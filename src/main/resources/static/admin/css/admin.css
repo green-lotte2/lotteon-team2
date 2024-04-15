@@ -458,7 +458,7 @@ button[type=submit] {
     margin: 0 2px;
     padding: 8px 9px;
     border: 1px solid #c4c4c4;
-    background: url() 0 0 repeat-x;
+    /*background: url(../images/) 0 0 repeat-x;*/
     color: #000;
     font-family: Tahoma;
     font-size: 12px;
