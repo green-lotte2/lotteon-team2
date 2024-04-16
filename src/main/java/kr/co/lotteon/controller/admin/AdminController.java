@@ -1,6 +1,5 @@
 package kr.co.lotteon.controller.admin;
 
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,4 +33,34 @@ public class AdminController {
     public String register(){
         return "/admin/product/register";
     }
+
+    @GetMapping("/admin/charts")
+    public String charts(){
+        return "/admin/charts";
+    }
+
+    @GetMapping("/admin/tables")
+    public String tables(){
+        return "/admin/tables";
+    }
+
+
+    @GetMapping("/admin/error/404")
+    public String error(){
+        return "/admin/error/404";
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
