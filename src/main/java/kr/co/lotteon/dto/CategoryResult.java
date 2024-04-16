@@ -1,4 +1,4 @@
-package kr.co.lotteon.DTO;
+package kr.co.lotteon.dto;
 
 import kr.co.lotteon.entity.Category;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package kr.co.lotteon.controller;
 
-import kr.co.lotteon.DTO.CategoryResult;
+import kr.co.lotteon.dto.CategoryResult;
 import kr.co.lotteon.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

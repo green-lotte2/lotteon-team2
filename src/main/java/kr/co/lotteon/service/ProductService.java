@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import kr.co.lotteon.DTO.CategoryResult;
+import kr.co.lotteon.dto.CategoryResult;
 import kr.co.lotteon.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
