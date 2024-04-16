@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.Console;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -57,12 +58,25 @@ public class ProductController {
     }
 
     @GetMapping("/product/search")
-    public String search(){
-        return "/product/search";
+    public String search(
+                        Model model,
+                        String search,
+                        @PageableDefault(size = 10, sort = "pname", direction = Sort.Direction.ASC) Pageable pageable){
+
+        Page<Product> resultList = productService.findByPname(pageable, search);
+        for(Product result : resultList){
+            log.info(result.toString());
+        }
+        model.addAttribute("product", resultList);
+        model.addAttribute("page", resultList);
+        return "/product/list";
     }
 
     @GetMapping("/product/view")
     public String view(){
         return "/product/view";
     }
+
+
+
 }

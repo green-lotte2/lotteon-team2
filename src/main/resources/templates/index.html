@@ -70,7 +70,10 @@
             <li><i class="fa fa-bars" aria-hidden="true"></i>카테고리</li>
             <li th:each="cate1:${cate}">
               <a href="#">
-                <i class="fas fa-tshirt"></i>[[${cate1.cname}]]<i class="fas fa-angle-right"></i>
+                <i class="fas fa-tshirt"></i>
+                <i th:if="${cate1.cname}=='가전·디지털'" class="fas fa-laptop">
+                [[${cate1.cname}]]
+                <i class="fas fa-angle-right"></i>
               </a>
               <ol>
                 <li th:each="cate2:${cate1.children}">

@@ -189,6 +189,17 @@ main > aside > .category > li > a {
   text-decoration: none;
   font-size: 1em;
 }
+
+main > aside > .category > li > ol > li > a {
+  padding-left:  20px;
+  line-height: 40px;
+  color: #111;
+  text-decoration: none;
+  display: block;
+  font-size: 1em;
+  width: 100%;
+}
+
 main > aside > .category > li > a:hover {  
   color: #ef2a23;
 }
@@ -204,10 +215,6 @@ main > aside > .category > li > ol > li > a:hover + ol {
 
 /* 서브메뉴에 마우스가 올라가면 계속 노출 */
 main > aside > .category ol:hover {
-  display: block;
-}
-
-main > aside > .category ol:hover ol:hover {
   display: block;
 }
 
