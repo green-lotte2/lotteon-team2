@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.lotteon.mapper.FaqMapper">
+
+    <select id="selectFaqList10" resultType="kr.co.lotteon.dto.FaqDTO">
+        SELECT * FROM `csfaq` AS a
+        JOIN `cscate2` AS b
+        ON a.cate1 = b.cate2 AND a.cate2 = b.cate2 WHERE a.cate1 = #{cate1} ORDER BY `faqno` DESC LIMIT 10
+    </select>
+
+
+    <select id="selectFaqView" resultType="kr.co.lotteon.dto.FaqDTO">
+        SELECT * FROM `csfaq` WHERE `faqno` = #{faqno}
+    </select>
+    
+</mapper>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8" />
+    <title>롯데ON::고객센터</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js}"></script>
+    <script th:src="@{https://kit.fontawesome.com/20962f3e4b.js}" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js}"></script>
+    <link rel="stylesheet" th:href="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/cs.css}"/>
+</head>
+    <body>
+        <div id="wrapper">
+            <header>
+                <div class="top">
+                    <div>
+                        <p>
+                            <a th:href="@{/member/login}">로그인</a>
+                            <a th:href="@{/member/join}">회원가입</a>
+                            <a th:href="@{/my/home}">마이페이지</a>
+                            <a th:href="@{/product/cart}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;장바구니</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="logo">
+                    <div>
+                        <a th:href="@{/cs/index}"><img th:src="@{/images/header_logo.png}" alt="로고" />고객센터</a>
+                    </div>
+                </div>
+            </header>
+
+            <div layout:fragment="content">
+
+            </div>
+
+            <th:block th:replace="/layout/footer :: footerFragment"></th:block>
+        </div>
+    </body>
+</html>
