@@ -66,6 +66,10 @@
     width: 160px;
 }
 
+.order-button {
+    cursor: pointer; /* 마우스가 버튼 위에 있을 때 포인터 모양으로 변경 */
+}
+
 
 /* list */
 #product > .list {}
