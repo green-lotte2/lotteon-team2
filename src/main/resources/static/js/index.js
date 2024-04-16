@@ -4,8 +4,8 @@ $(document).ready(function () {
     });
   });
 
-  $(function () {
-    var best = $("aside > .best");
+$(function () {
+  var best = $("aside > .best");
 
     $(window).scroll(function () {
       var t = $(this).scrollTop();
@@ -20,3 +20,10 @@ $(document).ready(function () {
       }
     });
 });
+
+$(function(){
+  $('#bannerTop .btnClose').click(function(){
+    $(this).closest('#bannerTop').removeClass('on');
+  });
+});
+

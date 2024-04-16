@@ -197,8 +197,17 @@ main > aside > .category > li > a:hover {
 main > aside > .category > li > a:hover + ol {
   display: block;
 }
+
+main > aside > .category > li > ol > li > a:hover + ol {
+  display: block;
+}
+
 /* 서브메뉴에 마우스가 올라가면 계속 노출 */
 main > aside > .category ol:hover {
+  display: block;
+}
+
+main > aside > .category ol:hover ol:hover {
   display: block;
 }
 
