@@ -1,6 +1,6 @@
 package kr.co.lotteon.DTO;
 
-import kr.co.lotteon.Entity.Category;
+import kr.co.lotteon.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

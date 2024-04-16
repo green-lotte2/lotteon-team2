@@ -1,7 +1,7 @@
 package kr.co.lotteon.repository;
 
 import jakarta.persistence.EntityManager;
-import kr.co.lotteon.Entity.Category;
+import kr.co.lotteon.entity.Category;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

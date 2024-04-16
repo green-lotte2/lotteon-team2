@@ -1,4 +1,4 @@
-package kr.co.lotteon.Entity;
+package kr.co.lotteon.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
