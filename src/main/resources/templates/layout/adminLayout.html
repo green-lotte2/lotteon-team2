@@ -66,8 +66,25 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">product:</h6>
-                        <a class="collapse-item" th:href="@{/admin/product/list}">상품목록</a>
+                        <a class="collapse-item" th:href="@{/admin/product/list}">상품현황</a>
                         <a class="collapse-item" th:href="@{/admin/product/register}">상품등록</a>
+                    </div>
+                </div>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree "
+                   aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>회원관리</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">product:</h6>
+                        <a class="collapse-item" th:href="@{/admin/user/list}">회원현황</a>
+                        <a class="collapse-item" th:href="@{/admin/user/register}">관리자등록</a>
+                        <a class="collapse-item" th:href="@{/admin/user/modify}">회원정보수정</a>
                     </div>
                 </div>
             </li>
@@ -81,23 +98,7 @@
                 <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">product:</h6>
-                        <a class="collapse-item" th:href="@{/admin/order/list}">주문목록</a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree "
-                   aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>회원관리</span>
-                </a>
-                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">product:</h6>
-                        <a class="collapse-item" th:href="@{/admin/user/list}">회원목록</a>
-                        <a class="collapse-item" th:href="@{/admin/user/register}">관리자등록</a>
-                        <a class="collapse-item" th:href="@{/admin/user/modify}">회원정보수정</a>
+                        <a class="collapse-item" th:href="@{/admin/order/list}">주문현황</a>
                     </div>
                 </div>
             </li>
@@ -218,7 +219,6 @@
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">Yeana</span>
-
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -247,7 +247,6 @@
 
             </nav>
             <!-- End of Topbar -->
-
         <!--.✨✨✨✨✨main 시작✨✨✨✨✨-->
         <main layout:fragment="content">
 

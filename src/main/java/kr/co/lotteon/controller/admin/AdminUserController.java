@@ -3,6 +3,7 @@ package kr.co.lotteon.controller.admin;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Slf4j
@@ -15,7 +16,9 @@ public class AdminUserController {
     }
 
     @GetMapping("/admin/user/list")
-    public String adminUserList(){
+    public String adminUserList(Model model, String role, String keyword){
+        log.info("role : " + role);
+
         return "/admin/user/list";
     }
 
