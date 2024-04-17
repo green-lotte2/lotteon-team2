@@ -14,8 +14,9 @@ public class AdminService {
 
     private final AdminMapper adminMapper;
 
-    public List<UserDTO> selectUsers(String role, String keyword){
-        return adminMapper.selectUsers(role, keyword);
+    public List<UserDTO> selectUsers(){
+        log.info("selectUsers... ");
+        return adminMapper.adminSelectUsers();
     }
 
 }

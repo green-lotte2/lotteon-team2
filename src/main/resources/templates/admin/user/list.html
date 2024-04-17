@@ -28,7 +28,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <form th:action="@{/admin/user/list}"  method="GET">
+                    <form th:action="@{/admin/user/list}"  method="get">
                         <div class="searchBox">
                             <select name="role" id="select">
                                 <option value="" selected disabled> 전체 </option>
@@ -60,60 +60,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="user:${users}">
                             <td>
-                                <input type="checkbox" name="상품코드">
+                                <input type="checkbox" name="checkUser">
                             </td>
-                            <td>a101</td>
-                            <td>홍길동</td>
-                            <td>hong@hong.com</td>
-                            <td>010-1234-1001</td>
-                            <td>[관리자]</td>
-                            <td>2021.05.12</td>
+                            <td>[[${user.uid}]]</td>
+                            <td>[[${user.name}]]</td>
+                            <td>[[${user.email}]]</td>
+                            <td>[[${user.hp}]]</td>
+                            <td>[[${user.role}]]</td>
+                            <td th:text="${#temporals.format(user.rdate, 'yyyy-MM-dd')}"></td>
                             <td>
-                                <a th:href="@{/admin/product/modify}">상세보기 및 수정</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="상품코드">
-                            </td>
-                            <td>a101</td>
-                            <td>홍길동</td>
-                            <td>hong@hong.com</td>
-                            <td>010-1234-1001</td>
-                            <td>[관리자]</td>
-                            <td>2021.05.12</td>
-                            <td>
-                                <a th:href="@{/admin/product/modify}">상세보기 및 수정</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="상품코드">
-                            </td>
-                            <td>a101</td>
-                            <td>홍길동</td>
-                            <td>hong@hong.com</td>
-                            <td>010-1234-1001</td>
-                            <td>[관리자]</td>
-                            <td>2021.05.12</td>
-                            <td>
-                                <a th:href="@{/admin/product/modify}">상세보기 및 수정</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="상품코드">
-                            </td>
-                            <td>a101</td>
-                            <td>홍길동</td>
-                            <td>hong@hong.com</td>
-                            <td>010-1234-1001</td>
-                            <td>[관리자]</td>
-                            <td>2021.05.12</td>
-                            <td>
-                                <a th:href="@{/admin/product/modify}">상세보기 및 수정</a>
+                                <a th:href="@{/admin/user/modify}">상세보기 및 수정</a>
                             </td>
                         </tr>
                         </tbody>
