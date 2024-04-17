@@ -1,8 +1,29 @@
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="~{/layout/UserLayout}">
 
-      <div class="product" id="product" layout:fragment="product">
+      <main class="content" id="product" layout:fragment="content">
+        <header>
+        <div class="menu">
+          <div>
+            <ul>
+              <li><a th:href="@{#}">히트상품</a></li>
+              <li><a th:href="@{#}">추천상품</a></li>
+              <li><a th:href="@{#}">최신상품</a></li>
+              <li><a th:href="@{#}">인기상품</a></li>
+              <li><a th:href="@{#}">할인상품</a></li>
+            </ul>
+            <ul>
+              <li><a th:href="@{#}">쿠폰존</a></li>
+              <li><a th:href="@{#}">사용후기</a></li>
+              <li><a th:href="@{#}">개인결제</a></li>
+              <li><a th:href="@{#}">고객센터</a></li>
+              <li><a th:href="@{#}">FAQ</a></li>
+            </ul>
+          </div>
+        </div>
+        </header>
+
         <aside>
           <ul class="category">
             <li><i class="fa fa-bars" aria-hidden="true"></i>카테고리</li>
@@ -55,7 +76,7 @@
                 </p>
               </nav>
                             
-              <form th:action="@{#}">
+              <form th:action="@{/product/order}" method="post">
                 <!-- 장바구니 목록 -->
                 <table>
                   <thead>
@@ -162,12 +183,13 @@
                       <td>26,000</td>
                     </tr>
                   </table>
-                  <input type="submit" name="" value="주문하기">    
+                  <input th:href="@{/product/order}" type="submit" name="" class="order-button" value="주문하기">
+
                 </div>
 
               </form>
 
             </section>
             <!-- 장바구니 페이지 끝 -->
-    </div>
+    </main>
 </html>

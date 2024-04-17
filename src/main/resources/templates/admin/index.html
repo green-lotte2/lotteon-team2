@@ -1,330 +1,222 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/adminLayout}">
 
 <head>
-    <meta charset="UTF-8">
-    <title>롯데ON::관리자 페이지</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>    
-    <script src="../../static/admin/js/gnb.js"></script>
-    <link rel="stylesheet" href="https:/ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="https:/stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet"  th:href="@{/admin/css/admin.css}">
+    <link th:href="@{css/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    <link th:href="@{css/sb-admin-2.min.css}" rel="stylesheet">
+
 </head>
-<body>
-    <div id="admin-wrapper">
-        <header>
-            <div>
-                <a th:href="@{/admin/index}" class="logo"><img th:src="@{/admin/images/admin_logo.png}" alt="admin_logo"/></a>
-                <p>
-                    <span>홍길동님 반갑습니다.</span>
-                    <a href="#">HOME |</a>
-                    <a href="#">로그아웃 |</a>
-                    <a href="#">고객센터</a>
-                </p>
-            </div>
-        </header>
-        <main>
-            <aside>
-                <!-- Global Navigation Bar -->
-                <ul id="gnb">
-                    <li>
-                        <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>환경설정</a>
-                        <ol>
-                            <li><a href="./config/info.html">기본환경정보</a></li>
-                            <li><a href="./config/banner.html">배너관리</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-store" aria-hidden="true"></i>상점관리</a>
-                        <ol>
-                            <li><a href="#">판매자현황</a></li>
-                            <li><a href="#">재고관리</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-users" aria-hidden="true"></i>회원관리</a>
-                        <ol>
-                            <li><a href="#">회원현황</a></li>
-                            <li><a href="#">포인트관리</a></li>
-                            <li><a href="#">비회원관리</a></li>
-                            <li><a href="#">접속자집계</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fas fa-box-open" aria-hidden="true"></i>상품관리</a>
-                        <ol>
-                            <li><a href="./product/list.html">상품현황</a></li>
-                            <li><a href="./product/register.html">상품등록</a></li>
-                            <li><a href="#">재고관리</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-credit-card" aria-hidden="true"></i>주문관리</a>
-                        <ol>
-                            <li><a href="#">주문현황</a></li>
-                            <li><a href="#">매출현황</a></li>
-                            <li><a href="#">결제관리</a></li>
-                            <li><a href="#">배송관리</a></li>
-                        </ol>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>게시판관리</a>
-                        <ol>
-                            <li><a href="#">게시판현황</a></li>
-                            <li><a href="#">고객문의</a></li>
-                        </ol>
-                    </li>
-                </ul>
-            </aside>
-            <section id="admin-index">
-                <nav>
-                    <h3>관리자 메인</h3>
-                    <p>
-                        HOME > <strong>메인</strong>
-                    </p>
-                </nav>
 
-                <h4>쇼핑몰 운영현황</h4>
-                <article>
-                    <table>	
-                        <tr>
-                            <td>
-                                <strong>주문건수(건)</strong>
-                                <span>131</span>
-                            </td>
-                            <td>
-                                <strong>주문금액(원)</strong>
-                                <span>1,130,000</span>
-                            </td>
-                            <td>
-                                <strong>회원가입(명)</strong>
-                                <span>1014</span>
-                            </td>
-                            <td>
-                                <strong>쇼핑몰 방문(명)</strong>
-                                <span>1014</span>
-                            </td>
-                            <td>
-                                <strong>신규게시물(건)</strong>
-                                <span>100</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>
-                                    <span>PC</span>
-                                    <span>60</span>
-                                </p>
-                                <p>
-                                    <span>Mobile</span>
-                                    <span>71</span>
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    <span>PC</span>
-                                    <span>60</span>
-                                </p>
-                                <p>
-                                    <span>Mobile</span>
-                                    <span>71</span>
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    <span>PC</span>
-                                    <span>60</span>
-                                </p>
-                                <p>
-                                    <span>Mobile</span>
-                                    <span>71</span>
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    <span>PC</span>
-                                    <span>60</span>
-                                </p>
-                                <p>
-                                    <span>Mobile</span>
-                                    <span>71</span>
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    <span>PC</span>
-                                    <span>60</span>
-                                </p>
-                                <p>
-                                    <span>Mobile</span>
-                                    <span>71</span>
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p>
-                                    <span>어제</span>
-                                    <span>4</span>
-                                </p>
-                                <p>
-                                    <span>주간</span>
-                                    <span>10</span>
-                                </p>
-                                <p>
-                                    <span>월간</span>
-                                    <span>30</span>
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    <span>어제</span>
-                                    <span>4</span>
-                                </p>
-                                <p>
-                                    <span>주간</span>
-                                    <span>10</span>
-                                </p>
-                                <p>
-                                    <span>월간</span>
-                                    <span>30</span>
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    <span>어제</span>
-                                    <span>4</span>
-                                </p>
-                                <p>
-                                    <span>주간</span>
-                                    <span>10</span>
-                                </p>
-                                <p>
-                                    <span>월간</span>
-                                    <span>30</span>
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    <span>어제</span>
-                                    <span>4</span>
-                                </p>
-                                <p>
-                                    <span>주간</span>
-                                    <span>10</span>
-                                </p>
-                                <p>
-                                    <span>월간</span>
-                                    <span>30</span>
-                                </p>
-                            </td>
-                            <td>
-                                <p>
-                                    <span>어제</span>
-                                    <span>4</span>
-                                </p>
-                                <p>
-                                    <span>주간</span>
-                                    <span>10</span>
-                                </p>
-                                <p>
-                                    <span>월간</span>
-                                    <span>30</span>
-                                </p>
-                            </td>		
-                        </tr>
-                    </table>
-                </article>
 
-                <h4>주문 업무현황</h4>
-                <article>
-                    <table>
-                        <tr>
-                            <td>
-                                <strong>입금대기(건)</strong>
-                                <span>100</span>
-                            </td>
-                            <td>
-                                <strong>배송준비(건)</strong>
-                                <span>100</span>
-                            </td>
-                            <td>
-                                <strong>취소요청(건)</strong>
-                                <span>100</span>
-                            </td>
-                            <td>
-                                <strong>교환요청(건)</strong>
-                                <span>100</span>
-                            </td>
-                            <td>
-                                <strong>반품요청(건)</strong>
-                                <span>100</span>
-                            </td>
-                        </tr>
-                    </table>                    
-                </article>
+<main layout:fragment="content">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-                <div>
-                    <div>
-                        <h4>공지사항</h4>
-                        <article>
-                            <p>
-                                <span>[공지] 판매자님들은 주기적인 비밀번호 변경을 하세요. 판매자님들은 주기적인 비밀번호 변경을 하세요.</span>
-                                <span>20-07-08 12:23</span>
-                            </p>
-                            <p>
-                                <span>[공지] 1주년 기념 신규가입 사은품 안내</span>
-                                <span>20-07-08 12:23</span>
-                            </p>
-                            <p>
-                                <span>[공지] 1주년 기념 신규가입 사은품 안내</span>
-                                <span>20-07-08 12:23</span>
-                            </p>
-                            <p>
-                                <span>[공지] 1주년 기념 신규가입 사은품 안내</span>
-                                <span>20-07-08 12:23</span>
-                            </p>
-                            <p>
-                                <span>[공지] 1주년 기념 신규가입 사은품 안내</span>
-                                <span>20-07-08 12:23</span>
-                            </p>
-                        </article>
-                    </div>
+            <!-- Content Row -->
+            <div class="row">
 
-                    <div>
-                        <h4>고객문의</h4>
-                        <article>
-                            <p>
-                                <span>[문의] 상품이 잘못 왔습니다.</span>
-                                <span>20-07-08 12:23</span>
-                            </p>
-                            <p>
-                                <span>[문의] 안녕하세요. 주문자 입니다. 구매한 상품에 문제가 있어서 이렇게 문의글을 남깁니다.</span>
-                                <span>20-07-08 12:23</span>
-                            </p>
-                            <p>
-                                <span>[문의] 상품이 1개 잘못 왔습니다.</span>
-                                <span>20-07-08 12:23</span>
-                            </p>
-                            <p>
-                                <span>[문의] 상품이 1개 잘못 왔습니다.</span>
-                                <span>20-07-08 12:23</span>
-                            </p>
-                            <p>
-                                <span>[문의] 상품이 1개 잘못 왔습니다.</span>
-                                <span>20-07-08 12:23</span>
-                            </p>                                                                
-                        </article>
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Earnings (Monthly)</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
-        </main>
-        <footer>
-            <div>
-                <p>Copyright ©lotteon.com All rights reserved. ADMINISTRATOR Version 5.4.1.2</p>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Earnings (Annual)</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                    </div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="progress progress-sm mr-2">
+                                                <div class="progress-bar bg-info" role="progressbar"
+                                                     style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                     aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Requests Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        Pending Requests</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </footer>
-    </div>    
-</body>
+
+            <!-- Content Row -->
+
+            <div class="row">
+
+                <!-- Area Chart -->
+                <div class="col-xl-8 col-lg-7">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div
+                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                            <div class="dropdown no-arrow">
+                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                     aria-labelledby="dropdownMenuLink">
+                                    <div class="dropdown-header">Dropdown Header:</div>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <canvas id="myAreaChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pie Chart -->
+                <div class="col-xl-4 col-lg-5">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div
+                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                            <div class="dropdown no-arrow">
+                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink2">
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                     aria-labelledby="dropdownMenuLink2">
+                                    <div class="dropdown-header">Dropdown Header:</div>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <div class="chart-pie pt-4 pb-2">
+                                <canvas id="myPieChart"></canvas>
+                            </div>
+                            <div class="mt-4 text-center small">
+                                        <span class="mr-2">
+                                            <i class="fas fa-circle text-primary"></i> Direct
+                                        </span>
+                                <span class="mr-2">
+                                            <i class="fas fa-circle text-success"></i> Social
+                                        </span>
+                                <span class="mr-2">
+                                            <i class="fas fa-circle text-info"></i> Referral
+                                        </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- /.container-fluid -->
+
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+    <script th:src="@{css/vendor/chart.js/Chart.min.js}"></script>
+    <script th:src="@{js/demo/chart-area-demo.js}"></script>
+    <script th:src="@{js/demo/chart-pie-demo.js}"></script>
+    <script th:src="@{css/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{css/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <script th:src="@{js/sb-admin-2.min.js}"></script>
+</main>
+
 </html>
