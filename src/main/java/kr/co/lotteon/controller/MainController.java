@@ -18,6 +18,8 @@ public class MainController {
     @GetMapping(value = {"/","/index"})
     public String index(Model model){
 
+        List<CategoryResult> cate = productService.getCategoryList();
+        model.addAttribute("cate", cate);
         return "/index";
     }
 
