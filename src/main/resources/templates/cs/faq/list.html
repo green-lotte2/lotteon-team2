@@ -5,105 +5,96 @@
 
 <div layout:fragment="content">
 
-  <script>
-    $(function(){
-      $('.more').click(function(e){
-        e.preventDefault();
+    <script>
+      $(function(){
+        $('.more').click(function(e){
+          e.preventDefault();
 
-        $(this).parents('.faqBlock').find('> li').show();
-        $(this).hide();
+          $(this).parents('.faqBlock').find('> li').show();
+          $(this).hide();
+        });
+        $('.simple').click(function(e){
+          e.preventDefault();
+
+          // 모든 li 요소를 숨기고
+          $(this).parent().find('> li').hide();
+          // 처음 3개 li 요소를 다시 보이게 하고
+          $(this).parent().find('> .faqItem:nth-child(1)').show();
+          $(this).parent().find('> .faqItem:nth-child(2)').show();
+          $(this).parent().find('> .faqItem:nth-child(3)').show();
+          // "더 보기" 버튼을 표시
+          $(this).parent().find('> .more').show();
+
+        });
       });
-      $('.simple').click(function(e){
-        e.preventDefault();
+    </script>
 
-        // 모든 li 요소를 숨기고
-        $(this).parent().find('> li').hide();
-        // 처음 3개 li 요소를 다시 보이게 하고
-        $(this).parent().find('> .faqItem:nth-child(1)').show();
-        $(this).parent().find('> .faqItem:nth-child(2)').show();
-        $(this).parent().find('> .faqItem:nth-child(3)').show();
-        // "더 보기" 버튼을 표시
-        $(this).parent().find('> .more').show();
 
-      });
-    });
-  </script>
-
-      <section id="cs">
-        <div class="faq">
-          <nav>
-            <div>
-              <p>홈<span>></span>자주묻는 질문</p>
-            </div>
-          </nav>
-          <section class="list">
-            <aside>
-              <h2>자주묻는 질문</h2>
-              <ul>
-                <li class="on"><a href="#">회원</a></li>
-                <li><a href="#">쿠폰/이벤트</a></li>
-                <li><a href="#">주문/결제</a></li>
-                <li><a href="#">배송</a></li>
-                <li><a href="#">취소/반품/교환</a></li>
-                <li><a href="#">여행/숙박/항공</a></li>
-                <li><a href="#">안전거래</a></li>
-              </ul>
-            </aside>
-            <article>
-              <nav>
-                <h1>회원</h1>
-                <h2>가장 자주 묻는 질문입니다.</h2>
-              </nav>
-
+    <section id="cs">
+      <div class="faq">
+        <nav>
+          <div>
+            <p>홈<span>></span>자주묻는 질문</p>
+          </div>
+        </nav>
+        <section class="list">
+          <aside>
+            <h2>자주묻는 질문</h2>
+            <ul>
+              <li th:class="${cate1 == 20 ? 'on' : ''}">
+                <a th:href="@{/cs/faq/list(cate1=20)}">회원</a>
+              </li>
+              <li th:class="${cate1 == 21 ? 'on' : ''}">
+                <a th:href="@{/cs/faq/list(cate1=21)}">쿠폰/혜택/이벤트</a>
+              </li>
+              <li th:class="${cate1 == 22 ? 'on' : ''}">
+                <a th:href="@{/cs/faq/list(cate1=22)}">주문/결제</a>
+              </li>
+              <li th:class="${cate1 == 23 ? 'on' : ''}">
+                <a th:href="@{/cs/faq/list(cate1=23)}">배송</a>
+              </li>
+              <li th:class="${cate1 == 24 ? 'on' : ''}">
+                <a th:href="@{/cs/faq/list(cate1=24)}">취소/반품/교환</a>
+              </li>
+              <li th:class="${cate1 == 25 ? 'on' : ''}">
+                <a th:href="@{/cs/faq/list(cate1=25)}">여행/숙박/항공</a>
+              </li>
+              <li th:class="${cate1 == 26 ? 'on' : ''}">
+                <a th:href="@{/cs/faq/list(cate1=26)}">기타</a>
+              </li>
+            </ul>
+          </aside>
+          <article>
+            <nav>
+              <h1 th:switch="${cate1}">
+                <h1 th:case="20">회원</h1>
+                <h1 th:case="21">쿠폰/혜택/이벤트</h1>
+                <h1 th:case="22">주문/결제</h1>
+                <h1 th:case="23">배송</h1>
+                <h1 th:case="24">취소/반품/교환</h1>
+                <h1 th:case="25">여행/숙박/항공</h1>
+                <h1 th:case="26">기타</h1>
+                <h1 th:case="*">다른 카테고리</h1>
+              </h1>
+              <h2>가장 자주 묻는 질문입니다.</h2>
+            </nav>
+            <th:block th:each="cate2list:${cate2list}">
               <div>
-                <h3>가입</h3>
-                <ul>
-                  <li><a th:href="@{view.html}"><span>Q.</span>개인회원과 법인회원에 차이가 있나요?</a></li>
-                  <li><a href="#"><span>Q.</span>개인회원과 법인회원에 차이가 있나요?</a></li>
-                  <li><a href="#"><span>Q.</span>개인회원과 법인회원에 차이가 있나요?</a></li>
-                  <li><a href="#"><span>Q.</span>개인회원과 법인회원에 차이가 있나요?</a></li>
-                  <li><a href="#"><span>Q.</span>개인회원과 법인회원에 차이가 있나요?</a></li>
-                  <li class="more"><a href="#">더보기</a></li>
+                <h3 th:text="${cate2list.c2name}"></h3>
+                <ul class="faqBlock">
+                  <th:block th:each="faqDTO:${faqDTOList}">
+                    <li th:if="${faqDTO.cate2 eq cate2list.cate2}" class="faqItem">
+                      <a th:href="@{/cs/faq/view(faqno=${faqDTO.faqno})}"><span>Q.</span>[[${faqDTO.title}]]</a>
+                    </li>
+                  </th:block>
+                  <li class="more"><a href="#" id="showMore">더보기</a></li>
+                  <li class="simple"><a href="#" id="showLess">간단히보기</a></li>
                 </ul>
               </div>
-              <div>
-                <h3>탈퇴</h3>
-                <ul>
-                  <li><a href="#"><span>Q.</span>회원탈퇴 후 재가입이 가능한가요?</a></li>
-                  <li><a href="#"><span>Q.</span>회원탈퇴 후 재가입이 가능한가요?</a></li>
-                  <li><a href="#"><span>Q.</span>회원탈퇴 후 재가입이 가능한가요?</a></li>
-                  <li><a href="#"><span>Q.</span>회원탈퇴 후 재가입이 가능한가요?</a></li>
-                  <li><a href="#"><span>Q.</span>회원탈퇴 후 재가입이 가능한가요?</a></li>
-                  <li class="more"><a href="#">더보기</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>회원정보</h3>
-                <ul>
-                  <li><a href="#"><span>Q.</span>회원정보를 수정하고 싶어요.</a></li>
-                  <li><a href="#"><span>Q.</span>회원정보를 수정하고 싶어요.</a></li>
-                  <li><a href="#"><span>Q.</span>회원정보를 수정하고 싶어요.</a></li>
-                  <li><a href="#"><span>Q.</span>회원정보를 수정하고 싶어요.</a></li>
-                  <li><a href="#"><span>Q.</span>회원정보를 수정하고 싶어요.</a></li>
-                  <li class="more"><a href="#">더보기</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>로그인</h3>
-                <ul>
-                  <li><a href="#"><span>Q.</span>로그인에 문제가 있어요.</a></li>
-                  <li><a href="#"><span>Q.</span>로그인에 문제가 있어요.</a></li>
-                  <li><a href="#"><span>Q.</span>로그인에 문제가 있어요.</a></li>
-                  <li><a href="#"><span>Q.</span>로그인에 문제가 있어요.</a></li>
-                  <li><a href="#"><span>Q.</span>로그인에 문제가 있어요.</a></li>
-                  <li class="more"><a href="#">더보기</a></li>
-                </ul>
-              </div>
-
-            </article>
-          </section>
-        </div>
-      </section>
-
-    </div>
+            </th:block>
+          </article>
+        </section>
+      </div>
+    </section>
+  </div>
 </html>

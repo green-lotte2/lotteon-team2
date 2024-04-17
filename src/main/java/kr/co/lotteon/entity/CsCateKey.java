@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class CateKey implements Serializable {
+public class CsCateKey implements Serializable {
 
     @Column(name = "cate1")
     private int cate1;

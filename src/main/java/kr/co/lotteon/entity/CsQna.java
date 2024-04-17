@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @Entity
 @Table(name = "qna")
-public class QnaEntity {
+public class CsQna {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class QnaEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cate1", insertable = false, updatable = false)
-    private Cate1Entity cate1Entity;
+    private CsCate1 csCate1;
 
     @Column(name = "cate1")
     private int cate1;
@@ -31,7 +31,7 @@ public class QnaEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({@JoinColumn(name = "cate1", referencedColumnName = "cate1", insertable = false, updatable = false),
             @JoinColumn(name = "cate2", referencedColumnName = "cate2", insertable = false, updatable = false)})
-    private Cate2Entity cate2Entity;
+    private CsCate2 csCate2;
 
     @Column(name = "cate2")
     private int cate2;
@@ -66,7 +66,7 @@ public class QnaEntity {
         return formatDate;
     }
 
-    public QnaDTO toDTO(){
+    public QnaDTO toDTO() {
         return QnaDTO.builder()
                 .qnano(qnano)
                 .cate1(cate1)
@@ -82,8 +82,8 @@ public class QnaEntity {
                 .answercomplete(answercomplete)
                 .regip(regip)
                 .rdate(rdate)
-                .c1name(cate1Entity.getC1name())
-                .c2name(cate2Entity.getC2name())
+                .c1name(csCate1.getC1name())
+                .c2name(csCate2.getC2name())
                 .build();
     }
 }

@@ -10,14 +10,14 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QCateKey is a Querydsl query type for CateKey
+ * QCateKey is a Querydsl query type for CsCateKey
  */
 @Generated("com.querydsl.codegen.DefaultEmbeddableSerializer")
 public class QCateKey extends BeanPath<CateKey> {
 
     private static final long serialVersionUID = 1290268173L;
 
-    public static final QCateKey cateKey = new QCateKey("cateKey");
+    public static final QCateKey cateKey = new QCateKey("csCateKey");
 
     public final NumberPath<Integer> cate1 = createNumber("cate1", Integer.class);
 

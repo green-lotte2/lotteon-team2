@@ -11,7 +11,7 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QFaqEntity is a Querydsl query type for FaqEntity
+ * QFaqEntity is a Querydsl query type for CsFaq
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QFaqEntity extends EntityPathBase<FaqEntity> {
@@ -62,8 +62,8 @@ public class QFaqEntity extends EntityPathBase<FaqEntity> {
 
     public QFaqEntity(Class<? extends FaqEntity> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.cate1Entity = inits.isInitialized("cate1Entity") ? new QCate1Entity(forProperty("cate1Entity")) : null;
-        this.cate2Entity = inits.isInitialized("cate2Entity") ? new QCate2Entity(forProperty("cate2Entity"), inits.get("cate2Entity")) : null;
+        this.cate1Entity = inits.isInitialized("cate1") ? new QCate1Entity(forProperty("cate1")) : null;
+        this.cate2Entity = inits.isInitialized("cate2") ? new QCate2Entity(forProperty("cate2"), inits.get("cate2")) : null;
     }
 
 }

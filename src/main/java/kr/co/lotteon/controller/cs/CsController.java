@@ -1,5 +1,7 @@
 package kr.co.lotteon.controller.cs;
 
+import kr.co.lotteon.dto.Cate2DTO;
+import kr.co.lotteon.dto.FaqDTO;
 import kr.co.lotteon.dto.NoticeDTO;
 import kr.co.lotteon.dto.QnaDTO;
 import kr.co.lotteon.service.CsService;
@@ -8,8 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Controller
@@ -37,13 +47,24 @@ public class CsController {
 
 
     // 자주 묻는 질문
-    @GetMapping("/cs/faq/list")
-    public String faqList() {
+    @RequestMapping("/cs/faq/list")
+    public String faq(@RequestParam(name= "cate1", required = false) int cate1, Model model){
+        log.info("faqcate1-----------------"+cate1);
+        List<FaqDTO> faqDTOList = csService.selectFaqList10(cate1);
+        List<Cate2DTO> cate2list = csService.selectCate2(cate1);
+        model.addAttribute("cate2list",cate2list);
+        model.addAttribute("faqDTOList",faqDTOList);
+        model.addAttribute("cate1",cate1);
+        log.info("faqDTOList==============="+faqDTOList);
         return "/cs/faq/list";
     }
 
     @GetMapping("/cs/faq/view")
-    public String faqView() {
+    public String selectFaqView(int faqno, Model model){
+        FaqDTO faqBoard = csService.selectFaqView(faqno);
+        model.addAttribute("faqBoard",faqBoard);
+
+        log.info("faqno--------"+faqno);
         return "/cs/faq/view";
     }
 

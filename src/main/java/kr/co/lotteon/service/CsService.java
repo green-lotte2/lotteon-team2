@@ -1,22 +1,14 @@
 package kr.co.lotteon.service;
 
 import kr.co.lotteon.dto.*;
-import kr.co.lotteon.entity.QnaEntity;
+import kr.co.lotteon.entity.CsQna;
 import kr.co.lotteon.mapper.*;
 import kr.co.lotteon.repository.QnaRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.log4j.Log4j2;
-import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Log4j2
@@ -208,7 +200,7 @@ public class CsService {
     }
 
 
-    // Faq 리스트
+    // CsFaq 리스트
     public List<FaqDTO> selectFaqList10(int cate1){
         return faqMapper.selectFaqList10(cate1);
     }
@@ -218,7 +210,7 @@ public class CsService {
         return qnaMapper.selectAdminQnaView(qnano);
     }
     // Admin Qna 뷰 코멘트
-    public List<QnaEntity> selectComments(int parent){
+    public List<CsQna> selectComments(int parent){
         return qnaRepository.findByParent(parent);
     }
 
