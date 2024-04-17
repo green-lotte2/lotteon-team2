@@ -23,4 +23,13 @@ public class MainController {
         return "/index";
     }
 
+    @GetMapping("/regtest")
+    public String regTest(Model model){
+
+        List<CategoryResult> cate = productService.getCategoryList();
+        model.addAttribute("cate", cate);
+
+        return "/registertest";
+    }
+
 }

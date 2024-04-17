@@ -17,15 +17,15 @@ public class ProductDTO {
     private int pno;
     private String uid;
     private int cate;
-    private String pname;
+    private String pname;//
     private LocalDateTime rdate;
-    private int price;
-    private int stock;
-    private int deliprice;
-    private String company;
-    private int discount;
-    private int point;
-    private String info;
+    private int price;//
+    private int stock;//
+    private int deliprice;//
+    private String company;//
+    private int discount;//
+    private int point;//
+    private String info;//
     private int delprice;
     private String size;
     private String color;

@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 @Getter
@@ -22,6 +23,7 @@ public class Product {
     private String uid;
     private int cate;
     private String pname;
+    @CreationTimestamp
     private LocalDateTime rdate;
     private int price;
     private int stock;
