@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cscate1")
+@Table(name = "cate1")
 public class Cate1Entity {
 
     @Id

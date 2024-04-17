@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "csqna")
+@Table(name = "qna")
 public class QnaEntity {
 
     @Id
