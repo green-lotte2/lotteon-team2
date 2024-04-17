@@ -10,14 +10,14 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QCate1Entity is a Querydsl query type for Cate1Entity
+ * QCate1Entity is a Querydsl query type for Cate1
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QCate1Entity extends EntityPathBase<Cate1Entity> {
 
     private static final long serialVersionUID = 93739074L;
 
-    public static final QCate1Entity cate1Entity = new QCate1Entity("cate1Entity");
+    public static final QCate1Entity cate1Entity = new QCate1Entity("cate1");
 
     public final StringPath c1name = createString("c1name");
 

@@ -1,6 +1,6 @@
 package kr.co.lotteon.dto;
 
-import kr.co.lotteon.entity.FaqEntity;
+import kr.co.lotteon.entity.CsFaq;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,8 +32,8 @@ public class FaqDTO {
     private String c2name;
     private String rdatesub;
 
-    public FaqEntity toEntity(){
-        return FaqEntity.builder()
+    public CsFaq toEntity(){
+        return CsFaq.builder()
                 .faqno(faqno)
                 .cate1(cate1)
                 .cate2(cate2)

@@ -2,8 +2,8 @@ package kr.co.lotteon.service;
 
 import kr.co.lotteon.dto.Cate1DTO;
 import kr.co.lotteon.dto.Cate2DTO;
-import kr.co.lotteon.entity.Cate1Entity;
-import kr.co.lotteon.entity.Cate2Entity;
+import kr.co.lotteon.entity.CsCate1;
+import kr.co.lotteon.entity.CsCate2;
 import kr.co.lotteon.repository.Cate1Repository;
 import kr.co.lotteon.repository.Cate2Repository;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +23,10 @@ public class CsCateService {
     private final Cate2Repository cate2Repository;
 
     public List<Cate1DTO> selectCate1s(){
-        return cate1Repository.findAll().stream().map(Cate1Entity::toDTO).collect(Collectors.toList());
+        return cate1Repository.findAll().stream().map(CsCate1::toDTO).collect(Collectors.toList());
     }
     public List<Cate2DTO> selectCate2s(int cate1){
-        return cate2Repository.findAllByCate1(cate1).stream().map(Cate2Entity::toDTO).collect(Collectors.toList());
+        return cate2Repository.findAllByCate1(cate1).stream().map(CsCate2::toDTO).collect(Collectors.toList());
     }
 
     public Map<String, Object> getCsCates(){

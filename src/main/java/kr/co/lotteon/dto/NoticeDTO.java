@@ -1,6 +1,6 @@
 package kr.co.lotteon.dto;
 
-import kr.co.lotteon.entity.NoticeEntity;
+import kr.co.lotteon.entity.CsNotice;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -29,8 +29,8 @@ public class NoticeDTO {
     private String c2name;
     private String rdatesub;
 
-    public NoticeEntity toEntity(){
-        return NoticeEntity.builder()
+    public CsNotice toEntity(){
+        return CsNotice.builder()
                 .noticeno(noticeno)
                 .cate1(cate1)
                 .cate2(cate2)

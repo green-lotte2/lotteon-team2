@@ -1,6 +1,6 @@
 package kr.co.lotteon.dto;
 
-import kr.co.lotteon.entity.QnaEntity;
+import kr.co.lotteon.entity.CsQna;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -51,8 +51,8 @@ public class QnaDTO {
         return formatDate;
     }
 
-    public QnaEntity toEntity(){
-        return QnaEntity.builder()
+    public CsQna toEntity(){
+        return CsQna.builder()
                 .qnano(qnano)
                 .cate1(cate1)
                 .cate2(cate2)

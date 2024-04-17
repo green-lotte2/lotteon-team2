@@ -11,17 +11,17 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "cate2")
-public class Cate2Entity {
+public class CsCate2 {
 
     @EmbeddedId
-    CateKey cateKey;
+    CsCateKey csCateKey;
 
     private String c2name;
 
     public Cate2DTO toDTO(){
         return Cate2DTO.builder()
-                .cate1(cateKey.getCate1())
-                .cate2(cateKey.getCate2())
+                .cate1(csCateKey.getCate1())
+                .cate2(csCateKey.getCate2())
                 .c2name(c2name)
                 .build();
     }

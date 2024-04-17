@@ -1,6 +1,7 @@
 package kr.co.lotteon.dto;
 
-import kr.co.lotteon.entity.Cate1Entity;
+import kr.co.lotteon.entity.CsCate1;
+import kr.co.lotteon.entity.CsCate1;
 import lombok.*;
 
 @Data
@@ -14,8 +15,8 @@ public class Cate1DTO {
     private String c1name;
 
 
-    public Cate1Entity toEntity(){
-        return Cate1Entity.builder()
+    public CsCate1 toEntity(){
+        return CsCate1.builder()
                 .cate1(cate1)
                 .c1name(c1name)
                 .build();
