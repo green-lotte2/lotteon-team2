@@ -13,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "cate1")
+
 public class CsCate1 {
 
     @Id

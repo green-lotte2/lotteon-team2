@@ -15,7 +15,9 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @Entity
 @Table(name = "faq")
+
 public class CsFaq {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

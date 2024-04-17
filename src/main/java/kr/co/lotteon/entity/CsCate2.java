@@ -11,7 +11,9 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "cate2")
+
 public class CsCate2 {
+
 
     @EmbeddedId
     CsCateKey csCateKey;
