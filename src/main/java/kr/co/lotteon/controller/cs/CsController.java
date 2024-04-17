@@ -1,16 +1,36 @@
 package kr.co.lotteon.controller.cs;
 
+import kr.co.lotteon.dto.NoticeDTO;
+import kr.co.lotteon.dto.QnaDTO;
+import kr.co.lotteon.service.CsService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Log4j2
 @Controller
 public class CsController {
 
+    @Autowired
+    private CsService csService;
+
     // 인덱스
     @GetMapping(value = {"/cs", "/cs/index"})
-    public String index(){
+    public String index(Model model){
+
+        List<NoticeDTO> noticelist = csService.selectNotices();
+        model.addAttribute("noticelist", noticelist);
+
+        List<QnaDTO> qnalist = csService.selectQna();
+        model.addAttribute("qnalist", qnalist);
+
+        log.info(noticelist.toString());
+        log.info(qnalist.toString());
+
         return "/cs/index";
     }
 

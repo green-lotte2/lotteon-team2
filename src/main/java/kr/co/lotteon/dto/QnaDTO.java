@@ -60,8 +60,6 @@ public class QnaDTO {
                 .content(content)
                 .file1(file1)
                 .file2(file2)
-                .file3(file3)
-                .file4(file4)
                 .uid(uid)
                 .ono(ono)
                 .prodno(prodno)

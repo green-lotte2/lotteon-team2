@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "cscate2")
+@Table(name = "cate2")
 public class Cate2Entity {
 
     @EmbeddedId

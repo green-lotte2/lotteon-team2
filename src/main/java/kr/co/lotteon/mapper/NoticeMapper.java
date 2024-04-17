@@ -16,6 +16,6 @@ public interface NoticeMapper {
     public int selectNoticeTotal();
     public int selectNoticeTotalCate(int cate1);
 
-    public NoticeDTO selectNoticeView(int noticeNo);
+    public NoticeDTO selectNoticeView(int noticeno);
 
 }

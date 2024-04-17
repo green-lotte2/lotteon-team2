@@ -6,12 +6,12 @@
 <mapper namespace="kr.co.lotteon.mapper.CateMapper">
 
     <select id="selectCate1" resultType="kr.co.lotteon.dto.Cate1DTO">
-        SELECT * FROM `cscate1` WHERE `cate1` >= 20
+        SELECT * FROM `cate1` WHERE `cate1` >= 20
     </select>
 
 
     <select id="selectCate2" resultType="kr.co.lotteon.dto.Cate2DTO">
-        SELECT * FROM `cscate2` WHERE `cate1` = #{cate1}
+        SELECT * FROM `cate2` WHERE `cate1` = #{cate1}
     </select>
 
 </mapper>
