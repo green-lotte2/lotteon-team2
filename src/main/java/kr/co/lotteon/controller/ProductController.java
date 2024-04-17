@@ -74,9 +74,28 @@ public class ProductController {
 
 
     @GetMapping("/product/list")
-    public String list(Model model,
+    public String list(String cate,
+                        Model model,
                        @PageableDefault(size = 10, sort = "pname", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<Product> product = productService.findAllProducts(pageable);
+        Page<Product> product = null;
+                productService.findAllProducts(pageable);
+        log.info(cate);
+        int depth = 0;
+        if (cate!=null){
+            int code = Integer.parseInt(cate);
+            if(code % 10 != 0){
+                depth = 1;
+                product = productService.findByCateBetween(pageable, code, depth);
+            }else if(code % 1000 != 0){
+                depth = 100;
+                product = productService.findByCateBetween(pageable, code, depth);
+            }else{
+                depth = 10000;
+                product = productService.findByCateBetween(pageable, code, depth);
+            }
+        }else{
+            product = productService.findAllProducts(pageable);
+        }
         log.info("product112 : " + product);
         model.addAttribute("product", product);
         model.addAttribute("page", product);

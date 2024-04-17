@@ -64,17 +64,21 @@
             <ul class="category">
                 <li><i class="fa fa-bars" aria-hidden="true"></i>카테고리</li>
                 <li th:each="cate1:${cate}">
-                    <a href="#">
+                    <a th:href="@{/product/list(cate=${cate1.cate})}">
                         <i class="fas fa-tshirt"></i>
                         [[${cate1.cname}]]
                         <i class="fas fa-angle-right"></i>
                     </a>
                     <ol>
                         <li th:each="cate2:${cate1.children}">
-                            <a href="#">[[${cate2.cname}]]</a>
+                            <a th:href="@{/product/list(cate=${cate2.cate})}">
+                                [[${cate2.cname}]]
+                            </a>
                             <ol>
                                 <li th:each="cate3:${cate2.children}">
-                                    <a href="#">[[${cate3.cname}]]</a>
+                                    <a th:href="@{/product/list(cate=${cate3.cate})}">
+                                        [[${cate3.cname}]]
+                                    </a>
                                 </li>
                             </ol>
                         </li>

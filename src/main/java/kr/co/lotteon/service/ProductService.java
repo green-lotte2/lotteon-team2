@@ -103,6 +103,10 @@ public class ProductService {
         return productRepository.findById(pno);
     }
 
+    public Page<Product> findByCateBetween(Pageable pageable, int cate, int depth){
+        return productRepository.findByCateBetween(pageable, cate, depth);
+    }
+
     public Product saveProduct(Product product) {
         return productRepository.save(product);
     }

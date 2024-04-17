@@ -11,4 +11,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     public Page<Product> findByPnameLike(Pageable pageable, String name);
+
+    public Page<Product> findByCateBetween(Pageable pageable, int cate, int depth);
+
 }
