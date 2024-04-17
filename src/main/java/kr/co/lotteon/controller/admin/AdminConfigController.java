@@ -11,6 +11,7 @@ public class AdminConfigController {
 
     @GetMapping(value = {"/admin", "/admin/index"})
     public String index(){
+        log.info("index.. ");
         return "/admin/index";
     }
 

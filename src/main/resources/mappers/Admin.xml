@@ -7,12 +7,12 @@
 
     <select id="adminSelectUsers" resultType="kr.co.lotteon.dto.UserDTO">
         SELECT * FROM `user`
-        <where>
+        <!--<where>
             <if test="role == 'USER'"> role=#{role}</if>
             <if test="role == 'SELLER'"> role=#{role}</if>
             <if test="role == 'ADMIN'"> role=#{role}</if>
             <if test="keyword != null and keyword != ''"> AND uid=#{uid}</if>
-        </where>
+        </where> -->
     </select>
 
 </mapper>
