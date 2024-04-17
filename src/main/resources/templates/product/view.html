@@ -2,58 +2,64 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/UserLayout}">
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const decreaseButton = document.querySelector('.decrease');
-        const increaseButton = document.querySelector('.increase');
-        const quantityInput = document.querySelector('input[name="num"]');
-        const cartButton = document.querySelector('.cart');
-        const orderButton = document.querySelector('.order');
-
-        // 수량 조정 함수
-        function adjustQuantity(change) {
-            let currentQuantity = parseInt(quantityInput.value);
-            currentQuantity = Math.max(1, currentQuantity + change);
-            quantityInput.value = currentQuantity;
-            updatePrice();
-        }
-
-        // 서버에 수량 업데이트 요청 보내기
-        function updateServerQuantity() {
-            const pno = document.getElementById('pno').value;
-            const quantity = parseInt(quantityInput.value);
-            fetch(`/product/updateQuantity?pno=${pno}&quantity=${quantity}`, {
-                method: 'POST'
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Quantity updated successfully:', data);
-                })
-                .catch(error => console.error('Error updating quantity:', error));
-        }
-
-        decreaseButton.addEventListener('click', () => adjustQuantity(-1));
-        increaseButton.addEventListener('click', () => adjustQuantity(1));
-
-        cartButton.addEventListener('click', updateServerQuantity);
-        orderButton.addEventListener('click', updateServerQuantity);
-    });
-
-    // 가격 업데이트 함수
-    function updatePrice() {
-        const pricePerUnit = parseFloat(document.getElementById('price').innerText.replace(/,/g, ''));
-        const quantity = parseInt(document.querySelector('input[name="num"]').value);
-        const totalPriceElement = document.getElementById('totalPrice');
-        totalPriceElement.innerText = (pricePerUnit * quantity).toLocaleString('en-US');
-    }
-</script>
-
 
 
 
 
     <!-- 상품 상세페이지 시이작! -->
             <section class="view" layout:fragment="content">
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // 플러스 버튼 클릭 시 수량 증가
+                        document.querySelector('.increase').onclick = function() {
+                            //document.querySelector('.increase').addEventListener('click', function() {
+                            const quantityInput = document.querySelector('.quantity');
+                            let value = parseInt(quantityInput.value);
+                            value = isNaN(value) ? 0 : value;
+                            quantityInput.value = value + 1;
+                            changePrice();
+                        };
+
+                        // 마이너스 버튼 클릭 시 수량 감소
+                        document.querySelector('.decrease').onclick = function() {
+                            //document.querySelector('.decrease').addEventListener('click', function() {
+                            const quantityInput = document.querySelector('.quantity');
+                            let value = parseInt(quantityInput.value);
+                            value = isNaN(value) ? 0 : value;
+                            if (value > 1) {
+                                quantityInput.value = value - 1;
+                            }
+                            changePrice();
+                        };
+
+                        // 수량 변경시 합계 가격 변동 코드
+                        const count = document.getElementById('count');
+                        const totalPrice = document.getElementById('totalPrice');
+                        const price = document.getElementById('price');
+                        const finalPoint = document.getElementById('finalPoint');
+                        const finalPrice = document.getElementById('finalPrice');
+
+                        function changePrice() {
+                            // 할인 적용 금액
+                            let StringPrice = price.innerText;
+                            let IntPrice = parseInt(StringPrice.replace(/,/g, ''));
+                            let total = count.value * IntPrice;
+                            console.log(count.value);
+                            console.log(price.innerText);
+
+                            totalPrice.innerText = total.toLocaleString();
+                            console.log(total);
+                            // 적립 포인트
+                            let totalPoint = total / 10;
+                            finalPoint.innerText = totalPoint.toLocaleString();
+                            console.log(totalPoint);
+                            // 최종 금액
+                            finalPrice.innerText = total.toLocaleString();
+                        }
+
+                    });
+                </script>
 
                 <!-- 제목, 페이지 네비게이션 -->
                 <nav>
@@ -111,14 +117,16 @@
                             </select>
                         </nav>
 
+                        <div class="quantity-input">
+                            <button class="decrease" type="button">-</button>
+                            <input type="text" class="quantity" th:name="prodCount" min="1" value="1" id="count">
+                            <button class="increase" type="button">+</button>
+                        </div>
+
 
                         <img src="../images/vip_plcc_banner.png" alt="100원만 결제해도 1만원 적립!" class="banner" />
 
-                        <div class="count">
-                            <button class="decrease">-</button>
-                            <input type="text" name="num" value="1" readonly/>
-                            <button class="increase">+</button>
-                        </div>
+
                         
                         <div class="total">
                             <span id="totalPrice" th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된 가격</ins>
