@@ -1,5 +1,6 @@
 package kr.co.lotteon.controller;
 
+import kr.co.lotteon.dto.CategoryResult;
 import kr.co.lotteon.dto.ProductDTO;
 import kr.co.lotteon.dto.ProductimgDTO;
 import kr.co.lotteon.entity.Product;
@@ -99,6 +100,7 @@ public class ProductController {
         log.info("product112 : " + product);
         model.addAttribute("product", product);
         model.addAttribute("page", product);
+        model.addAttribute("cate", productService.getCategoryList());
         return "/product/list";
     }
 
@@ -133,6 +135,7 @@ public class ProductController {
         Optional<Product> productOpt = productService.findProductById(pno);
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
+            model.addAttribute("cate", productService.getCategoryList());
             model.addAttribute("product", product);
             model.addAttribute("sizes", List.of("S", "M", "L")); // 예시 사이즈
             model.addAttribute("colors", List.of("Red", "Blue", "Green")); // 예시 색상

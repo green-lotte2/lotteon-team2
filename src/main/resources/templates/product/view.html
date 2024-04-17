@@ -2,10 +2,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/UserLayout}">
 
-
-
-
-
     <!-- 상품 상세페이지 시이작! -->
             <section class="view" layout:fragment="content">
 
@@ -58,6 +54,26 @@
                             finalPrice.innerText = total.toLocaleString();
                         }
 
+                        document.addEventListener("DOMContentLoaded", function() {
+                            console.log('DOM fully loaded and parsed');
+
+                            try {
+                                const today = new Date();
+                                const arrivalDate = new Date();
+                                arrivalDate.setDate(today.getDate() + 2);  // 현재 날짜에서 2일을 더합니다.
+                                const options = { weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Seoul' };
+
+                                // 날짜와 요일을 설정합니다.
+                                const formattedDate = arrivalDate.toLocaleDateString('ko-KR', options);
+                                const [weekday, date] = formattedDate.split(', ');
+
+                                // 도착 정보를 업데이트합니다.
+                                document.getElementById('arrivalInfo').textContent = `모레(${weekday}) ${date} 도착예정`;
+                                console.log(`모레(${weekday}) ${date} 도착예정`); // 콘솔에 출력하여 확인합니다.
+                            } catch (error) {
+                                console.error('Error calculating arrival date:', error);
+                            }
+                        });
                     });
                 </script>
 
@@ -94,8 +110,8 @@
                             </div>
                         </nav>
                         <nav>
-                            <span class="delivery">무료배송</span>
-                            <span class="arrival">모레(금) 7/8 도착예정</span>
+                            <span class="delivery">무료배송</span></br>
+                            <span class="arrival" id="arrivalInfo">1</span>
                             <span class="desc">본 상품은 국내배송만 가능합니다.</span>
                         </nav>
                         <nav>
