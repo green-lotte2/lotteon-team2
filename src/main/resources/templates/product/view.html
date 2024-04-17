@@ -2,72 +2,58 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/UserLayout}">
 
-<main class="content" id="product" layout:fragment="content">
-    <header>
-        <div class="menu">
-            <div>
-                <ul>
-                    <li><a th:href="@{#}">히트상품</a></li>
-                    <li><a th:href="@{#}">추천상품</a></li>
-                    <li><a th:href="@{#}">최신상품</a></li>
-                    <li><a th:href="@{#}">인기상품</a></li>
-                    <li><a th:href="@{#}">할인상품</a></li>
-                </ul>
-                <ul>
-                    <li><a th:href="@{#}">쿠폰존</a></li>
-                    <li><a th:href="@{#}">사용후기</a></li>
-                    <li><a th:href="@{#}">개인결제</a></li>
-                    <li><a th:href="@{#}">고객센터</a></li>
-                    <li><a th:href="@{#}">FAQ</a></li>
-                </ul>
-            </div>
-        </div>
-    </header>
-    <aside>
-        <ul class="category">
-            <li><i class="fa fa-bars" aria-hidden="true"></i>카테고리</li>
-            <li>
-                <a th:href="@{#}"><i class="fas fa-tshirt"></i>패션·의류·뷰티</a>
-                <ol>
-                    <li><a th:href="@{#}">남성의류</a></li>
-                    <li><a th:href="@{#}">여성의류</a></li>
-                    <li><a th:href="@{#}">잡화</a></li>
-                    <li><a th:href="@{#}">뷰티</a></li>
-                </ol>
-            </li>
-            <li>
-                <a th:href="@{#}"><i class="fas fa-laptop"></i>가전·디지털</a>
-                <ol>
-                    <li><a th:href="@{#}">노트북/PC</a></li>
-                    <li><a th:href="@{#}">가전</a></li>
-                    <li><a th:href="@{#}">휴대폰</a></li>
-                    <li><a th:href="@{#}">기타</a></li>
-                </ol>
-            </li>
-            <li>
-                <a th:href="@{#}"><i class="fas fa-utensils"></i>식품·생필품</a>
-                <ol>
-                    <li><a th:href="@{#}">신선식품</a></li>
-                    <li><a th:href="@{#}">가공식품</a></li>
-                    <li><a th:href="@{#}">건강식품</a></li>
-                    <li><a th:href="@{#}">생필품</a></li>
-                </ol>
-            </li>
-            <li>
-                <a th:href="@{#}"><i class="fas fa-home"></i>홈·문구·취미</a>
-                <ol>
-                    <li><a th:href="@{#}">가구/DIY</a></li>
-                    <li><a th:href="@{#}">침구·커튼</a></li>
-                    <li><a th:href="@{#}">생활용품</a></li>
-                    <li><a th:href="@{#}">사무용품</a></li>
-                </ol>
-            </li>
-        </ul>
-    </aside>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const decreaseButton = document.querySelector('.decrease');
+        const increaseButton = document.querySelector('.increase');
+        const quantityInput = document.querySelector('input[name="num"]');
+        const cartButton = document.querySelector('.cart');
+        const orderButton = document.querySelector('.order');
+
+        // 수량 조정 함수
+        function adjustQuantity(change) {
+            let currentQuantity = parseInt(quantityInput.value);
+            currentQuantity = Math.max(1, currentQuantity + change);
+            quantityInput.value = currentQuantity;
+            updatePrice();
+        }
+
+        // 서버에 수량 업데이트 요청 보내기
+        function updateServerQuantity() {
+            const pno = document.getElementById('pno').value;
+            const quantity = parseInt(quantityInput.value);
+            fetch(`/product/updateQuantity?pno=${pno}&quantity=${quantity}`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Quantity updated successfully:', data);
+                })
+                .catch(error => console.error('Error updating quantity:', error));
+        }
+
+        decreaseButton.addEventListener('click', () => adjustQuantity(-1));
+        increaseButton.addEventListener('click', () => adjustQuantity(1));
+
+        cartButton.addEventListener('click', updateServerQuantity);
+        orderButton.addEventListener('click', updateServerQuantity);
+    });
+
+    // 가격 업데이트 함수
+    function updatePrice() {
+        const pricePerUnit = parseFloat(document.getElementById('price').innerText.replace(/,/g, ''));
+        const quantity = parseInt(document.querySelector('input[name="num"]').value);
+        const totalPriceElement = document.getElementById('totalPrice');
+        totalPriceElement.innerText = (pricePerUnit * quantity).toLocaleString('en-US');
+    }
+</script>
 
 
-    <!-- 상품 상세페이지 시작 -->
-            <section class="view">
+
+
+
+    <!-- 상품 상세페이지 시이작! -->
+            <section class="view" layout:fragment="content">
 
                 <!-- 제목, 페이지 네비게이션 -->
                 <nav>
@@ -84,21 +70,21 @@
                     </div>
                     <div class="summary">
                         <nav>
-                            <h1>(주)판매자명</h1>
-                            <h2>상품번호&nbsp;:&nbsp;<span>10010118412</span></h2>
-                        </nav>                        
+                            <h1 th:text="${product.company}">판매자명</h1>
+                            <h2>상품번호: <span th:text="${product.cate}"></span></h2>
+                        </nav>
+
                         <nav>
-                            <h3>상품명</h3>
-                            <p>상품설명 출력</p>
+                            <h3 class="name" th:text="${product.pname}">상품명</h3>
+                            <p th:text="${product.info}">상품설명 출력</p>
                             <h5 class="rating star4"><a th:href="@{#}">상품평보기</a></h5>
                         </nav>
                         <nav>
-                            <div class="org_price">
-                                <del>30,000</del>
-                                <span>10%</span>
+                            <div class="org_price" th:text="${product.price}">
+                                <span class="discount" th:text="${product.discount + '%'}">10%</span>
                             </div>
                             <div class="dis_price">
-                                <ins>27,000</ins>
+                                <ins th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된 가격</ins>
                             </div>
                         </nav>
                         <nav>
@@ -110,11 +96,24 @@
                             <span class="card cardfree"><i>아이콘</i>무이자할부</span>&nbsp;&nbsp;
                             <span class="card cardadd"><i>아이콘</i>카드추가혜택</span>
                         </nav>
+
                         <nav>
                             <span class="origin">원산지-상세설명 참조</span>
                         </nav>
+                        <nav>
+                            <select class="size-select" name="size">
+                                <option value="">사이즈 선택</option>
+                                <option th:each="s : ${sizes}" th:value="${s}" th:text="${s}" th:selected="${s == product.size}">Size</option>
+                            </select>
+                            <select class="color-select" name="color">
+                                <option value="">색상 선택</option>
+                                <option th:each="c : ${colors}" th:value="${c}" th:text="${c}" th:selected="${c == product.color}">Color</option>
+                            </select>
+                        </nav>
+
+
                         <img src="../images/vip_plcc_banner.png" alt="100원만 결제해도 1만원 적립!" class="banner" />
-                        
+
                         <div class="count">
                             <button class="decrease">-</button>
                             <input type="text" name="num" value="1" readonly/>
@@ -122,7 +121,8 @@
                         </div>
                         
                         <div class="total">
-                            <span>35,000</span>
+                            <span id="totalPrice" th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된 가격</ins>
+                            </span>
                             <em>총 상품금액</em>
                         </div>
 
@@ -324,5 +324,4 @@
                 
             </section>
             <!-- 상품 상세페이지 끝 -->
-        </main>
 </html>

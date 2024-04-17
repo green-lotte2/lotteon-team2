@@ -36,8 +36,8 @@ public class ProductService {
         return productRepository.findByPnameLike(pageable, "%"+name+"%");
     }
 
-    public Optional<Product> findProductById(int productId) {
-        return productRepository.findById(productId);
+    public Optional<Product> findProductById(int pno) {
+        return productRepository.findById(pno);
     }
 
     public Product saveProduct(Product product) {

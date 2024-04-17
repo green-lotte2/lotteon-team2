@@ -12,9 +12,10 @@
     <link rel="stylesheet" th:href="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css}">
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}"/>
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css}">
-    <link rel="stylesheet" th:href="@{/css/common.css}"/>
-    <link rel="stylesheet" th:href="@{/css/product.css}"/>
     <link rel="stylesheet" th:href="@{/css/member.css}"/>
+    <link rel="stylesheet" th:href="@{/css/product.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+
 </head>
 
 <body>
@@ -37,11 +38,75 @@
                 </form>
             </div>
         </div>
+
+        <div class="menu">
+            <div>
+                <ul>
+                    <li><a th:href="@{#}">히트상품</a></li>
+                    <li><a th:href="@{#}">추천상품</a></li>
+                    <li><a th:href="@{#}">최신상품</a></li>
+                    <li><a th:href="@{#}">인기상품</a></li>
+                    <li><a th:href="@{#}">할인상품</a></li>
+                </ul>
+                <ul>
+                    <li><a th:href="@{#}">쿠폰존</a></li>
+                    <li><a th:href="@{#}">사용후기</a></li>
+                    <li><a th:href="@{#}">개인결제</a></li>
+                    <li><a th:href="@{#}">고객센터</a></li>
+                    <li><a th:href="@{#}">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
     </header>
-        <main layout:fragment="content">
+    <main class="content" id="product" >
+        <aside>
+            <ul class="category">
+                <li><i class="fa fa-bars" aria-hidden="true"></i>카테고리</li>
+                <li>
+                    <a th:href="@{#}"><i class="fas fa-tshirt"></i>패션·의류·뷰티</a>
+                    <ol>
+                        <li><a th:href="@{#}">남성의류</a></li>
+                        <li><a th:href="@{#}">여성의류</a></li>
+                        <li><a th:href="@{#}">잡화</a></li>
+                        <li><a th:href="@{#}">뷰티</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a th:href="@{#}"><i class="fas fa-laptop"></i>가전·디지털</a>
+                    <ol>
+                        <li><a th:href="@{#}">노트북/PC</a></li>
+                        <li><a th:href="@{#}">가전</a></li>
+                        <li><a th:href="@{#}">휴대폰</a></li>
+                        <li><a th:href="@{#}">기타</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a th:href="@{#}"><i class="fas fa-utensils"></i>식품·생필품</a>
+                    <ol>
+                        <li><a th:href="@{#}">신선식품</a></li>
+                        <li><a th:href="@{#}">가공식품</a></li>
+                        <li><a th:href="@{#}">건강식품</a></li>
+                        <li><a th:href="@{#}">생필품</a></li>
+                    </ol>
+                </li>
+                <li>
+                    <a th:href="@{#}"><i class="fas fa-home"></i>홈·문구·취미</a>
+                    <ol>
+                        <li><a th:href="@{#}">가구/DIY</a></li>
+                        <li><a th:href="@{#}">침구·커튼</a></li>
+                        <li><a th:href="@{#}">생활용품</a></li>
+                        <li><a th:href="@{#}">사무용품</a></li>
+                    </ol>
+                </li>
+            </ul>
+        </aside>
 
-        </main>
+    <section layout:fragment="content">
+    <!--내용시작-->
 
+    <!--내용끝-->
+    </section>
+    </main>
 <footer>
     <ul>
         <li><a th:href="@{#}">회사소개</a></li>
