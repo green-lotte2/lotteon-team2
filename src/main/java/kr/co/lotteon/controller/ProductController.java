@@ -12,16 +12,20 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -59,12 +63,12 @@ public class ProductController {
     }
 
     @GetMapping("/product/cart")
-    public String cart(){
+    public String cart() {
         return "/product/cart";
     }
 
     @GetMapping("/product/complete")
-    public String complete(){
+    public String complete() {
         return "/product/complete";
     }
 
@@ -80,23 +84,23 @@ public class ProductController {
     }
 
     @GetMapping("/product/order")
-    public String order(){
+    public String order() {
         return "/product/order";
     }
 
     @PostMapping("/product/order")
-    public String productorder(){
+    public String productorder() {
         return "/product/order";
     }
 
     @GetMapping("/product/search")
     public String search(
-                        Model model,
-                        String search,
-                        @PageableDefault(size = 10, sort = "pname", direction = Sort.Direction.ASC) Pageable pageable){
+            Model model,
+            String search,
+            @PageableDefault(size = 10, sort = "pname", direction = Sort.Direction.ASC) Pageable pageable) {
 
         Page<Product> resultList = productService.findByPname(pageable, search);
-        for(Product result : resultList){
+        for (Product result : resultList) {
             log.info(result.toString());
         }
         model.addAttribute("product", resultList);
@@ -104,11 +108,38 @@ public class ProductController {
         return "/product/list";
     }
 
+
     @GetMapping("/product/view")
-    public String view(){
-        return "/product/view";
+    public String viewProduct(@RequestParam("pno") int pno, Model model) {
+        Optional<Product> productOpt = productService.findProductById(pno);
+        if (productOpt.isPresent()) {
+            Product product = productOpt.get();
+            model.addAttribute("product", product);
+            model.addAttribute("sizes", List.of("S", "M", "L")); // 예시 사이즈
+            model.addAttribute("colors", List.of("Red", "Blue", "Green")); // 예시 색상
+            return "/product/view";
+        } else {
+            return "redirect:/product/list"; // 제품이 없을 경우 리다이렉트
+        }
     }
 
 
+    @PostMapping("/product/updateCartQuantity")
+    @ResponseBody
+    public ResponseEntity<?> updateCartQuantity(@RequestParam("pno") int pno, @RequestParam("quantity") int quantity) {
+        try {
+            Product product = productService.findProductById(pno).orElseThrow(() -> new Exception("Product not found"));
+            if (quantity > 0 && quantity <= product.getStock()) {
+                product.setStock(quantity); // 새로운 수량으로 업데이트
+                productService.saveProduct(product);
+                return ResponseEntity.ok().body("Updated successfully");
+            } else {
+                return ResponseEntity.badRequest().body("Invalid quantity");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating quantity: " + e.getMessage());
+        }
+    }
 
 }
+
