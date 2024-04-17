@@ -22,7 +22,6 @@ public class AdminProductController {
 
     @GetMapping("/admin/product/modify")
     public String adminProductModify(){
-
         return "/admin/product/modify";
     }
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.lotteon.mapper.AdminMapper">
+
+    <select id="adminSelectUsers" resultType="kr.co.lotteon.dto.UserDTO">
+        SELECT * FROM `user`
+        <where>
+            <if test="role == 'USER'"> role=#{role}</if>
+            <if test="role == 'SELLER'"> role=#{role}</if>
+            <if test="role == 'ADMIN'"> role=#{role}</if>
+            <if test="keyword != null and keyword != ''"> AND uid=#{uid}</if>
+        </where>
+    </select>
+
+</mapper>
