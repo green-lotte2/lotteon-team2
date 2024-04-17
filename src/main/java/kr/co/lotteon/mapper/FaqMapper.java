@@ -9,6 +9,6 @@ import java.util.List;
 public interface FaqMapper {
 
     List<FaqDTO> selectFaqList10(int cate1);
-    public FaqDTO selectFaqView(int faqNo);
+    public FaqDTO selectFaqView(int faqno);
 
 }

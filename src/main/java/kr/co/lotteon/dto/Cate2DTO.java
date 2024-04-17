@@ -15,6 +15,7 @@ public class Cate2DTO {
     private int cate2;
     private String c2name;
 
+
     public Cate2Entity toEntity(){
         return Cate2Entity.builder()
                 .cateKey(new CateKey(cate1, cate2))

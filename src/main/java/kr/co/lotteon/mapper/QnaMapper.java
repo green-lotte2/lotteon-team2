@@ -16,12 +16,12 @@ public interface QnaMapper {
     public int selectQnaTotalCate(int cate1);
     public int selectQnaTotal();
 
-    public QnaDTO selectQnaView(int qnaNo);
-    public QnaDTO selectAdminQnaView(int qnaNo);
+    public QnaDTO selectQnaView(int qnano);
+    public QnaDTO selectAdminQnaView(int qnano);
 
-    public QnaDTO selectQnaBoard(int qnaNO);
+    public QnaDTO selectQnaBoard(int qnano);
     public void updateQnaBoard(QnaDTO dto);
-    public void deleteQnaBoard(int qnaNo);
-    public QnaDTO selectQnaChildBoard(int qnaNo);
+    public void deleteQnaBoard(int qnano);
+    public QnaDTO selectQnaChildBoard(int qnano);
 
 }

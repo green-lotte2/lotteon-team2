@@ -10,6 +10,6 @@ import java.util.List;
 public interface CateMapper {
 
     public List<Cate1DTO> selectCate1();
-    public List<Cate2DTO> selectCate2(int dto);
+    public List<Cate2DTO> selectCate2(int cate1);
 
 }

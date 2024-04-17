@@ -13,6 +13,7 @@ public class Cate1DTO {
     private int cate1;
     private String c1name;
 
+
     public Cate1Entity toEntity(){
         return Cate1Entity.builder()
                 .cate1(cate1)

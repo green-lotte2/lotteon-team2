@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.lotteon.mapper.NoticeMapper">
+
+    <select id="selectNoticeListAll" parameterType="map" resultType="map">
+        SELECT * FROM `notice` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 ORDER BY `noticeno` DESC LIMIT #{start}, 10
+    </select>
+
+    <select id="selectNoticeListCate" parameterType="map" resultType="map">
+        SELECT * FROM `notice` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE a.cate1= #{cate1} ORDER BY `noticeno` DESC LIMIT #{start}, 10
+    </select>
+
+    <select id="selectNoticeTotalCate" resultType="int">
+        SELECT COUNT(*) FROM notice WHERE cate1 = #{cate1, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectNoticeTotal">
+        SELECT COUNT(*) FROM `notice`
+    </select>
+
+    <select id="selectNoticeView" resultType="kr.co.lotteon.dto.NoticeDTO">
+        SELECT * FROM `notice` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `noticeno`= #{noticeno}
+    </select>
+    
+</mapper>
