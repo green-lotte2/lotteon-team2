@@ -95,13 +95,15 @@ public class ProductService {
         Productimg img = modelMapper.map(imgDTO, Productimg.class);
 
         productimgRepository.save(img);
+        log.info("img" + img);
     }
 
     public Product insertProduct(ProductDTO productDTO) {
 
         Product product = modelMapper.map(productDTO, Product.class);
         Product savedProduct = productRepository.save(product);
-        log.info(savedProduct.toString());
+
+        log.info("savedProduct: " + savedProduct);
         return savedProduct;
     }
 

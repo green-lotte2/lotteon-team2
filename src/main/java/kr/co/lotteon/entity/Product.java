@@ -34,5 +34,5 @@ public class Product {
     private int delprice;
     private String size;
     private String color;
-
+    private int hit;
 }

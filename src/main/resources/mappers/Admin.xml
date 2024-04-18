@@ -15,4 +15,20 @@
         </where> -->
     </select>
 
+    <!--🎈admin_product_list-->
+    <select id="adminSelectProducts" resultType="kr.co.lotteon.dto.ProductDTO">
+        SELECT a.*, b.mainImg
+        FROM `product` AS a
+        LEFT JOIN `productimg` AS b ON a.pno = b.pno
+        LEFT JOIN `seller` AS c ON a.sid = c.uid
+        WHERE b.mainImg IS NOT NULL
+        ORDER BY a.rdate DESC, a.pno ASC
+    </select>
+
+    <!--🎈 admin_product_delete-->
+    <delete id="adminDeleteProducts">
+        DELETE FROM `product`
+        WHERE pno = #{pno}
+
+    </delete>
 </mapper>
