@@ -27,7 +27,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         String defaultPath = System.getProperty("user.dir") + File.separator + "src";
         String path = defaultPath + File.separator + "product" + File.separator;
         registry
-                .addResourceHandler("/img/**")
+                .addResourceHandler("/product/**")
                 .addResourceLocations("file:///" + path);
     }
 
