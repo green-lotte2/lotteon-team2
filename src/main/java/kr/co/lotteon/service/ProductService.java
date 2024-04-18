@@ -138,6 +138,20 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
+    public Page<Product> findProductsByCategoryName(String cname, Pageable pageable) {
+        // 카테고리 이름에 해당하는 카테고리 목록을 찾습니다.
+        List<Category> categories = categoryRepository.findByCname(cname);
+        if (categories.isEmpty()) {
+            return Page.empty();
+        }
+        // 여러 카테고리가 반환될 수 있으므로 첫 번째 카테고리의 ID를 사용하거나, 다른 로직을 구현할 수 있습니다.
+        Category category = categories.get(0); // 첫 번째 카테고리를 사용.
+
+        // 해당 카테고리 ID를 사용하여 상품을 검색합니다.
+        return productRepository.findByCate(category.getCate(), pageable);
+    }
+
+
     @Transactional(rollbackFor = Exception.class)
     public List<CategoryResult> getCategoryList() {
         List<CategoryResult> results = categoryRepository.findAll().stream().map(CategoryResult::of).collect(Collectors.toList());

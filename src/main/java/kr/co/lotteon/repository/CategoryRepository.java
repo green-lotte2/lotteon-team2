@@ -16,4 +16,11 @@ public class CategoryRepository {
     public List<Category> findAll() {
         return em.createQuery("select c from Category c where c.parent is NULL", Category.class).getResultList();
     }
+
+    // 사용자가 입력한 카테고리 이름으로 카테고리를 검색하는 메서드
+    public List<Category> findByCname(String cname) {
+        return em.createQuery("select c from Category c where c.cname like :cname", Category.class)
+                .setParameter("cname", '%' + cname + '%')
+                .getResultList();
+    }
 }

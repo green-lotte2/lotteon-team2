@@ -16,4 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     public List<Product> findTop8ByOrderByRdateDesc();
 
+    Page<Product> findByCate(int cate, Pageable pageable);
+
 }

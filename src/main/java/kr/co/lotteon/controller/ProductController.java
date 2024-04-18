@@ -164,6 +164,13 @@ public class ProductController {
         return "/product/list";
     }
 
+    @GetMapping("/product/search")
+    public String search(@RequestParam String search, Model model, Pageable pageable) {
+        Page<Product> products = productService.findProductsByCategoryName(search, pageable);
+        model.addAttribute("products", products);
+        return "product/search"; // 검색 결과를 보여줄 뷰의 이름
+    }
+
 
     @GetMapping("/product/view")
     public String viewProduct(@RequestParam("pno") int pno, Model model) {
