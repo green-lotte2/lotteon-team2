@@ -68,7 +68,6 @@ public class AdminProductController {
     }
 
 
-
     @GetMapping("/admin/product/list")
     public String adminProductList(Model model){
 
@@ -79,6 +78,19 @@ public class AdminProductController {
 
         return "/admin/product/list";
     }
+
+    @PostMapping("/admin/product/delete")
+    public String adminDeleteProduct(@RequestParam List<String> checkbox){
+        for(String pno : checkbox){
+            int productId = Integer.parseInt(pno);
+            adminService.adminDeleteProduct(productId);
+            log.info("deletePno : " + productId);
+        }
+        log.info(checkbox.toString());
+
+        return "redirect:/admin/product/list";
+    }
+
 
     @GetMapping("/admin/product/modify")
     public String adminProductModify(){

@@ -14,4 +14,7 @@ public interface AdminMapper{
     // admin 상품목록
     public List<ProductDTO> adminSelectProducts();
 
+    // admin 상품삭제
+    public void adminDeleteProduct(int pno);
+
 }

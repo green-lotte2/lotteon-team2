@@ -18,6 +18,42 @@
             object-fit: cover;
         }
     </style>
+    <script>
+        window.onload = function () {
+            const delBtn = document.getElementById('delBtn');
+            const selectAllCheckbox = document.getElementsByName('all')[0];
+            const checkBoxes = document.getElementsByName('checkbox');
+
+            delBtn.onclick = function(){
+                let Checked = false; // 최소한 하나의 체크박스가 선택되었는지 여부를 나타내는 변수
+                for (let i = 0; i < checkBoxes.length; i++) {
+                    if (checkBoxes[i].checked) {
+                        Checked = true;
+                        break; // 하나라도 체크되어 있으면 반복문 종료
+                    }
+                }
+
+                if (!Checked) {
+                    alert('삭제할 상품을 선택해주세요.');
+                    console.log('check..');
+                    return false;
+                } else {
+                    let confirmed = confirm('정말 삭제하시겠습니까?');
+                    if (!confirmed) {
+                        return false;
+                    }
+                }
+            };
+
+            selectAllCheckbox.addEventListener('change', function () {
+                for (let i = 0; i < checkBoxes.length; i++) {
+                    checkBoxes[i].checked = selectAllCheckbox.checked;
+                }
+            });
+        }
+
+
+    </script>
 </head>
 
     <main layout:fragment="content">
@@ -25,14 +61,14 @@
 
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-            <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.</p>
+            <p class="mb-4"></p>
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">상품목록</h6>
                 </div>
 
-                <form action="#" method="get">
+                <form th:action="@{/admin/product/delete}" method="post">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -79,7 +115,7 @@
                                 </tbody>
                             </table>
                             <div>
-                                <input type="submit" value="선택삭제">
+                                <input type="submit" id="delBtn" value="선택삭제">
                             </div>
                         </div>
                     </div>

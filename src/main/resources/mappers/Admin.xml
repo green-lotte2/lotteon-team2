@@ -26,9 +26,8 @@
     </select>
 
     <!--🎈 admin_product_delete-->
-    <delete id="adminDeleteProducts">
-        DELETE FROM `product`
-        WHERE pno = #{pno}
+    <delete id="adminDeleteProduct">
+        DELETE FROM `product` WHERE pno = #{pno}
 
     </delete>
 </mapper>

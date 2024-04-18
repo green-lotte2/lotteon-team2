@@ -25,5 +25,9 @@ public class AdminService {
         return  adminMapper.adminSelectProducts();
     }
 
+    public void adminDeleteProduct(int pno){
+        adminMapper.adminDeleteProduct(pno);
+    }
+
 
 }
