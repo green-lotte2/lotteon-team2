@@ -21,7 +21,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AppInfoInterceptor(appInfo));
     }
-
+    /*
     @Override
     public void  addResourceHandlers(ResourceHandlerRegistry registry) {
         String defaultPath = System.getProperty("user.dir") + File.separator + "src";
@@ -30,5 +30,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResourceHandler("/img/**")
                 .addResourceLocations("file:///" + path);
     }
-
+    */
 }
