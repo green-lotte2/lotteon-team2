@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class ProductDTO {
 
     private int pno;
-    private String uid;
+    private String sid;
     private int cate;
     private String pname;//
     private LocalDateTime rdate;
@@ -29,5 +29,10 @@ public class ProductDTO {
     private int delprice;
     private String size;
     private String color;
+    private int hit;
+
+    private String mainimg;
+    private String subimg;
+    private String detailimg;
 
 }

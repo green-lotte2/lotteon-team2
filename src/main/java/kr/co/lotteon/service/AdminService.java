@@ -1,5 +1,6 @@
 package kr.co.lotteon.service;
 
+import kr.co.lotteon.dto.ProductDTO;
 import kr.co.lotteon.mapper.AdminMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,5 +19,11 @@ public class AdminService {
         log.info("selectUsers... ");
         return adminMapper.adminSelectUsers();
     }
+
+    public List<ProductDTO> selectProducts(){
+        log.info("selectProducts...");
+        return  adminMapper.adminSelectProducts();
+    }
+
 
 }
