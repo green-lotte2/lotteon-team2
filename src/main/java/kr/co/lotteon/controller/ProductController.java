@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.Console;
 import java.util.ArrayList;
@@ -63,10 +64,43 @@ public class ProductController {
         return "/admin/product/list";
     }
 
+
+
     @GetMapping("/product/cart")
-    public String cart() {
+    public String cart(Model model) {
         return "/product/cart";
     }
+
+
+    /*
+    @PostMapping("/product/addToCart")
+    public String addToCart(@RequestParam("uid") String uid, @RequestParam("pno") int pno,
+                            @RequestParam("quantity") int quantity, RedirectAttributes redirectAttributes) {
+        productService.addToCart(uid, pno, quantity);
+        redirectAttributes.addFlashAttribute("successMessage", "Product added to cart successfully!");
+        return "redirect:/product/cart";
+    }
+
+    @PostMapping("/product/updateCart")
+    public ResponseEntity<?> updateCartQuantity(@RequestParam("uid") String uid, @RequestParam("pno") int pno,
+                                                @RequestParam("quantity") int quantity) {
+        try {
+            productService.updateCartQuantity(uid, pno, quantity);
+            return ResponseEntity.ok().body("Cart updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error updating cart: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/product/removeFromCart")
+    public String removeFromCart(@RequestParam("uid") String uid, @RequestParam("pno") int pno,
+                                 RedirectAttributes redirectAttributes) {
+        productService.removeFromCart(uid, pno);
+        redirectAttributes.addFlashAttribute("successMessage", "Product removed from cart successfully!");
+        return "redirect:/product/cart";
+    }
+        */
+
 
     @GetMapping("/product/complete")
     public String complete() {
