@@ -57,6 +57,7 @@ public class ProductController {
 
         productService.imgUpload(imgDTO, productDTO.getCate());
         Product product = productService.insertProduct(productDTO);
+        log.info(""+product.getPno());
         imgDTO.setPno(product.getPno());
         productService.insertImg(imgDTO);
 

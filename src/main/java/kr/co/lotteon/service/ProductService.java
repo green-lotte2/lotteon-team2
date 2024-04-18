@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Optional;
 import kr.co.lotteon.dto.CategoryResult;
@@ -55,6 +56,22 @@ public class ProductService {
         for(MultipartFile mf : imgDTO.getFiles()){
 
             String path = new File(imgUploadPath+"/"+cate+"/").getAbsolutePath();
+
+            File Folder = new File(path);
+
+            // 해당 디렉토리가 없다면 디렉토리를 생성.
+            if (!Folder.exists()) {
+                try{
+                    Folder.mkdir(); //폴더 생성합니다. ("새폴더"만 생성)
+                    log.info("폴더가 생성완료.");
+                }
+                catch(Exception e){
+                    e.getStackTrace();
+                }
+            }else {
+                log.info("폴더가 이미 존재합니다..");
+            }
+
             String oName = mf.getOriginalFilename();
             String ext = oName.substring(oName.lastIndexOf("."));
 
@@ -86,9 +103,13 @@ public class ProductService {
 
         Product product = modelMapper.map(productDTO, Product.class);
         Product savedProduct = productRepository.save(product);
+        log.info(savedProduct.toString());
         return savedProduct;
     }
 
+    public List<Product> findNewProduct(){
+        return productRepository.findTop8ByOrderByRdateDesc();
+    }
 
     public Page<Product> findAllProducts(Pageable pageable) {
         return productRepository.findAll(pageable);
@@ -104,7 +125,7 @@ public class ProductService {
     }
 
     public Page<Product> findByCateBetween(Pageable pageable, int cate, int depth){
-        return productRepository.findByCateBetween(pageable, cate, depth);
+        return productRepository.findByCateBetween(pageable, cate, cate + depth);
     }
 
     public Product saveProduct(Product product) {

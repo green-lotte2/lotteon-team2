@@ -1,6 +1,7 @@
 package kr.co.lotteon.controller;
 
 import kr.co.lotteon.dto.CategoryResult;
+import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,9 @@ public class MainController {
     public String index(Model model){
 
         List<CategoryResult> cate = productService.getCategoryList();
+        List<Product> newProduct = productService.findNewProduct();
         model.addAttribute("cate", cate);
+        model.addAttribute("newProduct", newProduct);
         return "/index";
     }
 
