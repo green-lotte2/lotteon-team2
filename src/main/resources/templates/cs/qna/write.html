@@ -1,66 +1,172 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.thymeleaf.org"
       layout:decorate="~{/layout/csLayout.html}">
-  <div layout:fragment="content">
 
-      <section id="cs">
-        <div class="qna">
-          <nav>
-            <div>
-              <p>홈<span>></span>문의하기</p>
-            </div>
-          </nav>
-          <section class="write">
-            <aside>
-              <h2>문의하기</h2>
-              <ul>
-                <li class="on"><a href="#">회원</a></li>
-                <li><a href="#">쿠폰/이벤트</a></li>
-                <li><a href="#">주문/결제</a></li>
-                <li><a href="#">배송</a></li>
-                <li><a href="#">취소/반품/교환</a></li>
-                <li><a href="#">여행/숙박/항공</a></li>
-                <li><a href="#">안전거래</a></li>
-              </ul>
-            </aside>
-            <article>
-              <form action="#">
-                <table>
-                  <tr>
-                    <td>문의유형</td>
-                    <td>
-                      <select name="type">
-                        <option value="0">선택</option>
-                        <option>가입</option>
-                        <option>탈퇴</option>
-                        <option>회원정보</option>
-                        <option>로그인</option>
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>문의제목</td>                  
-                    <td>
-                      <input type="text" name="title" placeholder="제목을 입력하세요."/>
-                    </td>
-                  </tr>                
-                  <tr>
-                    <td>문의내용</td>                  
-                    <td>
-                      <textarea name="content" placeholder="내용을 입력하세요."></textarea>
-                    </td>
-                  </tr>
-                </table>
-                <div>
-                  <a href="./list.html" class="btnList">취소하기</a>
-                  <input type="submit" class="btnSubmit" value="등록하기"/>
-                </div>
-              </form>
-            </article>
-          </section>
+<div layout:fragment="content">
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const jsonData = {};
+
+      // cate1 데이터를 서버에서 불러옴
+      fetch('/lotteon/cs/cate1')
+              .then(response => response.json())
+              .then(cate1Data => {
+                console.log(cate1Data);
+
+                // 문의유형 select 요소 찾기
+                const typeSelect = document.querySelector('select[name="type1"]');
+
+                // cate1 데이터를 반복하여 1차 선택 옵션 추가
+                cate1Data.forEach(function (cate1) {
+                  const option = document.createElement('option');
+                  option.value = cate1.cate1;
+                  option.text = cate1.c1name;
+                  typeSelect.appendChild(option);
+                });
+              })
+              .catch(err => {
+                console.log(err);
+              });
+
+      document.getElementById('category1').addEventListener('change', function () {
+        const selectedCategory1 = this.value;
+        console.log(selectedCategory1);
+
+        // 1차 카테고리 선택 값을 cate1 input 필드의 값으로 설정
+        document.getElementById('cate1').value = selectedCategory1;
+
+        // 1차 카테고리 선택 값(selectedCategory1)을 서버로 전송
+        const jsonData = {
+          cate1: selectedCategory1
+        };
+
+        fetch('/lotteon/cs/cate2', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(jsonData)
+        })
+                .then(response => response.json())
+                .then(cate2List => {
+                  console.log(cate2List);
+
+                  // 문의유형2 select 요소 찾기
+                  const typeSelect2 = document.querySelector('select[name="category2"]');
+                  typeSelect2.innerHTML = '';
+
+                  // cate2 데이터를 반복하여 2차 선택 옵션 추가
+                  cate2List.forEach(function (cate2) {
+                    const option = document.createElement('option');
+                    option.value = cate2.cate2;
+                    option.text = cate2.c2name;
+                    typeSelect2.appendChild(option);
+                  });
+
+                  // 2차 카테고리가 업데이트되면 첫 번째 옵션 선택
+                  typeSelect2.querySelector('option:first-child').selected = true;
+                  console.log(typeSelect2);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+      });
+
+      document.getElementById('category2').addEventListener('change', function () {
+        const selectedCategory2 = this.value;
+        console.log(selectedCategory2);
+
+        // 2차 카테고리 선택값을 cate2 input 필드의 값으로 설정
+        document.getElementById('cate2').value = selectedCategory2;
+      });
+    });
+  </script>
+
+  <section id="cs">
+    <div class="qna">
+      <nav>
+        <div>
+          <p>홈<span>></span>문의하기</p>
         </div>
-      </section>
+      </nav>
+      <section class="write">
+        <aside>
+          <h2>문의하기</h2>
+          <ul>
+            <li th:class="${cate1 == null or cate1 == '' ? 'on' : ''}">
+              <a th:href="@{/cs/qna/list}" >전체</a>
+            </li>
+            <li th:class="${cate1 == '20' ? 'on' : ''}">
+              <a th:href="@{/cs/qna/list(cate1=20)}">회원</a>
+            </li>
+            <li th:class="${cate1 == '21' ? 'on' : ''}">
+              <a th:href="@{/cs/qna/list(cate1=21)}">쿠폰/혜택/이벤트</a>
+            </li>
+            <li th:class="${cate1 == '22' ? 'on' : ''}">
+              <a th:href="@{/cs/qna/list(cate1=22)}">주문/결제</a>
+            </li>
+            <li th:class="${cate1 == '23' ? 'on' : ''}">
+              <a th:href="@{/cs/qna/list(cate1=23)}">배송</a>
+            </li>
+            <li th:class="${cate1 == '24' ? 'on' : ''}">
+              <a th:href="@{/cs/qna/list(cate1=24)}">취소/반품/교환</a>
+            </li>
+            <li th:class="${cate1 == '25' ? 'on' : ''}">
+              <a th:href="@{/cs/qna/list(cate1=25)}">여행/숙박/항공</a>
+            </li>
+            <li th:class="${cate1 == '26' ? 'on' : ''}">
+              <a th:href="@{/cs/qna/list(cate1=26)}">기타</a>
+            </li>
+          </ul>
+        </aside>
+        <article>
+          <form th:action="@{/cs/qna/write}" method="post" enctype="multipart/form-data">
+            <table>
+              <tr>
+                <td>문의유형</td>
+                <input type="hidden" name="cate1" id="cate1" value="" />
+                <input type="hidden" name="cate2" id="cate2" value="10" />
+                <input type="hidden" name="writer" value="fixed_user_id">
+                <input type="hidden" name="answercomplete" th:value=1>
+                <td>
+                  <select name="type1" id="category1">
+                    <option selected>1차 선택</option>
+                  </select>
+                  <select name="category2" id="category2">
+                    <option value="10" selected></option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>문의제목</td>
+                <td>
+                  <input type="text" name="title" placeholder="제목을 입력하세요."/>
+                </td>
+              </tr>
+              <tr>
+                <td>문의내용</td>
+                <td>
+                  <textarea name="content" placeholder="내용을 입력하세요."></textarea>
+                </td>
+              </tr>
+              <tr>
+                <td>파일첨부</td>
+                <td>
+                  <input type="file" name="mfile1"/>
+                </td>
+              </tr>
+            </table>
+            <div>
+                <a th:href="@{/cs/qna/list}" class="btnList">취소하기</a>
+                <input type="submit" class="btnSubmit" value="등록하기"/>
+              </div>
+            </form>
+          </article>
+        </section>
+      </div>
+    </section>
 
-    </div>
+  </div>
 </html>

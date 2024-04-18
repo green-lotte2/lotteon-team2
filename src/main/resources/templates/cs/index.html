@@ -6,6 +6,36 @@
 
     <section layout:fragment="content">
 
+      <script th:inline="javascript">
+        var uid = '';
+        /*[# th:if="${#authorization.expression('isAuthenticated()')}"]*/
+        uid = [[${#authentication.principal.user.uid}]];
+        /*[/]*/
+      </script>
+
+      <script>
+        function showAlert(id) {
+          const flag = '[[${#authentication.principal}]]'
+          if(flag == 'anonymousUser'){
+            alert('해당글은 작성자만 접근 가능합니다.');
+            return false;
+          }
+          console.log(id);
+          console.log(uid);
+          if(uid != id){
+            alert("해당 글 작성자만 접근 가능합니다.");
+            return false;
+          }
+          return true;
+        }
+
+        function showAlertLogin() {
+          alert('로그인이 필요한 기능입니다.');
+          window.location.href = '/lotteon/member/login';
+        }
+      </script>
+
+
       <section id="cs">
         <div class="main">
           <h1 class="title"><strong>롯데ON</strong>이 도와드릴게요!</h1>
@@ -61,7 +91,14 @@
                 </p>
               </li>
             </ul>
+            <a th:href="@{/cs/qna/write}"
+               th:unless="${#authorization.expression('isAuthenticated()')}"
+               onclick="showAlertLogin(); return false;"
+               class="ask">문의글 작성 ></a>
 
+            <a th:href="@{/cs/qna/write}"
+               th:if="${#authorization.expression('isAuthenticated()')}"
+               class="ask">문의글 작성 ></a>
           </section>
           <section class="tel">
             <h1>
