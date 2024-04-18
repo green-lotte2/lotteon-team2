@@ -1,11 +1,10 @@
 package kr.co.lotteon.service;
 
+import groovy.lang.Tuple;
 import kr.co.lotteon.dto.ProductDTO;
 import kr.co.lotteon.dto.ProductimgDTO;
-import kr.co.lotteon.entity.Product;
-import kr.co.lotteon.entity.Productimg;
-import kr.co.lotteon.repository.ProductRepository;
-import kr.co.lotteon.repository.ProductimgRepository;
+import kr.co.lotteon.entity.*;
+import kr.co.lotteon.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -18,7 +17,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Optional;
 import kr.co.lotteon.dto.CategoryResult;
-import kr.co.lotteon.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,9 +33,9 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final CategoryRepository categoryRepository;
-
     private final ProductRepository productRepository;
-
+    private final CartRepository cartRepository;
+    private final OrderRepository orderRepository;
 
     @Value("${img.upload.path}")
     private String imgUploadPath;
@@ -145,6 +143,16 @@ public class ProductService {
         List<CategoryResult> results = categoryRepository.findAll().stream().map(CategoryResult::of).collect(Collectors.toList());
         log.info(results.toString());
         return results;
+    }
+
+
+    public List<ProductDTO> getCartProducts(String uid) {
+        return cartRepository.findByUid(uid).stream()
+                .map(cart -> {
+                    ProductDTO dto = modelMapper.map(cart.getUid(), ProductDTO.class);
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 }
 

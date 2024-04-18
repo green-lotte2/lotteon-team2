@@ -8,23 +8,23 @@
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
                         // 플러스 버튼 클릭 시 수량 증가
-                        document.querySelector('.increase').onclick = function() {
+                        document.querySelector('.increase').onclick = function () {
                             //document.querySelector('.increase').addEventListener('click', function() {
-                            const quantityInput = document.querySelector('.quantity');
-                            let value = parseInt(quantityInput.value);
+                            const count = document.querySelector('.quantity');
+                            let value = parseInt(count.value);
                             value = isNaN(value) ? 0 : value;
-                            quantityInput.value = value + 1;
+                            count.value = value + 1;
                             changePrice();
                         };
 
                         // 마이너스 버튼 클릭 시 수량 감소
-                        document.querySelector('.decrease').onclick = function() {
+                        document.querySelector('.decrease').onclick = function () {
                             //document.querySelector('.decrease').addEventListener('click', function() {
-                            const quantityInput = document.querySelector('.quantity');
-                            let value = parseInt(quantityInput.value);
+                            const count = document.querySelector('.quantity');
+                            let value = parseInt(count.value);
                             value = isNaN(value) ? 0 : value;
                             if (value > 1) {
-                                quantityInput.value = value - 1;
+                                count.value = value - 1;
                             }
                             changePrice();
                         };
@@ -54,26 +54,99 @@
                             finalPrice.innerText = total.toLocaleString();
                         }
 
+                        try {
+                            const today = new Date();
+                            const arrivalDate = new Date();
+                            arrivalDate.setDate(today.getDate() + 2);  // 현재 날짜에서 2일을 더합니다.
+                            const options = {
+                                weekday: 'short',
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                                timeZone: 'Asia/Seoul'
+                            };
+
+                            // 날짜와 요일을 설정합니다.
+                            const formattedDate = arrivalDate.toLocaleDateString('ko-KR', options);
+                            const [weekday, date] = formattedDate.split(', ');
+
+                            // 도착 정보를 업데이트합니다.
+                            document.getElementById('arrivalInfo').textContent = `${weekday} 도착예정`;
+                            console.log(`모레(${weekday}) ${date} 도착예정`); // 콘솔에 출력하여 확인합니다.
+                        } catch (error) {
+                            console.error('Error calculating arrival date:', error);
+                        }
+
+
                         document.addEventListener("DOMContentLoaded", function() {
-                            console.log('DOM fully loaded and parsed');
+                            const btnCart = document.getElementById('btnCart');
+                            const btnOrder = document.getElementById('btnOrder');
 
-                            try {
-                                const today = new Date();
-                                const arrivalDate = new Date();
-                                arrivalDate.setDate(today.getDate() + 2);  // 현재 날짜에서 2일을 더합니다.
-                                const options = { weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Seoul' };
+                            btnCart.addEventListener('click', function() {
+                                // 예를 들어 uid가 저장된 쿠키 또는 로컬 스토리지에서 추출
+                                const uid = sessionStorage.getItem('uid');
+                                if (uid) {
+                                    window.location.href = `/product/cart?uid=${uid}`; // 사용자의 장바구니 페이지로 이동
+                                } else {
+                                    window.location.href = '/lotteon/member/login'; // 로그인 페이지로 이동
+                                }
+                            });
 
-                                // 날짜와 요일을 설정합니다.
-                                const formattedDate = arrivalDate.toLocaleDateString('ko-KR', options);
-                                const [weekday, date] = formattedDate.split(', ');
+                            btnOrder.addEventListener('click', function() {
+                                window.location.href = '/product/order'; // 바로 주문 페이지로 이동
+                            });
 
-                                // 도착 정보를 업데이트합니다.
-                                document.getElementById('arrivalInfo').textContent = `모레(${weekday}) ${date} 도착예정`;
-                                console.log(`모레(${weekday}) ${date} 도착예정`); // 콘솔에 출력하여 확인합니다.
-                            } catch (error) {
-                                console.error('Error calculating arrival date:', error);
+/*
+                            const btnOrder = document.getElementById('btnOrder');
+                            const btnCart = document.getElementById('btnCart');
+
+                            btnOrder.addEventListener('click', function () {
+                                handleBuyOrCart('order');
+                            });
+
+                            btnCart.addEventListener('click', function () {
+                                handleBuyOrCart('cart');
+                            });
+
+                            function handleBuyOrCart(actionType) {
+                                const uid = document.getElementById('uid');
+                                if (!uid || !uid.value) {
+                                    let result = confirm("로그인 후 사용하실 수 있습니다. \n 로그인 페이지로 이동하시겠습니까?");
+                                    if (result) {
+                                        window.location.href = '/lotteon/member/login'; // 로그인 페이지로 리다이렉션
+                                    }
+                                } else {
+                                    const prodCount = document.getElementsByName('prodCount')[0].value;
+                                    const prodno = document.getElementById('prodno').value;
+
+                                    const jsonData = {
+                                        uid: uid.value,
+                                        prodno: prodno,
+                                        prodCount: prodCount
+                                    };
+                                    const url = actionType === 'order' ? '/product/order' : '/product/cart';
+                                    fetch(url, {
+                                        method: 'POST',
+                                        headers: {'Content-Type': 'application/json'},
+                                        body: JSON.stringify(jsonData)
+                                    })
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error('Failed to process request');
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(data => {
+                                            alert('Request processed successfully');
+                                            window.location.href = data.redirectUrl; // Redirect to success page
+                                        })
+                                        .catch(err => console.error('Error:', err));
+                                }
                             }
                         });
+
+ */
+                    });
                     });
                 </script>
 
@@ -102,15 +175,21 @@
                             <h5 class="rating star4"><a th:href="@{#}">상품평보기</a></h5>
                         </nav>
                         <nav>
-                            <div class="org_price" th:text="${product.price}">
+                                <!-- 원래 가격을 출력합니다. -->
+                            <div class="org_price">
+                                <del th:text="${product.price}">30,000></del>
+                                <!-- 할인율 -->
                                 <span class="discount" th:text="${product.discount + '%'}">10%</span>
                             </div>
-                            <div class="dis_price">
-                                <ins th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된 가격</ins>
+                            <div>
+                                <!-- 할인된 가격을 계산합니다. 숫자를 직접 형식화하지 않고 정수로 출력합니다. -->
+                                <div class="dis_price">
+                                    <ins th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된 가격</ins>
+                                </div>
                             </div>
                         </nav>
                         <nav>
-                            <span class="delivery">무료배송</span></br>
+                            <span class="delivery">무료배송</span>
                             <span class="arrival" id="arrivalInfo">1</span>
                             <span class="desc">본 상품은 국내배송만 가능합니다.</span>
                         </nav>
@@ -122,7 +201,9 @@
                         <nav>
                             <span class="origin">원산지-상세설명 참조</span>
                         </nav>
-                        <nav>
+
+
+                        <!-- <nav>
                             <select class="size-select" name="size">
                                 <option value="">사이즈 선택</option>
                                 <option th:each="s : ${sizes}" th:value="${s}" th:text="${s}" th:selected="${s == product.size}">Size</option>
@@ -132,18 +213,18 @@
                                 <option th:each="c : ${colors}" th:value="${c}" th:text="${c}" th:selected="${c == product.color}">Color</option>
                             </select>
                         </nav>
+                        -->
 
-                        <div class="quantity-input">
+
+                        <div class="count">
                             <button class="decrease" type="button">-</button>
-                            <input type="text" class="quantity" th:name="prodCount" min="1" value="1" id="count">
+                            <input type="text" class="quantity" name="num" min="1" value="1" id="count">
                             <button class="increase" type="button">+</button>
                         </div>
 
 
                         <img src="../images/vip_plcc_banner.png" alt="100원만 결제해도 1만원 적립!" class="banner" />
 
-
-                        
                         <div class="total">
                             <span id="totalPrice" th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된 가격</ins>
                             </span>
@@ -151,9 +232,10 @@
                         </div>
 
                         <div class="button">
-                            <input type="button" class="cart"  value="장바구니"/>
-                            <input type="button" class="order" value="구매하기"/>
+                            <input type="button" class="cart" id="btnCart" value="장바구니"/>
+                            <input type="button" class="order" id="btnOrder" value="구매하기"/>
                         </div>
+
                     </div>
                 </article>
 
