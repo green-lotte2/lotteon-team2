@@ -10,5 +10,9 @@ import java.util.List;
 public interface ProductMapper {
 
     public List<UserDTO> SelectUsers();
+
     public List<ProductDTO> selectProducts();
+
+    public List<ProductDTO> selectProductsForNew();
+
 }

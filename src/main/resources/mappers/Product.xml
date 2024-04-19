@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.lotteon.mapper.ProductMapper">
+
+
+    <!--product_list-->
+    <select id="selectProductsForNew" resultType="kr.co.lotteon.dto.ProductDTO">
+        SELECT a.*, b.mainImg
+        FROM `product` AS a
+        LEFT JOIN `productimg` AS b ON a.pno = b.pno
+        WHERE b.mainImg IS NOT NULL
+        ORDER BY a.rdate DESC, a.pno ASC
+        LIMIT 8
+    </select>
+
+</mapper>

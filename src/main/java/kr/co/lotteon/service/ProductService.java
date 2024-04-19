@@ -3,7 +3,9 @@ package kr.co.lotteon.service;
 import groovy.lang.Tuple;
 import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.*;
+
 import kr.co.lotteon.mapper.AdminMapper;
+
 import kr.co.lotteon.mapper.ProductMapper;
 import kr.co.lotteon.repository.*;
 import org.modelmapper.ModelMapper;
@@ -45,9 +47,10 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final AdminMapper adminMapper;
 
-
+    
     private final ProductimgRepository productimgRepository;
 
+    /////////////////////////상품 이미지////////////////////////////////
     public ProductimgDTO imgUpload(ProductimgDTO imgDTO, int cate) {
 
         // 파일 업로드 시스템 경로 구하기
@@ -100,7 +103,10 @@ public class ProductService {
         productimgRepository.save(img);
         log.info("img" + img);
     }
-
+    /////////////////////////상품///////////////////////////////
+    /*
+        상품 등록
+     */
     public Product insertProduct(ProductDTO productDTO) {
 
         Product product = modelMapper.map(productDTO, Product.class);
@@ -109,9 +115,11 @@ public class ProductService {
         log.info("savedProduct: " + savedProduct);
         return savedProduct;
     }
-
-    public List<Product> findNewProduct() {
-        return productRepository.findTop8ByOrderByRdateDesc();
+    /*
+        상품 조회
+     */
+    public List<ProductDTO> findNewProduct(){
+        return productMapper.selectProductsForNew();
     }
 
     public Page<Product> findAllProducts(Pageable pageable) {
