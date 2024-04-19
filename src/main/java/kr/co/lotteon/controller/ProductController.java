@@ -1,9 +1,8 @@
 package kr.co.lotteon.controller;
 
-import kr.co.lotteon.dto.CategoryResult;
-import kr.co.lotteon.dto.ProductDTO;
-import kr.co.lotteon.dto.ProductimgDTO;
+import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.Product;
+import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +34,7 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService productService;
+    private final AdminService adminService;
 
     @PostMapping("/product/register")
     public String productRegister(ProductDTO productDTO,
@@ -110,31 +110,19 @@ public class ProductController {
 
 
     @GetMapping("/product/list")
-    public String list(String cate,
-                        Model model,
-                       @PageableDefault(size = 10, sort = "pname", direction = Sort.Direction.ASC) Pageable pageable) {
-        Page<Product> product = null;
-                productService.findAllProducts(pageable);
-        log.info(cate);
-        int depth = 0;
-        if (cate!=null){
-            int code = Integer.parseInt(cate);
-            if(code % 10 != 0){
-                depth = 1;
-                product = productService.findByCateBetween(pageable, code, depth);
-            }else if(code % 1000 != 0){
-                depth = 100;
-                product = productService.findByCateBetween(pageable, code, depth);
-            }else{
-                depth = 10000;
-                product = productService.findByCateBetween(pageable, code, depth);
-            }
-        }else{
-            product = productService.findAllProducts(pageable);
-        }
-        log.info("product112 : " + product);
-        model.addAttribute("product", product);
-        model.addAttribute("page", product);
+    public String list(Model model, @RequestParam(defaultValue = "1") int pg,
+                                    @RequestParam(defaultValue = "10") int size) {
+       List<ProductDTO> products = adminService.selectProducts();
+        model.addAttribute("products", products);
+        ProductPageRequestDTO pageRequestDTO = ProductPageRequestDTO.builder()
+                .pg(pg)
+                .size(size)
+                .sortProperty("pname") // 제품 이름으로 정렬한다고 가정합니다
+                .build();
+
+        ProductPageResponseDTO<ProductDTO, Product> responseDTO = productService.getList(pageRequestDTO);
+
+        model.addAttribute("result", responseDTO);
         model.addAttribute("cate", productService.getCategoryList());
         return "/product/list";
     }
@@ -163,7 +151,6 @@ public class ProductController {
         model.addAttribute("page", resultList);
         return "/product/list";
     }
-
 
     @GetMapping("/product/view")
     public String viewProduct(@RequestParam("pno") int pno, Model model) {

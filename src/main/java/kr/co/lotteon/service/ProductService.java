@@ -1,9 +1,10 @@
 package kr.co.lotteon.service;
 
 import groovy.lang.Tuple;
-import kr.co.lotteon.dto.ProductDTO;
-import kr.co.lotteon.dto.ProductimgDTO;
+import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.*;
+import kr.co.lotteon.mapper.AdminMapper;
+import kr.co.lotteon.mapper.ProductMapper;
 import kr.co.lotteon.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Optional;
-import kr.co.lotteon.dto.CategoryResult;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,6 +42,9 @@ public class ProductService {
     private String imgUploadPath;
 
     private final ModelMapper modelMapper;
+    private final ProductMapper productMapper;
+    private final AdminMapper adminMapper;
+
 
     private final ProductimgRepository productimgRepository;
 
@@ -51,22 +55,21 @@ public class ProductService {
 
         List<String> fileNames = new ArrayList<>();
 
-        for(MultipartFile mf : imgDTO.getFiles()){
+        for (MultipartFile mf : imgDTO.getFiles()) {
 
-            String path = new File(imgUploadPath+"/"+cate+"/").getAbsolutePath();
+            String path = new File(imgUploadPath + "/" + cate + "/").getAbsolutePath();
 
             File Folder = new File(path);
 
             // 해당 디렉토리가 없다면 디렉토리를 생성.
             if (!Folder.exists()) {
-                try{
+                try {
                     Folder.mkdir(); //폴더 생성합니다. ("새폴더"만 생성)
                     log.info("폴더가 생성완료.");
-                }
-                catch(Exception e){
+                } catch (Exception e) {
                     e.getStackTrace();
                 }
-            }else {
+            } else {
                 log.info("폴더가 이미 존재합니다..");
             }
 
@@ -91,7 +94,7 @@ public class ProductService {
         return imgDTO;
     }
 
-    public void insertImg(ProductimgDTO imgDTO){
+    public void insertImg(ProductimgDTO imgDTO) {
         Productimg img = modelMapper.map(imgDTO, Productimg.class);
 
         productimgRepository.save(img);
@@ -107,7 +110,7 @@ public class ProductService {
         return savedProduct;
     }
 
-    public List<Product> findNewProduct(){
+    public List<Product> findNewProduct() {
         return productRepository.findTop8ByOrderByRdateDesc();
     }
 
@@ -115,16 +118,16 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
-    public Page<Product> findByPname(Pageable pageable,String name){
+    public Page<Product> findByPname(Pageable pageable, String name) {
 
-        return productRepository.findByPnameLike(pageable, "%"+name+"%");
+        return productRepository.findByPnameLike(pageable, "%" + name + "%");
     }
 
     public Optional<Product> findProductById(int pno) {
         return productRepository.findById(pno);
     }
 
-    public Page<Product> findByCateBetween(Pageable pageable, int cate, int depth){
+    public Page<Product> findByCateBetween(Pageable pageable, int cate, int depth) {
         return productRepository.findByCateBetween(pageable, cate, cate + depth);
     }
 
@@ -139,6 +142,20 @@ public class ProductService {
     public void deleteProduct(int productId) {
         productRepository.deleteById(productId);
     }
+
+    public Page<Product> findProductsByCategoryName(String cname, Pageable pageable) {
+        // 카테고리 이름에 해당하는 카테고리 목록을 찾습니다.
+        List<Category> categories = categoryRepository.findByCname(cname);
+        if (categories.isEmpty()) {
+            return Page.empty();
+        }
+        // 여러 카테고리가 반환될 수 있으므로 첫 번째 카테고리의 ID를 사용하거나, 다른 로직을 구현할 수 있습니다.
+        Category category = categories.get(0); // 첫 번째 카테고리를 사용.
+
+        // 해당 카테고리 ID를 사용하여 상품을 검색합니다.
+        return productRepository.findByCate(category.getCate(), pageable);
+    }
+
 
     @Transactional(rollbackFor = Exception.class)
     public List<CategoryResult> getCategoryList() {
@@ -156,6 +173,18 @@ public class ProductService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public ProductPageResponseDTO<ProductDTO, Product> getList(ProductPageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable();
+        Page<Product> page = productRepository.findAll(pageable);
+        return new ProductPageResponseDTO<>(page, this::entityToDTO);
+    }
+
+    private ProductDTO entityToDTO(Product product) {
+        // 엔티티를 DTO로 변환하는 로직을 추가합니다
+        return null;
+    }
+
 }
 
 
