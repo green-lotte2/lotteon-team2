@@ -110,19 +110,51 @@ public class ProductController {
 
 
     @GetMapping("/product/list")
-    public String list(Model model, @RequestParam(defaultValue = "1") int pg,
-                                    @RequestParam(defaultValue = "10") int size) {
-       List<ProductDTO> products = adminService.selectProducts();
-        model.addAttribute("products", products);
-        ProductPageRequestDTO pageRequestDTO = ProductPageRequestDTO.builder()
-                .pg(pg)
-                .size(size)
-                .sortProperty("pname") // 제품 이름으로 정렬한다고 가정합니다
-                .build();
+    public String list(String cate, Model model,
+                       @PageableDefault(size = 10, sort = "pname", direction = Sort.Direction.ASC) Pageable pageable,
+                       @RequestParam(defaultValue = "1") int pg,
+                       @RequestParam(defaultValue = "10") int size) {
+
+                Page<Product> product = null;
+                    productService.findAllProducts(pageable);
+                log.info(cate);
+                int depth = 0;
+                if (cate!=null){
+                    int code = Integer.parseInt(cate);
+                    if(code % 10 != 0){
+                        depth = 1;
+                        product = productService.findByCateBetween(pageable, code, depth);
+                    }else if(code % 1000 != 0){
+                        depth = 100;
+                        product = productService.findByCateBetween(pageable, code, depth);
+                    }else{
+                        depth = 10000;
+                        product = productService.findByCateBetween(pageable, code, depth);
+                    }
+                }else{
+                    product = productService.findAllProducts(pageable);
+                }
+
+                List<ProductDTO> products = adminService.selectProducts();
+                model.addAttribute("products", products);
+                ProductPageRequestDTO pageRequestDTO = ProductPageRequestDTO.builder()
+                        .pg(pg)
+                        .size(size)
+                        .sortProperty("pname") // 제품 이름으로 정렬한다고 가정합니다
+                        .build();
 
         ProductPageResponseDTO<ProductDTO, Product> responseDTO = productService.getList(pageRequestDTO);
 
+        // 페이지 10개씩 출력
+        Page<Product> page = productService.findAllProducts(pageable);
+        model.addAttribute("products", page.getContent());
+        model.addAttribute("page",page);
+
+
+        log.info("product112 : " + product);
         model.addAttribute("result", responseDTO);
+        model.addAttribute("product", product);
+        model.addAttribute("page", product);
         model.addAttribute("cate", productService.getCategoryList());
         return "/product/list";
     }
