@@ -67,6 +67,10 @@ dependencies {
     // https://mvnrepository.com/artifact/commons-io/commons-io
     implementation group: 'commons-io', name: 'commons-io', version: '2.14.0'
 
+    // json-simple은 내부적으로 JSON 데이터를 처리하기 위해 Map과 List를 사용합니다.
+    //출처: https://tychejin.tistory.com/139 [너나들이 개발 이야기:티스토리]
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
 }
 
