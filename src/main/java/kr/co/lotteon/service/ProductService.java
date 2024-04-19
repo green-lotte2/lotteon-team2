@@ -118,9 +118,10 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
-    public Page<Product> findByPname(Pageable pageable, String name) {
+    public Page<Product> findByPname(Pageable pageable,String name){
+        log.info("findByPname...");
+        return productRepository.findByPnameLike(pageable, "%"+name+"%");
 
-        return productRepository.findByPnameLike(pageable, "%" + name + "%");
     }
 
     public Optional<Product> findProductById(int pno) {

@@ -95,7 +95,7 @@
                                 <option value="company">제조사</option>
                                 <option value="seller">판매사</option>
                             </select>
-                            <input type="search" id="prod_search" name="search" placeholder="검색어를 입력하세요.">
+                            <input type="search" id="prod_search" name="keyword" placeholder="검색어를 입력하세요.">
                             <button class="searchBtn">
                                 <img th:src="@{/admin/img/search_40.png}" alt="검색">
                             </button>
@@ -127,7 +127,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="product: ${adminProducts}">
+                                <tr th:each="product: ${products}">
                                     <td>
                                         <input type="checkbox" name="checkbox" th:value="${product.pno}">
                                     </td>
