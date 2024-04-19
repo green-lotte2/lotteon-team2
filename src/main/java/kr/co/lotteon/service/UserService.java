@@ -10,6 +10,11 @@ import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+
+import java.util.List;
 
 @Log4j2
 @Service
@@ -21,9 +26,9 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
+    public void insertUser(UserDTO userDTO) {
 
-    public void insertUser(UserDTO userDTO){
-        
         // 비밀번호 암호화
         userDTO.setPass(passwordEncoder.encode(userDTO.getPass()));
 
@@ -41,6 +46,21 @@ public class UserService {
 
 
     }
+
+    public int countById(String uid){
+        return userRepository.countByUid(uid);
+    }
+
+     public int countByHp(String hp){
+        return userRepository.countByHp(hp);
+    }
+
+    public int countByEmail(String email){
+        return userRepository.countByEmail(email);
+    }
+
+
+
 
 
 }

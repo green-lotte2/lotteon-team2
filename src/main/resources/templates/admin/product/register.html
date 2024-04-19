@@ -65,8 +65,7 @@
 
 
         main > section {
-            float: right;
-            width: 1130px;
+            width: 1000px;
             min-height: 600px;
             padding: 20px;
             box-sizing: border-box;
@@ -140,6 +139,62 @@
             display: block;
         }
     </style>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        window.onload = function (){
+
+            const category1 = document.getElementsByName('category1')[0];
+            const cateList = [[${cate}]];
+            cateList.forEach(function (item){
+
+                category1.innerHTML += `<option value="`+ item.cate +`">` +item.cname+ `</option>`;
+                console.log('1차분류!');
+            });
+
+            const category2 = document.getElementsByName('category2')[0];
+            category1.onchange = function (e){
+                cateList.forEach(function (item1){
+
+                    if(category1.value == item1.cate){
+
+                        category2.innerHTML = `<option>2차 분류 선택</option>`;
+                        item1.children.forEach(function (item2){
+
+                            category2.innerHTML += `<option value="`+ item2.cate +`">`+item2.cname+`</option>`;
+                        })
+
+                    }
+                });
+            }
+
+            const category3 = document.getElementsByName('cate')[0];
+            category2.onchange = function (e){
+                cateList.forEach(function (item1){
+                    if(category1.value == item1.cate){
+                        console.log(item1.cname);
+
+                        item1.children.forEach(function (item2){
+                            console.log(item2);
+                            console.log(category2.value);
+                            if (category2.value == item2.cate){
+                                category3.innerHTML = `<option value="cate0">3차 분류 선택 </option>`;
+                                item2.children.forEach(function (item3){
+                                    category3.innerHTML += `<option value="`+ item3.cate +`">`+item3.cname+`</option>`;
+                                });
+                            }
+                        })
+                    }
+                });
+            }
+
+            const regBtn = document.getElementsByName('regBtn')[0];
+            regBtn.onclick = function (e){
+                alert('상품등록이 성공적으로 완료되었습니다!');
+            }
+
+        }
+        /*]]>*/
+    </script>
 
 </head>
 
@@ -154,7 +209,7 @@
         </nav>
         <!-- 상품등록 컨텐츠 시작 -->
         <article>
-            <form action="#">
+            <form th:action="@{/admin/product/register}" method="post" enctype="multipart/form-data">
                 <!-- 상품분류 -->
                 <section>
                     <h4>상품분류</h4>
@@ -167,10 +222,7 @@
                             <td>
                                 <select name="category1">
                                     <option value="cate0">1차 분류 선택</option>
-                                    <option value="cate11">패션·의류·뷰티</option>
-                                    <option value="cate12">가전·디지털</option>
-                                    <option value="cate13">식품·생필품</option>
-                                    <option value="cate14">홈·문구·취미</option>
+
                                 </select>
                             </td>
                         </tr>
@@ -179,49 +231,14 @@
                             <td>
                                 <select name="category2">
                                     <option value="cate0">2차 분류 선택</option>
-                                    <option value="cate21">남성의류</option>
-                                    <option value="cate22">여성의류</option>
-                                    <option value="cate23">노트북/PC</option>
-                                    <option value="cate24">가전</option>
-                                    <option value="cate25">휴대폰</option>
-                                    <option value="cate26">신선식품</option>
-                                    <option value="cate27">가공식품</option>
-                                    <option value="cate28">가공식품</option>
-                                    <option value="cate29">건강식품</option>
-                                    <option value="cate30">생필품</option>
-                                    <option value="cate31">가구/DIY</option>
-                                    <option value="cate32">침구•커튼</option>
-                                    <option value="cate33">생활용품</option>
-                                    <option value="cate34">사무용품</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>3차 분류</td>
                             <td>
-                                <select name="category3">
+                                <select name="cate">
                                     <option value="cate0">3차 분류 선택</option>
-                                    <option value="cate41">아우터</option>
-                                    <option value="cate42">반소매 티쳐츠</option>
-                                    <option value="cate43">긴소매셔츠/맨투맨</option>
-                                    <option value="cate44">셔츠</option>
-                                    <option value="cate45">가디건</option>
-                                    <option value="cate46">아우터</option>
-                                    <option value="cate47">원피스</option>
-                                    <option value="cate48">블라우스/셔츠</option>
-                                    <option value="cate49">티셔츠/맨투맨</option>
-                                    <option value="cate50">가디건</option>
-                                    <option value="cate51">노트북</option>
-                                    <option value="cate52">데스크탑</option>
-                                    <option value="cate53">노트북 악세서리</option>
-                                    <option value="cate54">중고/리퍼PC</option>
-                                    <option value="cate55">TV</option>
-                                    <option value="cate56">청소기</option>
-                                    <option value="cate57">세탁기</option>
-                                    <option value="cate58">KT</option>
-                                    <option value="cate59">LGU+</option>
-                                    <option value="cate60">SKT</option>
-                                    <option value="cate61">공기계</option>
                                 </select>
                             </td>
                         </tr>
@@ -237,66 +254,66 @@
                     <table>
                         <tr>
                             <td>상품명</td>
-                            <td><input type="text" name="#"/></td>
+                            <td><input type="text" name="pname"/></td>
                         </tr>
                         <tr>
                             <td>기본설명</td>
                             <td>
                                 <span>상품명 하단에 상품에 대한 추가적인 설명이 필요한 경우에 입력</span>
-                                <input type="text" name="#"/>
+                                <input type="text" name="info"/>
                             </td>
                         </tr>
                         <tr>
                             <td>제조사</td>
-                            <td><input type="text" name="#"/></td>
+                            <td><input type="text" name="company"/></td>
                         </tr>
                         <tr>
                             <td>판매가격</td>
-                            <td><input type="text" name="#"/>원</td>
+                            <td><input type="text" name="price"/>원</td>
                         </tr>
                         <tr>
                             <td>할인율</td>
                             <td>
                                 <span>0을 입력하면 할인율 없음</span>
-                                <input type="text" name="#"/>원
+                                <input type="text" name="discount"/>원
                             </td>
                         </tr>
                         <tr>
                             <td>포인트</td>
                             <td>
                                 <span>0을 입력하면 포인트 없음</span>
-                                <input type="text" name="#"/>점
+                                <input type="text" name="point"/>점
                             </td>
                         </tr>
                         <tr>
                             <td>재고수량</td>
-                            <td><input type="text" name="#"/>개</td>
+                            <td><input type="text" name="stock"/>개</td>
                         </tr>
                         <tr>
                             <td>배송비</td>
                             <td>
                                 <span>0을 입력하면 배송비 무료</span>
-                                <input type="text" name="#"/>원
+                                <input type="text" name="deliprice"/>원
                             </td>
                         </tr>
                         <tr>
                             <td>상품 썸네일</td>
                             <td>
                                 <span>크기 190 x 190, 상품 목록에 출력될 이미지 입니다. </span>
-                                <input type="file" name="#"/>
+                                <input type="file" name="mainImg"/>
 
                                 <span>크기 230 x 230, 상품 메인에 출력될 이미지 입니다. </span>
-                                <input type="file" name="#"/>
+                                <input type="file" name="subImg1"/>
 
                                 <span>크기 456 x 456, 상품 상세에 출력될 이미지 입니다. </span>
-                                <input type="file" name="#"/>
+                                <input type="file" name="subImg2"/>
                             </td>
                         </tr>
                         <tr>
                             <td>상세 상품정보</td>
                             <td>
                                 <span>크기 가로 940px 높이 제약없음, 크기 최대 1MB, 상세페이지 상품정보에 출력될 이미지 입니다.</span>
-                                <input type="file" name="#"/>
+                                <input type="file" name="detailImg"/>
                             </td>
                         </tr>
                     </table>
@@ -328,7 +345,7 @@
                     </table>
                 </section>
 
-                <input type="submit" value="등록하기"/>
+                <input type="submit" name="regBtn" value="등록하기"/>
             </form>
         </article>
 

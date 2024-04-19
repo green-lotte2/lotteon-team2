@@ -11,9 +11,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Log4j2
 @RequestMapping("member")
@@ -57,6 +58,7 @@ public class UserController {
     public String join(){
         return "/member/join";
     }
+
 
     //로그인 페이지
     @GetMapping("/login")
@@ -114,4 +116,50 @@ public class UserController {
             return "redirect:/member/registerSeller";
         }
     }
+
+
+    @ResponseBody
+    @GetMapping("/checkUid")
+    public Map<String, Integer> checkUid(String uid){
+        log.info("uid : " + uid);
+
+        // 아이디 존재 유무 확인 서비스 호출
+        int result = userService.countById(uid);
+
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
+    @ResponseBody
+    @GetMapping("/checkEmail")
+    public Map<String, Integer> checkEmail(String email){
+        log.info("email : " + email);
+
+        int result = userService.countByEmail(email);
+
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+    @ResponseBody
+    @GetMapping("/checkHp")
+    public Map<String, Integer> checkHp(String hp){
+        log.info("hp : " + hp);
+
+        int result = userService.countByHp(hp);
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
 }

@@ -6,9 +6,16 @@ import kr.co.lotteon.mapper.*;
 import kr.co.lotteon.repository.QnaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Log4j2
@@ -39,11 +46,11 @@ public class CsService {
         return cateMapper.selectCate2(cate1);
     }
 
-/*
+
     // 파일등록
     public void insertQnaWrite(QnaDTO dto){
         if(dto.getMFile1() != null && !dto.getMFile1().isEmpty()){
-            List<String> saveNames = FileUpload(dto);
+            List<String> saveNames = fileUpload(dto);
             dto.setFile1(saveNames.get(0));
             dto.setFile2(saveNames.get(1));
         }
@@ -52,7 +59,7 @@ public class CsService {
     }
 
     // 파일 저장경로
-    @Value("${upload.path.files}")
+    @Value("${file.upload.path}")
     private String filePath;
 
     // 파일 업로드
@@ -80,7 +87,7 @@ public class CsService {
         }
         return saveNames;
     }
-*/
+
 
     ///////////////////// 페이징 ////////////////////////////////////
     //현재 페이지 번호

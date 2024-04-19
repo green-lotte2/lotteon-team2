@@ -142,7 +142,7 @@
             const cateList = [[${cate}]];
             cateList.forEach(function (item){
 
-               category1.innerHTML += `<option value="`+ item.cate +`">`+item.cname+`</option>`;
+                category1.innerHTML += `<option value="`+ item.cate +`">`+item.cname+`</option>`;
             });
 
             const category2 = document.getElementsByName('category2')[0];
@@ -151,7 +151,7 @@
 
                     if (category1.value == item1.cate){
 
-                        category2.innerHTML = `<option value="cate0">2차 분류 선택</option>`;
+                        category2.innerHTML = `<option>2차 분류 선택</option>`;
                         item1.children.forEach(function(item2){
 
                             category2.innerHTML += `<option value="`+ item2.cate +`">`+item2.cname+`</option>`;
