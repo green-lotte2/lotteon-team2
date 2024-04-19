@@ -14,26 +14,26 @@
     <link th:href="@{/admin/css/admin.css}" rel="stylesheet">
     <script th:inline="javascript">
         /*<![CDATA[*/
-        window.onload = function (){
+        window.onload = function () {
 
             const category1 = document.getElementsByName('category1')[0];
             const cateList = [[${cate}]];
-            cateList.forEach(function (item){
+            cateList.forEach(function (item) {
 
-                category1.innerHTML += `<option value="`+ item.cate +`">` +item.cname+ `</option>`;
+                category1.innerHTML += `<option value="` + item.cate + `">` + item.cname + `</option>`;
                 console.log('1차분류!');
             });
 
             const category2 = document.getElementsByName('category2')[0];
-            category1.onchange = function (e){
-                cateList.forEach(function (item1){
+            category1.onchange = function (e) {
+                cateList.forEach(function (item1) {
 
-                    if(category1.value == item1.cate){
+                    if (category1.value == item1.cate) {
 
                         category2.innerHTML = `<option>2차 분류 선택</option>`;
-                        item1.children.forEach(function (item2){
+                        item1.children.forEach(function (item2) {
 
-                            category2.innerHTML += `<option value="`+ item2.cate +`">`+item2.cname+`</option>`;
+                            category2.innerHTML += `<option value="` + item2.cate + `">` + item2.cname + `</option>`;
                         })
 
                     }
@@ -41,18 +41,18 @@
             }
 
             const category3 = document.getElementsByName('cate')[0];
-            category2.onchange = function (e){
-                cateList.forEach(function (item1){
-                    if(category1.value == item1.cate){
+            category2.onchange = function (e) {
+                cateList.forEach(function (item1) {
+                    if (category1.value == item1.cate) {
                         console.log(item1.cname);
 
-                        item1.children.forEach(function (item2){
+                        item1.children.forEach(function (item2) {
                             console.log(item2);
                             console.log(category2.value);
-                            if (category2.value == item2.cate){
+                            if (category2.value == item2.cate) {
                                 category3.innerHTML = `<option value="cate0">3차 분류 선택 </option>`;
-                                item2.children.forEach(function (item3){
-                                    category3.innerHTML += `<option value="`+ item3.cate +`">`+item3.cname+`</option>`;
+                                item2.children.forEach(function (item3) {
+                                    category3.innerHTML += `<option value="` + item3.cate + `">` + item3.cname + `</option>`;
                                 });
                             }
                         })
@@ -61,12 +61,34 @@
             }
 
             const regBtn = document.getElementsByName('regBtn')[0];
-            regBtn.onclick = function (e){
+            regBtn.onclick = function (e) {
                 alert('상품등록이 성공적으로 완료되었습니다!');
             }
 
         }
         /*]]>*/
+
+        const addTextBox = (obj) => {
+            const box = obj.parentNode;
+            console.log(box);
+            const newP = document.createElement('p');
+            newP.innerHTML = "<input type=\"text\" name=\"optionValue\" placeholder=\"옵션 값을 입력하세요\">\n" +
+                "<input type=\"button\" value=\"삭제\" onclick=\"remove(this)\">";
+
+            box.appendChild(newP);
+        }
+        const addField = () => {
+            const box = document.getElementById("box");
+            const newP = document.createElement('div');
+
+            newP.innerHTML = "<input type=\"text\" name=\"optionName\" placeholder=\"옵션 이름을 입력하세요\"><p><input type=\"text\" name=\"optionValue\" placeholder=\"옵션 값을 입력하세요\"><input type=\"button\" value=\"추가\" onclick=\"addTextBox(this)\"></p>";
+            box.appendChild(newP);
+
+        }
+        const remove = (obj) => {
+            obj.parentNode.remove();
+        }
+
     </script>
 
 </head>
@@ -169,6 +191,24 @@
                                 <input type="text" name="deliprice"/>원
                             </td>
                         </tr>
+
+
+
+
+                        <tr>
+                            <td>상품 옵션</td>
+                            <td id="box">
+                                <input type="button" onclick="addField()">
+                                <div>
+                                    <input type="text" name="optionName" placeholder="옵션 이름을 입력하세요"><p><input type="text" name="optionValue" placeholder="옵션 값을 입력하세요"><input type="button" value="추가" onclick="addTextBox(this)"></p>
+
+                                </div>
+                            </td>
+                        </tr>
+
+
+
+
                         <tr>
                             <td>상품 썸네일</td>
                             <td>
@@ -228,7 +268,6 @@
         </p>
         <!-- 상품등록 컨텐츠 끝 -->
     </section>
-
 
 
     <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
