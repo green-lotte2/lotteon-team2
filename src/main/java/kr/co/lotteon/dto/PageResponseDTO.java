@@ -6,10 +6,12 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CsPageResponseDTO {
+public class PageResponseDTO {
     private List<NoticeDTO> noticeList;
     private List<FaqDTO> faqList;
     private List<QnaDTO> qnaList;
+    //🎈상품검색
+    private List<ProductDTO> dtoList;
 
     private int pg;
     private int size;
@@ -22,9 +24,9 @@ public class CsPageResponseDTO {
     private boolean prev, next;
 
     @Builder
-    public CsPageResponseDTO(CsPageRequestDTO pageRequestDTO,
-                             List<NoticeDTO> noticeList, int total,
-                             List<FaqDTO> faqList, List<QnaDTO> qnaList) {
+    public PageResponseDTO(PageRequestDTO pageRequestDTO,
+                           List<NoticeDTO> noticeList, int total,
+                           List<FaqDTO> faqList, List<QnaDTO> qnaList, List<ProductDTO> dtoList) {
         this.cate1 = pageRequestDTO.getCate1();
         this.cate2 = pageRequestDTO.getCate2();
         this.pg = pageRequestDTO.getPg();
@@ -35,6 +37,8 @@ public class CsPageResponseDTO {
         this.noticeList = noticeList;
         this.faqList = faqList;
         this.qnaList = qnaList;
+        //🎈상품검색
+        this.dtoList = dtoList;
 
         this.end = (int) (Math.ceil(this.pg / 10.0)) * 10;
         this.start = this.end - 9;

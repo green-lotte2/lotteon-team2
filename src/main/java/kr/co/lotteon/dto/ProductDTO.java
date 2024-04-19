@@ -35,4 +35,5 @@ public class ProductDTO {
     private String subimg;
     private String detailimg;
 
+
 }

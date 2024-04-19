@@ -1,6 +1,6 @@
 package kr.co.lotteon.controller;
 
-import kr.co.lotteon.dto.CategoryResult;
+import kr.co.lotteon.dto.CategoryDTO;
 import kr.co.lotteon.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class CategoryController {
     @GetMapping("/test")
     public ResponseEntity<?> getCategoryList() {
         log.info(productService.getCategoryList().toString());
-        List<CategoryResult> cateList = productService.getCategoryList();
+        List<CategoryDTO> cateList = productService.getCategoryList();
 
         return ResponseEntity.ok(productService.getCategoryList());
     }

@@ -9,7 +9,7 @@ import org.springframework.data.domain.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CsPageRequestDTO {
+public class PageRequestDTO {
 
     @Builder.Default
     private int pg=1;
@@ -21,10 +21,12 @@ public class CsPageRequestDTO {
     private int cate1 = 0;
     @Builder.Default
     private int cate2 = 0;
-    private int type;
+
 
     @Builder.Default
     private String search = "";
+
+    private int pno;
 
     public Pageable getPageable(String sort){
         return PageRequest.of(
@@ -33,4 +35,13 @@ public class CsPageRequestDTO {
                 Sort.by(sort).descending()
         );
     }
+
+    //🎈 상품검색
+    private String type;
+    private String keyword;
+
+    private String company;
+    private String seller;
+    private String pname;
+    private String cate;
 }
