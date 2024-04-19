@@ -1,6 +1,6 @@
 package kr.co.lotteon.controller;
 
-import kr.co.lotteon.dto.CategoryResult;
+import kr.co.lotteon.dto.CategoryDTO;
 import kr.co.lotteon.dto.ProductDTO;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.service.ProductService;
@@ -22,7 +22,7 @@ public class MainController {
     @GetMapping(value = {"/","/index"})
     public String index(Model model){
 
-        List<CategoryResult> cate = productService.getCategoryList();
+        List<CategoryDTO> cate = productService.getCategoryList();
         List<ProductDTO> newProduct = productService.findNewProduct();
         log.info(newProduct.toString());
         model.addAttribute("cate", cate);
@@ -33,7 +33,7 @@ public class MainController {
     @GetMapping("/regtest")
     public String regTest(Model model){
 
-        List<CategoryResult> cate = productService.getCategoryList();
+        List<CategoryDTO> cate = productService.getCategoryList();
         model.addAttribute("cate", cate);
 
         return "/registertest";

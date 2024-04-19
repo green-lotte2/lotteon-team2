@@ -81,3 +81,17 @@ tasks.named('test') {
 springBoot {
     buildInfo()
 }
+// QueryDSL 설정
+def querydslDir = "src/main/generated"
+
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+tasks.withType(JavaCompile) {
+    options.generatedSourceOutputDirectory = file(querydslDir)
+}
+
+clean {
+    delete file(querydslDir)
+}

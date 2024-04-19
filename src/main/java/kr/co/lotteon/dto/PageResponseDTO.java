@@ -10,6 +10,8 @@ public class PageResponseDTO {
     private List<NoticeDTO> noticeList;
     private List<FaqDTO> faqList;
     private List<QnaDTO> qnaList;
+    //🎈상품검색
+    private List<ProductDTO> dtoList;
 
     private int pg;
     private int size;
@@ -24,7 +26,8 @@ public class PageResponseDTO {
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO,
                            List<NoticeDTO> noticeList, int total,
-                           List<FaqDTO> faqList, List<QnaDTO> qnaList) {
+                           List<FaqDTO> faqList, List<QnaDTO> qnaList, List<ProductDTO> dtoList) {
+
         this.cate1 = pageRequestDTO.getCate1();
         this.cate2 = pageRequestDTO.getCate2();
         this.pg = pageRequestDTO.getPg();
@@ -35,6 +38,8 @@ public class PageResponseDTO {
         this.noticeList = noticeList;
         this.faqList = faqList;
         this.qnaList = qnaList;
+        //🎈상품검색
+        this.dtoList = dtoList;
 
         this.end = (int) (Math.ceil(this.pg / 10.0)) * 10;
         this.start = this.end - 9;

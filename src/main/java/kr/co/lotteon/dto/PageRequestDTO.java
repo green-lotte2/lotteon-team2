@@ -21,10 +21,12 @@ public class PageRequestDTO {
     private int cate1 = 0;
     @Builder.Default
     private int cate2 = 0;
-    private String type;
+
 
     @Builder.Default
     private String search = "";
+
+    private int pno;
 
     public Pageable getPageable(String sort){
         return PageRequest.of(
@@ -33,4 +35,13 @@ public class PageRequestDTO {
                 Sort.by(sort).descending()
         );
     }
+
+    //🎈 상품검색
+    private String type;
+    private String keyword;
+
+    private String company;
+    private String seller;
+    private String pname;
+    private String cate;
 }

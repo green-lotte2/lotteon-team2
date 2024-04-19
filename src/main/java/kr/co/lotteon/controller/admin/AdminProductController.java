@@ -1,6 +1,6 @@
 package kr.co.lotteon.controller.admin;
 
-import kr.co.lotteon.dto.CategoryResult;
+import kr.co.lotteon.dto.CategoryDTO;
 import kr.co.lotteon.dto.ProductDTO;
 import kr.co.lotteon.dto.ProductimgDTO;
 import kr.co.lotteon.entity.Product;
@@ -33,7 +33,7 @@ public class AdminProductController {
 
     @GetMapping("/admin/product/register")
     public String adminProductRegister(Model model){
-        List<CategoryResult> cate = productService.getCategoryList();
+        List<CategoryDTO> cate = productService.getCategoryList();
         model.addAttribute("cate", cate);
         log.info("adminProductRegister1.." + cate);
 
@@ -112,13 +112,13 @@ public class AdminProductController {
             String search,
             @PageableDefault(size = 10, sort = "pname", direction = Sort.Direction.ASC) Pageable pageable) {
 
-        Page<Product> resultList = productService.findByPname(pageable, search);
+      /*  Page<Product> resultList = productService.findByPname(pageable, search);
         for (Product result : resultList) {
             log.info(result.toString());
         }
         model.addAttribute("products", resultList);
         model.addAttribute("page", resultList);
-        log.info("검색....1");
+        log.info("검색....1"); */
         return "/admin/product/search";
     }
 

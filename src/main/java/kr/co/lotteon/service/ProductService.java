@@ -1,6 +1,6 @@
 package kr.co.lotteon.service;
 
-import groovy.lang.Tuple;
+import com.querydsl.core.Tuple;
 import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.*;
 
@@ -8,6 +8,7 @@ import kr.co.lotteon.mapper.AdminMapper;
 
 import kr.co.lotteon.mapper.ProductMapper;
 import kr.co.lotteon.repository.*;
+import kr.co.lotteon.repository.custom.ProductRepositoryCustom;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -118,9 +119,11 @@ public class ProductService {
     /*
         상품 조회
      */
+
     public List<ProductDTO> findNewProduct(){
         return productMapper.selectProductsForNew();
     }
+
 
     public Page<Product> findAllProducts(Pageable pageable) {
         return productRepository.findAll(pageable);
@@ -139,6 +142,7 @@ public class ProductService {
     public Page<Product> findByCateBetween(Pageable pageable, int cate, int depth) {
         return productRepository.findByCateBetween(pageable, cate, cate + depth);
     }
+
 
     public Product saveProduct(Product product) {
         return productRepository.save(product);
@@ -165,10 +169,9 @@ public class ProductService {
         return productRepository.findByCate(category.getCate(), pageable);
     }
 
-
     @Transactional(rollbackFor = Exception.class)
-    public List<CategoryResult> getCategoryList() {
-        List<CategoryResult> results = categoryRepository.findAll().stream().map(CategoryResult::of).collect(Collectors.toList());
+    public List<CategoryDTO> getCategoryList() {
+        List<CategoryDTO> results = categoryRepository.findAll().stream().map(CategoryDTO::of).collect(Collectors.toList());
         log.info(results.toString());
         return results;
     }
@@ -193,6 +196,74 @@ public class ProductService {
         // 엔티티를 DTO로 변환하는 로직을 추가합니다
         return null;
     }
+
+
+
+    //🎈 상품 조회
+    public PageResponseDTO selectArticles(PageRequestDTO pageRequestDTO){
+
+        log.info("selectArticles...1");
+        Pageable pageable = pageRequestDTO.getPageable("pg");
+
+        log.info("selectArticles...2");
+        Page<Tuple> pageProduct = productRepository.selectProducts(pageRequestDTO , pageable);
+
+        log.info("selectArticles...3 : " + pageProduct);
+        List<ProductDTO> dtoList = pageProduct.getContent().stream()
+                .map(tuple ->
+                        {
+                            log.info("tuple : " + tuple);
+                            Product product = tuple.get(0, Product.class);
+                            int pno = tuple.get(1, int.class);
+                            product.setPno(pno);
+
+                            log.info("product : " + pno);
+
+                            return modelMapper.map(product, ProductDTO.class);
+                        }
+                )
+                .toList();
+
+        log.info("selectArticles...4 : " + dtoList);
+
+        int total = (int) pageProduct.getTotalElements();
+
+        return PageResponseDTO.builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total(total)
+                .build();
+    }
+
+    public PageResponseDTO searchArticles(PageRequestDTO pageRequestDTO){
+
+        Pageable pageable = pageRequestDTO.getPageable("pg");
+        Page<Tuple> pageArticle = productRepository.searchProducts(pageRequestDTO, pageable);
+
+        List<ProductDTO> dtoList = pageArticle.getContent().stream()
+                .map(tuple ->
+                        {
+                            log.info("tuple : " + tuple);
+                            Product product = tuple.get(0, Product.class);
+                            int pno = tuple.get(1, int.class);
+                            product.setPno(pno);
+
+                            log.info("product : " + pno);
+
+                            return modelMapper.map(product, ProductDTO.class);
+                        }
+                )
+                .toList();
+
+        int total = (int) pageArticle.getTotalElements();
+
+        return PageResponseDTO.builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total(total)
+                .build();
+    }
+
 
 }
 
