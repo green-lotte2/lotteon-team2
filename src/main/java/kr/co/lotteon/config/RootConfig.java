@@ -29,7 +29,6 @@ public class RootConfig {
 
     @Bean
     public AppInfo appInfo(){
-
         String name = buildProperties.getName();
         String version = buildProperties.getVersion();
 
