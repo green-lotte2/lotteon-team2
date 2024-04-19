@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CsPageResponseDTO {
+public class PageResponseDTO {
     private List<NoticeDTO> noticeList;
     private List<FaqDTO> faqList;
     private List<QnaDTO> qnaList;
@@ -22,9 +22,9 @@ public class CsPageResponseDTO {
     private boolean prev, next;
 
     @Builder
-    public CsPageResponseDTO(CsPageRequestDTO pageRequestDTO,
-                             List<NoticeDTO> noticeList, int total,
-                             List<FaqDTO> faqList, List<QnaDTO> qnaList) {
+    public PageResponseDTO(PageRequestDTO pageRequestDTO,
+                           List<NoticeDTO> noticeList, int total,
+                           List<FaqDTO> faqList, List<QnaDTO> qnaList) {
         this.cate1 = pageRequestDTO.getCate1();
         this.cate2 = pageRequestDTO.getCate2();
         this.pg = pageRequestDTO.getPg();

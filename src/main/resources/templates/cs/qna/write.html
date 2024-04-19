@@ -6,82 +6,76 @@
 <div layout:fragment="content">
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+
+    $(function (){
       const jsonData = {};
 
       // cate1 데이터를 서버에서 불러옴
-      fetch('/lotteon/cs/cate1')
-              .then(response => response.json())
-              .then(cate1Data => {
-                console.log(cate1Data);
+      $.ajax({
+        url: '/lotteon/cs/cate1',
+        type: 'GET',
+        data: jsonData,
+        success: function (cate1Data){
+          console.log(cate1Data);
 
-                // 문의유형 select 요소 찾기
-                const typeSelect = document.querySelector('select[name="type1"]');
+          // 문의유형의 select 요소 찾기
+          const typeSelect = $('select[name="type1"]');
 
-                // cate1 데이터를 반복하여 1차 선택 옵션 추가
-                cate1Data.forEach(function (cate1) {
-                  const option = document.createElement('option');
-                  option.value = cate1.cate1;
-                  option.text = cate1.c1name;
-                  typeSelect.appendChild(option);
-                });
-              })
-              .catch(err => {
-                console.log(err);
-              });
+          // cate1 데이터를 반복하여 1차 선택 옵션 추가
+          cate1Data.forEach(function (cate1){
+            typeSelect.append($('<option>', {
+              value: cate1.cate1,
+              text: cate1.c1name
+            }));
+          });
+        }
+      });
 
-      document.getElementById('category1').addEventListener('change', function () {
-        const selectedCategory1 = this.value;
+      $('#category1').change(function (){
+        const selectedCategory1 = $(this).val();
         console.log(selectedCategory1);
 
         // 1차 카테고리 선택 값을 cate1 input 필드의 값으로 설정
-        document.getElementById('cate1').value = selectedCategory1;
+        $('#cate1').val(selectedCategory1);
 
         // 1차 카테고리 선택 값(selectedCategory1)을 서버로 전송
         const jsonData = {
           cate1: selectedCategory1
         };
 
-        fetch('/lotteon/cs/cate2', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(jsonData)
-        })
-                .then(response => response.json())
-                .then(cate2List => {
-                  console.log(cate2List);
+        $.ajax({
+          url: '/lotteon/cs/cate2',
+          type: 'GET',
+          data: jsonData,
+          success: function (cate2List){
+            console.log(cate2List);
 
-                  // 문의유형2 select 요소 찾기
-                  const typeSelect2 = document.querySelector('select[name="category2"]');
-                  typeSelect2.innerHTML = '';
+            // 문의유형2 select 요소 찾기
+            const typeSelect2 = $('select[name="category2"]');
+            typeSelect2.empty();
 
-                  // cate2 데이터를 반복하여 2차 선택 옵션 추가
-                  cate2List.forEach(function (cate2) {
-                    const option = document.createElement('option');
-                    option.value = cate2.cate2;
-                    option.text = cate2.c2name;
-                    typeSelect2.appendChild(option);
-                  });
-
-                  // 2차 카테고리가 업데이트되면 첫 번째 옵션 선택
-                  typeSelect2.querySelector('option:first-child').selected = true;
-                  console.log(typeSelect2);
-                })
-                .catch(err => {
-                  console.log(err);
-                });
+            // cate2 데이터를 반복하여 2차 선택 옵션 추가
+            cate2List.forEach(function (cate2){
+              typeSelect2.append($('<option>',{
+                value: cate2.cate2,
+                text: cate2.c2name
+              }));
+            });
+            // 2차 카테고리가 업데이트되면 첫번째 옵션 선택
+            typeSelect2.find('option:first').prop('selected', true);
+            console.log(typeSelect2);
+          }
+        });
       });
-
-      document.getElementById('category2').addEventListener('change', function () {
-        const selectedCategory2 = this.value;
+      $('#category2').change(function (){
+        const selectedCategory2 = $(this).val();
         console.log(selectedCategory2);
 
         // 2차 카테고리 선택값을 cate2 input 필드의 값으로 설정
-        document.getElementById('cate2').value = selectedCategory2;
+        $('#cate2').val(selectedCategory2);
       });
-    });
+    }); // function 종료
+
   </script>
 
   <section id="cs">

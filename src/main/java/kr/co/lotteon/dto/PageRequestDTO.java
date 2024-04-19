@@ -9,7 +9,7 @@ import org.springframework.data.domain.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CsPageRequestDTO {
+public class PageRequestDTO {
 
     @Builder.Default
     private int pg=1;
@@ -21,7 +21,7 @@ public class CsPageRequestDTO {
     private int cate1 = 0;
     @Builder.Default
     private int cate2 = 0;
-    private int type;
+    private String type;
 
     @Builder.Default
     private String search = "";

@@ -1,5 +1,6 @@
 package kr.co.lotteon.mapper;
 
+import kr.co.lotteon.dto.NoticeDTO;
 import kr.co.lotteon.dto.ProductDTO;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
@@ -16,5 +17,8 @@ public interface AdminMapper{
 
     // admin 상품삭제
     public void adminDeleteProduct(int pno);
+
+    // cs modify용
+    public void updateAdminNotice(NoticeDTO dto);
 
 }
