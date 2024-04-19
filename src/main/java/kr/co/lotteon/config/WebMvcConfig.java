@@ -21,14 +21,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AppInfoInterceptor(appInfo));
     }
-    /*
+
     @Override
     public void  addResourceHandlers(ResourceHandlerRegistry registry) {
-        String defaultPath = System.getProperty("user.dir") + File.separator + "src";
+        String defaultPath = System.getProperty("user.dir");
         String path = defaultPath + File.separator + "product" + File.separator;
         registry
-                .addResourceHandler("/img/**")
+                .addResourceHandler("/product/**")
                 .addResourceLocations("file:///" + path);
     }
-    */
+
 }
