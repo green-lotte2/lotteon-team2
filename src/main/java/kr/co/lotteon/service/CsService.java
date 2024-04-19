@@ -89,7 +89,10 @@ public class CsService {
     }
 
 
-    ///////////////////// 페이징 ////////////////////////////////////
+
+    ////////////////////////
+    // 페이징 시작 //////////
+    ///////////////////////
     //현재 페이지 번호
     public int getCurrentPage(String pg){
         int currentPage = 1;
@@ -164,7 +167,10 @@ public class CsService {
     public int getStartNum(int currentPage){
         return (currentPage - 1) * 10;
     }
-    ///////////////////// 페이징 끝 /////////////////////////////////
+    ////////////////////////
+    // 페이징 끝 ////////////
+    ///////////////////////
+
 
 
     // noticeList 전체

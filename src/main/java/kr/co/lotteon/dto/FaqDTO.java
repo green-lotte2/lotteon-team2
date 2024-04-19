@@ -25,7 +25,6 @@ public class FaqDTO {
 
     private LocalDateTime rdate;
 
-    private int hit;
 
     // 추가필드
     private String c1name;
