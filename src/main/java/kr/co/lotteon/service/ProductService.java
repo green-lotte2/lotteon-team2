@@ -116,7 +116,7 @@ public class ProductService {
     }
 
     public Page<Product> findByPname(Pageable pageable,String name){
-
+        log.info("findByPname...");
         return productRepository.findByPnameLike(pageable, "%"+name+"%");
     }
 
