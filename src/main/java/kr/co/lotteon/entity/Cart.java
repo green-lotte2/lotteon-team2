@@ -14,7 +14,7 @@ import lombok.*;
 @Builder
 @ToString
 @Entity
-@Table(name = "Cart")
+@Table(name = "cart")
 public class Cart {
 
     @Id

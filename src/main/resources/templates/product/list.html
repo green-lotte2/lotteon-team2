@@ -41,36 +41,11 @@
 
 
         <!-- 상품목록 -->
-              <table border="0">                  
-                <tr>
-                  <td><a th:href="@{/product/view}" class="thumb"><img th:src="@{/images/2. home.jpg}" alt="상품이미지"/></a></td>
-                  <td>
-                    <h3 class="name">상품명</h3>
-                    <a th:href="@{#}" class="desc">상품설명</a>
-                  </td>
-                  <td>
-                    <ul>
-                      <li><ins class="dis-price">22,000</ins></li>
-                      <li>
-                        <del class="org-price">30,000</del>
-                        <span class="discount">10%</span>
-                      </li>
-                      <li><span class="free-delivery">무료배송</span></li>
-                    </ul>
-                  </td>
-                  <td>
-                    <h4 class="seller"><i class="fas fa-home"></i>&nbsp;판매자</h4>
-                    <h5 class="badge power">판매자등급</h5>
-                    <h6 class="rating star1">상품평</h6>
-                  </td>
-                </tr>
-
-
-
-                  <tr th:each="product : ${page}">
+              <table border="0">
+                  <tr th:each="product : ${products}">
                       <td>
                           <a th:href="@{/product/view(pno=${product.pno})}" class="thumb">
-                              <img th:src="@{/images/2. home.jpg}" alt="상품이미지" />
+                              <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
                           </a>
                       </td>
                       <td>
@@ -112,19 +87,23 @@
               <!-- 상품목록 페이지번호 -->
         <div class="paging">
             <!-- 이전 페이지 링크 -->
-            <span th:if="${page.hasPrevious()}">
-        <a th:href="@{/product/list(page=${page.number - 1}, size=${page.size}, sort=${page.sort})}">&lt; 이전</a>
+            <span class="prev">
+        <a th:if="${result.prev}" th:href="@{/product/list(pg=${result.page - 1})}">&lt;&nbsp;이전</a>
     </span>
-            <!-- 페이지 번호 -->
-            <span th:each="i : ${#numbers.sequence(1, page.totalPages)}">
-        <a th:href="@{/product/list(page=${i - 1}, size=${page.size}, sort=${page.sort})}" th:text="${i}" th:class="${i == page.number + 1} ? 'on' : ''"></a>
+
+            <!-- 숫자 페이지 링크 -->
+            <span class="num">
+        <span th:each="pageNum : ${#numbers.sequence(result.start, result.end)}">
+            <a th:href="@{/product/list(pg=${pageNum})}"
+               th:text="${pageNum}" th:class="${pageNum == result.page} ? 'on' : ''"></a>
+        </span>
     </span>
+
             <!-- 다음 페이지 링크 -->
-            <span th:if="${page.hasNext()}">
-        <a th:href="@{/product/list(page=${page.number + 1}, size=${page.size}, sort=${page.sort})}">다음 &gt;</a>
+            <span class="next">
+        <a th:if="${result.next}" th:href="@{/product/list(pg=${result.page + 1})}">다음&nbsp;&gt;</a>
     </span>
         </div>
 
     </section>
-</main>
 </html>

@@ -55,7 +55,6 @@ public class CsFaq {
     @CreationTimestamp
     private LocalDateTime rdate;
 
-    private int hit;
 
     public String getRdatesub(){
         String formatDate = rdate.format(DateTimeFormatter.ofPattern("yy.MM.dd"));

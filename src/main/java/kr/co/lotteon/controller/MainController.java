@@ -1,15 +1,18 @@
 package kr.co.lotteon.controller;
 
 import kr.co.lotteon.dto.CategoryResult;
+import kr.co.lotteon.dto.ProductDTO;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.codehaus.groovy.transform.LogASTTransformation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
-
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class MainController {
@@ -20,7 +23,8 @@ public class MainController {
     public String index(Model model){
 
         List<CategoryResult> cate = productService.getCategoryList();
-        List<Product> newProduct = productService.findNewProduct();
+        List<ProductDTO> newProduct = productService.findNewProduct();
+        log.info(newProduct.toString());
         model.addAttribute("cate", cate);
         model.addAttribute("newProduct", newProduct);
         return "/index";

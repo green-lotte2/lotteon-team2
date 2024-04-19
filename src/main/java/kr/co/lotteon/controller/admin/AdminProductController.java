@@ -8,6 +8,10 @@ import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +68,7 @@ public class AdminProductController {
         log.info("pno.. ");
         productService.insertImg(imgDTO);
 
-        return "/admin/product/register";
+        return "redirect:/admin/product/list";
     }
 
 
@@ -101,5 +105,23 @@ public class AdminProductController {
     public String adminOrderList(){
         return "/admin/order/list";
     }
+
+    @GetMapping("/admin/product/search")
+    public String search(
+            Model model,
+            String search,
+            @PageableDefault(size = 10, sort = "pname", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        Page<Product> resultList = productService.findByPname(pageable, search);
+        for (Product result : resultList) {
+            log.info(result.toString());
+        }
+        model.addAttribute("products", resultList);
+        model.addAttribute("page", resultList);
+        log.info("검색....1");
+        return "/admin/product/search";
+    }
+
+
 
 }
