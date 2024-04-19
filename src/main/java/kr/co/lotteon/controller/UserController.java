@@ -9,6 +9,7 @@ import kr.co.lotteon.service.TermsService;
 import kr.co.lotteon.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -62,7 +63,7 @@ public class UserController {
 
     //로그인 페이지
     @GetMapping("/login")
-    public String login(){
+    public String loginForm(){
         return "/member/login";
     }
 
@@ -132,22 +133,44 @@ public class UserController {
         resultMap.put("result", result);
 
         return resultMap;
-
-
-
     }
 
     @ResponseBody
-    @GetMapping("/checkEmail")
-    public Map<String, Integer> checkEmail(String email) {
-        log.info("email: " + email);
+    @GetMapping("/checkEmail/{value}")
+    public ResponseEntity<?> checkEmail(HttpSession session, @PathVariable("value") String value){
 
-        // 이메일 중복 여부 확인 서비스 호출
-        boolean exists = userService.existsByEmail(email);
-        int result = exists ? 1 : 0;
+        boolean isExist = userService.existsByEmail(value);
+        log.info("isExist : " + isExist);
+
+        // 중복 없으면 이메일 인증코드 발송
+        if(!isExist){
+            log.info("email : " + value);
+            userService.sendEmailCode(session, value);
+        }
+
+        // Json 생성
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", isExist);
+
+        return ResponseEntity.ok().body(resultMap);
+    }
+
+
+    @ResponseBody
+    @GetMapping("/checkEmailCode/{value}")
+    public Map<String, Boolean> checkEmailCode(@PathVariable("value") String code, HttpSession session) {
+        String sessionCode = (String) session.getAttribute("code");
+
+
+        log.info("sessionCode : " + sessionCode);
+        log.info("code : " + code);
+
+        // 세션 코드와 입력된 코드 비교
+        boolean result = sessionCode != null && sessionCode.equals(code);
+        log.info("result : " + result);
 
         // JSON 출력
-        Map<String, Integer> resultMap = new HashMap<>();
+        Map<String, Boolean> resultMap = new HashMap<>();
         resultMap.put("result", result);
 
         return resultMap;

@@ -10,29 +10,29 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QCate1Entity is a Querydsl query type for Cate1
+ * QCsCate1 is a Querydsl query type for CsCate1
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QCate1Entity extends EntityPathBase<Cate1Entity> {
+public class QCsCate1 extends EntityPathBase<CsCate1> {
 
-    private static final long serialVersionUID = 93739074L;
+    private static final long serialVersionUID = 1760260527L;
 
-    public static final QCate1Entity cate1Entity = new QCate1Entity("cate1");
+    public static final QCsCate1 csCate1 = new QCsCate1("csCate1");
 
     public final StringPath c1name = createString("c1name");
 
     public final NumberPath<Integer> cate1 = createNumber("cate1", Integer.class);
 
-    public QCate1Entity(String variable) {
-        super(Cate1Entity.class, forVariable(variable));
+    public QCsCate1(String variable) {
+        super(CsCate1.class, forVariable(variable));
     }
 
-    public QCate1Entity(Path<? extends Cate1Entity> path) {
+    public QCsCate1(Path<? extends CsCate1> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QCate1Entity(PathMetadata metadata) {
-        super(Cate1Entity.class, metadata);
+    public QCsCate1(PathMetadata metadata) {
+        super(CsCate1.class, metadata);
     }
 
 }

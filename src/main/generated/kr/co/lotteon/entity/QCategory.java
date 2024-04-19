@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-package kr.co.lotteon.Entity;
-=======
 package kr.co.lotteon.entity;
->>>>>>> 840ccb66032d8827537ab78b5a50f6e153f0b885
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -20,11 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QCategory extends EntityPathBase<Category> {
 
-<<<<<<< HEAD
-    private static final long serialVersionUID = 347433729L;
-=======
     private static final long serialVersionUID = 1344451361L;
->>>>>>> 840ccb66032d8827537ab78b5a50f6e153f0b885
 
     private static final PathInits INITS = PathInits.DIRECT2;
 

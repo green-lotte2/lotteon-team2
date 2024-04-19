@@ -29,8 +29,6 @@
 			const spanMsgPass = document.getElementsByClassName('msgPass')[0];
 			const inputName = document.getElementsByName('name')[0];
 			const spanMsgName = document.getElementsByClassName('msgName')[0];
-			const inputEmail = document.getElementsByName('email')[0];
-			const spanMsgEmail = document.getElementsByClassName('msgEmail')[0];
 			const inputHp = document.getElementsByName('hp')[0];
 			const spanMsgHp = document.getElementsByClassName('msgHp')[0];
 
@@ -113,63 +111,97 @@
 				}
 			};
 
-			//이메일
-			inputEmail.onkeyup = function () {
-				const email = inputEmail.value.trim();
-				const spinner   = this.getElementsByClassName('spinner')[0];
+			// 이메일 유효성 검사
+			const divEmailCode = document.getElementById('divEmailCode');
+			const inputEmail = document.getElementById('inputEmail');
+			const btn_email = document.getElementById('btn_email');
+			const resultEmail = document.getElementById('result_email');
 
-				if (!email.match(reEmail)) {
-					spanMsgEmail.innerText = '올바른 이메일 형식이 아닙니다.';
-					spanMsgEmail.style.color = 'red';
+			btn_email.onclick = function () {
+
+				const type = this.dataset.type;
+
+				console.log("type : " + type);
+
+				// 유효성 검사
+				if (!inputEmail.value.match(reEmail)) {
+
+					resultEmail.innerText = '이메일 형식이 맞지 않습니다.';
+					resultEmail.style.color='red';
 					isEmailOk = false;
-				} else {
-					spanMsgEmail.innerText = '';
-					isEmailOk = true;
-
-					// 중복 확인
-					fetch(`/lotteon/member/checkEmail?email=${email}`)
-							.then(response => response.json())
-							.then(data => {
-								if (data.result > 0) {
-									spanMsgEmail.innerText = '이미 사용 중인 이메일입니다.';
-									spanMsgEmail.style.color = 'red';
-									isEmailOk = false;
-								} else {
-									spanMsgEmail.innerText = '사용 가능한 이메일입니다.';
-									spanMsgEmail.style.color = 'green';
-									isEmailOk = true;
-								}
-							});
+					return;
 				}
-			};
 
+				console.log("fetchData1...1");
+
+				fetch(`/lotteon/member/checkEmail/${inputEmail.value}`)
+						.then(response => response.json())
+						.then(data => {
+							console.log(data);
+							if(!data.result){
+								result_email.innerText='인증번호가 발송 되었습니다.';
+								result_email.style.color='green';
+								isEmailOk = true;
+							}else{
+								result_email.innerText='이미 사용중인 이메일 입니다.';
+								result_email.style.color = 'red';
+								isEmailOk = false;
+							}
+						});
+			}
+
+			// 이메일 인증코드 확인
+			const btnCheckEmailCode = document.getElementById('btnCheckEmailCode');
+			const inputEmailCode = document.getElementById('inputEmailCode');
+			const resultEmailCode = document.getElementById('resultEmailCode');
+
+			btnCheckEmailCode.onclick = async function () {
+
+				fetch(`/lotteon/member/checkEmailCode/${inputEmailCode.value}`)
+						.then(response => response.json())
+						.then(data => {
+							console.log(data);
+
+							if (!data.result) {
+								resultEmailCode.innerText = '인증코드가 일치하지 않습니다.';
+								resultEmailCode.style.color='red';
+								isEmailOk = false;
+							} else {
+								resultEmailCode.innerText = '이메일이 인증되었습니다.';
+								resultEmailCode.style.color='green';
+								isEmailOk = true;
+							}
+						});
+			}
+
+			// 휴대폰 유효성 검사
 			inputHp.onkeyup = function () {
-				const hp = inputHp.value.trim();
+					const hp = inputHp.value.trim();
 
-				if (!hp.match(reHp)) {
-					spanMsgHp.innerText = '올바른 휴대폰 번호 형식이 아닙니다.';
-					spanMsgHp.style.color = 'red';
-					isHpOk = false;
-				} else {
-					spanMsgHp.innerText = '';
-					isHpOk = true;
+					if (!hp.match(reHp)) {
+						spanMsgHp.innerText = '올바른 휴대폰 번호 형식이 아닙니다.';
+						spanMsgHp.style.color = 'red';
+						isHpOk = false;
+					} else {
+						spanMsgHp.innerText = '';
+						isHpOk = true;
 
-					// 중복 확인
-					fetch(`/lotteon/member/checkHp?hp=${hp}`)
-							.then(response => response.json())
-							.then(data => {
-								if (data.result > 0) {
-									spanMsgHp.innerText = '이미 사용 중인 휴대폰 번호입니다.';
-									spanMsgHp.style.color = 'red';
-									isHpOk = false;
-								} else {
-									spanMsgHp.innerText = '사용 가능한 휴대폰 번호입니다.';
-									spanMsgHp.style.color = 'green';
-									isHpOk = true;
-								}
-							});
-				}
-			};
+						// 중복 확인
+						fetch(`/lotteon/member/checkHp?hp=${hp}`)
+								.then(response => response.json())
+								.then(data => {
+									if (data.result > 0) {
+										spanMsgHp.innerText = '이미 사용 중인 휴대폰 번호입니다.';
+										spanMsgHp.style.color = 'red';
+										isHpOk = false;
+									} else {
+										spanMsgHp.innerText = '사용 가능한 휴대폰 번호입니다.';
+										spanMsgHp.style.color = 'green';
+										isHpOk = true;
+									}
+								});
+					}
+				};
 
 			// 우편번호 주소검색
 			// 다음 우편번호 API 스크립트 상단 추가, postcode 함수 util.js 파일 추가
@@ -265,17 +297,18 @@
 					</tr>
 					<tr>
 						<th><span class="essential">*</span>EMAIL</th>
-						<td>
-							<div>
-							<input type="email" name="email" id="email" placeholder="이메일 입력" required/>
-							<button type="button" id="emailNum">인증번호</button>
-							<span class="msgEmail"></span>
-							</div>
+						<td><input id="inputEmail" type="email" name="email" placeholder="이메일 입력"
+								   required/>
+							<button class="btnSubmit" type="button" id="btn_email" data-type="email">이메일 인증</button>
+							<span id="result_email"></span>
 
-							<div>
-							<input type="text" name="inputCode" id="intputCode" maxlength="6" placeholder="인증번호를 입력해주세요." required/>
-							<button name="check" id="check" type="button" onclick="verifyCode()" >확인하기</button>
-							<span class="msgEmail"></span>
+							<div id="divEmailCode">
+								<input class="form-control" id="inputEmailCode" name="code" type="text" placeholder="이메일 인증코드 입력"/>
+								<button type="button" class="btnSubmit" id="btnCheckEmailCode"
+										data-type="email">
+									<span class="" role="status">인증코드 확인</span>
+								</button>
+								<div id="resultEmailCode" class="d-block"></div>
 							</div>
 						</td>
 					</tr>

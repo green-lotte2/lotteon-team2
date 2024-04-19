@@ -29,7 +29,7 @@ public class UserService {
     private final UserDetailRepository userDetailRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     @Transactional
     public void insertUser(UserDTO userDTO) {
@@ -75,15 +75,17 @@ public class UserService {
         MimeMessage message = javaMailSender.createMimeMessage();
 
         // 인증코드 생성 후 세션 저장
-        int code = ThreadLocalRandom.current().nextInt(100000, 1000000);
-        session.setAttribute("code", String.valueOf(code));
+        String code = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
+        session.setAttribute("code", code);
 
         log.info("code : " + code);
 
         String title = "lotteon 인증코드 입니다.";
         String content = "<h1>인증코드는 " + code + "입니다.</h1>";
 
+
         try {
+            message.setSubject(title);
             message.setFrom(new InternetAddress(sender, "보내는 사람", "UTF-8"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
             message.setSubject(title);
@@ -91,13 +93,10 @@ public class UserService {
 
             javaMailSender.send(message);
 
-        }catch(Exception e){
-            log.error("sendEmailConde : " + e.getMessage());
+        } catch (Exception e) {
+            log.error("error={}", e.getMessage());
         }
 
     }
-
-
-
 
 }

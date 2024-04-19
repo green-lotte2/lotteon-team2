@@ -11,26 +11,26 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QNoticeEntity is a Querydsl query type for CsNotice
+ * QCsNotice is a Querydsl query type for CsNotice
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QNoticeEntity extends EntityPathBase<NoticeEntity> {
+public class QCsNotice extends EntityPathBase<CsNotice> {
 
-    private static final long serialVersionUID = 400953726L;
+    private static final long serialVersionUID = -938643061L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QNoticeEntity noticeEntity = new QNoticeEntity("noticeEntity");
+    public static final QCsNotice csNotice = new QCsNotice("csNotice");
 
     public final NumberPath<Integer> cate1 = createNumber("cate1", Integer.class);
 
-    public final QCate1Entity cate1Entity;
-
     public final NumberPath<Integer> cate2 = createNumber("cate2", Integer.class);
 
-    public final QCate2Entity cate2Entity;
-
     public final StringPath content = createString("content");
+
+    public final QCsCate1 csCate1;
+
+    public final QCsCate2 csCate2;
 
     public final NumberPath<Integer> noticeno = createNumber("noticeno", Integer.class);
 
@@ -42,26 +42,26 @@ public class QNoticeEntity extends EntityPathBase<NoticeEntity> {
 
     public final StringPath uid = createString("uid");
 
-    public QNoticeEntity(String variable) {
-        this(NoticeEntity.class, forVariable(variable), INITS);
+    public QCsNotice(String variable) {
+        this(CsNotice.class, forVariable(variable), INITS);
     }
 
-    public QNoticeEntity(Path<? extends NoticeEntity> path) {
+    public QCsNotice(Path<? extends CsNotice> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QNoticeEntity(PathMetadata metadata) {
+    public QCsNotice(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QNoticeEntity(PathMetadata metadata, PathInits inits) {
-        this(NoticeEntity.class, metadata, inits);
+    public QCsNotice(PathMetadata metadata, PathInits inits) {
+        this(CsNotice.class, metadata, inits);
     }
 
-    public QNoticeEntity(Class<? extends NoticeEntity> type, PathMetadata metadata, PathInits inits) {
+    public QCsNotice(Class<? extends CsNotice> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.cate1Entity = inits.isInitialized("cate1") ? new QCate1Entity(forProperty("cate1")) : null;
-        this.cate2Entity = inits.isInitialized("cate2") ? new QCate2Entity(forProperty("cate2"), inits.get("cate2")) : null;
+        this.csCate1 = inits.isInitialized("csCate1") ? new QCsCate1(forProperty("csCate1")) : null;
+        this.csCate2 = inits.isInitialized("csCate2") ? new QCsCate2(forProperty("csCate2"), inits.get("csCate2")) : null;
     }
 
 }
