@@ -4,6 +4,7 @@ import groovy.lang.Tuple;
 import kr.co.lotteon.dto.ProductDTO;
 import kr.co.lotteon.dto.ProductimgDTO;
 import kr.co.lotteon.entity.*;
+import kr.co.lotteon.mapper.ProductMapper;
 import kr.co.lotteon.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,8 +43,10 @@ public class ProductService {
 
     private final ModelMapper modelMapper;
 
+    private final ProductMapper productMapper;
     private final ProductimgRepository productimgRepository;
 
+    /////////////////////////상품 이미지////////////////////////////////
     public ProductimgDTO imgUpload(ProductimgDTO imgDTO, int cate) {
 
         // 파일 업로드 시스템 경로 구하기
@@ -97,7 +100,10 @@ public class ProductService {
         productimgRepository.save(img);
         log.info("img" + img);
     }
-
+    /////////////////////////상품///////////////////////////////
+    /*
+        상품 등록
+     */
     public Product insertProduct(ProductDTO productDTO) {
 
         Product product = modelMapper.map(productDTO, Product.class);
@@ -106,9 +112,11 @@ public class ProductService {
         log.info("savedProduct: " + savedProduct);
         return savedProduct;
     }
-
-    public List<Product> findNewProduct(){
-        return productRepository.findTop8ByOrderByRdateDesc();
+    /*
+        상품 조회
+     */
+    public List<ProductDTO> findNewProduct(){
+        return productMapper.selectProductsForNew();
     }
 
     public Page<Product> findAllProducts(Pageable pageable) {
