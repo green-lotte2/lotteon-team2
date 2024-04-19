@@ -11,30 +11,28 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QFaqEntity is a Querydsl query type for CsFaq
+ * QCsFaq is a Querydsl query type for CsFaq
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QFaqEntity extends EntityPathBase<FaqEntity> {
+public class QCsFaq extends EntityPathBase<CsFaq> {
 
-    private static final long serialVersionUID = -1676148522L;
+    private static final long serialVersionUID = 2147083587L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QFaqEntity faqEntity = new QFaqEntity("faqEntity");
+    public static final QCsFaq csFaq = new QCsFaq("csFaq");
 
     public final NumberPath<Integer> cate1 = createNumber("cate1", Integer.class);
 
-    public final QCate1Entity cate1Entity;
-
     public final NumberPath<Integer> cate2 = createNumber("cate2", Integer.class);
-
-    public final QCate2Entity cate2Entity;
 
     public final StringPath content = createString("content");
 
-    public final NumberPath<Integer> faqno = createNumber("faqno", Integer.class);
+    public final QCsCate1 csCate1;
 
-    public final NumberPath<Integer> hit = createNumber("hit", Integer.class);
+    public final QCsCate2 csCate2;
+
+    public final NumberPath<Integer> faqno = createNumber("faqno", Integer.class);
 
     public final DateTimePath<java.time.LocalDateTime> rdate = createDateTime("rdate", java.time.LocalDateTime.class);
 
@@ -44,26 +42,26 @@ public class QFaqEntity extends EntityPathBase<FaqEntity> {
 
     public final StringPath uid = createString("uid");
 
-    public QFaqEntity(String variable) {
-        this(FaqEntity.class, forVariable(variable), INITS);
+    public QCsFaq(String variable) {
+        this(CsFaq.class, forVariable(variable), INITS);
     }
 
-    public QFaqEntity(Path<? extends FaqEntity> path) {
+    public QCsFaq(Path<? extends CsFaq> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QFaqEntity(PathMetadata metadata) {
+    public QCsFaq(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QFaqEntity(PathMetadata metadata, PathInits inits) {
-        this(FaqEntity.class, metadata, inits);
+    public QCsFaq(PathMetadata metadata, PathInits inits) {
+        this(CsFaq.class, metadata, inits);
     }
 
-    public QFaqEntity(Class<? extends FaqEntity> type, PathMetadata metadata, PathInits inits) {
+    public QCsFaq(Class<? extends CsFaq> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.cate1Entity = inits.isInitialized("cate1") ? new QCate1Entity(forProperty("cate1")) : null;
-        this.cate2Entity = inits.isInitialized("cate2") ? new QCate2Entity(forProperty("cate2"), inits.get("cate2")) : null;
+        this.csCate1 = inits.isInitialized("csCate1") ? new QCsCate1(forProperty("csCate1")) : null;
+        this.csCate2 = inits.isInitialized("csCate2") ? new QCsCate2(forProperty("csCate2"), inits.get("csCate2")) : null;
     }
 
 }

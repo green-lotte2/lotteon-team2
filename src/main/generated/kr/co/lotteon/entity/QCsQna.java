@@ -11,28 +11,28 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QQnaEntity is a Querydsl query type for CsQna
+ * QCsQna is a Querydsl query type for CsQna
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QQnaEntity extends EntityPathBase<QnaEntity> {
+public class QCsQna extends EntityPathBase<CsQna> {
 
-    private static final long serialVersionUID = -216770268L;
+    private static final long serialVersionUID = 2147094545L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QQnaEntity qnaEntity = new QQnaEntity("qnaEntity");
+    public static final QCsQna csQna = new QCsQna("csQna");
 
     public final NumberPath<Integer> answercomplete = createNumber("answercomplete", Integer.class);
 
     public final NumberPath<Integer> cate1 = createNumber("cate1", Integer.class);
 
-    public final QCate1Entity cate1Entity;
-
     public final NumberPath<Integer> cate2 = createNumber("cate2", Integer.class);
 
-    public final QCate2Entity cate2Entity;
-
     public final StringPath content = createString("content");
+
+    public final QCsCate1 csCate1;
+
+    public final QCsCate2 csCate2;
 
     public final StringPath file1 = createString("file1");
 
@@ -58,26 +58,26 @@ public class QQnaEntity extends EntityPathBase<QnaEntity> {
 
     public final StringPath uid = createString("uid");
 
-    public QQnaEntity(String variable) {
-        this(QnaEntity.class, forVariable(variable), INITS);
+    public QCsQna(String variable) {
+        this(CsQna.class, forVariable(variable), INITS);
     }
 
-    public QQnaEntity(Path<? extends QnaEntity> path) {
+    public QCsQna(Path<? extends CsQna> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QQnaEntity(PathMetadata metadata) {
+    public QCsQna(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QQnaEntity(PathMetadata metadata, PathInits inits) {
-        this(QnaEntity.class, metadata, inits);
+    public QCsQna(PathMetadata metadata, PathInits inits) {
+        this(CsQna.class, metadata, inits);
     }
 
-    public QQnaEntity(Class<? extends QnaEntity> type, PathMetadata metadata, PathInits inits) {
+    public QCsQna(Class<? extends CsQna> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.cate1Entity = inits.isInitialized("cate1") ? new QCate1Entity(forProperty("cate1")) : null;
-        this.cate2Entity = inits.isInitialized("cate2") ? new QCate2Entity(forProperty("cate2"), inits.get("cate2")) : null;
+        this.csCate1 = inits.isInitialized("csCate1") ? new QCsCate1(forProperty("csCate1")) : null;
+        this.csCate2 = inits.isInitialized("csCate2") ? new QCsCate2(forProperty("csCate2"), inits.get("csCate2")) : null;
     }
 
 }
