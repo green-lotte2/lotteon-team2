@@ -55,12 +55,12 @@
                       <td>
                           <ul>
                               <li>
-                                  <!-- 할인된 가격을 계산합니다. 숫자를 직접 형식화하지 않고 정수로 출력합니다. -->
-                                  <ins class="dis-price" th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된 가격</ins>
+                                  <!-- 할인된 가격을 계산하고 콤마 포맷을 적용합니다. -->
+                                  <ins class="dis-price" th:text="${#numbers.formatInteger((product.price * (1 - product.discount / 100.0)), 3, 'COMMA')}">할인된 가격</ins>
                               </li>
                               <li>
-                                  <!-- 원래 가격을 출력합니다. -->
-                                  <del class="org-price" th:text="${product.price}">30,000</del>
+                                  <!-- 원래 가격에 콤마 포맷을 적용합니다. -->
+                                  <del class="org-price" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}">30,000</del>
                                   <!-- 할인율 -->
                                   <span class="discount" th:text="${product.discount + '%'}">10%</span>
                               </li>
@@ -78,30 +78,27 @@
                           <h6 class="rating star2">상품평</h6>
                       </td>
                   </tr>
-
-
               </table>
 
 
-
-              <!-- 상품목록 페이지번호 -->
+        <!-- 상품목록 페이지번호 -->
         <div class="paging">
             <!-- 이전 페이지 링크 -->
             <span class="prev">
-        <a th:if="${result.prev}" th:href="@{/product/list(pg=${result.page - 1})}">&lt;&nbsp;이전</a>
+        <a th:if="${result.page > 1}" th:href="@{/product/list(pg=${result.page - 1})}">&lt;&nbsp;이전</a>
     </span>
 
             <!-- 숫자 페이지 링크 -->
             <span class="num">
-        <span th:each="pageNum : ${#numbers.sequence(result.start, result.end)}">
-            <a th:href="@{/product/list(pg=${pageNum})}"
-               th:text="${pageNum}" th:class="${pageNum == result.page} ? 'on' : ''"></a>
-        </span>
+        <!-- Ensure the start page is at least 1 -->
+        <a th:each="pageNum : ${#numbers.sequence(result.start > 1 ? result.start : 1, result.end)}"
+           th:href="@{/product/list(pg=${pageNum})}" th:text="${pageNum}"
+           th:class="${pageNum == result.page} ? 'on' : ''"></a>
     </span>
 
             <!-- 다음 페이지 링크 -->
             <span class="next">
-        <a th:if="${result.next}" th:href="@{/product/list(pg=${result.page + 1})}">다음&nbsp;&gt;</a>
+        <a th:if="${result.page < result.totalPage}" th:href="@{/product/list(pg=${result.page + 1})}">다음&nbsp;&gt;</a>
     </span>
         </div>
 
