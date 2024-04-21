@@ -31,6 +31,9 @@ public class ProductDTO {
     private String color;
     private int hit;
 
+    private String opname;
+    private String opvalue;
+
     private String mainimg;
     private String subimg;
     private String detailimg;

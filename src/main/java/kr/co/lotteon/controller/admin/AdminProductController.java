@@ -47,7 +47,11 @@ public class AdminProductController {
                                        @RequestParam("subImg2") MultipartFile fileC,
                                        @RequestParam("detailImg") MultipartFile fileD){
         log.info("adminProductRegister2");
-        log.info("" + productDTO);
+        log.info(productDTO.toString());
+
+
+        Product product = productService.insertProduct(productDTO);
+
 
         List<MultipartFile> files = new ArrayList<>();
         files.add(fileA);
@@ -55,17 +59,11 @@ public class AdminProductController {
         files.add(fileD);
 
         ProductimgDTO imgDTO = new ProductimgDTO();
-
         imgDTO.setPno(productDTO.getPno());
         imgDTO.setFiles(files);
+        imgDTO.setPno(product.getPno());
 
         productService.imgUpload(imgDTO, productDTO.getCate());
-        Product product = productService.insertProduct(productDTO);
-
-        log.info("product :" + product);
-
-        imgDTO.setPno(product.getPno());
-        log.info("pno.. ");
         productService.insertImg(imgDTO);
 
         return "redirect:/admin/product/list";

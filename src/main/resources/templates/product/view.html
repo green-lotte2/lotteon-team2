@@ -2,417 +2,441 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/UserLayout}">
 
-    <!-- 상품 상세페이지 시이작! -->
-            <section class="view" layout:fragment="content">
+<!-- 상품 상세페이지 시이작! -->
+<section class="view" layout:fragment="content">
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        // 플러스 버튼 클릭 시 수량 증가
-                        document.querySelector('.increase').onclick = function () {
-                            //document.querySelector('.increase').addEventListener('click', function() {
-                            const count = document.querySelector('.quantity');
-                            let value = parseInt(count.value);
-                            value = isNaN(value) ? 0 : value;
-                            count.value = value + 1;
-                            changePrice();
-                        };
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            // 플러스 버튼 클릭 시 수량 증가
+            document.querySelector('.increase').onclick = function () {
+                //document.querySelector('.increase').addEventListener('click', function() {
+                const count = document.querySelector('.quantity');
+                let value = parseInt(count.value);
+                value = isNaN(value) ? 0 : value;
+                count.value = value + 1;
+                changePrice();
+            };
 
-                        // 마이너스 버튼 클릭 시 수량 감소
-                        document.querySelector('.decrease').onclick = function () {
-                            //document.querySelector('.decrease').addEventListener('click', function() {
-                            const count = document.querySelector('.quantity');
-                            let value = parseInt(count.value);
-                            value = isNaN(value) ? 0 : value;
-                            if (value > 1) {
-                                count.value = value - 1;
-                            }
-                            changePrice();
-                        };
+            // 마이너스 버튼 클릭 시 수량 감소
+            document.querySelector('.decrease').onclick = function () {
+                //document.querySelector('.decrease').addEventListener('click', function() {
+                const count = document.querySelector('.quantity');
+                let value = parseInt(count.value);
+                value = isNaN(value) ? 0 : value;
+                if (value > 1) {
+                    count.value = value - 1;
+                }
+                changePrice();
+            };
 
-                        // 수량 변경시 합계 가격 변동 코드
-                        const count = document.getElementById('count');
-                        const totalPrice = document.getElementById('totalPrice');
-                        const price = document.getElementById('price');
-                        const finalPoint = document.getElementById('finalPoint');
-                        const finalPrice = document.getElementById('finalPrice');
+            // 수량 변경시 합계 가격 변동 코드
+            const count = document.getElementById('count');
+            const totalPrice = document.getElementById('totalPrice');
+            const price = document.getElementById('price');
+            const finalPoint = document.getElementById('finalPoint');
+            const finalPrice = document.getElementById('finalPrice');
 
-                        function changePrice() {
-                            // 할인 적용 금액
-                            let StringPrice = price.innerText;
-                            let IntPrice = parseInt(StringPrice.replace(/,/g, ''));
-                            let total = count.value * IntPrice;
-                            console.log(count.value);
-                            console.log(price.innerText);
+            function changePrice() {
+                // 할인 적용 금액
+                let StringPrice = price.innerText;
+                let IntPrice = parseInt(StringPrice.replace(/,/g, ''));
+                let total = count.value * IntPrice;
+                console.log(count.value);
+                console.log(price.innerText);
 
-                            totalPrice.innerText = total.toLocaleString();
-                            console.log(total);
-                            // 적립 포인트
-                            let totalPoint = total / 10;
-                            finalPoint.innerText = totalPoint.toLocaleString();
-                            console.log(totalPoint);
-                            // 최종 금액
-                            finalPrice.innerText = total.toLocaleString();
-                        }
+                totalPrice.innerText = total.toLocaleString();
+                console.log(total);
+                // 적립 포인트
+                let totalPoint = total / 10;
+                finalPoint.innerText = totalPoint.toLocaleString();
+                console.log(totalPoint);
+                // 최종 금액
+                finalPrice.innerText = total.toLocaleString();
+            }
 
-                        try {
-                            const today = new Date();
-                            const arrivalDate = new Date();
-                            arrivalDate.setDate(today.getDate() + 2);  // 현재 날짜에서 2일을 더합니다.
-                            const options = {
-                                weekday: 'short',
-                                year: 'numeric',
-                                month: '2-digit',
-                                day: '2-digit',
-                                timeZone: 'Asia/Seoul'
-                            };
+            try {
+                const today = new Date();
+                const arrivalDate = new Date();
+                arrivalDate.setDate(today.getDate() + 2);  // 현재 날짜에서 2일을 더합니다.
+                const options = {
+                    weekday: 'short',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    timeZone: 'Asia/Seoul'
+                };
 
-                            // 날짜와 요일을 설정합니다.
-                            const formattedDate = arrivalDate.toLocaleDateString('ko-KR', options);
-                            const [weekday, date] = formattedDate.split(', ');
+                // 날짜와 요일을 설정합니다.
+                const formattedDate = arrivalDate.toLocaleDateString('ko-KR', options);
+                const [weekday, date] = formattedDate.split(', ');
 
-                            // 도착 정보를 업데이트합니다.
-                            document.getElementById('arrivalInfo').textContent = `${weekday} 도착예정`;
-                            console.log(`모레(${weekday}) ${date} 도착예정`); // 콘솔에 출력하여 확인합니다.
-                        } catch (error) {
-                            console.error('Error calculating arrival date:', error);
-                        }
+                // 도착 정보를 업데이트합니다.
+                document.getElementById('arrivalInfo').textContent = `${weekday} 도착예정`;
+                console.log(`모레(${weekday}) ${date} 도착예정`); // 콘솔에 출력하여 확인합니다.
+            } catch (error) {
+                console.error('Error calculating arrival date:', error);
+            }
 
 
-                        document.addEventListener("DOMContentLoaded", function() {
-                            const btnCart = document.getElementById('btnCart');
-                            const btnOrder = document.getElementById('btnOrder');
+            document.addEventListener("DOMContentLoaded", function () {
+                const btnCart = document.getElementById('btnCart');
+                const btnOrder = document.getElementById('btnOrder');
 
-                            btnCart.addEventListener('click', function() {
-                                // 예를 들어 uid가 저장된 쿠키 또는 로컬 스토리지에서 추출
-                                const uid = sessionStorage.getItem('uid');
-                                if (uid) {
-                                    window.location.href = `/product/cart?uid=${uid}`; // 사용자의 장바구니 페이지로 이동
-                                } else {
-                                    window.location.href = '/lotteon/member/login'; // 로그인 페이지로 이동
-                                }
-                            });
+                btnCart.addEventListener('click', function () {
+                    // 예를 들어 uid가 저장된 쿠키 또는 로컬 스토리지에서 추출
+                    const uid = sessionStorage.getItem('uid');
+                    if (uid) {
+                        window.location.href = `/product/cart?uid=${uid}`; // 사용자의 장바구니 페이지로 이동
+                    } else {
+                        window.location.href = '/lotteon/member/login'; // 로그인 페이지로 이동
+                    }
+                });
 
-                            btnOrder.addEventListener('click', function() {
-                                window.location.href = '/product/order'; // 바로 주문 페이지로 이동
-                            });
+                btnOrder.addEventListener('click', function () {
+                    window.location.href = '/product/order'; // 바로 주문 페이지로 이동
+                });
 
-/*
-                            const btnOrder = document.getElementById('btnOrder');
-                            const btnCart = document.getElementById('btnCart');
 
-                            btnOrder.addEventListener('click', function () {
-                                handleBuyOrCart('order');
-                            });
+                /*
+                                            const btnOrder = document.getElementById('btnOrder');
+                                            const btnCart = document.getElementById('btnCart');
 
-                            btnCart.addEventListener('click', function () {
-                                handleBuyOrCart('cart');
-                            });
+                                            btnOrder.addEventListener('click', function () {
+                                                handleBuyOrCart('order');
+                                            });
 
-                            function handleBuyOrCart(actionType) {
-                                const uid = document.getElementById('uid');
-                                if (!uid || !uid.value) {
-                                    let result = confirm("로그인 후 사용하실 수 있습니다. \n 로그인 페이지로 이동하시겠습니까?");
-                                    if (result) {
-                                        window.location.href = '/lotteon/member/login'; // 로그인 페이지로 리다이렉션
-                                    }
-                                } else {
-                                    const prodCount = document.getElementsByName('prodCount')[0].value;
-                                    const prodno = document.getElementById('prodno').value;
+                                            btnCart.addEventListener('click', function () {
+                                                handleBuyOrCart('cart');
+                                            });
 
-                                    const jsonData = {
-                                        uid: uid.value,
-                                        prodno: prodno,
-                                        prodCount: prodCount
-                                    };
-                                    const url = actionType === 'order' ? '/product/order' : '/product/cart';
-                                    fetch(url, {
-                                        method: 'POST',
-                                        headers: {'Content-Type': 'application/json'},
-                                        body: JSON.stringify(jsonData)
-                                    })
-                                        .then(response => {
-                                            if (!response.ok) {
-                                                throw new Error('Failed to process request');
+                                            function handleBuyOrCart(actionType) {
+                                                const uid = document.getElementById('uid');
+                                                if (!uid || !uid.value) {
+                                                    let result = confirm("로그인 후 사용하실 수 있습니다. \n 로그인 페이지로 이동하시겠습니까?");
+                                                    if (result) {
+                                                        window.location.href = '/lotteon/member/login'; // 로그인 페이지로 리다이렉션
+                                                    }
+                                                } else {
+                                                    const prodCount = document.getElementsByName('prodCount')[0].value;
+                                                    const prodno = document.getElementById('prodno').value;
+
+                                                    const jsonData = {
+                                                        uid: uid.value,
+                                                        prodno: prodno,
+                                                        prodCount: prodCount
+                                                    };
+                                                    const url = actionType === 'order' ? '/product/order' : '/product/cart';
+                                                    fetch(url, {
+                                                        method: 'POST',
+                                                        headers: {'Content-Type': 'application/json'},
+                                                        body: JSON.stringify(jsonData)
+                                                    })
+                                                        .then(response => {
+                                                            if (!response.ok) {
+                                                                throw new Error('Failed to process request');
+                                                            }
+                                                            return response.json();
+                                                        })
+                                                        .then(data => {
+                                                            alert('Request processed successfully');
+                                                            window.location.href = data.redirectUrl; // Redirect to success page
+                                                        })
+                                                        .catch(err => console.error('Error:', err));
+                                                }
                                             }
-                                            return response.json();
-                                        })
-                                        .then(data => {
-                                            alert('Request processed successfully');
-                                            window.location.href = data.redirectUrl; // Redirect to success page
-                                        })
-                                        .catch(err => console.error('Error:', err));
-                                }
-                            }
-                        });
+                                        });
 
- */
-                    });
-                    });
-                </script>
+                 */
+            });
+            const optionField = document.getElementById('option');
+            const optionName = [[${product.opname}]];
+            const optionValue = [[${product.opvalue}]];
 
-                <!-- 제목, 페이지 네비게이션 -->
-                <nav>
-                    <h1>상품보기</h1>
-                    <p>
-                        HOME > <span>패션·의류·뷰티</span> > <strong>남성의류</strong>
-                    </p>
-                </nav>
+            if(optionName != null){
+                const optionNameList = optionName.split('%');
+                const optionValueList = optionValue.split('$');
+                for(let i = 0; i < optionNameList.length-1; i++){
+                    const values = optionValueList[i].split('/');
 
-                <!-- 상품 전체 정보 내용 -->                
-                <article class="info">
-                    <div class="image">
-                        <img th:src="@{https://via.placeholder.com/460x460}" alt="상품이미지"/>
+                    optionField.innerHTML += `<span>` + optionNameList[i] + `</span>`;
+                    const select = document.createElement('select');
+                    for(let j = 0; j < values.length-1; j++){
+                        select.innerHTML += `<option value="` + values[j] + `">` + values[j] + `</option>`;
+                    }
+                    optionField.appendChild(select);
+                }
+            }
+        });
+    </script>
+
+    <!-- 제목, 페이지 네비게이션 -->
+    <nav>
+        <h1>상품보기</h1>
+        <p>
+            HOME > <span>패션·의류·뷰티</span> > <strong>남성의류</strong>
+        </p>
+    </nav>
+
+    <!-- 상품 전체 정보 내용 -->
+    <article class="info">
+        <div class="image">
+            <img th:src="@{https://via.placeholder.com/460x460}" alt="상품이미지"/>
+        </div>
+        <div class="summary">
+            <nav>
+                <h1 th:text="${product.company}">판매자명</h1>
+                <h2>상품번호: <span th:text="${product.cate}"></span></h2>
+            </nav>
+
+            <nav>
+                <h3 class="name" th:text="${product.pname}">상품명</h3>
+                <p th:text="${product.info}">상품설명 출력</p>
+                <h5 class="rating star4"><a th:href="@{#}">상품평보기</a></h5>
+            </nav>
+            <nav>
+                <!-- 원래 가격을 출력합니다. -->
+                <div class="org_price">
+                    <del th:text="${product.price}">30,000></del>
+                    <!-- 할인율 -->
+                    <span class="discount" th:text="${product.discount + '%'}">10%</span>
+                </div>
+                <div>
+                    <!-- 할인된 가격을 계산합니다. 숫자를 직접 형식화하지 않고 정수로 출력합니다. -->
+                    <div class="dis_price">
+                        <ins th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된
+                            가격
+                        </ins>
                     </div>
-                    <div class="summary">
-                        <nav>
-                            <h1 th:text="${product.company}">판매자명</h1>
-                            <h2>상품번호: <span th:text="${product.cate}"></span></h2>
-                        </nav>
+                </div>
+            </nav>
+            <nav>
+                <span class="delivery">무료배송</span>
+                <span class="arrival" id="arrivalInfo">1</span>
+                <span class="desc">본 상품은 국내배송만 가능합니다.</span>
+            </nav>
+            <nav>
+                <span class="card cardfree"><i>아이콘</i>무이자할부</span>&nbsp;&nbsp;
+                <span class="card cardadd"><i>아이콘</i>카드추가혜택</span>
+            </nav>
 
-                        <nav>
-                            <h3 class="name" th:text="${product.pname}">상품명</h3>
-                            <p th:text="${product.info}">상품설명 출력</p>
-                            <h5 class="rating star4"><a th:href="@{#}">상품평보기</a></h5>
-                        </nav>
-                        <nav>
-                                <!-- 원래 가격을 출력합니다. -->
-                            <div class="org_price">
-                                <del th:text="${product.price}">30,000></del>
-                                <!-- 할인율 -->
-                                <span class="discount" th:text="${product.discount + '%'}">10%</span>
-                            </div>
-                            <div>
-                                <!-- 할인된 가격을 계산합니다. 숫자를 직접 형식화하지 않고 정수로 출력합니다. -->
-                                <div class="dis_price">
-                                    <ins th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된 가격</ins>
-                                </div>
-                            </div>
-                        </nav>
-                        <nav>
-                            <span class="delivery">무료배송</span>
-                            <span class="arrival" id="arrivalInfo">1</span>
-                            <span class="desc">본 상품은 국내배송만 가능합니다.</span>
-                        </nav>
-                        <nav>
-                            <span class="card cardfree"><i>아이콘</i>무이자할부</span>&nbsp;&nbsp;
-                            <span class="card cardadd"><i>아이콘</i>카드추가혜택</span>
-                        </nav>
+            <nav>
+                <span class="origin">원산지-상세설명 참조</span>
+            </nav>
+            <nav id="option">
 
-                        <nav>
-                            <span class="origin">원산지-상세설명 참조</span>
-                        </nav>
+            </nav>
+
+            <!-- <nav>
+                <select class="size-select" name="size">
+                    <option value="">사이즈 선택</option>
+                    <option th:each="s : ${sizes}" th:value="${s}" th:text="${s}" th:selected="${s == product.size}">Size</option>
+                </select>
+                <select class="color-select" name="color">
+                    <option value="">색상 선택</option>
+                    <option th:each="c : ${colors}" th:value="${c}" th:text="${c}" th:selected="${c == product.color}">Color</option>
+                </select>
+            </nav>
+            -->
 
 
-                        <!-- <nav>
-                            <select class="size-select" name="size">
-                                <option value="">사이즈 선택</option>
-                                <option th:each="s : ${sizes}" th:value="${s}" th:text="${s}" th:selected="${s == product.size}">Size</option>
-                            </select>
-                            <select class="color-select" name="color">
-                                <option value="">색상 선택</option>
-                                <option th:each="c : ${colors}" th:value="${c}" th:text="${c}" th:selected="${c == product.color}">Color</option>
-                            </select>
-                        </nav>
-                        -->
+            <div class="count">
+                <button class="decrease" type="button">-</button>
+                <input type="text" class="quantity" name="num" min="1" value="1" id="count">
+                <button class="increase" type="button">+</button>
+            </div>
 
 
-                        <div class="count">
-                            <button class="decrease" type="button">-</button>
-                            <input type="text" class="quantity" name="num" min="1" value="1" id="count">
-                            <button class="increase" type="button">+</button>
-                        </div>
+            <img src="../images/vip_plcc_banner.png" alt="100원만 결제해도 1만원 적립!" class="banner"/>
 
-
-                        <img src="../images/vip_plcc_banner.png" alt="100원만 결제해도 1만원 적립!" class="banner" />
-
-                        <div class="total">
-                            <span id="totalPrice" th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된 가격</ins>
+            <div class="total">
+                            <span id="totalPrice"
+                                  th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0)}">할인된 가격</ins>
                             </span>
-                            <em>총 상품금액</em>
-                        </div>
+                <em>총 상품금액</em>
+            </div>
 
-                        <div class="button">
-                            <input type="button" class="cart" id="btnCart" value="장바구니"/>
-                            <input type="button" class="order" id="btnOrder" value="구매하기"/>
-                        </div>
+            <div class="button">
+                <input type="button" class="cart" id="btnCart" value="장바구니"/>
+                <input type="button" class="order" id="btnOrder" value="구매하기"/>
+            </div>
 
-                    </div>
-                </article>
+        </div>
+    </article>
 
-                <!-- 상품 정보 내용 -->
-                <article class="detail">
-                    <nav>
-                        <h1>상품정보</h1>
-                    </nav>
-                    <!-- 상품상세페이지 이미지 -->
-                    <img src="https://via.placeholder.com/860x460" alt="상세페이지1">
-                    <img src="https://via.placeholder.com/860x460" alt="상세페이지2">
-                    <img src="https://via.placeholder.com/860x460" alt="상세페이지3">
-                </article>
+    <!-- 상품 정보 내용 -->
+    <article class="detail">
+        <nav>
+            <h1>상품정보</h1>
+        </nav>
+        <!-- 상품상세페이지 이미지 -->
+        <img src="https://via.placeholder.com/860x460" alt="상세페이지1">
+        <img src="https://via.placeholder.com/860x460" alt="상세페이지2">
+        <img src="https://via.placeholder.com/860x460" alt="상세페이지3">
+    </article>
 
-                <!-- 상품 정보 제공 고시 내용 -->
-                <article class="notice">
-                    <nav>
-                        <h1>상품 정보 제공 고시</h1>
-                        <p>[전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의거 등록된 정보입니다.</p>
-                    </nav>
-                    <table border="0">
-                        <tr>
-                            <td>상품번호</td>
-                            <td>10110125435</td>
-                        </tr>
-                        <tr>
-                            <td>상품상태</td>
-                            <td>새상품</td>
-                        </tr>
-                        <tr>
-                            <td>부가세 면세여부</td>
-                            <td>과세상품</td>
-                        </tr>
-                        <tr>
-                            <td>영수증발행</td>
-                            <td>발행가능 - 신용카드 전표, 온라인 현금영수증</td>
-                        </tr>
-                        <tr>
-                            <td>사업자구분</td>
-                            <td>사업자 판매자</td>
-                        </tr>
-                        <tr>
-                            <td>브랜드</td>
-                            <td>블루포스</td>
-                        </tr>
-                        <tr>
-                            <td>원산지</td>
-                            <td>국내생산</td>
-                        </tr>
-                    </table>
-                    <table border="0">
-                        <tr>
-                            <td>제품소재</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>색상</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>치수</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>제조자/수입국</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>제조국</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>취급시 주의사항</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>제조연월</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>품질보증기준</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>A/S 책임자와 전화번호</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                            <td>주문후 예상 배송기간</td>
-                            <td>상세정보 직접입력</td>
-                        </tr>
-                        <tr>
-                        <td colspan="2">구매, 교환, 반품, 배송, 설치 등과 관련하여 추가비용, 제한조건 등의 특이사항이 있는 경우</td>
-                        </tr>
-                    </table>
-                    <p class="notice">
-                        소비자가 전자상거래등에서 소비자 보호에 관한 법률 제 17조 제1항 또는 제3항에 따라 청약철회를 하고
-                        동법 제 18조 제1항 에 따라 청약철회한 물품을 판매자에게 반환하였음에도 불구 하고 결제 대금의
-                        환급이 3영업일을 넘게 지연된 경우, 소비자 는 전자상거래등에서 소비자보호에 관한 법률 제18조
-                        제2항 및 동법 시행령 제21조 2에 따라 지연일수에 대하여 전상법 시행령으로 정하는 이율을 곱하여
-                        산정한 지연이자(“지연배상금”)를 신청할 수 있습니다. 아울러, 교환∙반품∙보증 및 결제대금의
-                        환급신청은 [나의쇼핑정보]에서 하실 수 있으며, 자세한 문의는 개별 판매자에게 연락하여 주시기 바랍니다.
-                    </p>
-                </article>
-                
-                <!-- 상품 리뷰 내용 -->
-                <article class="review">
-                    <nav>
-                        <h1>상품리뷰</h1>
-                    </nav>
-                    <ul>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">상품평</h5>
-                                <span>seo******	2018-07-10</span>
-                            </div>
-                            <h3>상품명1/BLUE/L</h3>
-                            <p>
-                                가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
-                                아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
-                                제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
-                            </p>
-                        </li>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">상품평</h5>
-                                <span>seo******	2018-07-10</span>
-                            </div>
-                            <h3>상품명1/BLUE/L</h3>
-                            <p>
-                                가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
-                                아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
-                                제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
-                            </p>
-                        </li>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">상품평</h5>
-                                <span>seo******	2018-07-10</span>
-                            </div>
-                            <h3>상품명1/BLUE/L</h3>
-                            <p>
-                                가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
-                                아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
-                                제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
-                            </p>
-                        </li>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">상품평</h5>
-                                <span>seo******	2018-07-10</span>
-                            </div>
-                            <h3>상품명1/BLUE/L</h3>
-                            <p>
-                                가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
-                                아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
-                                제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
-                            </p>
-                        </li>
-                        <li>
-                            <div>
-                                <h5 class="rating star4">상품평</h5>
-                                <span>seo******	2018-07-10</span>
-                            </div>
-                            <h3>상품명1/BLUE/L</h3>
-                            <p>
-                                가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
-                                아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
-                                제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
-                            </p>
-                        </li>
-                    </ul>
-                    <div class="paging">
+    <!-- 상품 정보 제공 고시 내용 -->
+    <article class="notice">
+        <nav>
+            <h1>상품 정보 제공 고시</h1>
+            <p>[전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의거 등록된 정보입니다.</p>
+        </nav>
+        <table border="0">
+            <tr>
+                <td>상품번호</td>
+                <td>10110125435</td>
+            </tr>
+            <tr>
+                <td>상품상태</td>
+                <td>새상품</td>
+            </tr>
+            <tr>
+                <td>부가세 면세여부</td>
+                <td>과세상품</td>
+            </tr>
+            <tr>
+                <td>영수증발행</td>
+                <td>발행가능 - 신용카드 전표, 온라인 현금영수증</td>
+            </tr>
+            <tr>
+                <td>사업자구분</td>
+                <td>사업자 판매자</td>
+            </tr>
+            <tr>
+                <td>브랜드</td>
+                <td>블루포스</td>
+            </tr>
+            <tr>
+                <td>원산지</td>
+                <td>국내생산</td>
+            </tr>
+        </table>
+        <table border="0">
+            <tr>
+                <td>제품소재</td>
+                <td>상세정보 직접입력</td>
+            </tr>
+            <tr>
+                <td>색상</td>
+                <td>상세정보 직접입력</td>
+            </tr>
+            <tr>
+                <td>치수</td>
+                <td>상세정보 직접입력</td>
+            </tr>
+            <tr>
+                <td>제조자/수입국</td>
+                <td>상세정보 직접입력</td>
+            </tr>
+            <tr>
+                <td>제조국</td>
+                <td>상세정보 직접입력</td>
+            </tr>
+            <tr>
+                <td>취급시 주의사항</td>
+                <td>상세정보 직접입력</td>
+            </tr>
+            <tr>
+                <td>제조연월</td>
+                <td>상세정보 직접입력</td>
+            </tr>
+            <tr>
+                <td>품질보증기준</td>
+                <td>상세정보 직접입력</td>
+            </tr>
+            <tr>
+                <td>A/S 책임자와 전화번호</td>
+                <td>상세정보 직접입력</td>
+            </tr>
+            <tr>
+                <td>주문후 예상 배송기간</td>
+                <td>상세정보 직접입력</td>
+            </tr>
+            <tr>
+                <td colspan="2">구매, 교환, 반품, 배송, 설치 등과 관련하여 추가비용, 제한조건 등의 특이사항이 있는 경우</td>
+            </tr>
+        </table>
+        <p class="notice">
+            소비자가 전자상거래등에서 소비자 보호에 관한 법률 제 17조 제1항 또는 제3항에 따라 청약철회를 하고
+            동법 제 18조 제1항 에 따라 청약철회한 물품을 판매자에게 반환하였음에도 불구 하고 결제 대금의
+            환급이 3영업일을 넘게 지연된 경우, 소비자 는 전자상거래등에서 소비자보호에 관한 법률 제18조
+            제2항 및 동법 시행령 제21조 2에 따라 지연일수에 대하여 전상법 시행령으로 정하는 이율을 곱하여
+            산정한 지연이자(“지연배상금”)를 신청할 수 있습니다. 아울러, 교환∙반품∙보증 및 결제대금의
+            환급신청은 [나의쇼핑정보]에서 하실 수 있으며, 자세한 문의는 개별 판매자에게 연락하여 주시기 바랍니다.
+        </p>
+    </article>
+
+    <!-- 상품 리뷰 내용 -->
+    <article class="review">
+        <nav>
+            <h1>상품리뷰</h1>
+        </nav>
+        <ul>
+            <li>
+                <div>
+                    <h5 class="rating star4">상품평</h5>
+                    <span>seo******	2018-07-10</span>
+                </div>
+                <h3>상품명1/BLUE/L</h3>
+                <p>
+                    가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
+                    아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
+                    제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
+                </p>
+            </li>
+            <li>
+                <div>
+                    <h5 class="rating star4">상품평</h5>
+                    <span>seo******	2018-07-10</span>
+                </div>
+                <h3>상품명1/BLUE/L</h3>
+                <p>
+                    가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
+                    아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
+                    제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
+                </p>
+            </li>
+            <li>
+                <div>
+                    <h5 class="rating star4">상품평</h5>
+                    <span>seo******	2018-07-10</span>
+                </div>
+                <h3>상품명1/BLUE/L</h3>
+                <p>
+                    가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
+                    아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
+                    제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
+                </p>
+            </li>
+            <li>
+                <div>
+                    <h5 class="rating star4">상품평</h5>
+                    <span>seo******	2018-07-10</span>
+                </div>
+                <h3>상품명1/BLUE/L</h3>
+                <p>
+                    가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
+                    아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
+                    제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
+                </p>
+            </li>
+            <li>
+                <div>
+                    <h5 class="rating star4">상품평</h5>
+                    <span>seo******	2018-07-10</span>
+                </div>
+                <h3>상품명1/BLUE/L</h3>
+                <p>
+                    가격대비 정말 괜찮은 옷이라 생각되네요 핏은 음...제가 입기엔 어깨선이 맞고 루즈핏이라 하기도 좀 힘드네요.
+                    아주 약간 루즈한정도...?그래도 이만한 옷은 없다고 봅니다 깨끗하고 포장도 괜찮고 다음에도 여기서 판매하는
+                    제품들을 구매하고 싶네요 정말 만족하고 후기 남깁니다 많이 파시길 바래요 ~ ~ ~
+                </p>
+            </li>
+        </ul>
+        <div class="paging">
                         <span class="prev">
                             <a href="#"><&nbsp;이전</a>
                         </span>
-                        <span class="num">
+            <span class="num">
                             <a href="#" class="on">1</a>
                             <a href="#">2</a>
                             <a href="#">3</a>
@@ -421,13 +445,13 @@
                             <a href="#">6</a>
                             <a href="#">7</a>
                         </span>
-                        <span class="next">
+            <span class="next">
                             <a href="#">다음&nbsp;></a>
                         </span>
-                    </div>
+        </div>
 
-                </article>
-                
-            </section>
-            <!-- 상품 상세페이지 끝 -->
+    </article>
+
+</section>
+<!-- 상품 상세페이지 끝 -->
 </html>
