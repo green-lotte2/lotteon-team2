@@ -18,6 +18,7 @@ import lombok.*;
 public class Cart {
 
     @Id
+    private int cno;
     private String uid;
     private int pno;
     private int pcount;

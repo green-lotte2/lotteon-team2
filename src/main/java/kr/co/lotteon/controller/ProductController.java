@@ -128,24 +128,23 @@ public class ProductController {
                        @RequestParam(defaultValue = "1") int pg,
                        @RequestParam(defaultValue = "10") int size) {
 
-
-        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+        // PageRequestDTO 객체 생성
+        ProductPageRequestDTO productPageRequestDTO = ProductPageRequestDTO.builder()
                 .pg(pg)
                 .size(size)
                 .build();
+        log.info("dddddd" + productPageRequestDTO);
 
-        PageResponseDTO responseDTO = productService.getList(pageRequestDTO, cate);
-        log.info("response"+responseDTO);
+        // 서비스 메소드 호출
+        ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, cate);
         model.addAttribute("products", responseDTO.getDtoList());
         model.addAttribute("result", responseDTO);
         model.addAttribute("cate", productService.getCategoryList()); // 카테고리 리스트 추가
 
+        log.info("response : " + responseDTO);
+
         return "/product/list";
     }
-
-
-
-
 
     @GetMapping("/product/order")
     public String order() {

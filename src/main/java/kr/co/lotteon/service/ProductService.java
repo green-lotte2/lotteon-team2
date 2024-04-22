@@ -188,15 +188,15 @@ public class ProductService {
 
 
     // ProductService.java
-    public PageResponseDTO getList(PageRequestDTO pageRequestDTO, String cate) {
-        if (pageRequestDTO == null) {
+    public ProductPageResponseDTO getList(ProductPageRequestDTO productpageRequestDTO, String cate) {
+        if (productpageRequestDTO == null) {
             log.error("PageRequestDTO is null");
             throw new IllegalArgumentException("PageRequestDTO must not be null");
         }
 
         Pageable pageable = PageRequest.of(
-                Math.max(pageRequestDTO.getPg() - 1, 0),
-                pageRequestDTO.getSize(),
+                Math.max(productpageRequestDTO.getPg() - 1, 0),
+                productpageRequestDTO.getSize(),
                 Sort.by("pname").ascending()
         );
 
@@ -211,12 +211,14 @@ public class ProductService {
             }
         } catch (NumberFormatException e) {
             log.error("Invalid category format: " + cate, e);
-            return PageResponseDTO.builder()
+            return ProductPageResponseDTO.builder()
                     .dtoList(Collections.emptyList())
                     .total(0)
                     .build();
         }
-
+        for(Product p : page){
+            log.info("asdjfklasjdk" + p);
+        }
         List<ProductDTO> productDTOs = page.getContent().stream()
                 .map(product -> {
                     ProductDTO dto = entityToDTO(product);
@@ -229,8 +231,10 @@ public class ProductService {
                 })
                 .collect(Collectors.toList());
 
-        return PageResponseDTO.builder()
+        return ProductPageResponseDTO.builder()
                 .dtoList(productDTOs)
+                .pg(productpageRequestDTO.getPg())
+                .size(page.getSize())
                 .total((int) page.getTotalElements())
                 .build();
     }
@@ -238,6 +242,7 @@ public class ProductService {
     private ProductDTO entityToDTO(Product product) {
         return ProductDTO.builder()
                 .pno(product.getPno())
+                .cate(product.getCate())
                 .pname(product.getPname())
                 .price(product.getPrice())
                 .stock(product.getStock())

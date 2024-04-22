@@ -7,7 +7,7 @@ on:
     branches: [ main ] # main branch로 push 될 때 실행
 
 # 해당 yml 내에서 사용할 key-value 속성
-env:  
+env:
   PROJECT_NAME: lotteon-team2/lotteon
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: seungyoon-s3-bucket-github-actions
@@ -31,13 +31,13 @@ jobs:
           java-version: '17'
 
       # application.properties를 프로젝트에 포함
-      - name: add Application.yml
-        run: touch ./src/main/resources/application.yml
+      - name: add Application.properties
+        run: touch ./src/main/resources/application.properties
         shell: bash
         
       # github secret으로 등록한 properties 내용 덮어쓰기
-      - name: copy Application.yml
-        run: echo "${{ secrets.APP_PROPERTIES }}" > ./src/main/resources/application.yml
+      - name: copy Application.properties
+        run: echo "${{ secrets.APP_PROPERTIES }}" > ./src/main/resources/application.properties
         shell: bash
         
       # gradle 권한 설정

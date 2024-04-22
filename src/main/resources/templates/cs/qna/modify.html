@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="~{/layout/csLayout.html}">
+
+    <div layout:fragment="content">
+
+        <section id="cs">
+            <div class="qna">
+                <nav>
+                    <div>
+                        <p>홈<span>></span>문의하기</p>
+                    </div>
+                </nav>
+                <section class="view">
+                    <aside>
+                        <h2>문의하기</h2>
+                        <ul>
+                            <li th:class="${cate1 == null or cate1 == '' ? 'on' : ''}">
+                                <a th:href="@{/cs/qna/list}" >전체</a>
+                            </li>
+                            <li th:class="${cate1 == '20' ? 'on' : ''}">
+                                <a th:href="@{/cs/qna/list(cate1=20)}">회원</a>
+                            </li>
+                            <li th:class="${cate1 == '21' ? 'on' : ''}">
+                                <a th:href="@{/cs/qna/list(cate1=21)}">쿠폰/혜택/이벤트</a>
+                            </li>
+                            <li th:class="${cate1 == '22' ? 'on' : ''}">
+                                <a th:href="@{/cs/qna/list(cate1=22)}">주문/결제</a>
+                            </li>
+                            <li th:class="${cate1 == '23' ? 'on' : ''}">
+                                <a th:href="@{/cs/qna/list(cate1=23)}">배송</a>
+                            </li>
+                            <li th:class="${cate1 == '24' ? 'on' : ''}">
+                                <a th:href="@{/cs/qna/list(cate1=24)}">취소/반품/교환</a>
+                            </li>
+                            <li th:class="${cate1 == '25' ? 'on' : ''}">
+                                <a th:href="@{/cs/qna/list(cate1=25)}">여행/숙박/항공</a>
+                            </li>
+                            <li th:class="${cate1 == '26' ? 'on' : ''}">
+                                <a th:href="@{/cs/qna/list(cate1=26)}">기타</a>
+                            </li>
+                        </ul>
+                    </aside>
+                    <article>
+                        <form th:action="@{/cs/qna/modify}" method="post">
+                            <nav>
+                                <input type="hidden" name="qnano" th:value="${qnaBoard.qnano}"/>
+                                <h2 class="title" th:text="'[' + ${qnaBoard.c2name} + ']' + ${qnaBoard.title}"></h2>
+                                <p>
+                                    <span th:text="${#strings.substring(qnaBoard.uid, 0, 3) + '***'}"></span>
+                                    <span th:text="${#temporals.format(qnaBoard.rdate, 'yy-MM-dd')}"></span>
+                                </p>
+                            </nav>
+                            <div class="content">
+                                <textarea id="mc" name="content">[[${qnaBoard.content}]]</textarea>
+                                <br><br>
+                                <p>
+                                    ※ 피싱 관련 피해신고<br /><br />
+                                    ▶ 경찰청 사이버수사국 (국번없이)182 :
+                                    http://cyberbureau.police.go.kr<br />
+                                    ▶ KISA 인터넷침해대응센터 (국번없이)118 :
+                                    http://www.krcert.or.kr<br />
+                                    감사합니다.<br />
+                                </p>
+                            </div>
+                            <div>
+                                <a th:href="@{/cs/qna/view(qnano=${qnaBoard.qnano})}" class="btnList">취소하기</a>
+                                <input type="submit" class="btnSubmit" value="수정완료"/>
+                            </div>
+                        </form>
+                    </article>
+                </section>
+            </div>
+        </section>
+    </div>
+</html>

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'kr.co.lotteon'
-version = '0.0.5-SNAPSHOT'
+version = '0.0.6-SNAPSHOT'
 
 java {
     sourceCompatibility = '17'
@@ -82,8 +82,8 @@ tasks.named('test') {
 springBoot {
     buildInfo()
 }
-// QueryDSL 설정
-tasks.named('jar'){
+// xxx-plain.jar 생성을 금지시키는 설정
+tasks.named('jar') {
     enabled = false
 }
 // QueryDSL 설정 - main 하위에 Querydsl 생성 설정
