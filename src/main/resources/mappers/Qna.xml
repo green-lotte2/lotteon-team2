@@ -10,13 +10,13 @@
         VALUES (#{cate1}, #{cate2}, #{title}, #{content}, #{file1}, #{file2}, #{uid}, #{answercomplete}, #{regip}, #{rdate})
     </insert>
 
-    <select id="selectQnaListAll" parameterType="map" resultType="map">
+    <select id="selectQnaListAll" parameterType="int" resultType="kr.co.lotteon.dto.QnaDTO">
         SELECT * FROM `qna` AS a
         JOIN `cate2` AS b
         ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `parent`=0 ORDER BY `qnano` DESC LIMIT #{start}, 10
     </select>
 
-    <select id="selectQnaListCate" parameterType="map" resultType="map">
+    <select id="selectQnaListCate" parameterType="int" resultType="kr.co.lotteon.dto.QnaDTO">
         SELECT * FROM `qna` AS a
         JOIN `cate2` AS b
         ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE a.cate1= #{cate1} AND `parent`=0 ORDER BY `qnano` DESC LIMIT #{start}, 10

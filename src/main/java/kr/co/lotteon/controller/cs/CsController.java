@@ -132,7 +132,7 @@ public class CsController {
         model.addAttribute("cate1", cate1);
         log.info(currentPage);
         log.info(lastPageNum);
-        log.info("cate1last : " + cate1);
+        log.info("cate1list : " + cate1);
 
         return "/cs/notice/list";
     }
@@ -156,8 +156,8 @@ public class CsController {
                                    @RequestParam(name="cate1", required = false) String cate1,
                                    Model model) {
 
-        log.info(pg);
-        log.info(cate1);
+        log.info("pg : " + pg);
+        log.info("cate1 : " + cate1);
 
         // 현재 페이지 번호
         int currentPage = csService.getCurrentPage(pg);
@@ -174,7 +174,9 @@ public class CsController {
         if(cate1 == null || cate1.isEmpty()){
             log.info("qna1");
             total = csService.selectQnaTotal();
+            log.info("qnaDTOS 1 : " + total);
             qnaDTOS = csService.selectQnaListAll(start);
+            log.info("qnaDTOS 2 : " + qnaDTOS);
         }else {
             log.info("qna2");
             log.info("qna2 cate1 : " + cate1);
@@ -203,7 +205,7 @@ public class CsController {
         model.addAttribute("cate1",cate1);
         log.info(currentPage);
         log.info(lastPageNum);
-        log.info("cate1last : " + cate1);
+        log.info("cate1list : " + cate1);
 
         return "/cs/qna/list";
     }
@@ -232,10 +234,13 @@ public class CsController {
     @PostMapping("/cs/qna/write")
     public String write(HttpServletRequest request, QnaDTO dto){
         dto.setRegip(request.getRemoteAddr());
+        dto.setUid("everybody24");
         dto.setRdate(LocalDateTime.now());
         csService.insertQnaWrite(dto);
-        return "redirect:/cs/index";
+        return "redirect:/cs/qna/list";
     }
+
+
 
     // Qna 파일 다운로드
     @GetMapping("/cs/qna/download")
@@ -246,7 +251,7 @@ public class CsController {
         String filePath = dto.getFile1();
         String oName = dto.getFile2();
 
-        String path = "files/" + filePath;
+        String path = "uploads/" + filePath;
         byte[] fileByte = FileUtils.readFileToByteArray(new File(path));
 
         response.setContentType("application/octet-stream");
@@ -257,4 +262,6 @@ public class CsController {
         response.getOutputStream().flush();
         response.getOutputStream().close();
     }
+
+
 }

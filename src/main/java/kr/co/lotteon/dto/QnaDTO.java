@@ -26,8 +26,6 @@ public class QnaDTO {
     private String file3;
     private String file4;
     private String uid;
-    private String ono;     //null 값을 넣으려면 String을 써야함
-    private String prodno;
     private int parent;
     private int answercomplete;
     private String regip;
@@ -61,8 +59,6 @@ public class QnaDTO {
                 .file1(file1)
                 .file2(file2)
                 .uid(uid)
-                .ono(ono)
-                .prodno(prodno)
                 .parent(parent)
                 .answercomplete(answercomplete)
                 .regip(regip)

@@ -42,11 +42,7 @@ public class QCsQna extends EntityPathBase<CsQna> {
 
     public final StringPath file4 = createString("file4");
 
-    public final StringPath ono = createString("ono");
-
     public final NumberPath<Integer> parent = createNumber("parent", Integer.class);
-
-    public final StringPath prodno = createString("prodno");
 
     public final NumberPath<Integer> qnano = createNumber("qnano", Integer.class);
 
