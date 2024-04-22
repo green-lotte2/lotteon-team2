@@ -63,16 +63,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="notice: ${noticeList}">
+                                <tr th:each="noticeDTOS: ${noticeDTOS}">
                                     <td>
                                         <input type="checkbox" name="checkbox" value="">
                                     </td>
-                                    <td>[[${notice.noticeno}]]</td>
-                                    <td th:text="'['+ ${notice.c1name} + ']'"></td>
+                                    <td>[[${noticeDTOS.noticeno}]]</td>
+                                    <td th:text="'['+ ${noticeDTOS.c2name} + ']'"></td>
                                     <td>
-                                        <a th:href="@{/admin/cs/notice/view(noticeno=${notice.noticeno}, cate1=${notice.cate1})}">[[${notice.title}]]</a>
+                                        <a th:href="@{/admin/cs/notice/view(noticeno=${noticeDTOS.noticeno}, cate2=${noticeDTOS.cate2})}">[[${noticeDTOS.title}]]</a>
                                     </td>
-                                    <td th:text="${#temporals.format(notice.rdate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#temporals.format(noticeDTOS.rdate, 'yyyy-MM-dd')}"></td>
                                     <td>
                                         <a th:href="@{/admin/cs/notice/delete}">[삭제]</a>
                                         <a th:href="@{/admin/cs/notice/modify}">[수정]</a>

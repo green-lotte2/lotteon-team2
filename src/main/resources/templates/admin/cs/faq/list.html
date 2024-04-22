@@ -17,6 +17,7 @@
 </head>
 
 <main layout:fragment="content">
+
     <div id="faqList" class="container-fluid">
 
         <!-- Page Heading -->
@@ -27,7 +28,6 @@
             <div class="card-header py-3" >
                 <h6 class="m-0 font-weight-bold text-primary">자주묻는질문</h6>
             </div>
-
             <div class="card-body">
                 <div class="table-responsive">
                             <form th:action="@{/admin/cs/search}" method="get">
@@ -65,16 +65,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="faq : ${faqList}">
+                                <tr th:each="cate2list : ${cate2List}">
                                     <td>
                                         <input type="checkbox" name="checkbox" value="">
                                     </td>
-                                    <td>[[${faq.faqno}]]</td>
-                                    <td th:text="'[' + ${faq.c1name} + ']'"></td>
+                                    <td>[[${cate2list.faqno}]]</td>
+                                    <td th:text="'[' + ${cate2list.c2name} + ']'"></td>
                                     <td>
-                                        <a th:href="@{/admin/cs/faq/view(faqno=${faq.faqno}, cate1=${faq.cate1}, cate2=${faq.cate2})}">[[${faq.title}]]</a>
+                                        <a th:href="@{/admin/cs/faq/view(faqno=${cate2list.faqno}, cate2=${cate2list.cate2})}">[[${cate2list.title}]]</a>
                                     </td>
-                                    <td th:text="${#temporals.format(faq.rdate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#temporals.format(cate2list.rdate, 'yyyy-MM-dd')}"></td>
                                     <td>
                                         <a th:href="@{/admin/cs/faq/delete}">[삭제]</a>
                                         <a th:href="@{/admin/cs/faq/modify}">[수정]</a>
