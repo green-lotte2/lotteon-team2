@@ -68,21 +68,23 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" name="checkbox" value="">
-                                    </td>
-                                    <td>번호</td>
-                                    <td>유형</td>
-                                    <td>제목</td>
-                                    <td>작성자</td>
-                                    <td>작성일</td>
-                                    <td>상태</td>
-                                    <td>
-                                        <a th:href="@{/admin/notice/delete}">[삭제]</a>
-                                        <a th:href="@{/admin/notice/modify}">[수정]</a>
-                                    </td>
-                                </tr>
+                                    <tr th:each="qnaDTOS:${qnaDTOS}">
+                                        <td>
+                                            <input type="checkbox" name="checkbox" value="">
+                                        </td>
+                                        <td>[[${qnaDTOS.qnano}]]</td>
+                                        <td th:text="'[' + ${qnaDTOS.c2name} + ']'">유형</td>
+                                        <td>
+                                            <a th:href="@{/admin/cs/qna/view(qnano=${qnaDTOS.qnano}, cate2=${qnaDTOS.cate2})}">[[${qnaDTOS.title}]]</a>
+                                            </td>
+                                        <td>작성자</td>
+                                        <td>작성일</td>
+                                        <td>상태</td>
+                                        <td>
+                                            <a th:href="@{/admin/cs/qna/delete}">[삭제]</a>
+                                            <a th:href="@{/admin/cs/qna/modify}">[수정]</a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <div>

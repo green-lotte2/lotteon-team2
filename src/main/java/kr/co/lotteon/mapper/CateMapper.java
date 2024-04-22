@@ -11,5 +11,6 @@ public interface CateMapper {
 
     public List<Cate1DTO> selectCate1();
     public List<Cate2DTO> selectCate2(int cate1);
+    public List<Cate2DTO> adminSelectCate2();
 
 }

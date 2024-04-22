@@ -23,5 +23,9 @@ public interface QnaMapper {
     public void updateQnaBoard(QnaDTO dto);
     public void deleteQnaBoard(int qnano);
     public QnaDTO selectQnaChildBoard(int qnano);
+    
+    //🎈 admin 문의하기 리스트
+    List<QnaDTO> adminSelectQnaList();
+    
 
 }

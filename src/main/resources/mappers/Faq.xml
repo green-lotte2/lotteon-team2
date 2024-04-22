@@ -12,9 +12,26 @@
         WHERE a.cate1=#{cate1} ORDER BY `faqno` DESC LIMIT 10
     </select>
 
+    <!--🎈admin faq 목록-->
+    <select id="selectFaqList" resultType="kr.co.lotteon.dto.FaqDTO">
+        SELECT a.*, b.*
+        FROM `faq` AS a
+        JOIN `cate2` AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
+        ORDER BY `faqno` DESC LIMIT 10
+    </select>
+
 
     <select id="selectFaqView" resultType="kr.co.lotteon.dto.FaqDTO">
         SELECT * FROM `faq` WHERE `faqno` = #{faqno}
+    </select>
+
+    <!--🎈admin Faq view-->
+    <select id="adminSelectFaqView" resultType="kr.co.lotteon.dto.FaqDTO">
+        SELECT a.*, b.c2name
+        FROM `faq` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
+        WHERE `faqno` = #{faqno}
     </select>
     
 </mapper>

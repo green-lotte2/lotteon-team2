@@ -68,7 +68,7 @@ public class CsController {
 
     @GetMapping("/cs/faq/view")
     public String selectFaqView(int faqno, Model model){
-        FaqDTO faqBoard = csService.selectFaqView(faqno);
+        FaqDTO faqBoard = csService.adminSelectFaqView(faqno);
         model.addAttribute("faqBoard",faqBoard);
 
         log.info("faqno : " + faqno);
