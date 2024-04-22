@@ -10,16 +10,18 @@ import kr.co.lotteon.mapper.ProductMapper;
 import kr.co.lotteon.repository.*;
 import kr.co.lotteon.repository.custom.ProductRepositoryCustom;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.internal.util.Objects;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -186,16 +186,68 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductPageResponseDTO<ProductDTO, Product> getList(ProductPageRequestDTO pageRequestDTO) {
-        Pageable pageable = pageRequestDTO.getPageable();
-        Page<Product> page = productRepository.findAll(pageable);
-        return new ProductPageResponseDTO<>(page, this::entityToDTO);
+
+    // ProductService.java
+    public PageResponseDTO getList(PageRequestDTO pageRequestDTO, String cate) {
+        if (pageRequestDTO == null) {
+            log.error("PageRequestDTO is null");
+            throw new IllegalArgumentException("PageRequestDTO must not be null");
+        }
+
+        Pageable pageable = PageRequest.of(
+                Math.max(pageRequestDTO.getPg() - 1, 0),
+                pageRequestDTO.getSize(),
+                Sort.by("pname").ascending()
+        );
+
+        Page<Product> page;
+        try {
+            if (cate != null && !cate.trim().isEmpty()) {
+                int code = Integer.parseInt(cate);
+                int depth = (code % 10 != 0) ? 1 : (code % 1000 != 0) ? 100 : 10000;
+                page = productRepository.findByCateBetween(pageable, code, code + depth - 1);
+            } else {
+                page = productRepository.findAll(pageable);
+            }
+        } catch (NumberFormatException e) {
+            log.error("Invalid category format: " + cate, e);
+            return PageResponseDTO.builder()
+                    .dtoList(Collections.emptyList())
+                    .total(0)
+                    .build();
+        }
+
+        List<ProductDTO> productDTOs = page.getContent().stream()
+                .map(product -> {
+                    ProductDTO dto = entityToDTO(product);
+                    productimgRepository.findById(product.getPno()).ifPresent(img -> {
+                        dto.setMainimg(img.getMainimg());
+                        dto.setSubimg(img.getSubimg());
+                        dto.setDetailimg(img.getDetailimg());
+                    });
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.builder()
+                .dtoList(productDTOs)
+                .total((int) page.getTotalElements())
+                .build();
     }
 
     private ProductDTO entityToDTO(Product product) {
-        // 엔티티를 DTO로 변환하는 로직을 추가합니다
-        return null;
+        return ProductDTO.builder()
+                .pno(product.getPno())
+                .pname(product.getPname())
+                .price(product.getPrice())
+                .stock(product.getStock())
+                .company(product.getCompany())
+                .mainimg(null)  // 초기 이미지 정보를 null로 설정
+                .subimg(null)
+                .detailimg(null)
+                .build();
     }
+
 
 
 
@@ -263,7 +315,6 @@ public class ProductService {
                 .total(total)
                 .build();
     }
-
 
 }
 
