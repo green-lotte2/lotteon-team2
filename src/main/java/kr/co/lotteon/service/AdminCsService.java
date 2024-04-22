@@ -47,6 +47,7 @@ public class AdminCsService {
         noticeRepository.save(entity);
     }
 
+    //🎈 공지사항 리스트
     public List<NoticeDTO> noticeList(){
 
         return noticeRepository.findAll()
@@ -56,6 +57,7 @@ public class AdminCsService {
                 )
                 .collect(Collectors.toList());
     }
+
 
     // Notice 리스트
     public PageResponseDTO noticeList(PageRequestDTO pageRequestDTO){
@@ -135,11 +137,23 @@ public class AdminCsService {
                 .build();
     }
 
+    
 
 
 
+    // 🎈Faq 리스트
+    public List<FaqDTO> faqList(){
 
-    // Faq 리스트
+        return faqRepository.findAll()
+                .stream()
+                .map(
+                        CsFaq::toDTO
+                )
+                .collect(Collectors.toList());
+    }
+
+
+    // FAQ 리스트
     public PageResponseDTO faqList(PageRequestDTO pageRequestDTO){
         Pageable pageable = pageRequestDTO.getPageable("faqno");
         Page<CsFaq> result = null;
@@ -169,6 +183,13 @@ public class AdminCsService {
                 .total(totalElement)
                 .build();
     }
+
+
+    //🎈 공지사항 뷰
+    public NoticeDTO adminNoticeView(int noticeno){
+        return adminMapper.adminNoticeView(noticeno);
+    }
+    public FaqDTO adminFaqView(int faqno){ return adminMapper.adminFaqView(faqno);}
 }
 
 
