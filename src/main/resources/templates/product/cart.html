@@ -30,17 +30,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="empty">
-                      <td colspan="7">장바구니에 상품이 없습니다.</td>
-                    </tr>
-                    <tr>
+                  <tr th:if="${products == null or products.isEmpty()}" class="empty">
+                    <td colspan="8">장바구니에 상품이 없습니다.</td>
+                  </tr>
+                    <tr th:each="product : ${products}" th:unless="${products == null or products.isEmpty()}">
                       <td><input type="checkbox" name=""></td>
                       <td>
                         <article>
-                          <a th:href="@{#}"><img th:src="@{https://via.placeholder.com/80x80}" alt=""></a>
+                          <a th:href="@{/product/view(pno=${product.pno})}"><img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지"></a>
                           <div>
-                            <h2><a th:href="@{#}">상품명</a></h2>
-                            <p>상품설명</p>
+                            <h2 class="name" th:text="${product.pname}"><a th:href="@{/product/view}" >상품명</a></h2>
+                            <p th:href="@{/product/view(pno=${product.pno})}" class="desc" th:text="${product.info}">상품설명</p>
                           </div>
                         </article>
                       </td>

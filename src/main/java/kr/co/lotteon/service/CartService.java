@@ -18,8 +18,8 @@ public class CartService {
     
     // 장바구니 삽입
     public void insertCart(CartDTO cartDTO) {
+        log.info(cartDTO.toString());
         List<Cart> existingCartItems = cartRepository.findCartByUidAndPno(cartDTO.getUid(), cartDTO.getPno());
-
         if(existingCartItems.isEmpty()){
             // 해당 상품이 장바구니에 없으면 새로 추가
             Cart cartItem = new Cart();

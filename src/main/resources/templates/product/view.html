@@ -78,110 +78,73 @@
             }
 
 
-            const btnCart = document.getElementById('btnCart');
             const btnOrder = document.getElementById('btnOrder');
+            const btnCart = document.getElementById('btnCart');
 
-            btnCart.addEventListener('click', async function () {
-                const option = document.getElementById('option');
-                const count = document.getElementById('count').value;
-                const pno = document.getElementById('pno').innerText;
+            btnOrder.addEventListener('click', function () {
+                handleBuyOrCart('order');
+            });
 
+            btnCart.addEventListener('click', function () {
+                handleBuyOrCart('cart');
+            });
 
-                if([[${#authorization.getAuthentication()}]] != null){
-                    console.log("logined");
-                }
-                const uid = [[${#authentication.principal.user.uid}]];
-                console.log(uid);
-                let optionText = "";
+            function handleBuyOrCart(actionType) {
+                var isAuthenticated = [[${#authorization.expression('isAuthenticated()')}]];
+                if (!isAuthenticated) {
+                    let result = confirm("로그인 후 사용하실 수 있습니다. \n 로그인 페이지로 이동하시겠습니까?");
+                    if (result) {
+                        window.location.href = '/lotteon/member/login'; // 로그인 페이지로 리다이렉션
+                    }
+                } else {
+                    // 로그인 되어 있으면 장바구니 또는 주문 처리
+                    const option = document.getElementById('option');
+                    const count = document.getElementById('count').value;
+                    const pno = document.getElementById('pno').innerText;
 
-                option.childNodes.forEach(function (item){
-                    if(item.nodeName === "SELECT" || item.nodeName === "select"){
-                        console.log(item.name);
-                        console.log(item.value);
-                        optionText += item.name + "/" + item.value;
-                        optionText += ",";
+                    let optionText = "";
+                    if (option) {
+                        option.childNodes.forEach(function (item) {
+                            if (item.nodeName === "SELECT" || item.nodeName === "select") {
+                                optionText += item.name + "/" + item.value;
+                                optionText += ",";
+                            }
+                        });
                     }
 
-                });
-                optionText = optionText.slice(0, -1);
-                if(confirm("장바구니에 담으시겠습니까?")) {
                     const jsonData = {
                         "pno": pno,
                         "pcount": count,
-                        "options": optionText
-                    }
-                    console.log(jsonData);
-
-                    const data = await fetchPost(`/lotteon/product/cart/insert`, jsonData);
-                    if(data != null){
-                        if(confirm("장바구니로 이동하시겠습니까?")){
-                            window.location.href = `/product/cart?uid=${uid}`; // 사용자의 장바구니 페이지로 이동
-                        }
-                    }else{
-                        alert("등록에 실패했습니다.");
-                    }
-                    return false;
-                }else{
-                    return false;
+                        "options": optionText.slice(0, -1)
+                    };
+                    const url = actionType === 'order' ? '/lotteon/product/order' : '/lotteon/product/cart/insert';
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(jsonData)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Failed to process request');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (actionType === 'order') {
+                                // 구매 요청이 성공적이면 주문 페이지로 리다이렉션
+                                window.location.href = '/lotteon/product/order';
+                            } else {
+                                alert('Request processed successfully');
+                                window.location.href = "/lotteon/product/cart";
+                            }
+                        })
+                        .catch(err => console.error('Error:', err));
                 }
-
-            });
+            }
 
             btnOrder.addEventListener('click', function () {
-                window.location.href = '/product/order'; // 바로 주문 페이지로 이동
+                window.location.href = '/lotteon/product/order'; // 바로 주문 페이지로 이동
             });
-
-
-            /*
-                                        const btnOrder = document.getElementById('btnOrder');
-                                        const btnCart = document.getElementById('btnCart');
-
-                                        btnOrder.addEventListener('click', function () {
-                                            handleBuyOrCart('order');
-                                        });
-
-                                        btnCart.addEventListener('click', function () {
-                                            handleBuyOrCart('cart');
-                                        });
-
-                                        function handleBuyOrCart(actionType) {
-                                            const uid = document.getElementById('uid');
-                                            if (!uid || !uid.value) {
-                                                let result = confirm("로그인 후 사용하실 수 있습니다. \n 로그인 페이지로 이동하시겠습니까?");
-                                                if (result) {
-                                                    window.location.href = '/lotteon/member/login'; // 로그인 페이지로 리다이렉션
-                                                }
-                                            } else {
-                                                const prodCount = document.getElementsByName('prodCount')[0].value;
-                                                const prodno = document.getElementById('prodno').value;
-
-                                                const jsonData = {
-                                                    uid: uid.value,
-                                                    prodno: prodno,
-                                                    prodCount: prodCount
-                                                };
-                                                const url = actionType === 'order' ? '/product/order' : '/product/cart';
-                                                fetch(url, {
-                                                    method: 'POST',
-                                                    headers: {'Content-Type': 'application/json'},
-                                                    body: JSON.stringify(jsonData)
-                                                })
-                                                    .then(response => {
-                                                        if (!response.ok) {
-                                                            throw new Error('Failed to process request');
-                                                        }
-                                                        return response.json();
-                                                    })
-                                                    .then(data => {
-                                                        alert('Request processed successfully');
-                                                        window.location.href = data.redirectUrl; // Redirect to success page
-                                                    })
-                                                    .catch(err => console.error('Error:', err));
-                                            }
-                                        }
-                                    });
-
-             */
 
             const optionField = document.getElementById('option');
             const optionName = [[${product.opname}]];
@@ -202,7 +165,11 @@
                     optionField.appendChild(select);
                 }
             }
+
         });
+
+
+
     </script>
 
     <!-- 제목, 페이지 네비게이션 -->
