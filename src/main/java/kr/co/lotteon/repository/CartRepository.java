@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface CartRepository extends JpaRepository<Cart, String> {
     List<Cart> findByUid(String uid);
+    List<Cart>  findCartByUidAndPno(String uid, int pno);
 }

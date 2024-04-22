@@ -3,6 +3,7 @@ package kr.co.lotteon.controller;
 import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.service.AdminService;
+import kr.co.lotteon.service.CartService;
 import kr.co.lotteon.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.Console;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +36,7 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductService productService;
+    private final CartService cartService;
     private final AdminService adminService;
 
     @PostMapping("/product/register")
@@ -70,7 +73,18 @@ public class ProductController {
     public String cart(Model model) {
         return "/product/cart";
     }
+    @ResponseBody
+    @PostMapping("/product/cart/insert")
+    public ResponseEntity<CartDTO> insertCartItem(Principal principal, @RequestBody CartDTO cartDTO) {
+        String uid = principal.getName();
+        log.info("uid : " + uid);
+        cartDTO.setUid(uid);
+        log.info("insertCart : " + cartDTO);
 
+        cartService.insertCart(cartDTO);
+
+        return ResponseEntity.ok(cartDTO);
+    }
 
     /*
     @PostMapping("/product/addToCart")

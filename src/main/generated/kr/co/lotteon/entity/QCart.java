@@ -19,6 +19,8 @@ public class QCart extends EntityPathBase<Cart> {
 
     public static final QCart cart = new QCart("cart");
 
+    public final StringPath options = createString("options");
+
     public final NumberPath<Integer> pcount = createNumber("pcount", Integer.class);
 
     public final NumberPath<Integer> pno = createNumber("pno", Integer.class);

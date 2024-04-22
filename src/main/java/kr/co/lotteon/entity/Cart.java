@@ -21,5 +21,6 @@ public class Cart {
     private String uid;
     private int pno;
     private int pcount;
+    private String options;
 
 }
