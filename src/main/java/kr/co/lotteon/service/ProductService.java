@@ -129,6 +129,8 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
+
+
     public Page<Product> findByPname(Pageable pageable,String name){
         log.info("findByPname...");
         return productRepository.findByPnameLike(pageable, "%"+name+"%");
@@ -177,15 +179,9 @@ public class ProductService {
     }
 
 
-    public List<ProductDTO> getCartProducts(String uid) {
-        return cartRepository.findByUid(uid).stream()
-                .map(cart -> {
-                    ProductDTO dto = modelMapper.map(cart.getUid(), ProductDTO.class);
-                    return dto;
-                })
-                .collect(Collectors.toList());
+    public List<ProductDTO> getCartProductsByUid(String uid) {
+        return productMapper.selectCartWithProductsByUid(uid);
     }
-
 
     // ProductService.java
     public ProductPageResponseDTO getList(ProductPageRequestDTO productpageRequestDTO, String cate) {
