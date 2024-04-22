@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Log4j2
@@ -99,6 +100,14 @@ public class UserService {
             log.error("error={}", e.getMessage());
         }
 
+    }
+
+    public User selectUser(String uid){
+        Optional<User> optUser = userRepository.findById(uid);
+        if(optUser.isPresent()){
+            return optUser.get();
+        }
+        return null;
     }
 
     public String getUid(){
