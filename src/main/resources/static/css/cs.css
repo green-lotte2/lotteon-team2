@@ -140,6 +140,27 @@ header > .logo a {
   vertical-align: top;
   margin-left: 6px;
 }
+
+#cs > .main > section > h1 > span {
+  float: right;
+
+  font-size: 14px;
+  margin-top: 6px;
+  color: #555;
+}
+
+#cs > .main > section > h1 > span::after {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  content: "";
+  background: url("../images/cs_sprites.png") no-repeat;
+  background-position: -230px -276px;
+  background-size: 750px auto;
+  vertical-align: top;
+  margin-left: 6px;
+}
+
 #cs > .main > section > ul {
 }
 #cs > .main > section > ul > li {

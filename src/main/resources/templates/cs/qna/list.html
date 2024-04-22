@@ -5,6 +5,33 @@
 
   <div layout:fragment="content">
 
+    <script th:inline="javascript">
+      var uid = '';
+      uid = [[${#authentication.principal.user.uid}]];
+    </script>
+
+    <script>
+      function showAlert(id) {
+        const flag = '[[${#authentication.principal}]]'
+        if(flag == 'anonymousUser'){
+          alert('해당글은 작성자만 접근 가능합니다.');
+          return false;
+        }
+        console.log(id);
+        console.log(uid);
+        if(uid != id){
+          alert("해당 글 작성자만 접근 가능합니다.");
+          return false;
+        }
+        return true;
+      }
+
+      function showAlertLogin() {
+        alert('로그인이 필요한 기능입니다.');
+        window.location.href = '/lotteon/member/login';
+      }
+    </script>
+
       <section id="cs">
         <div class="qna">
           <nav>
@@ -59,8 +86,8 @@
 
               <table>
                 <tr th:each="qnaDTOS:${qnaDTOS}">
-                  <td><a th:href="@{/cs/qna/view(qnano=${qnaDTOS.qnano})}" class="title"
-                         th:text="'[' + ${qnaDTOS.c2name} + ']' + ${qnaDTOS.title}"></a></td>
+                  <td><a th:href="@{/cs/qna/view(qnano=${qnaDTOS.qnano})}" th:onclick="return showAlert([[${qnaDTOS.uid}]]);"
+                         class="title" th:text="'[' + ${qnaDTOS.c2name} + ']' + ${qnaDTOS.title}"></a></td>
                   <td class="uid" th:text="${#strings.substring(qnaDTOS.uid, 0, 3) + '***'}"></td>
 
                   <th:block class="answercomplete">
@@ -86,6 +113,7 @@
               </div>
 
               <a th:href="@{/cs/qna/write}"
+                 th:if="${#authorization.expression('isAuthenticated()')}"
                  class="btnWrite">문의글 작성</a>
 
 

@@ -31,7 +31,7 @@ public class AdminCsController {
     /////////////////////////
     // 🎈공지사항 //////////////
     ////////////////////////
-    @GetMapping("/admin/cs/notice/list")
+    @GetMapping(value = {"/admin/cs/notice/list", "/admin/cs/notice/"})
     public String adminNoticeList(@RequestParam(name="pg", defaultValue = "1") String pg,
                                   @RequestParam(name="cate1", required = false) String cate1,
                                   Model model){
