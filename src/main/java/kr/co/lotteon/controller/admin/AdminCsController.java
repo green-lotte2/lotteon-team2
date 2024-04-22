@@ -1,6 +1,7 @@
 package kr.co.lotteon.controller.admin;
 
 
+import kr.co.lotteon.dto.Cate2DTO;
 import kr.co.lotteon.dto.FaqDTO;
 import kr.co.lotteon.dto.NoticeDTO;
 import kr.co.lotteon.service.AdminCsService;
@@ -85,18 +86,19 @@ public class AdminCsController {
         log.info("lastPage: " + lastPageNum);
         log.info("cate1last : " + cate1);
 
-
+/*
         List<NoticeDTO> noticeList = adminCsService.noticeList();
         model.addAttribute("noticeList", noticeList);
         log.info("noticeList : " + noticeList);
-
+*/
         return "/admin/cs/notice/list";
+
     }
 
     //🎈 공지사항 view
     @GetMapping("/admin/cs/notice/view")
     public String adminNoticeView(int noticeno, Model model){
-        NoticeDTO noticeBoard = adminCsService.adminNoticeView(noticeno);
+        NoticeDTO noticeBoard = csService.selectNoticeView(noticeno);
         model.addAttribute("noticeBoard", noticeBoard);
         log.info("noticeno : " + noticeno);
         log.info("noticeBoard : " + noticeBoard.toString());
@@ -141,12 +143,13 @@ public class AdminCsController {
     // 🎈자주 묻는 질문 ////////
     ///////////////////////
     @GetMapping("/admin/cs/faq/list")
-    public String adminFaqList(Model model){
-
-        List<FaqDTO> faqList = adminCsService.faqList();
-        model.addAttribute("faqList", faqList);
-        log.info("faqList : " + faqList);
-
+    public String adminFaqList(Model model, Integer cate1){
+        List<FaqDTO> faqDTOList = csService.selectFaqList10(cate1);
+        List<Cate2DTO> cate2list = csService.selectCate2(cate1);
+        model.addAttribute("cate2list",cate2list);
+        model.addAttribute("faqDTOList",faqDTOList);
+        model.addAttribute("cate1", cate1);
+       log.info("faqDTOList : " + faqDTOList);
 
         return "/admin/cs/faq/list";
     }
@@ -154,10 +157,11 @@ public class AdminCsController {
     @GetMapping("/admin/cs/faq/view")
     public String adminFaqView(int faqno, Model model){
 
-        FaqDTO faqBoard = adminCsService.adminFaqView(faqno);
-        model.addAttribute("faqBoard", faqBoard);
+        FaqDTO faqBoard = csService.selectFaqView(faqno);
+        model.addAttribute("faqBoard",faqBoard);
+
         log.info("faqno : " + faqno);
-        log.info("faqBoard : " + faqBoard.toString());
+        log.info("faqBoard : " + faqBoard);
 
         return "/admin/cs/faq/view";
     }

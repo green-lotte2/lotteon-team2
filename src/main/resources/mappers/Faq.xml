@@ -6,9 +6,10 @@
 <mapper namespace="kr.co.lotteon.mapper.FaqMapper">
 
     <select id="selectFaqList10" resultType="kr.co.lotteon.dto.FaqDTO">
-        SELECT * FROM `faq` AS a
-        JOIN `cate2` AS b
-        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE a.cate1=#{cate1} ORDER BY `faqno` DESC LIMIT 10
+        SELECT a.*, b.*
+        FROM `faq` AS a
+        JOIN `cate2` AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
+        WHERE a.cate1=#{cate1} ORDER BY `faqno` DESC LIMIT 10
     </select>
 
 
