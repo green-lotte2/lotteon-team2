@@ -79,7 +79,8 @@
           <section class="qna">
             <h1>
               문의하기
-              <a th:href="@{/cs/qna/list}">전체보기</a>
+              <a th:href="@{/cs/qna/list}" th:if="${#authorization.expression('isAuthenticated()')}">전체보기</a>
+              <span th:unless="${#authorization.expression('isAuthenticated()')}" onclick="showAlertLogin();" style="cursor: pointer;">전체보기</span>
             </h1>
             <ul>
               <li th:each="qnalist:${qnalist}">

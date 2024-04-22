@@ -234,13 +234,11 @@ public class CsController {
     @PostMapping("/cs/qna/write")
     public String write(HttpServletRequest request, QnaDTO dto){
         dto.setRegip(request.getRemoteAddr());
-        dto.setUid("everybody24");
         dto.setRdate(LocalDateTime.now());
+        log.info(dto);
         csService.insertQnaWrite(dto);
         return "redirect:/cs/qna/list";
     }
-
-
 
     // Qna 파일 다운로드
     @GetMapping("/cs/qna/download")
@@ -263,5 +261,53 @@ public class CsController {
         response.getOutputStream().close();
     }
 
+    @GetMapping("/cs/qna/modify")
+    public String selectQnaBoard(int qnano, Model model){
+        QnaDTO qnaBoard = csService.selectQnaBoard(qnano);
+        model.addAttribute("qnaBoard", qnaBoard);
+        log.info("qnano : " + qnano);
+        log.info("qnaBoard : " + qnaBoard.toString());
+        return "/cs/qna/modify";
+    }
 
+    @PostMapping("/cs/qna/modify")
+    public String updateQnaBoard (@ModelAttribute QnaDTO dto){
+        dto.setRdate(LocalDateTime.now());
+        csService.updateQnaBoard(dto);
+        log.info("updateQnaBoardDTO------" + dto.toString());
+        int qnano = dto.getQnano();
+        log.info("updateQnaBoardQnano----------"+qnano);
+        return "redirect:/cs/qna/view?qnano="+qnano;
+    }
+
+    @GetMapping("/cs/qna/delete")
+    public String deleteQnaBoard (int qnano){
+
+        // 게시물 삭제 전 파일 정보 가져오기
+        QnaDTO dto = csService.selectQnaBoard(qnano);
+
+        // 파일 경로
+        String filePath = dto.getFile1();
+
+        // 파일 삭제
+        boolean isFileDeleted = deleteFile(filePath);
+        csService.deleteQnaBoard(qnano);
+
+        // 만약 파일이 정상적으로 삭제되었다면 게시물을 삭제한다.
+        if(isFileDeleted){
+            csService.deleteQnaBoard(qnano);
+        }
+        return "redirect:/cs/qna/list";
+    }
+
+    // 파일삭제 구현
+    private boolean deleteFile(String filePath){
+        try{
+            File fileToDelete = new File("uploads/" + filePath);
+            return fileToDelete.delete();
+        }catch(Exception e){
+            log.error("파일 삭제 중 오류 발생 : " + e.getMessage());
+            return false;
+        }
+    }
 }
