@@ -63,6 +63,9 @@
             });
             // 2차 카테고리가 업데이트되면 첫번째 옵션 선택
             typeSelect2.find('option:first').prop('selected', true);
+            const firstCate2Value = typeSelect2.val();
+            $('#cate2').val(firstCate2Value);
+
             console.log(typeSelect2);
           }
         });
@@ -121,15 +124,15 @@
               <tr>
                 <td>문의유형</td>
                 <input type="hidden" name="cate1" id="cate1" value="" />
-                <input type="hidden" name="cate2" id="cate2" value="10" />
-                <input type="hidden" name="uid" value="fixed_user_id">
+                <input type="hidden" name="cate2" id="cate2" value="" />
+                <input type="hidden" name="uid" th:value="${#authentication.principal.user.uid}">
                 <input type="hidden" name="answercomplete" th:value=1>
                 <td>
                   <select name="type1" id="category1">
                     <option selected>1차 선택</option>
                   </select>
                   <select name="category2" id="category2">
-                    <option value="10" selected></option>
+                    <option selected>2차 선택</option>
                   </select>
                 </td>
               </tr>

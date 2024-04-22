@@ -16,6 +16,31 @@
 </head>
 
 <main layout:fragment="content">
+    <section id="adminBoard">
+        <div class="board faq">
+            <div class="view">
+                <h2>자주묻는질문</h2>
+                <article>
+                    <nav>
+                        <h2 class="title" th:text="'[' + ${faqBoard.c1name} + ']' + ${faqBoard.title}"></h2>
+                        <span th:text="${#temporals.format(faqBoard.rdate, 'yyyy-MM-dd')}"></span>
+                    </nav>
+
+                    <div class="content">
+                        <p>
+                            [[${faqBoard.content}]]
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="bottomBtn">
+            <a th:href="@{/admin/cs/faq/list}" class="listbtn">목록</a>
+            <a th:href="@{/admin/cs/faq/modify}" class="modifyBtn">수정</a>
+            <a th:href="@{/admin/cs/faq/delete}" class="deleteBtn">삭제</a>
+        </div>
+
+    </section>
 
     <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

@@ -1,12 +1,20 @@
 package kr.co.lotteon.controller.admin;
 
 
+import kr.co.lotteon.dto.Cate2DTO;
+import kr.co.lotteon.dto.FaqDTO;
+import kr.co.lotteon.dto.NoticeDTO;
 import kr.co.lotteon.service.AdminCsService;
 import kr.co.lotteon.service.CsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -21,15 +29,79 @@ public class AdminCsController {
 
 
     /////////////////////////
-    // 공지사항 //////////////
+    // 🎈공지사항 //////////////
     ////////////////////////
-    @GetMapping("/admin/cs/notice/list")
-    public String adminNoticeList(){
+    @GetMapping(value = {"/admin/cs/notice/list", "/admin/cs/notice/"})
+    public String adminNoticeList(@RequestParam(name="pg", defaultValue = "1") String pg,
+                                  @RequestParam(name="cate1", required = false) String cate1,
+                                  Model model){
+
+        log.info("pg : " + pg);
+        log.info("cate1 : " + cate1);
+
+        // 현재 페이지 번호
+        int currentPage = csService.getCurrentPage(pg);
+        log.info("currentPage : " + currentPage);
+
+        // 시작 인덱스
+        int start = csService.getStartNum(currentPage);
+        log.info("start : " + start);
+
+        // 전체 게시물 갯수
+        int total;
+        List<NoticeDTO> noticeDTOS;
+
+
+        if(cate1 == null || cate1.isEmpty()){
+            log.info("notice1");
+            total = csService.selectNoticeTotal();
+            noticeDTOS = csService.selectNoticeListAll(start);
+        }else {
+            log.info("notice2");
+            log.info("notice2 cate1 : " + cate1);
+            total = csService.selectNoticeTotalCate(Integer.parseInt(cate1));
+
+            log.info("notice2 total : " + total);
+
+            noticeDTOS = csService.selectNoticeListCate(Integer.parseInt(cate1), start);
+        }
+
+        // 마지막 페이지 번호
+        int lastPageNum = csService.getLastPageNum(total);
+
+        // 페이지 그룹 (현재 번호, 마지막 번호)
+        int[] result = csService.getPageGroupNum(currentPage, lastPageNum);
+
+        // 페이지 시작 번호
+        int pageStartNum = csService.getPageStartNum(total, currentPage);
+
+        model.addAttribute("noticeDTOS", noticeDTOS);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("lastPageNum", lastPageNum);
+        model.addAttribute("pageGroupStart", result[0]);
+        model.addAttribute("pageGroupEnd", result[1]);
+        model.addAttribute("pageStartNum", pageStartNum+1);
+        model.addAttribute("cate1", cate1);
+        log.info("currentPage: " + currentPage);
+        log.info("lastPage: " + lastPageNum);
+        log.info("cate1last : " + cate1);
+
+/*
+        List<NoticeDTO> noticeList = adminCsService.noticeList();
+        model.addAttribute("noticeList", noticeList);
+        log.info("noticeList : " + noticeList);
+*/
         return "/admin/cs/notice/list";
+
     }
 
+    //🎈 공지사항 view
     @GetMapping("/admin/cs/notice/view")
-    public String adminNoticeView(){
+    public String adminNoticeView(int noticeno, Model model){
+        NoticeDTO noticeBoard = csService.selectNoticeView(noticeno);
+        model.addAttribute("noticeBoard", noticeBoard);
+        log.info("noticeno : " + noticeno);
+        log.info("noticeBoard : " + noticeBoard.toString());
         return "/admin/cs/notice/view";
     }
 
@@ -47,7 +119,7 @@ public class AdminCsController {
 
 
     /////////////////////////
-    // 1:1 질문 /////////////
+    // 🎈1:1 질문 /////////////
     ////////////////////////
     @GetMapping("/admin/cs/qna/list")
     public String adminQnaList(){
@@ -68,15 +140,29 @@ public class AdminCsController {
 
 
     ////////////////////////
-    // 자주 묻는 질문 ////////
+    // 🎈자주 묻는 질문 ////////
     ///////////////////////
     @GetMapping("/admin/cs/faq/list")
-    public String adminFaqList(){
+    public String adminFaqList(Model model, Integer cate1){
+        List<FaqDTO> faqDTOList = csService.selectFaqList10(cate1);
+        List<Cate2DTO> cate2list = csService.selectCate2(cate1);
+        model.addAttribute("cate2list",cate2list);
+        model.addAttribute("faqDTOList",faqDTOList);
+        model.addAttribute("cate1", cate1);
+       log.info("faqDTOList : " + faqDTOList);
+
         return "/admin/cs/faq/list";
     }
 
     @GetMapping("/admin/cs/faq/view")
-    public String adminFaqView(){
+    public String adminFaqView(int faqno, Model model){
+
+        FaqDTO faqBoard = csService.selectFaqView(faqno);
+        model.addAttribute("faqBoard",faqBoard);
+
+        log.info("faqno : " + faqno);
+        log.info("faqBoard : " + faqBoard);
+
         return "/admin/cs/faq/view";
     }
 

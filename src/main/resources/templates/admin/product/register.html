@@ -12,6 +12,12 @@
             rel="stylesheet">
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
     <link th:href="@{/admin/css/admin.css}" rel="stylesheet">
+    <style>
+        .option{
+            border: 1px solid #1e1e1e;
+            display: inline-block;
+        }
+    </style>
     <script th:inline="javascript">
         /*<![CDATA[*/
         window.onload = function () {
@@ -62,14 +68,58 @@
 
             const regBtn = document.getElementsByName('regBtn')[0];
             regBtn.onclick = function (e) {
+                e.preventDefault();
+
+                const optionField = document.getElementsByClassName('option');
+                let optionName = "";
+                let optionValue = "";
+                console.log(optionField);
+
+                for(let i = 0; i < optionField.length; i++){
+                    console.log(optionField[i].childNodes[1].value);
+                    optionName += optionField[i].childNodes[1].value;
+                    if(optionName == ""){
+                        optionName = null;
+                        optionValue = null;
+                        break;
+                    }
+                    for(let j = 2; j < optionField[i].childNodes.length; j++){
+                        console.log(optionField[i].childNodes[j]);
+                        optionValue += optionField[i].childNodes[j].childNodes[0].value + "/";
+                    }
+                    optionName += "%";
+                    optionValue += "$";
+                }
+                console.log(optionName);
+                console.log(optionValue);
+                if (optionName != null){
+                    hidOptionName = document.createElement('input');
+                    hidOptionValue = document.createElement('input');
+
+                    hidOptionName.type = 'hidden';
+                    hidOptionName.name = 'opname';
+                    hidOptionName.value = optionName;
+                    hidOptionValue.type = 'hidden';
+                    hidOptionValue.name = 'opvalue';
+                    hidOptionValue.value = optionValue;
+
+                    optionField[0].appendChild(hidOptionName);
+                    optionField[0].appendChild(hidOptionValue);
+                }
+
+
+                document.getElementById('register').submit();
+
                 alert('상품등록이 성공적으로 완료되었습니다!');
+
+
             }
 
         }
         /*]]>*/
 
         const addTextBox = (obj) => {
-            const box = obj.parentNode;
+            const box = obj.parentNode.parentNode;
             console.log(box);
             const newP = document.createElement('p');
             newP.innerHTML = "<input type=\"text\" name=\"optionValue\" placeholder=\"옵션 값을 입력하세요\">\n" +
@@ -80,8 +130,8 @@
         const addField = () => {
             const box = document.getElementById("box");
             const newP = document.createElement('div');
-
-            newP.innerHTML = "<input type=\"text\" name=\"optionName\" placeholder=\"옵션 이름을 입력하세요\"><p><input type=\"text\" name=\"optionValue\" placeholder=\"옵션 값을 입력하세요\"><input type=\"button\" value=\"추가\" onclick=\"addTextBox(this)\"></p>";
+            newP.className = 'option';
+            newP.innerHTML = "<input type=\"button\" value=\"삭제\" onclick=\"remove(this)\"><input type=\"text\" name=\"optionName\" placeholder=\"옵션 이름을 입력하세요\"><p><input type=\"text\" name=\"optionValue\" placeholder=\"옵션 값을 입력하세요\"><input type=\"button\" value=\"추가\" onclick=\"addTextBox(this)\"></p>";
             box.appendChild(newP);
 
         }
@@ -104,7 +154,7 @@
         </nav>
         <!-- 상품등록 컨텐츠 시작 -->
         <article>
-            <form th:action="@{/admin/product/register}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/admin/product/register}" method="post" id="register" enctype="multipart/form-data">
                 <!-- 상품분류 -->
                 <section>
                     <h4>상품분류</h4>
@@ -198,12 +248,10 @@
                         <tr>
                             <td>상품 옵션</td>
                             <td id="box">
-                                <input type="button" onclick="addField()">
-                                <div>
-                                    <input type="text" name="optionName" placeholder="옵션 이름을 입력하세요"><p><input type="text" name="optionValue" placeholder="옵션 값을 입력하세요"><input type="button" value="추가" onclick="addTextBox(this)"></p>
 
-                                </div>
+                                <div class="option"><input type="button" value="추가" onclick="addField()"><input type="text" name="optionName" placeholder="옵션 이름을 입력하세요"><p><input type="text" name="optionValue" placeholder="옵션 값을 입력하세요"><input type="button" value="추가" onclick="addTextBox(this)"></p></div>
                             </td>
+
                         </tr>
 
 

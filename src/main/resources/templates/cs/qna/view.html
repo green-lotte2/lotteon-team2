@@ -49,9 +49,7 @@
                   <span th:text="${#temporals.format(qnaBoard.rdate, 'yyyy-MM-dd')}"></span>
                 </p>
 
-                <th:block th:if="${qnaBoard.file1 != null}">
-                  <a class="filedown" th:href="@{/cs/qna/download(qnaNo=${qnaBoard.qnano})}">첨부된 파일 : [[${qnaBoard.file2}]]</a>
-                </th:block>
+
 
 
               </nav>
@@ -80,8 +78,8 @@
                 </div>
               </th:block>
               <a th:href="@{/cs/qna/list}" class="btnList">목록보기</a>
-              <a th:href="@{/cs/qna/modify(qnaNo=${qnaBoard.qnano})}" class="btnList">수정하기</a>
-              <a th:href="@{/cs/qna/delete(qnaNo=${qnaBoard.qnano})}" class="btnList">삭제하기</a>
+              <a th:href="@{/cs/qna/modify(qnano=${qnaBoard.qnano})}" class="btnList">수정하기</a>
+              <a th:href="@{/cs/qna/delete(qnano=${qnaBoard.qnano})}" class="btnList">삭제하기</a>
             </article>
           </section>
         </div>

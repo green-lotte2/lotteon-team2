@@ -30,4 +30,41 @@
         DELETE FROM `product` WHERE pno = #{pno}
 
     </delete>
+
+    <!--🎈admin_notice_list-->
+    <select id="adminNoticeList" parameterType="map" resultType="map">
+        SELECT a.*, b.c2name
+        FROM `notice` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
+        WHERE a.cate1= #{cate1} ORDER BY `noticeno` DESC LIMIT #{start}, 10
+    </select>
+
+    <!--🎈admin_notice_view-->
+    <select id="adminNoticeView" resultType="kr.co.lotteon.dto.NoticeDTO">
+        SELECT a.*, b.c1name
+        FROM `notice` AS a
+        JOIN `cate1` AS b
+        ON a.cate1 = b.cate1
+        WHERE `noticeno`= #{noticeno}
+    </select>
+
+    <!--🎈admin_faq_list-->
+    <select id="adminFaqList" resultType="kr.co.lotteon.dto.FaqDTO">
+        SELECT * FROM `faq` AS a
+        JOIN `cate1` AS b ON a.cate1 = b.cate1
+        JOIN `cate2` AS c ON a.cate2 = c.cate2
+        WHERE a.cate1=#{cate1} ORDER BY `faqno` DESC LIMIT 10
+    </select>
+
+    <!--🎈admin_faq_view-->
+    <select id="adminFaqView" resultType="kr.co.lotteon.dto.FaqDTO">
+        SELECT a.*, b.c1name, c.c2name
+        FROM `faq` AS a
+        JOIN `cate1` AS b ON a.cate1 = b.cate1
+        JOIN `cate2` AS c ON a.cate2 = c.cate2
+        WHERE `faqno`= #{faqno}
+    </select>
+
+
 </mapper>

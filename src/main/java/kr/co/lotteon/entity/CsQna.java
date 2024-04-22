@@ -53,9 +53,6 @@ public class CsQna {
     @Column(name = "uid")
  */
     private String uid;
-
-    private String ono;
-    private String prodno;
     private int parent;
     private int answercomplete;
     private String regip;
@@ -78,8 +75,6 @@ public class CsQna {
                 .file1(file1)
                 .file2(file2)
                 .uid(uid)
-                .ono(ono)
-                .prodno(prodno)
                 .parent(parent)
                 .answercomplete(answercomplete)
                 .regip(regip)
