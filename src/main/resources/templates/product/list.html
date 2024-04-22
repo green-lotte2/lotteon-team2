@@ -42,7 +42,7 @@
 
         <!-- 상품목록 -->
               <table border="0">
-                  <tr th:each="product : ${products}">
+                  <tr th:each="product : ${products.isPresent() ? products.get() : ''}">
                       <td>
                           <a th:href="@{/product/view(pno=${product.pno})}" class="thumb">
                               <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
@@ -85,20 +85,21 @@
         <div class="paging">
             <!-- 이전 페이지 링크 -->
             <span class="prev">
-        <a th:if="${result.page > 1}" th:href="@{/product/list(pg=${result.page - 1})}">&lt;&nbsp;이전</a>
+        <a th:if="${result.pg > 1}" th:href="@{/product/list(pg=${result.pg - 1})}">&lt;&nbsp;이전</a>
     </span>
 
             <!-- 숫자 페이지 링크 -->
             <span class="num">
-        <!-- Ensure the start page is at least 1 -->
-        <a th:each="pageNum : ${#numbers.sequence(result.start > 1 ? result.start : 1, result.end)}"
-           th:href="@{/product/list(pg=${pageNum})}" th:text="${pageNum}"
-           th:class="${pageNum == result.page} ? 'on' : ''"></a>
-    </span>
+                <a th:each="pageNum : ${#numbers.sequence(result.start, result.end)}"
+                   th:href="@{/product/list(pg=${pageNum})}"
+                   th:text="${pageNum}"
+                   th:class="${pageNum == result.pg ? 'on' : ''}"></a>
+            </span>
+
 
             <!-- 다음 페이지 링크 -->
             <span class="next">
-        <a th:if="${result.page < result.totalPage}" th:href="@{/product/list(pg=${result.page + 1})}">다음&nbsp;&gt;</a>
+        <a th:if="${result.pg < result.totalPage}" th:href="@{/product/list(pg=${result.pg + 1})}">다음&nbsp;&gt;</a>
     </span>
         </div>
 
