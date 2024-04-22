@@ -42,7 +42,7 @@
 
         <!-- 상품목록 -->
               <table border="0">
-                  <tr th:each="product : ${products.isPresent() ? products.get() : ''}">
+                  <tr th:each="product : ${products}">
                       <td>
                           <a th:href="@{/product/view(pno=${product.pno})}" class="thumb">
                               <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">

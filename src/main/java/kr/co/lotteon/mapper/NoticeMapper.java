@@ -18,4 +18,7 @@ public interface NoticeMapper {
 
     public NoticeDTO selectNoticeView(int noticeno);
 
+    //🎈admin notice view
+    public NoticeDTO adminSelectNoticeView(int noticeno);
+
 }

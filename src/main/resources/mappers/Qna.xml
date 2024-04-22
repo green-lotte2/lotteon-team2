@@ -67,5 +67,16 @@
     <select id="selectQnaChildBoard" resultType="kr.co.lotteon.dto.QnaDTO">
         SELECT * FROM `qna` WHERE `parent`=#{qnano}
     </select>
+
+
+    <!--🎈admin_qna_list-->
+    <select id="adminSelectQnaList" resultType="kr.co.lotteon.dto.QnaDTO">
+        SELECT a.*, b.*
+        FROM `qna` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
+        ORDER BY `qnano` DESC LIMIT 10
+    </select>
+
     
 </mapper>

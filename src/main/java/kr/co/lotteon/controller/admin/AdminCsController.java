@@ -4,6 +4,7 @@ package kr.co.lotteon.controller.admin;
 import kr.co.lotteon.dto.Cate2DTO;
 import kr.co.lotteon.dto.FaqDTO;
 import kr.co.lotteon.dto.NoticeDTO;
+import kr.co.lotteon.dto.QnaDTO;
 import kr.co.lotteon.service.AdminCsService;
 import kr.co.lotteon.service.CsService;
 import lombok.extern.slf4j.Slf4j;
@@ -98,7 +99,7 @@ public class AdminCsController {
     //🎈 공지사항 view
     @GetMapping("/admin/cs/notice/view")
     public String adminNoticeView(int noticeno, Model model){
-        NoticeDTO noticeBoard = csService.selectNoticeView(noticeno);
+        NoticeDTO noticeBoard = csService.adminSelectNoticeView(noticeno);
         model.addAttribute("noticeBoard", noticeBoard);
         log.info("noticeno : " + noticeno);
         log.info("noticeBoard : " + noticeBoard.toString());
@@ -122,7 +123,10 @@ public class AdminCsController {
     // 🎈1:1 질문 /////////////
     ////////////////////////
     @GetMapping("/admin/cs/qna/list")
-    public String adminQnaList(){
+    public String adminQnaList(Model model){
+        List<QnaDTO> qnaDTOS = csService.adminSelectQnaList();
+        model.addAttribute("qnaDTOS", qnaDTOS);
+
         return "/admin/cs/qna/list";
     }
 
@@ -143,21 +147,20 @@ public class AdminCsController {
     // 🎈자주 묻는 질문 ////////
     ///////////////////////
     @GetMapping("/admin/cs/faq/list")
-    public String adminFaqList(Model model, Integer cate1){
-        List<FaqDTO> faqDTOList = csService.selectFaqList10(cate1);
-        List<Cate2DTO> cate2list = csService.selectCate2(cate1);
-        model.addAttribute("cate2list",cate2list);
-        model.addAttribute("faqDTOList",faqDTOList);
-        model.addAttribute("cate1", cate1);
-       log.info("faqDTOList : " + faqDTOList);
-
+    public String adminFaqList(Model model){
+        List<FaqDTO> faqDTOList = csService.selectFaqList();
+        List<Cate2DTO> cate2list = csService.adminSelectCate2();
+        model.addAttribute("faqDTOList", faqDTOList);
+        model.addAttribute("cate2List", cate2list);
+        log.info("faqDTOList : " + faqDTOList);
+        log.info("cate2List : " + cate2list);
         return "/admin/cs/faq/list";
     }
 
     @GetMapping("/admin/cs/faq/view")
     public String adminFaqView(int faqno, Model model){
 
-        FaqDTO faqBoard = csService.selectFaqView(faqno);
+        FaqDTO faqBoard = csService.adminSelectFaqView(faqno);
         model.addAttribute("faqBoard",faqBoard);
 
         log.info("faqno : " + faqno);

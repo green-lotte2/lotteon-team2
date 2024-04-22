@@ -14,4 +14,9 @@
         SELECT * FROM `cate2` WHERE `cate1` = #{cate1}
     </select>
 
+    <!--🎈admin 카테고리-->
+    <select id="adminSelectCate2" resultType="kr.co.lotteon.dto.Cate2DTO">
+        SELECT * FROM `cate2`
+    </select>
+
 </mapper>

@@ -65,16 +65,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="cate2list : ${cate2List}">
+                                <tr th:each="faqDTOList: ${faqDTOList}">
                                     <td>
                                         <input type="checkbox" name="checkbox" value="">
                                     </td>
-                                    <td>[[${cate2list.faqno}]]</td>
-                                    <td th:text="'[' + ${cate2list.c2name} + ']'"></td>
+                                    <td>[[${faqDTOList.faqno}]]</td>
+                                    <td th:text="'[' + ${faqDTOList.c2name} + ']'"></td>
                                     <td>
-                                        <a th:href="@{/admin/cs/faq/view(faqno=${cate2list.faqno}, cate2=${cate2list.cate2})}">[[${cate2list.title}]]</a>
+                                        <a th:href="@{/admin/cs/faq/view(faqno=${faqDTOList.faqno}, cate2=${faqDTOList.cate2})}">[[${faqDTOList.title}]]</a>
                                     </td>
-                                    <td th:text="${#temporals.format(cate2list.rdate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#temporals.format(faqDTOList.rdate, 'yyyy-MM-dd')}"></td>
                                     <td>
                                         <a th:href="@{/admin/cs/faq/delete}">[삭제]</a>
                                         <a th:href="@{/admin/cs/faq/modify}">[수정]</a>

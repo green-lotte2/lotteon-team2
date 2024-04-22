@@ -217,11 +217,41 @@ public class CsService {
     public List<FaqDTO> selectFaqList10(int cate1){
         return faqMapper.selectFaqList10(cate1);
     }
+    
+    // 🎈Admin Faq 리스트
+    public List<FaqDTO> selectFaqList(){
+        return faqMapper.selectFaqList();
+    }
 
-    // Admin Qna 뷰
+    // 🎈Admin Faq 리스트 카테고리
+    public List<Cate2DTO> adminSelectCate2(){
+        return cateMapper.adminSelectCate2();
+    }
+
+    // 🎈 Admin Qna 리스트
+    public List<QnaDTO> adminSelectQnaList(){
+        return  qnaMapper.adminSelectQnaList();
+    }
+
+
+
+    // 🎈Admin Faq view
+    public FaqDTO adminSelectFaqView(int faqno){
+        return faqMapper.adminSelectFaqView(faqno);
+    }
+
+    // 🎈Admin Notice view
+    public NoticeDTO adminSelectNoticeView(int noticeno){
+        return noticeMapper.adminSelectNoticeView(noticeno);
+    }
+
+
+
+    // 🎈 Admin Qna 뷰
     public QnaDTO selectAdminQnaView(int qnano){
         return qnaMapper.selectAdminQnaView(qnano);
     }
+
     // Admin Qna 뷰 코멘트
     public List<CsQna> selectComments(int parent){
         return qnaRepository.findByParent(parent);

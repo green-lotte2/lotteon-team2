@@ -23,7 +23,7 @@
                <h2>공지사항</h2>
                 <article>
                     <nav>
-                        <h2 class="title" th:text="'[' + ${noticeBoard.c1name} + ']' + ${noticeBoard.title}"></h2>
+                        <h2 class="title" th:text="'[' + ${noticeBoard.c2name} + ']' + ${noticeBoard.title}"></h2>
                         <span th:text="${#temporals.format(noticeBoard.rdate, 'yyyy-MM-dd')}"></span>
                     </nav>
 

@@ -157,7 +157,6 @@ input#delBtn:hover {
 
 input#writeBtn {
     position: relative;
-    left: 990px;
     width: 80px;
     background: #6e6b6b;
     border-radius: 5px;
