@@ -162,7 +162,21 @@ public class ProductController {
     }
 
     @GetMapping("/product/order")
-    public String order() {
+    public String order(Authentication authentication, Model model) {
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
+        }
+
+        // 사용자 정보 가져오기
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String uid = userDetails.getUsername();  // 인증된 사용자 ID 추출
+
+        List<ProductDTO> cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
+
+        model.addAttribute("cartProducts", cartProducts);  // 모델에 장바구니 상품 목록 추가
+        model.addAttribute("cate", productService.getCategoryList());
+
         return "/product/order";
     }
 

@@ -2,9 +2,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="~{/layout/UserLayout}">
 
-
-
-
 <!-- 장바구니 페이지 시작 -->
 <section class="cart" layout:fragment="content">
     <script>
@@ -50,6 +47,7 @@
     </nav>
 
     <form id="deleteForm">
+
         <!-- 장바구니 목록 -->
         <table>
             <thead>
@@ -94,8 +92,6 @@
             </tbody>
         </table>
         <input type="button" name="del" id="btnDelete" value="선택 삭제" class="btnDelete" onclick="submitDeleteForm()">
-
-
         <!-- 장바구니 전체합계 -->
         <div class="total">
             <h2>전체합계</h2>
@@ -126,11 +122,8 @@
                 </tr>
             </table>
             <input th:href="@{/product/order}" type="submit" name="" class="order-button" value="주문하기">
-
         </div>
-
     </form>
-
 </section>
 <!-- 장바구니 페이지 끝 -->
 </html>
