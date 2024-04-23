@@ -20,8 +20,4 @@ public interface QnaRepository extends JpaRepository<CsQna, Integer> {
 
     public List<CsQna> findByQnano(int qnano);
 
-    int countByUid(String uid);
-
-    List<CsQna> findTop3ByUidOrderByRdate(String uid);
-
 }
