@@ -5,9 +5,15 @@ import kr.co.lotteon.entity.Cart;
 import kr.co.lotteon.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,6 +50,22 @@ public class CartService {
         }
     }
 
+    // 장바구니에서 선택 상품 삭제
+    public ResponseEntity<?> deleteCartItems(int[] pnos) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            for (int pno : pnos) {
+                cartRepository.deleteByPno(pno);
+            }
+            response.put("success", true);
+            response.put("message", "삭제 성공");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "삭제 실패");
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
 }
 
 

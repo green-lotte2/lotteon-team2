@@ -33,6 +33,7 @@ public class ProductDTO {
 
     private String opname;
     private String opvalue;
+    private int pcount;
 
     private String mainimg;
     private String subimg;

@@ -4,93 +4,133 @@
 
 
 
-            <!-- 장바구니 페이지 시작 -->
-            <section class="cart" layout:fragment="content">
-              <!-- 제목, 페이지 네비게이션 -->
-              <nav>
-                <h1>장바구니</h1>
-                <p>
-                  HOME > <span>패션·의류·뷰티</span> > <strong>장바구니</strong>
-                </p>
-              </nav>
-                            
-              <form th:action="@{/product/order}" method="post">
-                <!-- 장바구니 목록 -->
-                <table>
-                  <thead>
-                    <tr>
-                      <th><input type="checkbox" name="all"></th>
-                      <th>상품명</th>
-                      <th>총수량</th>
-                      <th>판매가</th>
-                      <th>할인</th>
-                      <th>포인트</th>
-                      <th>배송비</th>
-                      <th>소계</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <tr th:if="${cartProducts == null or cartProducts.isEmpty()}" class="empty">
-                    <td colspan="8">장바구니에 상품이 없습니다.</td>
-                  </tr>
-                  <tr th:each="product : ${cartProducts}" th:unless="${cartProducts == null or cartProducts.isEmpty()}">
-                    <td><input type="checkbox" name="productSelect" th:value="${product.pno}"></td>
-                    <td>
-                      <article>
-                        <a th:href="@{/product/view(pno=${product.pno})}"><img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지"></a>
+
+<!-- 장바구니 페이지 시작 -->
+<section class="cart" layout:fragment="content">
+    <script>
+        function submitDeleteForm() {
+            const checkboxes = document.querySelectorAll('input[name="productSelect"]:checked');
+            if (checkboxes.length === 0) {
+                alert('삭제할 상품을 선택하세요.');
+                return;
+            }
+            const pnos = Array.from(checkboxes).map(cb => parseInt(cb.value));
+            fetch('/lotteon/cart/delete', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ pnos: pnos })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('선택한 상품이 삭제되었습니다.');
+                        window.location.reload();
+                    } else {
+                        alert('상품 삭제에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('삭제 처리 중 오류가 발생했습니다.');
+                });
+        }
+        function toggleSelectAll(source) {
+            const checkboxes = document.querySelectorAll('input[name="productSelect"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = source.checked;
+            });
+        }
+    </script>
+    <!-- 제목, 페이지 네비게이션 -->
+    <nav>
+        <h1>장바구니</h1>
+        <p>
+            HOME > <span>패션·의류·뷰티</span> > <strong>장바구니</strong>
+        </p>
+    </nav>
+
+    <form id="deleteForm">
+        <!-- 장바구니 목록 -->
+        <table>
+            <thead>
+            <tr>
+                <th><input type="checkbox" onclick="toggleSelectAll(this)"></th>
+                <th>상품명</th>
+                <th>총수량</th>
+                <th>판매가</th>
+                <th>할인</th>
+                <th>포인트</th>
+                <th>배송비</th>
+                <th>소계</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${cartProducts == null or cartProducts.isEmpty()}" class="empty">
+                <td colspan="8">장바구니에 상품이 없습니다.</td>
+            </tr>
+            <tr th:each="product : ${cartProducts}" th:unless="${cartProducts == null or cartProducts.isEmpty()}">
+                <td><input type="checkbox" name="productSelect" th:value="${product.pno}"></td>
+                <td>
+                    <article>
+                        <a th:href="@{/product/view(pno=${product.pno})}"><img
+                                th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지"></a>
                         <div>
-                          <h2 class="name" th:text="${product.pname}"><a th:href="@{/product/view(pno=${product.pno})}" >상품명</a></h2>
-                          <p th:text="${product.info}">상품설명</p>
+                            <h2 class="name" th:text="${product.pname}"><a
+                                    th:href="@{/product/view(pno=${product.pno})}">상품명</a></h2>
+                            <p th:text="${product.info}">상품설명</p>
                         </div>
-                      </article>
-                    </td>
-                    <td th:text="${product.stock}">1</td>
-                    <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">27,000</td>
-                    <td th:text="${product.discount + '%'}">5%</td>
-                    <td th:text="${#numbers.formatInteger(product.point, 0, 'COMMA')}">270</td>
-                    <td th:text="${product.deliprice == 0 ? '무료배송' : product.deliprice + '원'}">무료배송</td>
-                    <td th:text="${#numbers.formatInteger((product.price * product.stock) * (1 - product.discount / 100.0), 0, 'COMMA')}">27,000</td>
-                  </tr>
+                    </article>
+                </td>
+                <td th:text="${product.pcount}">1</td>
+                <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">27,000</td>
+                <td th:text="${product.discount + '%'}">5%</td>
+                <td th:text="${#numbers.formatInteger(product.point, 0, 'COMMA')}">270</td>
+                <td th:text="${product.deliprice == 0 ? '무료배송' : product.deliprice + '원'}">무료배송</td>
+                <td th:text="${#numbers.formatInteger((product.price * product.pcount) * (1 - product.discount / 100.0), 0, 'COMMA')}">
+                    27,000
+                </td>
+            </tr>
 
-                  </tbody>
-                </table>
-                <input type="button" name="del" value="선택삭제">
+            </tbody>
+        </table>
+        <input type="button" name="del" id="btnDelete" value="선택 삭제" class="btnDelete" onclick="submitDeleteForm()">
 
-                <!-- 장바구니 전체합계 -->
-                <div class="total">
-                  <h2>전체합계</h2>
-                  <table border="0">
-                    <tr>
-                      <td>상품수</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>상품금액</td>
-                      <td>27,000</td>
-                    </tr>
-                    <tr>
-                      <td>할인금액</td>
-                      <td>-1,000</td>
-                    </tr>
-                    <tr>
-                      <td>배송비</td>
-                      <td>0</td>
-                    </tr>              
-                    <tr>
-                      <td>포인트</td>
-                      <td>260</td>
-                    </tr>
-                    <tr>
-                      <td>전체주문금액</td>
-                      <td>26,000</td>
-                    </tr>
-                  </table>
-                  <input th:href="@{/product/order}" type="submit" name="" class="order-button" value="주문하기">
 
-                </div>
+        <!-- 장바구니 전체합계 -->
+        <div class="total">
+            <h2>전체합계</h2>
+            <table border="0">
+                <tr>
+                    <td>상품수</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>상품금액</td>
+                    <td>27,000</td>
+                </tr>
+                <tr>
+                    <td>할인금액</td>
+                    <td>-1,000</td>
+                </tr>
+                <tr>
+                    <td>배송비</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>포인트</td>
+                    <td>260</td>
+                </tr>
+                <tr>
+                    <td>전체주문금액</td>
+                    <td>26,000</td>
+                </tr>
+            </table>
+            <input th:href="@{/product/order}" type="submit" name="" class="order-button" value="주문하기">
 
-              </form>
+        </div>
 
-            </section>
-            <!-- 장바구니 페이지 끝 -->
+    </form>
+
+</section>
+<!-- 장바구니 페이지 끝 -->
 </html>

@@ -239,7 +239,7 @@
 #product > .view > .info > div {
     float: left;
     width: 50%;
-    height: 100%;
+    height: auto;
     padding: 10px;
     box-sizing: border-box;
 }

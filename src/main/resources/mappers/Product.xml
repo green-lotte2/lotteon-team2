@@ -18,12 +18,21 @@
 
     <!-- 장바구니 상품 정보 조회 -->
     <select id="selectCartWithProductsByUid" resultType="kr.co.lotteon.dto.ProductDTO">
-        SELECT a.*, b.mainImg, c.pcount, c.options
+        SELECT a.pname, a.company, a.price, a.cate, a.info, a.discount, a.point, a.deliprice, b.mainImg, c.pcount, c.options
         FROM `cart` AS c
         JOIN `product` AS a ON c.pno = a.pno
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
         WHERE c.uid = #{uid}
         ORDER BY c.cno DESC
     </select>
+
+    <!-- 상품 상세 정보 조회 -->
+    <select id="selectProductWithImagesById" resultType="kr.co.lotteon.dto.ProductDTO">
+        SELECT p.*, img.mainimg, img.subimg, img.detailimg
+        FROM product p
+        LEFT JOIN productimg img ON p.pno = img.pno
+        WHERE p.pno = #{pno}
+    </select>
+
 
 </mapper>

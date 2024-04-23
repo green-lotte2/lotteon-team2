@@ -16,4 +16,6 @@ public interface ProductMapper {
     public List<ProductDTO> selectProductsForNew();
 
     List<ProductDTO> selectCartWithProductsByUid(String uid);
+
+    ProductDTO selectProductWithImagesById(int pno);
 }

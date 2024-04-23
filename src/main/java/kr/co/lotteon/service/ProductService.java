@@ -250,6 +250,11 @@ public class ProductService {
     }
 
 
+    // 서비스 계층
+    public ProductDTO findProductDTOById(int pno) {
+        return productMapper.selectProductWithImagesById(pno);
+    }
+
 
 
     //🎈 상품 조회
@@ -316,6 +321,8 @@ public class ProductService {
                 .total(total)
                 .build();
     }
+
+
 
 }
 

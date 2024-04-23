@@ -16,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.Console;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -189,11 +188,10 @@ public class ProductController {
 
     @GetMapping("/product/view")
     public String viewProduct(@RequestParam("pno") int pno, Model model) {
-        Optional<Product> productOpt = productService.findProductById(pno);
-        if (productOpt.isPresent()) {
-            Product product = productOpt.get();
+        ProductDTO productDTO = productService.findProductDTOById(pno);
+        if (productDTO != null) {
             model.addAttribute("cate", productService.getCategoryList());
-            model.addAttribute("product", product);
+            model.addAttribute("product", productDTO);
             model.addAttribute("sizes", List.of("S", "M", "L")); // 예시 사이즈
             model.addAttribute("colors", List.of("Red", "Blue", "Green")); // 예시 색상
             return "/product/view";
@@ -218,6 +216,18 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating quantity: " + e.getMessage());
         }
+    }
+
+    // 장바구니에서 상품 삭제
+    /*
+        # 장바구니에서 선택 상품 삭제 (int배열로 pno 받음)
+          - 삭제할 pno의 값을 int배열로 받음
+          - 해당 pno 값으로 product의 상품 목록 삭제
+     */
+    @PostMapping("/cart/delete")
+    public ResponseEntity<?> deleteCart(@RequestBody Map<String, int[]> requestData) {
+        int[] pnos = requestData.get("pnos");
+        return cartService.deleteCartItems(pnos);
     }
 
 }
