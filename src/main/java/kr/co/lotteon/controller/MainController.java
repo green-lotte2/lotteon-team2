@@ -27,6 +27,7 @@ public class MainController {
         log.info(newProduct.toString());
         model.addAttribute("cate", cate);
         model.addAttribute("newProduct", newProduct);
+        model.addAttribute("cate", productService.getCategoryList());
         return "/index";
     }
 

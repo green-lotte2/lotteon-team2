@@ -18,7 +18,7 @@
 
     <!-- 장바구니 상품 정보 조회 -->
     <select id="selectCartWithProductsByUid" resultType="kr.co.lotteon.dto.ProductDTO">
-        SELECT a.pname, a.company, a.price, a.cate, a.info, a.discount, a.point, a.deliprice, b.mainImg, c.pcount, c.options
+        SELECT a.pno, a.pname, a.company, a.price, a.cate, a.info, a.discount, a.point, a.deliprice, b.mainImg, c.pcount, c.options
         FROM `cart` AS c
         JOIN `product` AS a ON c.pno = a.pno
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
