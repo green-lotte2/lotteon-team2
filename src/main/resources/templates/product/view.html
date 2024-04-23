@@ -54,6 +54,7 @@
                 finalPrice.innerText = total.toLocaleString();
             }
 
+
             try {
                 const today = new Date();
                 const arrivalDate = new Date();
@@ -200,7 +201,7 @@
             <nav>
                 <!-- 원래 가격을 출력합니다. -->
                 <div class="org_price">
-                    <del th:text="${#numbers.formatInteger(product.price,  0, 'COMMA')}">30,000></del>
+                    <del id="price" th:text="${#numbers.formatInteger(product.price,  0, 'COMMA')}">30,000></del>
                     <!-- 할인율 -->
                     <span class="discount" th:text="${product.discount + '%'}">10%</span>
                 </div>

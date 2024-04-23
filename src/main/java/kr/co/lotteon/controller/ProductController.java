@@ -73,6 +73,7 @@ public class ProductController {
     }
 
 
+
     @GetMapping("/product/cart")
     public String cart(Authentication authentication, Model model) {
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -146,15 +147,24 @@ public class ProductController {
                        @RequestParam(defaultValue = "1") int pg,
                        @RequestParam(defaultValue = "10") int size) {
 
+        // cate 문자열을 int로 변환, 유효하지 않은 경우 기본값 0을 사용
+        int cateInt = 0;
+        try {
+            cateInt = Integer.parseInt(cate);
+        } catch (NumberFormatException e) {
+            log.error("Invalid category ID: {}", cate, e);
+            // 필요한 경우 오류 처리 또는 기본값 설정
+        }
+
         // PageRequestDTO 객체 생성
         ProductPageRequestDTO productPageRequestDTO = ProductPageRequestDTO.builder()
                 .pg(pg)
                 .size(size)
                 .build();
-        log.info("dddddd" + productPageRequestDTO);
 
         // 서비스 메소드 호출
         ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, cate);
+        responseDTO.setCate(cateInt); // cate 값을 responseDTO에 설정
         model.addAttribute("products", responseDTO.getDtoList());
         model.addAttribute("result", responseDTO);
         model.addAttribute("cate", productService.getCategoryList()); // 카테고리 리스트 추가
@@ -239,14 +249,10 @@ public class ProductController {
     }
 
     // 장바구니에서 상품 삭제
-    /*
-        # 장바구니에서 선택 상품 삭제 (int배열로 pno 받음)
-          - 삭제할 pno의 값을 int배열로 받음
-          - 해당 pno 값으로 product의 상품 목록 삭제
-     */
     @PostMapping("/cart/delete")
     public ResponseEntity<?> deleteCart(@RequestBody Map<String, int[]> requestData) {
         int[] pnos = requestData.get("pnos");
+        log.info("pnos : " + pnos);
         return cartService.deleteCartItems(pnos);
     }
 

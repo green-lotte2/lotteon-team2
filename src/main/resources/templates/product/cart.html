@@ -5,39 +5,84 @@
 <!-- 장바구니 페이지 시작 -->
 <section class="cart" layout:fragment="content">
     <script>
-        function submitDeleteForm() {
-            const checkboxes = document.querySelectorAll('input[name="productSelect"]:checked');
-            if (checkboxes.length === 0) {
-                alert('삭제할 상품을 선택하세요.');
-                return;
-            }
-            const pnos = Array.from(checkboxes).map(cb => parseInt(cb.value));
-            fetch('/lotteon/cart/delete', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ pnos: pnos })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('선택한 상품이 삭제되었습니다.');
-                        window.location.reload();
-                    } else {
-                        alert('상품 삭제에 실패했습니다.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('삭제 처리 중 오류가 발생했습니다.');
-                });
-        }
-        function toggleSelectAll(source) {
-            const checkboxes = document.querySelectorAll('input[name="productSelect"]');
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = source.checked;
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTotalSum();  // 페이지 로드 시 합계 업데이트
+
+            // 전체 선택 체크박스 이벤트 핸들러 추가
+            const selectAllCheckbox = document.getElementById('selectAll');
+            selectAllCheckbox.addEventListener('change', function() {
+                toggleSelectAll(this);
             });
-        }
+
+            // 체크박스 변경 시 합계 업데이트
+            document.querySelectorAll('input[name="productSelect"]').forEach(checkbox => {
+                checkbox.addEventListener('change', updateTotalSum);
+            });
+
+            window.submitDeleteForm = function() {
+                const checkboxes = document.querySelectorAll('input[name="productSelect"]:checked');
+                if (checkboxes.length === 0) {
+                    alert('삭제할 상품을 선택하세요.');
+                    return;
+                }
+                const pnos = Array.from(checkboxes).map(cb => parseInt(cb.value));
+                fetch('/lotteon/cart/delete', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ pnos: pnos })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('선택한 상품이 삭제되었습니다.');
+                            window.location.reload(); // 페이지 새로 고침
+                        } else {
+                            alert('상품 삭제에 실패했습니다.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('삭제 처리 중 오류가 발생했습니다.');
+                    });
+
+            }
+            function toggleSelectAll(source) {
+                const checkboxes = document.querySelectorAll('input[name="productSelect"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = source.checked;
+                });
+                updateTotalSum(); // 체크 상태가 바뀔 때 전체 합계를 업데이트
+            }
+
+            function updateTotalSum() {
+                const checkboxes = document.querySelectorAll('input[name="productSelect"]:checked');
+                let totalAmount = 0;
+                let totalItems = 0;
+                let discount = 0;
+                let deliveryFee = 0;
+                checkboxes.forEach(checkbox => {
+                    const row = checkbox.closest('tr');
+                    const quantity = parseInt(row.querySelector('[name="productSelect"]').getAttribute('data-pcount'));
+                    const price = parseFloat(row.querySelector('[name="productSelect"]').getAttribute('data-price'));
+                    const itemDiscount = parseFloat(row.querySelector('[name="productSelect"]').getAttribute('data-discount')) / 100;
+                    const itemDeliveryFee = parseFloat(row.querySelector('[name="productSelect"]').getAttribute('data-delivery'));
+                    totalAmount += (price * quantity) * (1 - itemDiscount);
+                    discount += (price * itemDiscount) * quantity;
+                    deliveryFee += itemDeliveryFee;
+                    totalItems += quantity;
+                });
+
+                document.querySelector('.total [name="totalItems"]').innerText = totalItems;
+                document.querySelector('.total [name="totalAmount"]').innerText = totalAmount.toLocaleString();
+                document.querySelector('.total [name="totalDiscount"]').innerText = (discount * -1).toLocaleString();
+                document.querySelector('.total [name="totalDelivery"]').innerText = deliveryFee.toLocaleString();
+                document.querySelector('.total [name="totalOrderAmount"]').innerText = (totalAmount + deliveryFee - discount).toLocaleString();
+                console.log('Total sum updated.');  // 확인용 콘솔 로그
+            }
+        });
     </script>
+
+
     <!-- 제목, 페이지 네비게이션 -->
     <nav>
         <h1>장바구니</h1>
@@ -52,7 +97,7 @@
         <table>
             <thead>
             <tr>
-                <th><input type="checkbox" onclick="toggleSelectAll(this)"></th>
+                <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"></th>
                 <th>상품명</th>
                 <th>총수량</th>
                 <th>판매가</th>
@@ -67,11 +112,13 @@
                 <td colspan="8">장바구니에 상품이 없습니다.</td>
             </tr>
             <tr th:each="product : ${cartProducts}" th:unless="${cartProducts == null or cartProducts.isEmpty()}">
-                <td><input type="checkbox" name="productSelect" th:value="${product.pno}"></td>
+                <td><input type="checkbox" name="productSelect" th:value="${product.pno}" th:data-price="${product.price}"
+                           th:data-pcount="${product.pcount}" th:data-discount="${product.discount}" th:data-delivery="${product.deliprice}">
+                </td>
                 <td>
                     <article>
-                        <a th:href="@{/product/view(pno=${product.pno})}"><img
-                                th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지"></a>
+                        <a th:href="@{/product/view(pno=${product.pno})}">
+                            <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지"></a>
                         <div>
                             <h2 class="name" th:text="${product.pname}"><a
                                     th:href="@{/product/view(pno=${product.pno})}">상품명</a></h2>
@@ -98,27 +145,23 @@
             <table border="0">
                 <tr>
                     <td>상품수</td>
-                    <td>1</td>
+                    <td name="totalItems">0</td>
                 </tr>
                 <tr>
                     <td>상품금액</td>
-                    <td>27,000</td>
+                    <td name="totalAmount">0</td>
                 </tr>
                 <tr>
                     <td>할인금액</td>
-                    <td>-1,000</td>
+                    <td name="totalDiscount">0</td>
                 </tr>
                 <tr>
                     <td>배송비</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>포인트</td>
-                    <td>260</td>
+                    <td name="totalDelivery">0</td>
                 </tr>
                 <tr>
                     <td>전체주문금액</td>
-                    <td>26,000</td>
+                    <td name="totalOrderAmount">0</td>
                 </tr>
             </table>
             <input th:href="@{/product/order}" type="submit" name="" class="order-button" value="주문하기">

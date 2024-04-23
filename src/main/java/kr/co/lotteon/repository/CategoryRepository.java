@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -23,4 +25,14 @@ public class CategoryRepository {
                 .setParameter("cname", '%' + cname + '%')
                 .getResultList();
     }
+
+    public Optional<Category> findById(int categoryId) {
+        return em.createQuery("SELECT c FROM Category c WHERE c.cate = :cate", Category.class)
+                .setParameter("cate", categoryId)
+                .getResultList()
+                .stream()
+                .findFirst();
+    }
+
+
 }

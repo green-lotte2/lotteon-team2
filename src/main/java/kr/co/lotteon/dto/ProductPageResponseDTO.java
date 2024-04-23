@@ -2,9 +2,11 @@ package kr.co.lotteon.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Setter;
 
 import java.util.List;
 
+@Setter
 @Data
 public class ProductPageResponseDTO {
     private List<NoticeDTO> noticeList;

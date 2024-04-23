@@ -104,6 +104,8 @@ public class ProductService {
         productimgRepository.save(img);
         log.info("img" + img);
     }
+
+
     /////////////////////////상품///////////////////////////////
     /*
         상품 등록
@@ -157,6 +159,30 @@ public class ProductService {
     public void deleteProduct(int productId) {
         productRepository.deleteById(productId);
     }
+
+    // 카테고리 ID와 계층의 깊이를 기준으로 상품 목록을 조회합니다.
+    public List<CategoryDTO> calculateCategoryPath(int categoryId) {
+        List<CategoryDTO> path = new ArrayList<>();
+        Optional<Category> currentCategory = categoryRepository.findById(categoryId);
+
+        while (currentCategory.isPresent()) {
+            Category category = currentCategory.get();
+            path.add(0, CategoryDTO.of(category));
+            currentCategory = Optional.ofNullable(category.getParent());
+        }
+
+        return path;
+    }
+
+
+    // 엔티티를 DTO로 변환하는 메서드
+    private ProductDTO convertToProductDTO(Product product) {
+        ProductDTO dto = modelMapper.map(product, ProductDTO.class);
+        // 추가적인 변환 로직 구현
+        return dto;
+    }
+
+
 
     public Page<Product> findProductsByCategoryName(String cname, Pageable pageable) {
         // 카테고리 이름에 해당하는 카테고리 목록을 찾습니다.
@@ -321,9 +347,6 @@ public class ProductService {
                 .total(total)
                 .build();
     }
-
-
-
 }
 
 
