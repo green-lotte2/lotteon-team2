@@ -1,6 +1,7 @@
 package kr.co.lotteon.controller;
 
 import kr.co.lotteon.dto.*;
+import kr.co.lotteon.entity.Orders;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.entity.User;
 import kr.co.lotteon.service.AdminService;
@@ -197,7 +198,10 @@ public class ProductController {
     }
 
     @PostMapping("/product/order")
-    public String productorder() {
+    public String productorder(OrdersDTO ordersDTO) {
+
+        log.info(ordersDTO.toString());
+
         return "/product/order";
     }
 

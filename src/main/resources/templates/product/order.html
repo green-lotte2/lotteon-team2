@@ -6,8 +6,12 @@
 <!-- 주문 페이지 시작-->
 <section class="order" layout:fragment="content">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
-        window.onload = function (){
+    <script th:inline="javascript">
+        window.onload = function () {
+
+            document.getElementById('order').onclick = async function (){
+
+            }
 
             // 주소 API 호출
             document.getElementById('btnZip').onclick = function (e) {
@@ -15,15 +19,15 @@
                 postcode();
             }
 
-            document.getElementById('usePoint').onclick = function (e){
+            document.getElementById('usePoint').onclick = function (e) {
                 e.preventDefault();
                 const point = document.getElementById('point').value;
                 console.log(point);
-                if(parseInt(point) < 5000 || point == ""){
+                if (parseInt(point) < 5000 || point == "") {
                     alert("포인트 5,000점 이상이면 현금처럼 사용 가능합니다.");
                     return false;
                 } else {
-                    if(point > [[${user.point}]]){
+                    if (point > [[${user.point}]]) {
                         alert("보유하신 포인트를 초과하였습니다.");
                         return false;
                     }
@@ -51,7 +55,7 @@
                 });
             }
 
-            function setting(){
+            function setting() {
                 const checked = document.getElementsByName('productSelect');
                 const count = document.getElementsByClassName('count');
                 const price = document.getElementsByClassName('price');
@@ -63,17 +67,17 @@
                 let calcPriceSum = 0;
                 let deliPriceSum = 0;
                 let discountPrice = 0;
-                for(let i = 0; i < count.length; i++){
-                    if(checked[i].checked){
+                for (let i = 0; i < count.length; i++) {
+                    if (checked[i].checked) {
                         const countNum = parseInt(count[i].innerText);
                         const priceNum = parseInt(price[i].getAttribute('value'));
                         const calcPriceNum = parseInt(calcPrice[i].getAttribute('value'));
                         countSum += countNum;
                         priceSum += priceNum * countNum;
                         calcPriceSum += calcPriceNum;
-                        if(delivery[i].innerText === "무료배송"){
+                        if (delivery[i].innerText === "무료배송") {
                             deliPriceSum += 0;
-                        }else{
+                        } else {
                             deliPriceSum += parseInt(delivery[i].innerText);
                         }
                         discountPrice += (priceNum * countNum) - calcPriceNum;
@@ -89,6 +93,7 @@
                 document.getElementById('finalPrice').innerText = finalPrice + '';
 
             }
+
             setting();
         }
     </script>
@@ -100,7 +105,7 @@
         </p>
     </nav>
 
-    <form th:action="@{#}">
+    <form th:action="@{/product/order}" method="post">
         <!-- 주문 상품 목록 -->
         <table>
             <thead>
@@ -120,7 +125,8 @@
                 <td colspan="8">장바구니에 상품이 없습니다.</td>
             </tr>
             <tr th:each="product : ${cartProducts}" th:unless="${cartProducts == null or cartProducts.isEmpty()}">
-                <td><input type="checkbox" name="productSelect" th:value="${product.pno} + ',' + ${product.pcount}" checked></td>
+                <td><input type="checkbox" name="productSelect" th:value="${product.pno} + ',' + ${product.pcount}"
+                           checked></td>
                 <td>
                     <article>
                         <a th:href="@{/product/view(pno=${product.pno})}">
@@ -135,11 +141,15 @@
                     </article>
                 </td>
                 <td class="count" th:text="${product.pcount}">1</td>
-                <td class="price" th:value="${#numbers.formatInteger(product.price, 0)}" th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">27,000</td>
+                <td class="price" th:value="${#numbers.formatInteger(product.price, 0)}"
+                    th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">27,000
+                </td>
                 <td class="discount" th:text="${product.discount + '%'}">5%</td>
                 <td class="calc" th:text="${#numbers.formatInteger(product.point, 0, 'COMMA')}">270</td>
                 <td class="delivery" th:text="${product.deliprice == 0 ? '무료배송' : product.deliprice + '원'}">무료배송</td>
-                <td class="calcPrice" th:value="${#numbers.formatInteger((product.price * product.pcount) * (1 - product.discount / 100.0), 0)}" th:text="${#numbers.formatInteger((product.price * product.pcount) * (1 - product.discount / 100.0), 0, 'COMMA')}">
+                <td class="calcPrice"
+                    th:value="${#numbers.formatInteger((product.price * product.pcount) * (1 - product.discount / 100.0), 0)}"
+                    th:text="${#numbers.formatInteger((product.price * product.pcount) * (1 - product.discount / 100.0), 0, 'COMMA')}">
                     27,000
                 </td>
             </tr>
@@ -175,7 +185,7 @@
                     <td id="finalPrice">25,000</td>
                 </tr>
             </table>
-            <input type="button" name="" value="결제하기">
+            <input type="submit" id="order" value="결제하기">
         </div>
 
         <!-- 배송정보 -->

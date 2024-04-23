@@ -961,6 +961,20 @@
   margin-top: 10px;
 }
 
+#product > .order > form > .final > input[type=submit] {
+    width: 100%;
+    height: 56px;
+    font-size: 26px;
+    border-width: 1px;
+    border-color: #d81818;
+    border-bottom-color: #9e1212;
+    background: #ed2f2f;
+    background-image: linear-gradient(#ed2f2f, #dd0e0e);
+    background-image: -webkit-linear-gradient(#ed2f2f, #dd0e0e);
+    color: #fff;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
 
 #product > .order > form .product > h3 {  
   font-size: 15px;

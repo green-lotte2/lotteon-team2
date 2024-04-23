@@ -48,8 +48,20 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final AdminMapper adminMapper;
 
-    
+
     private final ProductimgRepository productimgRepository;
+
+    /////////////////////////주문/////////////////////////////////
+    public Orders insertOrder(OrdersDTO ordersDTO){
+        Orders orders = modelMapper.map(ordersDTO, Orders.class);
+
+        return orderRepository.save(orders);
+    }
+
+    public void insertOrderDetail(Orders orders, OrdersDTO ordersDTO){
+
+    }
+
 
     /////////////////////////상품 이미지////////////////////////////////
     public ProductimgDTO imgUpload(ProductimgDTO imgDTO, int cate) {
