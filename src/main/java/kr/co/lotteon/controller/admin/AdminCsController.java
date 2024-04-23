@@ -114,7 +114,11 @@ public class AdminCsController {
     }
 
     @GetMapping("/admin/cs/notice/modify")
-    public String adminNoticeModify(){
+    public String adminNoticeModify(int noticeno, Model model){
+        NoticeDTO noticeBoard = csService.adminSelectNoticeBoard(noticeno);
+        model.addAttribute("noticeBoard", noticeBoard);
+        log.info("noticeno: " + noticeno);
+        log.info("noticboard: " + noticeBoard);
         return "/admin/cs/notice/modify";
     }
 
@@ -144,7 +148,7 @@ public class AdminCsController {
     }
 
     @GetMapping("/admin/cs/qna/modify")
-    public String adminQnaModify(int qnano, Model model){
+    public String adminQnaModify(Integer qnano, Model model){
         QnaDTO qnaBoard = csService.adminSelectQnaBoard(qnano);
         model.addAttribute("qnaBoard", qnaBoard);
         log.info("qnano : " + qnano);

@@ -369,6 +369,16 @@ main table span {
     font-size: 20px;
     color: #333;
 }
+
+#adminBoard .board > .view > article .content >textarea {
+    min-width: 800px;
+    border: none;
+    max-width: 800px;
+    min-height: 400px;
+    overflow: auto;
+    resize: none;
+    outline: none;
+}
 .bottomBtn {
     margin-top: 20px;
     display: block;

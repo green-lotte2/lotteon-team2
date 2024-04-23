@@ -16,8 +16,7 @@ public interface QnaMapper {
     public int selectQnaTotalCate(int cate1);
     public int selectQnaTotal();
 
-    public QnaDTO selectQnaView(int qnano);
-    public QnaDTO selectAdminQnaView(int qnano);
+
 
     public QnaDTO selectQnaBoard(int qnano);
     public void updateQnaBoard(QnaDTO dto);
