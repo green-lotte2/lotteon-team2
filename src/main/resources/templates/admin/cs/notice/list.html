@@ -74,8 +74,8 @@
                                     </td>
                                     <td th:text="${#temporals.format(noticeDTOS.rdate, 'yyyy-MM-dd')}"></td>
                                     <td>
-                                        <a th:href="@{/admin/cs/notice/delete}">[삭제]</a>
-                                        <a th:href="@{/admin/cs/notice/modify}">[수정]</a>
+                                        <a th:href="@{/admin/cs/notice/delete(noticeno=${noticeDTOS.noticeno})}">[삭제]</a>
+                                        <a th:href="@{/admin/cs/notice/modify(noticeno=${noticeDTOS.noticeno})}">[수정]</a>
                                     </td>
                                 </tr>
                                 </tbody>

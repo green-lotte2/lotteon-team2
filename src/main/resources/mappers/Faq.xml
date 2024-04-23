@@ -33,5 +33,12 @@
         ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
         WHERE `faqno` = #{faqno}
     </select>
-    
+
+    <!--🎈admin Faq 삭제-->
+    <delete id="adminDeleteFaqBoard">
+        DELETE FROM `faq` WHERE `faqno`=#{faqno}
+    </delete>
+
+
+
 </mapper>

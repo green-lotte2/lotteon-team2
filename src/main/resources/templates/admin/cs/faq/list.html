@@ -76,8 +76,8 @@
                                     </td>
                                     <td th:text="${#temporals.format(faqDTOList.rdate, 'yyyy-MM-dd')}"></td>
                                     <td>
-                                        <a th:href="@{/admin/cs/faq/delete}">[삭제]</a>
-                                        <a th:href="@{/admin/cs/faq/modify}">[수정]</a>
+                                        <a th:href="@{/admin/cs/faq/delete(faqno=${faqDTOList.faqno})}">[삭제]</a>
+                                        <a th:href="@{/admin/cs/faq/modify(faqno=${faqDTOList.faqno})}">[수정]</a>
                                     </td>
                                 </tr>
                                 </tbody>

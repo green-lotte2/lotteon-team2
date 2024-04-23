@@ -24,5 +24,8 @@ public interface NoticeMapper {
 
     //🎈 admin notice 수정
     public NoticeDTO adminSelectNoticeBoard(int noticeno);
+    public void adminUpdateNoticeBoard(NoticeDTO dto);
 
+    //🎈 admin notice 삭제
+    public void adminDeleteNoticeBoard(int noticeno);
 }
