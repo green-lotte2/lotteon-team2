@@ -27,8 +27,10 @@
     </select>
 
     <select id="selectQnaTotal">
-        SELECT COUNT(*) FROM `qna` WHERE `parent`=0
+        SELECT COUNT(*) FROM `qna` WHERE `parent`= 0
     </select>
+
+
 
     <select id="selectQnaView" resultType="kr.co.lotteon.dto.QnaDTO">
         SELECT * FROM `qna` AS a

@@ -1,6 +1,7 @@
 package kr.co.lotteon.mapper;
 
 import kr.co.lotteon.dto.NoticeDTO;
+import kr.co.lotteon.dto.QnaDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,5 +21,8 @@ public interface NoticeMapper {
 
     //🎈admin notice view
     public NoticeDTO adminSelectNoticeView(int noticeno);
+
+    //🎈 admin notice 수정
+    public NoticeDTO adminSelectNoticeBoard(int noticeno);
 
 }

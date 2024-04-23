@@ -151,6 +151,7 @@ public class CsController {
     /////////////////////////
     // 1:1 질문 /////////////
     ////////////////////////
+
     @RequestMapping("/cs/qna/list")
     public String selectQnaListAll(@RequestParam(name="pg", defaultValue = "1") String pg,
                                    @RequestParam(name="cate1", required = false) String cate1,
@@ -211,6 +212,8 @@ public class CsController {
 
         return "/cs/qna/list";
     }
+
+
 
     @GetMapping("/cs/qna/view")
     public String selectQnaView(int qnano, Model model) {

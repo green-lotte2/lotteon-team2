@@ -28,16 +28,16 @@
                     </nav>
 
                     <div class="content">
-                        <p>
+                        <textarea readonly>
                             [[${noticeBoard.content}]]
-                        </p>
+                        </textarea>
                     </div>
                 </article>
             </div>
         </div>
         <div class="bottomBtn">
             <a th:href="@{/admin/cs/notice/list}" class="listbtn">목록</a>
-            <a th:href="@{/admin/cs/notice/modify}" class="modifyBtn">수정</a>
+            <a th:href="@{/admin/cs/notice/modify(noticeno=${noticeBoard.noticeno})}" class="modifyBtn">수정</a>
             <a th:href="@{/admin/cs/notice/delete}" class="deleteBtn">삭제</a>
         </div>
 

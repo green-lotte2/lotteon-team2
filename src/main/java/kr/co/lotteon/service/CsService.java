@@ -188,6 +188,7 @@ public class CsService {
     }
 
     // qnaList 전체
+
     public List<QnaDTO> selectQnaListAll(int start){
         return qnaMapper.selectQnaListAll(start);
     }
@@ -196,6 +197,7 @@ public class CsService {
     public List<QnaDTO> selectQnaListCate(int cate1, int start){
         return qnaMapper.selectQnaListCate(cate1, start);
     }
+
 
 
     //myqna uid 참조
@@ -210,7 +212,7 @@ public class CsService {
         return noticeMapper.selectNoticeView(noticeno);
     }
     public QnaDTO selectQnaView(int qnano){
-        return qnaMapper.selectQnaView(qnano);
+        return qnaMapper.selectQnaBoard(qnano);
     }
     public FaqDTO selectFaqView(int faqno){
         return faqMapper.selectFaqView(faqno);
@@ -230,6 +232,12 @@ public class CsService {
     // 🎈Admin Notice view
     public NoticeDTO adminSelectNoticeView(int noticeno){
         return noticeMapper.adminSelectNoticeView(noticeno);
+    }
+
+    // 🎈 Admin Notice 수정
+    public NoticeDTO adminSelectNoticeBoard(int noticeno){
+        log.info("noticeno" + noticeno);
+        return noticeMapper.adminSelectNoticeBoard(noticeno);
     }
 
     // 🎈Admin Faq 리스트
@@ -261,6 +269,7 @@ public class CsService {
 
     // 🎈 Admin Qna 수정
     public QnaDTO adminSelectQnaBoard(int qnano){
+        log.info("qnano" + qnano);
         return qnaMapper.adminSelectQnaBoard(qnano);
     }
     public void adminUpdateQnaBoard(QnaDTO dto) {
