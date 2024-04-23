@@ -49,6 +49,10 @@
                   <span th:text="${#temporals.format(qnaBoard.rdate, 'yyyy-MM-dd')}"></span>
                 </p>
 
+                <th:block th:if="${qnaBoard.file1 != null}">
+                  <a class="filedown" th:href="@{/cs/qna/download(qnano=${qnaBoard.qnano})}">첨부된 파일 : [[${qnaBoard.file2}]]</a>
+                </th:block>
+
 
 
 

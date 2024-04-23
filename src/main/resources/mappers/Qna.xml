@@ -10,7 +10,7 @@
         VALUES ( #{cate1}, #{cate2}, #{title}, #{content}, #{file1}, #{file2}, #{uid}, #{answercomplete}, #{regip}, #{rdate})
     </insert>
 
-    <select id="selectQnaListAll" parameterType="int" resultType="kr.co.lotteon.dto.QnaDTO">
+    <select id="selectQnaListAll" parameterType="map" resultType="kr.co.lotteon.dto.QnaDTO">
         SELECT * FROM `qna` AS a
         JOIN `cate2` AS b
         ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 ORDER BY `qnano` DESC LIMIT #{start}, 10
@@ -23,11 +23,11 @@
     </select>
 
     <select id="selectQnaTotalCate" resultType="int">
-        SELECT COUNT(*) FROM `qna` WHERE cate1 = #{cate1, jdbcType=INTEGER}
+        SELECT COUNT(*) FROM `qna` WHERE cate1 = #{cate1, jdbcType=INTEGER} AND `parent`=0
     </select>
 
     <select id="selectQnaTotal">
-        SELECT COUNT(*) FROM `qna` WHERE `qnano`=#{qnano}
+        SELECT COUNT(*) FROM `qna` WHERE `parent`=0
     </select>
 
     <select id="selectQnaView" resultType="kr.co.lotteon.dto.QnaDTO">

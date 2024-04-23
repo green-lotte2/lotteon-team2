@@ -42,6 +42,8 @@ public class QCsQna extends EntityPathBase<CsQna> {
 
     public final StringPath file4 = createString("file4");
 
+    public final NumberPath<Integer> parent = createNumber("parent", Integer.class);
+
     public final NumberPath<Integer> qnano = createNumber("qnano", Integer.class);
 
     public final DateTimePath<java.time.LocalDateTime> rdate = createDateTime("rdate", java.time.LocalDateTime.class);

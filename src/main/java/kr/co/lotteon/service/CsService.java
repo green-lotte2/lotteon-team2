@@ -75,6 +75,7 @@ public class CsService {
 
         // 저장된 파일명 리스트 초기화
         List<String> saveNames = new ArrayList<>();
+        log.info(path);
         for(MultipartFile file:files){
             //파일명 변경
             String oName = file.getOriginalFilename();  // 업로드시 원래 이름
