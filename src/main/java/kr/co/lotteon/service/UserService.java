@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import kr.co.lotteon.dto.UserDTO;
 import kr.co.lotteon.entity.User;
 import kr.co.lotteon.entity.UserDetail;
+import kr.co.lotteon.mapper.UserMapper;
 import kr.co.lotteon.repository.UserDetailRepository;
 import kr.co.lotteon.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserDetailRepository userDetailRepository;
+    private final UserMapper userMapper;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender javaMailSender;
@@ -108,6 +110,11 @@ public class UserService {
             return optUser.get();
         }
         return null;
+    }
+
+    public UserDTO selectUserDetail(String uid){
+        log.info(userMapper.selectUser(uid));
+        return userMapper.selectUser(uid);
     }
 
     public String getUid(){

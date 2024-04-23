@@ -29,7 +29,7 @@ public class UserDTO {
     private LocalDateTime regDate;
     private LocalDateTime leaveDate;
 
-    private int userpoint;
+    private int point;
     private String provider;
     private int grade;
     private String location;

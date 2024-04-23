@@ -2,9 +2,11 @@ package kr.co.lotteon.controller;
 
 import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.Product;
+import kr.co.lotteon.entity.User;
 import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.CartService;
 import kr.co.lotteon.service.ProductService;
+import kr.co.lotteon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,7 @@ public class ProductController {
     private final ProductService productService;
     private final CartService cartService;
     private final AdminService adminService;
+    private final UserService userService;
 
     @PostMapping("/product/register")
     public String productRegister(ProductDTO productDTO,
@@ -174,6 +177,9 @@ public class ProductController {
 
         List<ProductDTO> cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
 
+        UserDTO user = userService.selectUserDetail(uid);
+        log.info("dddddd"+user);
+        model.addAttribute("user", user);
         model.addAttribute("cartProducts", cartProducts);  // 모델에 장바구니 상품 목록 추가
         model.addAttribute("cate", productService.getCategoryList());
 

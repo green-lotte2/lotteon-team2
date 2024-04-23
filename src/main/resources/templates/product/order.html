@@ -5,6 +5,7 @@
 
 <!-- 주문 페이지 시작-->
 <section class="order" layout:fragment="content">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
         window.onload = function (){
 
@@ -12,6 +13,24 @@
             document.getElementById('btnZip').onclick = function (e) {
                 e.preventDefault();
                 postcode();
+            }
+
+            document.getElementById('usePoint').onclick = function (e){
+                e.preventDefault();
+                const point = document.getElementById('point').value;
+                console.log(point);
+                if(parseInt(point) < 5000 || point == ""){
+                    alert("포인트 5,000점 이상이면 현금처럼 사용 가능합니다.");
+                    return false;
+                } else {
+                    if(point > [[${user.point}]]){
+                        alert("보유하신 포인트를 초과하였습니다.");
+                        return false;
+                    }
+                    document.getElementById('discountPoint').innerText = '-' + point;
+                    setting();
+                }
+
             }
 
             const selectAllCheckbox = document.getElementById('allCheckbox');
@@ -36,7 +55,7 @@
                 const checked = document.getElementsByName('productSelect');
                 const count = document.getElementsByClassName('count');
                 const price = document.getElementsByClassName('price');
-                const discount = document.getElementsByClassName('discount');
+                const discount = document.getElementById('discountPoint');
                 const delivery = document.getElementsByClassName('delivery');
                 const calcPrice = document.getElementsByClassName('calcPrice');
                 let countSum = 0;
@@ -50,7 +69,7 @@
                         const priceNum = parseInt(price[i].getAttribute('value'));
                         const calcPriceNum = parseInt(calcPrice[i].getAttribute('value'));
                         countSum += countNum;
-                        priceSum += priceNum;
+                        priceSum += priceNum * countNum;
                         calcPriceSum += calcPriceNum;
                         if(delivery[i].innerText === "무료배송"){
                             deliPriceSum += 0;
@@ -60,12 +79,17 @@
                         discountPrice += (priceNum * countNum) - calcPriceNum;
                     }
                 }
+                console.log(discount.innerText);
+                const finalPrice = calcPriceSum - deliPriceSum + parseInt(discount.innerText);
 
-                const finalPrice = calcPriceSum - deliPriceSum;
-                console.log(discountPrice);
-                console.log(finalPrice);
+                document.getElementById('count').innerText = countSum + ' 건';
+                document.getElementById('price').innerText = priceSum + '';
+                document.getElementById('discount').innerText = discountPrice + '';
+                document.getElementById('delivery').innerText = deliPriceSum + '';
+                document.getElementById('finalPrice').innerText = finalPrice + '';
+
             }
-
+            setting();
         }
     </script>
     <!-- 제목, 페이지 네비게이션 -->
@@ -96,7 +120,7 @@
                 <td colspan="8">장바구니에 상품이 없습니다.</td>
             </tr>
             <tr th:each="product : ${cartProducts}" th:unless="${cartProducts == null or cartProducts.isEmpty()}">
-                <td><input type="checkbox" name="productSelect" th:value="${product.pno} + ',' + ${product.stock}" checked></td>
+                <td><input type="checkbox" name="productSelect" th:value="${product.pno} + ',' + ${product.pcount}" checked></td>
                 <td>
                     <article>
                         <a th:href="@{/product/view(pno=${product.pno})}">
@@ -110,12 +134,12 @@
                         </div>
                     </article>
                 </td>
-                <td class="count" th:text="${product.stock}">1</td>
+                <td class="count" th:text="${product.pcount}">1</td>
                 <td class="price" th:value="${#numbers.formatInteger(product.price, 0)}" th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">27,000</td>
                 <td class="discount" th:text="${product.discount + '%'}">5%</td>
                 <td class="calc" th:text="${#numbers.formatInteger(product.point, 0, 'COMMA')}">270</td>
                 <td class="delivery" th:text="${product.deliprice == 0 ? '무료배송' : product.deliprice + '원'}">무료배송</td>
-                <td class="calcPrice" th:value="${#numbers.formatInteger((product.price * product.stock) * (1 - product.discount / 100.0), 0)}" th:text="${#numbers.formatInteger((product.price * product.stock) * (1 - product.discount / 100.0), 0, 'COMMA')}">
+                <td class="calcPrice" th:value="${#numbers.formatInteger((product.price * product.pcount) * (1 - product.discount / 100.0), 0)}" th:text="${#numbers.formatInteger((product.price * product.pcount) * (1 - product.discount / 100.0), 0, 'COMMA')}">
                     27,000
                 </td>
             </tr>
@@ -144,7 +168,7 @@
                 </tr>
                 <tr>
                     <td>포인트 할인</td>
-                    <td>-1000</td>
+                    <td id="discountPoint">0</td>
                 </tr>
                 <tr>
                     <td>전체주문금액</td>
@@ -160,32 +184,32 @@
             <table>
                 <tr>
                     <td>주문자</td>
-                    <td><input type="text" name="orderer"/></td>
+                    <td><input type="text" th:value="${user.name}" name="orderer"/></td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td>
-                        <input type="text" name="hp"/>
+                        <input type="text" th:value="${user.hp}" name="hp"/>
                         <span>- 포함 입력</span>
                     </td>
                 </tr>
                 <tr>
                     <td>우편번호</td>
                     <td>
-                        <input type="text" name="zip"/>
+                        <input type="text" id="inputZip" name="zip"/>
                         <input type="button" id="btnZip" value="검색"/>
                     </td>
                 </tr>
                 <tr>
                     <td>기본주소</td>
                     <td>
-                        <input type="text" name="addr1"/>
+                        <input type="text" id="addr1" name="addr1"/>
                     </td>
                 </tr>
                 <tr>
                     <td>상세주소</td>
                     <td>
-                        <input type="text" name="addr2"/>
+                        <input type="text" id="addr2" name="addr2"/>
                     </td>
                 </tr>
             </table>
@@ -196,10 +220,10 @@
             <h1>할인정보</h1>
 
             <div>
-                <p>현재 포인트 : <span>7200</span>점</p>
+                <p>현재 포인트 : <span>[[${user.point}]]</span>점</p>
                 <label>
-                    <input type="text" name="point"/>점
-                    <input type="button" value="적용"/>
+                    <input type="text" id="point" name="point"/>점
+                    <input type="button" id="usePoint" value="적용"/>
                 </label>
                 <span>포인트 5,000점 이상이면 현금처럼 사용 가능합니다.</span>
             </div>
