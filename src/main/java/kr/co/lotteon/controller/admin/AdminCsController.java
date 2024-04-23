@@ -9,12 +9,14 @@ import kr.co.lotteon.service.AdminCsService;
 import kr.co.lotteon.service.CsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -131,13 +133,34 @@ public class AdminCsController {
     }
 
     @GetMapping("/admin/cs/qna/view")
-    public String adminQnaView(){
+    public String adminQnaView(int qnano, Model model){
+        QnaDTO qnaBoard = csService.adminSelectQnaView(qnano);
+        model.addAttribute("qnaBoard", qnaBoard);
+
+        log.info("qnano : " + qnano);
+        log.info("qnaBoard : " + qnaBoard);
+
         return "/admin/cs/qna/view";
     }
 
-    @GetMapping("/admin/cs/qna/reply")
-    public String adminQnaReply(){
-        return "/admin/cs/qna/reply";
+    @GetMapping("/admin/cs/qna/modify")
+    public String adminQnaModify(int qnano, Model model){
+        QnaDTO qnaBoard = csService.adminSelectQnaBoard(qnano);
+        model.addAttribute("qnaBoard", qnaBoard);
+        log.info("qnano : " + qnano);
+        log.info("qnaBoard : " + qnaBoard);
+
+        return "/admin/cs/qna/modify";
+    }
+
+    @PostMapping("/admin/cs/qna/modify")
+    public String adminUpdateQnaBoard(@ModelAttribute QnaDTO dto){
+        dto.setRdate(LocalDateTime.now());
+        csService.adminUpdateQnaBoard(dto);
+        log.info("updateQnaBoardDTO------" + dto);
+        int qnano = dto.getQnano();
+        log.info("updateQnaBoardQnano------------"+qnano);
+        return "redirect:/admin/cs/qna/view?qnano="+qnano;
     }
 
 

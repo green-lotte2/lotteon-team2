@@ -6,28 +6,28 @@
 <mapper namespace="kr.co.lotteon.mapper.QnaMapper">
 
     <insert id="insertQnaWrite">
-        INSERT INTO `qna` (cate1, cate2, title, content, file1, file2, uid, answercomplete, regip, rdate)
-        VALUES (#{cate1}, #{cate2}, #{title}, #{content}, #{file1}, #{file2}, #{uid}, #{answercomplete}, #{regip}, #{rdate})
+        INSERT INTO `qna` ( cate1, cate2, title, content, file1, file2, uid, answercomplete, regip, rdate)
+        VALUES ( #{cate1}, #{cate2}, #{title}, #{content}, #{file1}, #{file2}, #{uid}, #{answercomplete}, #{regip}, #{rdate})
     </insert>
 
     <select id="selectQnaListAll" parameterType="int" resultType="kr.co.lotteon.dto.QnaDTO">
         SELECT * FROM `qna` AS a
         JOIN `cate2` AS b
-        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `parent`=0 ORDER BY `qnano` DESC LIMIT #{start}, 10
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 ORDER BY `qnano` DESC LIMIT #{start}, 10
     </select>
 
     <select id="selectQnaListCate" parameterType="int" resultType="kr.co.lotteon.dto.QnaDTO">
         SELECT * FROM `qna` AS a
         JOIN `cate2` AS b
-        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE a.cate1= #{cate1} AND `parent`=0 ORDER BY `qnano` DESC LIMIT #{start}, 10
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE a.cate1= #{cate1} ORDER BY `qnano` DESC LIMIT #{start}, 10
     </select>
 
     <select id="selectQnaTotalCate" resultType="int">
-        SELECT COUNT(*) FROM `qna` WHERE cate1 = #{cate1, jdbcType=INTEGER} AND `parent`=0
+        SELECT COUNT(*) FROM `qna` WHERE cate1 = #{cate1, jdbcType=INTEGER}
     </select>
 
     <select id="selectQnaTotal">
-        SELECT COUNT(*) FROM `qna` WHERE `parent`=0
+        SELECT COUNT(*) FROM `qna` WHERE `qnano`=#{qnano}
     </select>
 
     <select id="selectQnaView" resultType="kr.co.lotteon.dto.QnaDTO">
@@ -46,7 +46,7 @@
     </select>
 
     <select id="selectComment" resultType="kr.co.lotteon.dto.QnaDTO">
-        SELECT * FROM `qna` WHERE `parent` = #{qnano}
+        SELECT * FROM `qna` WHERE `qnano` = #{qnano}
     </select>
 
 
@@ -65,7 +65,7 @@
     </delete>
 
     <select id="selectQnaChildBoard" resultType="kr.co.lotteon.dto.QnaDTO">
-        SELECT * FROM `qna` WHERE `parent`=#{qnano}
+        SELECT * FROM `qna` WHERE `qnano`=#{qnano}
     </select>
 
 
@@ -78,5 +78,29 @@
         ORDER BY `qnano` DESC LIMIT 10
     </select>
 
+    <!--🎈admin_qna_view-->
+    <select id="adminSelectQnaView" resultType="kr.co.lotteon.dto.QnaDTO">
+        SELECT * FROM `qna` AS a
+        JOIN `cate1` as b
+        JOIN `cate2` as c
+        ON a.cate1 = c.cate1 AND a.cate2 = c.cate2 AND a.cate1 = b.cate1
+        WHERE `qnano` = #{qnano}
+    </select>
+
+    <!--🎈admin_qna_modify-->
+    <select id="adminSelectQnaBoard" resultType="kr.co.lotteon.dto.QnaDTO">
+        SELECT * FROM `qna` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `qnano`=#{qnano}
+    </select>
+
+    <update id="adminUpdateQnaBoard">
+        UPDATE `qna` SET `content`=#{content} WHERE `qnano`=#{qnano}
+    </update>
+
+    <!--🎈admin_qna_delete-->
+    <delete id="adminDeleteQnaBoard">
+        DELETE FROM `qna` WHERE `qnano`=#{qnano}
+    </delete>
     
 </mapper>

@@ -26,7 +26,6 @@ public class QnaDTO {
     private String file3;
     private String file4;
     private String uid;
-    private int parent;
     private int answercomplete;
     private String regip;
     private LocalDateTime rdate;
@@ -59,7 +58,6 @@ public class QnaDTO {
                 .file1(file1)
                 .file2(file2)
                 .uid(uid)
-                .parent(parent)
                 .answercomplete(answercomplete)
                 .regip(regip)
                 .rdate(rdate)

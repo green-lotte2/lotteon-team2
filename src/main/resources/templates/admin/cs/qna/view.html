@@ -16,6 +16,54 @@
 </head>
 
 <main layout:fragment="content">
+    <section id="adminBoard">
+        <div class="board qna">
+            <div class="view">
+                <h2>1:1 문의</h2>
+                <article>
+                    <nav>
+                        <h2 class="title" th:text="'[' + ${qnaBoard.c2name} + ']' + ${qnaBoard.title}"></h2>
+                        <p>
+                            <span th:text="${#strings.substring(qnaBoard.uid, 0, 3) + '***'}"></span>
+                            <span th:text="${#temporals.format(qnaBoard.rdate, 'yyyy-MM-dd')}"></span>
+                        </p>
+                    </nav>
+                    <div class="content">
+                        <p>
+                            [[${qnaBoard.content}]]
+                        </p><br><br>
+                        <p class="warningText">
+                            ※ 피싱 관련 피해신고<br /><br />
+                            ▶ 경찰청 사이버수사국 (국번없이)182 :
+                            http://cyberbureau.police.go.kr<br />
+                            ▶ KISA 인터넷침해대응센터 (국번없이)118 :
+                            http://www.krcert.or.kr<br />
+                            감사합니다.<br />
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <th:block th:if="${qnaBoard.answercomplete != 1}">
+            <nav>
+                <h2 class="title" th:text="'☞[답변]' + ${qnaChildBoard.title}"></h2>
+            </nav>
+            <div class="content">
+                <p>
+                    [[${qnaChildBoard.content}]]
+                </p>
+            </div>
+        </th:block>
+        <div class="bottomBtn">
+            <a th:href="@{/admin/cs/qna/list}" class="listBtn">목록</a>
+            <a th:href="@{/admin/cs/qna/modify}" class="modifyBtn">수정</a>
+            <a th:href="@{/admin/cs/qna/delete}" class="deleteBtn">삭제</a>
+        </div>
+
+    </section>
+
+
 
     <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
