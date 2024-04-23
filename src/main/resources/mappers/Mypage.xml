@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.lotteon.mapper.MypageMapper">
+
+    <select id="selectMyQnaBoard" parameterType="map" resultType="map">
+        SELECT * FROM `qna` AS a JOIN `cate2`
+        AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
+        WHERE `uid`=#{uid} ORDER BY `qnano` DESC LIMIT #{start}, 10;
+    </select>
+
+    <select id="selectMyQnaTotal">
+        SELECT COUNT(*) FROM `qna` WHERE `uid`=#{uid};
+    </select>
+
+    <select id="selectCsQnaComment">
+        SELECT * FROM `qna` AS a JOIN `cate2` AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `qnano`=#{qnano}
+    </select>
+
+</mapper>

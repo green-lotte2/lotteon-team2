@@ -49,9 +49,8 @@ public class CsQna {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid", insertable = false, updatable = false)
     private MemberEntity memberEntity;
-
+*/
     @Column(name = "uid")
- */
     private String uid;
     private int parent;
     private int answercomplete;

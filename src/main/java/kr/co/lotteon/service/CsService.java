@@ -27,6 +27,7 @@ public class CsService {
     private final QnaMapper qnaMapper;
     private final NoticeMapper noticeMapper;
     private final FaqMapper faqMapper;
+    private final MypageMapper mypageMapper;
 
     private final QnaRepository qnaRepository;
 
@@ -49,8 +50,10 @@ public class CsService {
 
     // 파일등록
     public void insertQnaWrite(QnaDTO dto){
+        log.info("insertQnaWrite : " + dto);
         if(dto.getMFile1() != null && !dto.getMFile1().isEmpty()){
             List<String> saveNames = fileUpload(dto);
+            // 파일을 선택한 경우에만 처리
             dto.setFile1(saveNames.get(0));
             dto.setFile2(saveNames.get(1));
         }
@@ -114,12 +117,12 @@ public class CsService {
         return noticeMapper.selectNoticeTotalCate(cate1);
     }
 
-    /*
+
     // myqna 게시판 총 갯수 카운트
     public String selectMyQnaTotal(String uid) {
-        return MyMapper.selectMyQnaTotal(uid);
+        return mypageMapper.selectMyQnaTotal(uid);
     }
-    */
+
 
     // Qna게시판 총 갯수 카운트
     public int selectQnaTotal(){
@@ -193,12 +196,12 @@ public class CsService {
         return qnaMapper.selectQnaListCate(cate1, start);
     }
 
-    /*
+
     //myqna uid 참조
     public List<QnaDTO> selectMyQnaBoard(String uid , int start) {
-        return MyMapper.selectMyQnaBoard(uid, start);
+        return mypageMapper.selectMyQnaBoard(uid, start);
     }
-    */
+
 
 
     // 게시판 뷰
@@ -275,10 +278,10 @@ public class CsService {
         return qnaMapper.selectQnaChildBoard(qnano);
     }
 
-    /*
+
     // myqna 답변
-    public List<QnaDTO> selectQnaComment(int qnano){
-        return MyMapper.selectQnaComment(qnano);
+    public List<QnaDTO> selectCsQnaComment(int qnano){
+        return mypageMapper.selectCsQnaComment(qnano);
     }
-    */
+
 }
