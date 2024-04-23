@@ -26,6 +26,15 @@ public interface QnaMapper {
     
     //🎈 admin 문의하기 리스트
     List<QnaDTO> adminSelectQnaList();
-    
+
+    //🎈 admin 문의하기 view
+    public QnaDTO adminSelectQnaView(int qnano);
+
+    //🎈 admin 문의하기 수정
+    public QnaDTO adminSelectQnaBoard(int qnano);
+    public void adminUpdateQnaBoard(QnaDTO dto);
+
+    //🎈 admin 문의하기 삭제
+    public void adminDeleteQnaBoard(int qnano);
 
 }

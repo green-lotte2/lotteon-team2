@@ -31,6 +31,16 @@
         ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `noticeno`= #{noticeno}
     </select>
 
+
+    <!--🎈admin_notice_list-->
+    <select id="adminNoticeList" parameterType="map" resultType="map">
+        SELECT a.*, b.c2name
+        FROM `notice` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
+        WHERE a.cate1= #{cate1} ORDER BY `noticeno` DESC LIMIT #{start}, 10
+    </select>
+
     <!--🎈admin Select Notice View-->
     <select id="adminSelectNoticeView" resultType="kr.co.lotteon.dto.NoticeDTO">
         SELECT a.*, b.c2name

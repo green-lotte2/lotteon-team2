@@ -1,6 +1,7 @@
 package kr.co.lotteon.repository;
 
 import kr.co.lotteon.entity.CsQna;
+import kr.co.lotteon.entity.CsReply;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +17,8 @@ public interface QnaRepository extends JpaRepository<CsQna, Integer> {
     public Page<CsQna> findByCate1AndTitleContains(int cate1, String keyword, Pageable pageable);
     public Page<CsQna> findByCate1(int cate1, Pageable pageable);
 
-    public List<CsQna> findByParent(int parent);
+
+    public List<CsQna> findByQnano(int qnano);
 
     int countByUid(String uid);
 

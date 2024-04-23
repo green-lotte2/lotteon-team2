@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/adminLayout}"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>롯데온::관리자 고객문의 답변</title>
+    <link th:href="@{/admin/css/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+
+</head>
+
+<main layout:fragment="content">
+    <section id="adminBoard">
+            <div class="board qna">
+                <div class="view modify">
+                    <h2>1:1 문의</h2>
+                    <article>
+                        <nav>
+                            <h2 class="title" th:text="'[' + ${qnaBoard.c2name} + ']' + ${qnaBoard.title}"></h2>
+                            <p>
+                                <span th:text="${#strings.substring(qnaBoard.uid, 0, 3) + '***'}"></span>
+                                <span th:text="${#temporals.format(qnaBoard.rdate, 'yyyy-MM-dd')}"></span>
+                            </p>
+                        </nav>
+                        <div class="content">
+                            <p>
+                                [[${qnaBoard.content}]]
+                            </p><br><br>
+                            <p class="warningText">
+                                ※ 피싱 관련 피해신고<br /><br />
+                                ▶ 경찰청 사이버수사국 (국번없이)182 :
+                                http://cyberbureau.police.go.kr<br />
+                                ▶ KISA 인터넷침해대응센터 (국번없이)118 :
+                                http://www.krcert.or.kr<br />
+                                감사합니다.<br />
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+
+        <form action="/admin/cs/qna/modify" method="post">
+            <th:block th:if="${qnaBoard.answercomplete != 1}">
+                <nav>
+                    <h2 class="title" th:text="'☞[답변]' + ${qnaChildBoard.title}"></h2>
+                </nav>
+                <div class="content">
+                    <textarea>
+                        답변내용
+                    </textarea>
+                </div>
+            </th:block>
+        </form>
+
+        <div class="bottomBtn">
+            <a th:href="@{/admin/cs/qna/list}" class="listBtn">목록</a>
+            <a th:href="@{/admin/cs/qna/modify}" class="modifyBtn">수정</a>
+            <a th:href="@{/admin/cs/qna/delete}" class="deleteBtn">삭제</a>
+        </div>
+
+    </section>
+
+    <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
+</main>
+
+</html>

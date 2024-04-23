@@ -217,7 +217,17 @@ public class CsService {
     public List<FaqDTO> selectFaqList10(int cate1){
         return faqMapper.selectFaqList10(cate1);
     }
-    
+
+    //////////////////////////////////////////
+    ///////////////🎀Admin🎀/////////////////
+    /////////////////////////////////////////
+    ////////////////////////////////////////
+
+    // 🎈Admin Notice view
+    public NoticeDTO adminSelectNoticeView(int noticeno){
+        return noticeMapper.adminSelectNoticeView(noticeno);
+    }
+
     // 🎈Admin Faq 리스트
     public List<FaqDTO> selectFaqList(){
         return faqMapper.selectFaqList();
@@ -234,27 +244,34 @@ public class CsService {
     }
 
 
-
     // 🎈Admin Faq view
     public FaqDTO adminSelectFaqView(int faqno){
         return faqMapper.adminSelectFaqView(faqno);
     }
 
-    // 🎈Admin Notice view
-    public NoticeDTO adminSelectNoticeView(int noticeno){
-        return noticeMapper.adminSelectNoticeView(noticeno);
-    }
-
-
 
     // 🎈 Admin Qna 뷰
-    public QnaDTO selectAdminQnaView(int qnano){
-        return qnaMapper.selectAdminQnaView(qnano);
+    public QnaDTO adminSelectQnaView(int qnano){
+        return qnaMapper.adminSelectQnaView(qnano);
     }
 
+    // 🎈 Admin Qna 수정
+    public QnaDTO adminSelectQnaBoard(int qnano){
+        return qnaMapper.adminSelectQnaBoard(qnano);
+    }
+    public void adminUpdateQnaBoard(QnaDTO dto) {
+        qnaMapper.adminUpdateQnaBoard(dto);
+    }
+
+    // 🎈 Admin Qna 삭제
+    public void adminDeleteQnaBoard(int qnano){
+        qnaMapper.adminDeleteQnaBoard(qnano);
+    }
+
+
     // Admin Qna 뷰 코멘트
-    public List<CsQna> selectComments(int parent){
-        return qnaRepository.findByParent(parent);
+    public List<CsQna> selectComments(int qnano){
+        return qnaRepository.findByQnano(qnano);
     }
 
     // Qna 수정
