@@ -189,9 +189,11 @@ public class CsController {
 
         // 마지막 페이지 번호
         int lastPageNum = csService.getLastPageNum(total);
+        log.info(total);
 
         // 페이지 그룹 (현재 번호, 마지막 번호)
         int[] result = csService.getPageGroupNum(currentPage, lastPageNum);
+        log.info(lastPageNum);
 
         // 페이지 시작 번호
         int pageStartNum = csService.getPageStartNum(total, currentPage);

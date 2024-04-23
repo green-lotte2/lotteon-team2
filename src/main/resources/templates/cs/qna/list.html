@@ -8,21 +8,25 @@
     <script th:inline="javascript">
       var uid = '';
       uid = [[${#authentication.principal.user.uid}]];
-    </script>
 
-    <script>
       function showAlert(id) {
         const flag = '[[${#authentication.principal}]]'
         if(flag == 'anonymousUser'){
-          alert('해당글은 작성자만 접근 가능합니다.');
+          alert('해당 글은 작성자만 접근 가능합니다.');
           return false;
         }
         console.log(id);
         console.log(uid);
+        const role = '[[${#authentication.principal.authorities}]]';
+        console.log(typeof role);
         if(uid != id){
+          if(role.indexOf('ADMIN') != -1) {
+            return true;
+          }
           alert("해당 글 작성자만 접근 가능합니다.");
           return false;
         }
+
         return true;
       }
 
