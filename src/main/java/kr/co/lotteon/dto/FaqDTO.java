@@ -19,7 +19,6 @@ public class FaqDTO {
     private int cate2;
     private String title;
     private String content;
-    private int relatedfaq;
     private String uid;
     private String regip;
 

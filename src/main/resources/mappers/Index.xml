@@ -18,7 +18,7 @@
     <select id="selectQna" resultType="kr.co.lotteon.dto.QnaDTO">
         SELECT * FROM `qna` AS a
         JOIN `cate1` AS b
-        ON a.cate1 = b.cate1 ORDER BY `qnano` DESC LIMIT 5
+        ON a.cate1 = b.cate1 WHERE `parent`=0 ORDER BY `qnano` DESC LIMIT 5
     </select>
-    
+
 </mapper>
