@@ -17,8 +17,11 @@ public interface QnaRepository extends JpaRepository<CsQna, Integer> {
     public Page<CsQna> findByCate1AndTitleContains(int cate1, String keyword, Pageable pageable);
     public Page<CsQna> findByCate1(int cate1, Pageable pageable);
 
-
     public List<CsQna> findByQnano(int qnano);
     public CsQna findFirstByQnano(int qnano);
+
+    int countByUid(String uid);
+
+    List<CsQna> findTop3ByUidOrderByRdate(String uid);
 
 }

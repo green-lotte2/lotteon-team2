@@ -8,15 +8,15 @@
     <select id="selectMyQnaBoard" parameterType="map" resultType="map">
         SELECT * FROM `qna` AS a JOIN `cate2`
         AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
-        WHERE `uid`=#{uid} ORDER BY `qnano` DESC LIMIT #{start}, 10;
+        WHERE `uid`=#{uid} AND `parent`=0 ORDER BY `qnano` DESC LIMIT #{start}, 10;
     </select>
 
     <select id="selectMyQnaTotal">
-        SELECT COUNT(*) FROM `qna` WHERE `uid`=#{uid};
+        SELECT COUNT(*) FROM `qna` WHERE `parent`=0 AND `uid`=#{uid};
     </select>
 
     <select id="selectCsQnaComment">
-        SELECT * FROM `qna` AS a JOIN `cate2` AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `qnano`=#{qnano}
+        SELECT * FROM `qna` AS a JOIN `cate2` AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `parent`=#{qnaNo}
     </select>
 
 </mapper>

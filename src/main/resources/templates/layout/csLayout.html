@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/html">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
     <title>롯데ON::2조</title>
@@ -28,7 +28,7 @@
                             <a sec:authorize="isAnonymous()" th:href="@{/member/login}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;장바구니</a>
 
                             <a sec:authorize="isAuthenticated()" th:href="@{/mypage/}">[[${#authentication.principal.user.name}]]</a>
-                            <a sec:authorize="isAuthenticated()" th:href="@{/}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>장바구니</a>
+                            <a sec:authorize="isAuthenticated()" th:href="@{/product/cart}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>장바구니</a>
                             <a sec:authorize="isAuthenticated()" th:href="@{/admin/index}">관리자</a>
                             <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
                         </p>

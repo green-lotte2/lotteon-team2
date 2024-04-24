@@ -709,6 +709,83 @@
 }
 
 
+/* 리뷰 작성 페이지 전체 스타일 */
+#product > .review-write {
+    padding: 20px;
+    background-color: #f9f9fa;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#product > .review-write > .product-details {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#product > .review-write > .product-details > h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+#product > .review-write > .product-details > .info > h2 {
+    font-size: 20px;
+    color: #666;
+}
+
+#product > .review-write > .product-details > .info > p {
+    font-size: 16px;
+    color: #444;
+}
+
+#product > .review-write > .product-details > img {
+    width: auto; /* 이미지 크기 적절히 조정 */
+    height: auto;
+    margin-top: 10px;
+}
+
+#product > .review-write form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#product > .review-write form > div {
+    margin: 10px 0;
+}
+
+#product > .review-write form > div > label {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+#product > .review-write form select,
+#product > .review-write form textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#product > .review-write form textarea {
+    width: 80%; /* textarea 너비 조정 */
+    height: 100px; /* textarea 높이 조정 */
+}
+
+#product > .review-write form button {
+    padding: 10px 20px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#product > .review-write form button:hover {
+    background-color: #0056b3;
+}
+
+
+
 /* 장바구니 */
 #product > .cart {}
 #product > .cart > form > input[name=del] {

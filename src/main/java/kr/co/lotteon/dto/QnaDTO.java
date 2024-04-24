@@ -23,8 +23,6 @@ public class QnaDTO {
     private String content;
     private String file1;
     private String file2;
-    private String file3;
-    private String file4;
     private String uid;
     private int parent;
     private int answercomplete;
@@ -39,7 +37,7 @@ public class QnaDTO {
     private String c1name;
     private String c2name;
     private String writermarking;
-    private String rdatesub;
+    private String rdateSub;
 
 
     private QnaDTO comment;

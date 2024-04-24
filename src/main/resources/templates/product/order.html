@@ -32,13 +32,12 @@
                         return false;
                     }
                     document.getElementById('discountPoint').innerText = '-' + point;
+                    document.getElementsByName('usepoint')[0].value = point;
                     setting();
                 }
-
             }
-
             const selectAllCheckbox = document.getElementById('allCheckbox');
-            const check = document.getElementsByName('productSelect');
+            const check = document.getElementsByName('checkbox');
 
             selectAllCheckbox.addEventListener('change', function () {
                 for (let i = 0; i < check.length; i++) {
@@ -47,7 +46,6 @@
                 }
             });
 
-            console.log(check);
             for (let i = 0; i < check.length; i++) {
                 check[i].addEventListener('change', function (e) {
                     selectAllCheckbox.checked = false;
@@ -56,14 +54,16 @@
             }
 
             function setting() {
-                const checked = document.getElementsByName('productSelect');
+                const checked = document.getElementsByName('checkbox');
                 const count = document.getElementsByClassName('count');
                 const price = document.getElementsByClassName('price');
                 const discount = document.getElementById('discountPoint');
+                const point = document.getElementsByClassName('point');
                 const delivery = document.getElementsByClassName('delivery');
                 const calcPrice = document.getElementsByClassName('calcPrice');
                 let countSum = 0;
                 let priceSum = 0;
+                let pointSum = 0;
                 let calcPriceSum = 0;
                 let deliPriceSum = 0;
                 let discountPrice = 0;
@@ -72,9 +72,12 @@
                         const countNum = parseInt(count[i].innerText);
                         const priceNum = parseInt(price[i].getAttribute('value'));
                         const calcPriceNum = parseInt(calcPrice[i].getAttribute('value'));
+                        const pointNum = parseInt(point[i].innerText);
                         countSum += countNum;
                         priceSum += priceNum * countNum;
+                        pointSum += pointNum;
                         calcPriceSum += calcPriceNum;
+                        console.log(pointSum);
                         if (delivery[i].innerText === "무료배송") {
                             deliPriceSum += 0;
                         } else {
@@ -83,17 +86,18 @@
                         discountPrice += (priceNum * countNum) - calcPriceNum;
                     }
                 }
-                console.log(discount.innerText);
                 const finalPrice = calcPriceSum - deliPriceSum + parseInt(discount.innerText);
 
                 document.getElementById('count').innerText = countSum + ' 건';
                 document.getElementById('price').innerText = priceSum + '';
                 document.getElementById('discount').innerText = discountPrice + '';
+                document.getElementById('savePoint').innerText = pointSum + '';
                 document.getElementById('delivery').innerText = deliPriceSum + '';
                 document.getElementById('finalPrice').innerText = finalPrice + '';
-
+                document.getElementsByName('total')[0].value = finalPrice;
+                document.getElementsByName('savepoint')[0].value = pointSum;
             }
-
+            document.getElementsByName('usepoint')[0].value = 0;
             setting();
         }
     </script>
@@ -125,8 +129,9 @@
                 <td colspan="8">장바구니에 상품이 없습니다.</td>
             </tr>
             <tr th:each="product : ${cartProducts}" th:unless="${cartProducts == null or cartProducts.isEmpty()}">
-                <td><input type="checkbox" name="productSelect" th:value="${product.pno} + ',' + ${product.pcount}"
-                           checked></td>
+                <td>
+                    <input type="checkbox" name="checkbox" th:value="${product.pno} + '%' + ${product.pcount} + '%' + ${product.options}" checked>
+                </td>
                 <td>
                     <article>
                         <a th:href="@{/product/view(pno=${product.pno})}">
@@ -145,7 +150,7 @@
                     th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">27,000
                 </td>
                 <td class="discount" th:text="${product.discount + '%'}">5%</td>
-                <td class="calc" th:text="${#numbers.formatInteger(product.point, 0, 'COMMA')}">270</td>
+                <td class="point" th:text="${#numbers.formatInteger(product.point, 0, 'COMMA')}">270</td>
                 <td class="delivery" th:text="${product.deliprice == 0 ? '무료배송' : product.deliprice + '원'}">무료배송</td>
                 <td class="calcPrice"
                     th:value="${#numbers.formatInteger((product.price * product.pcount) * (1 - product.discount / 100.0), 0)}"
@@ -181,10 +186,18 @@
                     <td id="discountPoint">0</td>
                 </tr>
                 <tr>
+                    <td>적립 예정 포인트</td>
+                    <td id="savePoint">0</td>
+                </tr>
+                <tr>
                     <td>전체주문금액</td>
                     <td id="finalPrice">25,000</td>
                 </tr>
             </table>
+            <input type="hidden" name="usepoint">
+            <input type="hidden" name="total">
+            <input type="hidden" name="savepoint">
+            <input type="hidden" name="uid" th:value="${user.uid}">
             <input type="submit" id="order" value="결제하기">
         </div>
 
@@ -194,14 +207,18 @@
             <table>
                 <tr>
                     <td>주문자</td>
-                    <td><input type="text" th:value="${user.name}" name="orderer"/></td>
+                    <td><input type="text" th:value="${user.name}" readonly/></td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td>
-                        <input type="text" th:value="${user.hp}" name="hp"/>
+                        <input type="text" th:value="${user.hp}" name="hp" readonly/>
                         <span>- 포함 입력</span>
                     </td>
+                </tr>
+                <tr>
+                    <td>받는분</td>
+                    <td><input type="text" name="receiver"/></td>
                 </tr>
                 <tr>
                     <td>우편번호</td>
@@ -245,21 +262,21 @@
             <div>
                 <span>신용카드</span>
                 <p>
-                    <label><input type="radio" name="payment" value="type1"/>신용카드 결제</label>
-                    <label><input type="radio" name="payment" value="type2"/>체크카드 결제</label>
+                    <label><input type="radio" name="payment" value="credit"/>신용카드 결제</label>
+                    <label><input type="radio" name="payment" value="check"/>체크카드 결제</label>
                 </p>
             </div>
             <div>
                 <span>계좌이체</span>
                 <p>
-                    <label><input type="radio" name="payment" value="type3"/>실시간 계좌이체</label>
-                    <label><input type="radio" name="payment" value="type4"/>무통장 입금</label>
+                    <label><input type="radio" name="payment" value="account"/>실시간 계좌이체</label>
+                    <label><input type="radio" name="payment" value="transfer"/>무통장 입금</label>
                 </p>
             </div>
             <div>
                 <span>기타</span>
                 <p>
-                    <label><input type="radio" name="payment" value="type3"/>휴대폰결제</label>
+                    <label><input type="radio" name="payment" value="phone"/>휴대폰결제</label>
                     <label>
                         <input type="radio" name="payment" value="type4"/>카카오페이
                         <img src="../images/ico_kakaopay.gif" alt="카카오페이"/>

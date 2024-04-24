@@ -42,14 +42,13 @@ public class CsQna {
     private String content;
     private String file1;
     private String file2;
-    private String file3;
-    private String file4;
 
     /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid", insertable = false, updatable = false)
-    private MemberEntity memberEntity;
-*/
+    private User user;
+    */
+
     @Column(name = "uid")
     private String uid;
     private int parent;
@@ -59,7 +58,7 @@ public class CsQna {
     @CreationTimestamp
     private LocalDateTime rdate;
 
-    public String getRdatesub(){
+    public String getRdateSub(){
         String formatDate = rdate.format(DateTimeFormatter.ofPattern("yy.MM.dd"));
         return formatDate;
     }

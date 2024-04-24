@@ -57,6 +57,17 @@ public class UserService {
 
     }
 
+    public void updateUserPoint(String uid, int point, int savepoint){
+        Optional<UserDetail> optUserDetail = userDetailRepository.findById(uid);
+        if(optUserDetail.isPresent()){
+            UserDetail userDetail = optUserDetail.get();
+            int result = userDetail.getPoint() - point + savepoint;
+            userDetail.setPoint(result);
+
+            userDetailRepository.save(userDetail);
+        }
+    }
+
     public boolean existsById(String uid) {
         return userRepository.existsByUid(uid);
     }

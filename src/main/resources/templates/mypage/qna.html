@@ -50,7 +50,7 @@
                     // 만약 answerRow가 보이지 않는 경우 (숨겨져 있는 경우)
                     if (!isAnswerRowVisible) {
                         answerRow.show(); // 보이기
-                        
+
                         fetch("/lotteon/mypage/qna/comment?qnano=" + qnano)
                             .then(response => response.json())
                             .then(data => {

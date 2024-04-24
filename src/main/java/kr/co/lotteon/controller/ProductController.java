@@ -41,7 +41,6 @@ public class ProductController {
 
     private final ProductService productService;
     private final CartService cartService;
-    private final AdminService adminService;
     private final UserService userService;
 
     @PostMapping("/product/register")
@@ -150,12 +149,10 @@ public class ProductController {
 
         // cate 문자열을 int로 변환, 유효하지 않은 경우 기본값 0을 사용
         int cateInt = 0;
-        try {
+        if(cate != null){
             cateInt = Integer.parseInt(cate);
-        } catch (NumberFormatException e) {
-            log.error("Invalid category ID: {}", cate, e);
-            // 필요한 경우 오류 처리 또는 기본값 설정
         }
+
 
         // PageRequestDTO 객체 생성
         ProductPageRequestDTO productPageRequestDTO = ProductPageRequestDTO.builder()
@@ -187,7 +184,6 @@ public class ProductController {
         String uid = userDetails.getUsername();  // 인증된 사용자 ID 추출
 
         List<ProductDTO> cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
-
         UserDTO user = userService.selectUserDetail(uid);
         log.info("dddddd"+user);
         model.addAttribute("user", user);
@@ -198,27 +194,74 @@ public class ProductController {
     }
 
     @PostMapping("/product/order")
-    public String productorder(OrdersDTO ordersDTO) {
+    public String productOrder(OrdersDTO ordersDTO, @RequestParam List<String> checkbox) {
 
-        log.info(ordersDTO.toString());
+        Orders orders = productService.insertOrder(ordersDTO);
+        int ono = orders.getOno();
+        for(String select : checkbox){
+            OrdersDTO ordersDTO1 = new OrdersDTO();
+            ordersDTO1.setOno(ono);
+            String[] productInfo = select.split("%");
 
-        return "/product/order";
-    }
+            ordersDTO1.setPno(Integer.parseInt(productInfo[0]));
+            ordersDTO1.setPcount(Integer.parseInt(productInfo[1]));
+            ordersDTO1.setOptions(null);
 
-    @GetMapping("/product/search")
-    public String search(
-            Model model,
-            String search,
-            @PageableDefault(size = 10, sort = "pname", direction = Sort.Direction.ASC) Pageable pageable) {
-
-        Page<Product> resultList = productService.findByPname(pageable, search);
-        for (Product result : resultList) {
-            log.info(result.toString());
+            if (productInfo.length > 2){
+                ordersDTO1.setOptions(productInfo[2]);
+            }
+            String uid = ordersDTO.getUid();
+            userService.updateUserPoint(uid, ordersDTO.getUsepoint(), ordersDTO.getSavepoint());
+            productService.insertOrderDetail(ordersDTO1);
+            cartService.orderCartItems(uid, ordersDTO1.getPno());
         }
-        model.addAttribute("product", resultList);
-        model.addAttribute("page", resultList);
-        return "/product/list";
+        return "redirect:/product/list";
     }
+
+
+    // 상품 검색 컨트롤러
+    @GetMapping("/product/search")
+    public String searchProducts(@RequestParam(required = false) String search,
+                                 @RequestParam(required = false) Integer minPrice,
+                                 @RequestParam(required = false) Integer maxPrice,
+                                 @RequestParam(required = false) String cate,
+                                 Model model, @RequestParam(defaultValue = "1") int pg,
+                                 @RequestParam(defaultValue = "10") int size) {
+
+        // 서비스 메서드를 호출하여 검색 결과를 가져옵니다.
+        List<ProductDTO> products = productService.searchProducts(search, minPrice, maxPrice, cate);
+        int totalResults = productService.countSearchProducts(search, minPrice, maxPrice, cate);
+
+            ProductPageRequestDTO productPageRequestDTO = ProductPageRequestDTO.builder()
+                    .pg(pg)
+                    .size(size)
+                    .build();
+
+        if (products.isEmpty()) {
+            // 검색 결과가 없다면 빈 리스트를 모델에 추가합니다.
+            model.addAttribute("products", Collections.emptyList());
+        } else {
+            // 검색 결과가 있다면 모델에 검색 결과를 추가합니다.
+            ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, cate);
+            model.addAttribute("products", responseDTO.getDtoList());
+            model.addAttribute("result", responseDTO);
+            model.addAttribute("cate", productService.getCategoryList());
+            model.addAttribute("totalResults", totalResults);
+
+            log.info("responseDTO1 : " + responseDTO);
+        }
+
+
+            // 검색 키워드와 가격 정보를 뷰에 유지
+            model.addAttribute("products", products);
+            model.addAttribute("searchKeyword", search);
+            model.addAttribute("minPrice", minPrice);
+            model.addAttribute("maxPrice", maxPrice);
+            model.addAttribute("category", cate);
+
+            return "/product/search"; // 검색 결과를 보여줄 뷰 이름
+    }
+
 
     @GetMapping("/product/view")
     public String viewProduct(@RequestParam("pno") int pno, Model model) {
@@ -233,6 +276,7 @@ public class ProductController {
             return "redirect:/product/list"; // 제품이 없을 경우 리다이렉트
         }
     }
+
 
 
     @PostMapping("/product/updateCartQuantity")
@@ -254,10 +298,10 @@ public class ProductController {
 
     // 장바구니에서 상품 삭제
     @PostMapping("/cart/delete")
-    public ResponseEntity<?> deleteCart(@RequestBody Map<String, int[]> requestData) {
+    public ResponseEntity<?> deleteCart(Principal principal, @RequestBody Map<String, int[]> requestData) {
         int[] pnos = requestData.get("pnos");
         log.info("pnos : " + pnos);
-        return cartService.deleteCartItems(pnos);
+        return cartService.deleteCartItems(principal.getName(), pnos);
     }
 
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/UserLayout}">
+
+<section class="review-write" layout:fragment="content">
+    <div class="product-details">
+        <h1>Review</h1>
+        <div class="info">
+            <h2 th:text="${product.pname}">상품명</h2>
+            <p>판매자명: <span th:text="${product.company}">Company Name</span></p>
+            <p>상품번호: <span th:text="${product.cate}">12345</span></p>
+            <p>가격: <ins th:text="${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0, 'COMMA')}"></ins>원</p>
+        </div>
+        <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품 이미지"/>
+    </div>
+
+    <form th:action="@{/product/review}" method="post">
+        <input type="hidden" th:value="${product.pno}" name="pno"/>
+        <input type="hidden" th:value="${#authentication.principal.user.uid}" name="uid"/>
+
+        <div>
+            <label for="rating">평점:</label>
+            <select id="rating" name="rating">
+                <option value="1">1 - 매우 나쁨</option>
+                <option value="2">2 - 나쁨</option>
+                <option value="3">3 - 보통</option>
+                <option value="4">4 - 좋음</option>
+                <option value="5">5 - 매우 좋음</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="content">리뷰:</label>
+            <textarea id="content" name="content" rows="4" cols="50" placeholder="리뷰를 작성해 주세요."></textarea>
+        </div>
+
+        <div>
+            <button type="submit">리뷰 제출</button>
+        </div>
+    </form>
+</section>
+
+</html>
