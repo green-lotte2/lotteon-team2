@@ -298,7 +298,7 @@ public class CsService {
     }
 
 
-    // Admin Qna 뷰 코멘트
+    // 🎈 Admin Qna 뷰 코멘트
     public List<CsQna> selectComments(int qnano){
         return qnaRepository.findByQnano(qnano);
     }
