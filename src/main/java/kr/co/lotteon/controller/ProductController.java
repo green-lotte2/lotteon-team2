@@ -172,53 +172,6 @@ public class ProductController {
         return "/product/list";
     }
 
-    @GetMapping("/product/order")
-    public String order(Authentication authentication, Model model) {
-
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
-        }
-
-        // 사용자 정보 가져오기
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String uid = userDetails.getUsername();  // 인증된 사용자 ID 추출
-
-        List<ProductDTO> cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
-        UserDTO user = userService.selectUserDetail(uid);
-        log.info("dddddd"+user);
-        model.addAttribute("user", user);
-        model.addAttribute("cartProducts", cartProducts);  // 모델에 장바구니 상품 목록 추가
-        model.addAttribute("cate", productService.getCategoryList());
-
-        return "/product/order";
-    }
-
-    @PostMapping("/product/order")
-    public String productOrder(OrdersDTO ordersDTO, @RequestParam List<String> checkbox) {
-
-        Orders orders = productService.insertOrder(ordersDTO);
-        int ono = orders.getOno();
-        for(String select : checkbox){
-            OrdersDTO ordersDTO1 = new OrdersDTO();
-            ordersDTO1.setOno(ono);
-            String[] productInfo = select.split("%");
-
-            ordersDTO1.setPno(Integer.parseInt(productInfo[0]));
-            ordersDTO1.setPcount(Integer.parseInt(productInfo[1]));
-            ordersDTO1.setOptions(null);
-
-            if (productInfo.length > 2){
-                ordersDTO1.setOptions(productInfo[2]);
-            }
-            String uid = ordersDTO.getUid();
-            userService.updateUserPoint(uid, ordersDTO.getUsepoint(), ordersDTO.getSavepoint());
-            productService.insertOrderDetail(ordersDTO1);
-            cartService.orderCartItems(uid, ordersDTO1.getPno());
-        }
-        return "redirect:/product/list";
-    }
-
-
     // 상품 검색 컨트롤러
     @GetMapping("/product/search")
     public String searchProducts(@RequestParam(required = false) String search,

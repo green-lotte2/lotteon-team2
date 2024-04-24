@@ -6,22 +6,48 @@
 
     <script th:inline="javascript">
         window.onload = function (){
-            const paramCate = parseInt([[${param.cate}]]);
-            const cateMap = document.getElementById('cate');
-            console.log(paramCate);
-            console.log(cateMap);
-            cateMap.innerText = paramCate;
-            const cateList = [[${cate}]];
-            cateList.forEach(function (){
-                console.log(cateList[paramCate/10000]);
-            })
+            if([[${param.cate}]] != null){
+                const paramCate = parseInt([[${param.cate}]]);
+                const cateMap = document.getElementById('cate');
+
+                const cateList = [[${cate}]];
+
+                if (paramCate % 100 !== 0){
+                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
+                    const typeB = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].cname;
+                    const typeC = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].children[Math.floor((paramCate % 100))-1].cname;
+                    const span = document.createElement('span');
+                    span.innerText = typeA;
+                    cateMap.appendChild(span);
+                    cateMap.innerText += " > ";
+                    span.innerText = typeB;
+                    cateMap.appendChild(span);
+                    cateMap.innerText += " > ";
+                    span.innerText = typeC;
+                    cateMap.appendChild(span);
+
+                }else if(paramCate % 10000 !== 0){
+                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
+                    const typeB = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].cname;
+                    const span = document.createElement('span');
+                    span.innerText = typeA;
+                    cateMap.appendChild(span);
+                    cateMap.innerText += " > ";
+                    span.innerText = typeB;
+                    cateMap.appendChild(span);
+                }else{
+                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
+                    const span = document.createElement('span');
+                    span.innerText = typeA;
+                    cateMap.appendChild(span);
+                }
+            }
         }
     </script>
     <!-- 제목, 페이지 네비게이션 -->
     <nav>
         <h1>상품목록</h1>
-        <p id="cate"></p>
-        <p>HOME > <span>패션·의류·뷰티</span> > <strong>남성의류</strong></p>
+        <p id="cate">HOME >  </p>
     </nav>
 
     <!-- 검색결과 그룹박스(검색 있을때만 출력하게) -->

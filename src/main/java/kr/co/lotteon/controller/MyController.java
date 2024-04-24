@@ -38,10 +38,7 @@ public class MyController {
         return "/mypage/home";
     }
 
-    @GetMapping("/mypage/order")
-    public String order() {
-        return "/mypage/order";
-    }
+
 
     @GetMapping("/mypage/point")
     public String point() {
@@ -52,13 +49,13 @@ public class MyController {
     public String coupon() {
         return "/mypage/coupon";
     }
-
+/*
     @GetMapping("/mypage/review")
     public String review() {
         return "/mypage/review";
     }
 
-
+*/
 
     @RequestMapping("/mypage/qna")
     public String qna(@AuthenticationPrincipal MyUserDetails myUserDetails,
