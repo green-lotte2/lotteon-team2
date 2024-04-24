@@ -12,5 +12,5 @@ public interface CartRepository extends JpaRepository<Cart, String> {
     List<Cart>  findCartByUidAndPno(String uid, int pno);
 
     @Transactional
-    void deleteByPno(int pno);
+    void deleteByUidAndPno(String uid, int pno);
 }

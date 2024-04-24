@@ -50,12 +50,16 @@ public class CartService {
         }
     }
 
+    public void orderCartItems(String uid, int pno){
+        cartRepository.deleteByUidAndPno(uid,pno);
+    }
+
     // 장바구니에서 선택 상품 삭제
-    public ResponseEntity<?> deleteCartItems(int[] pnos) {
+    public ResponseEntity<?> deleteCartItems(String uid, int[] pnos) {
         Map<String, Object> response = new HashMap<>();
         try {
             for (int pno : pnos) {
-                cartRepository.deleteByPno(pno);
+                cartRepository.deleteByUidAndPno(uid, pno);
             }
             response.put("success", true);
             response.put("message", "삭제 성공");

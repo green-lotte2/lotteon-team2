@@ -41,7 +41,6 @@ public class ProductController {
 
     private final ProductService productService;
     private final CartService cartService;
-    private final AdminService adminService;
     private final UserService userService;
 
     @PostMapping("/product/register")
@@ -187,7 +186,6 @@ public class ProductController {
         String uid = userDetails.getUsername();  // 인증된 사용자 ID 추출
 
         List<ProductDTO> cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
-
         UserDTO user = userService.selectUserDetail(uid);
         log.info("dddddd"+user);
         model.addAttribute("user", user);
@@ -198,11 +196,28 @@ public class ProductController {
     }
 
     @PostMapping("/product/order")
-    public String productorder(OrdersDTO ordersDTO) {
+    public String productOrder(OrdersDTO ordersDTO, @RequestParam List<String> checkbox) {
 
-        log.info(ordersDTO.toString());
+        Orders orders = productService.insertOrder(ordersDTO);
+        int ono = orders.getOno();
+        for(String select : checkbox){
+            OrdersDTO ordersDTO1 = new OrdersDTO();
+            ordersDTO1.setOno(ono);
+            String[] productInfo = select.split("%");
 
-        return "/product/order";
+            ordersDTO1.setPno(Integer.parseInt(productInfo[0]));
+            ordersDTO1.setPcount(Integer.parseInt(productInfo[1]));
+            ordersDTO1.setOptions(null);
+
+            if (productInfo.length > 2){
+                ordersDTO1.setOptions(productInfo[2]);
+            }
+            String uid = ordersDTO.getUid();
+            userService.updateUserPoint(uid, ordersDTO.getUsepoint(), ordersDTO.getSavepoint());
+            productService.insertOrderDetail(ordersDTO1);
+            cartService.orderCartItems(uid, ordersDTO1.getPno());
+        }
+        return "redirect:/product/list";
     }
 
     @GetMapping("/product/search")
@@ -254,10 +269,10 @@ public class ProductController {
 
     // 장바구니에서 상품 삭제
     @PostMapping("/cart/delete")
-    public ResponseEntity<?> deleteCart(@RequestBody Map<String, int[]> requestData) {
+    public ResponseEntity<?> deleteCart(Principal principal, @RequestBody Map<String, int[]> requestData) {
         int[] pnos = requestData.get("pnos");
         log.info("pnos : " + pnos);
-        return cartService.deleteCartItems(pnos);
+        return cartService.deleteCartItems(principal.getName(), pnos);
     }
 
 }

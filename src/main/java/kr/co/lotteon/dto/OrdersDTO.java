@@ -16,6 +16,7 @@ public class OrdersDTO {
     private int pno;
     private LocalDateTime odate;
     private int usepoint;
+    private int savepoint;
     private String receiver;
     private String hp;
     private String zip;

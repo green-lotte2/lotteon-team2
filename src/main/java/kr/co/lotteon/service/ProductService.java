@@ -38,6 +38,7 @@ public class ProductService {
 
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
+    private final OrderDetailRepository orderDetailRepository;
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
 
@@ -58,8 +59,9 @@ public class ProductService {
         return orderRepository.save(orders);
     }
 
-    public void insertOrderDetail(Orders orders, OrdersDTO ordersDTO){
-
+    public void insertOrderDetail(OrdersDTO ordersDTO){
+        OrderDetail orderDetail = modelMapper.map(ordersDTO, OrderDetail.class);
+        orderDetailRepository.save(orderDetail);
     }
 
 

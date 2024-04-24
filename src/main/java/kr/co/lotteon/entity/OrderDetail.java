@@ -1,8 +1,6 @@
 package kr.co.lotteon.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -19,6 +17,7 @@ import java.time.LocalDateTime;
 public class OrderDetail {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int dono;
     private int ono;
     private int pno;
