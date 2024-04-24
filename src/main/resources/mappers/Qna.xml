@@ -100,9 +100,11 @@
         UPDATE `qna` SET `content`=#{content} WHERE `qnano`=#{qnano}
     </update>
 
+
     <!--🎈admin_qna_delete-->
     <delete id="adminDeleteQnaBoard">
         DELETE FROM `qna` WHERE `qnano`=#{qnano}
     </delete>
-    
+
+
 </mapper>

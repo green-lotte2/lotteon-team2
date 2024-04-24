@@ -57,6 +57,14 @@
         WHERE `noticeno` = #{noticeno}
     </select>
 
+    <update id="adminUpdateNoticeBoard">
+        UPDATE `notice` SET `content`=#{content} WHERE `noticeno`=#{noticeno}
+    </update>
+
+    <!--🎈admin_notice_delete-->
+    <delete id="adminDeleteNoticeBoard">
+        DELETE FROM `notice` WHERE `noticeno`=#{noticeno}
+    </delete>
 
 
 </mapper>

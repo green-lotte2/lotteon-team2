@@ -19,7 +19,8 @@
 <main layout:fragment="content">
 
         <section id="adminBoard">
-            <form th:action="@{/admin/cs/notice/modify}">
+            <form th:action="@{/admin/cs/notice/modify}" method="post">
+                <input type="hidden" name="noticeno" th:value="${noticeBoard.noticeno}">
                 <div class="board notice">
                     <div class="view">
                         <h2>공지사항</h2>
@@ -30,16 +31,14 @@
                             </nav>
 
                             <div class="content">
-                        <textarea>
-                            [[${noticeBoard.content}]]
-                        </textarea>
+                                <textarea name="content">[[${noticeBoard.content}]]</textarea>
                             </div>
                         </article>
                     </div>
                 </div>
                 <div class="bottomBtn">
                     <a th:href="@{/admin/cs/notice/list}" class="listbtn">목록</a>
-                    <a th:href="@{/admin/cs/notice/modify}" class="modifyBtn">수정</a>
+                    <input type="submit" class="modifyBtn" value="수정완료">
                     <a th:href="@{/admin/cs/notice/delete}" class="deleteBtn">삭제</a>
                 </div>
             </form>

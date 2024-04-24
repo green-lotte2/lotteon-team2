@@ -239,6 +239,15 @@ public class CsService {
         log.info("noticeno" + noticeno);
         return noticeMapper.adminSelectNoticeBoard(noticeno);
     }
+    public void adminUpdateNoticeBoard(NoticeDTO dto) {
+        noticeMapper.adminUpdateNoticeBoard(dto);
+    }
+
+    // 🎈 Admin Notice 삭제
+    public void adminDeleteNoticeBoard(int noticeno) {
+        noticeMapper.adminDeleteNoticeBoard(noticeno);
+    }
+
 
     // 🎈Admin Faq 리스트
     public List<FaqDTO> selectFaqList(){
@@ -249,6 +258,13 @@ public class CsService {
     public List<Cate2DTO> adminSelectCate2(){
         return cateMapper.adminSelectCate2();
     }
+
+    // 🎈 Admin Faq 삭제
+    public void adminDeleteFaqBoard(int faqno) {
+        faqMapper.adminDeleteFaqBoard(faqno);
+    }
+
+
 
     // 🎈 Admin Qna 리스트
     public List<QnaDTO> adminSelectQnaList(){

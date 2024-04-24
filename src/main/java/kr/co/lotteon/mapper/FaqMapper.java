@@ -19,4 +19,8 @@ public interface FaqMapper {
     // 🎈 admin faq view
     public FaqDTO adminSelectFaqView(int faqno);
 
+
+    // 🎈 admin faq 삭제
+    public void adminDeleteFaqBoard(int faqno);
+
 }

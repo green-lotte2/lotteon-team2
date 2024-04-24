@@ -113,6 +113,7 @@ public class AdminCsController {
         return "/admin/cs/notice/write";
     }
 
+    //🎈 공지사항 수정
     @GetMapping("/admin/cs/notice/modify")
     public String adminNoticeModify(int noticeno, Model model){
         NoticeDTO noticeBoard = csService.adminSelectNoticeBoard(noticeno);
@@ -120,6 +121,25 @@ public class AdminCsController {
         log.info("noticeno: " + noticeno);
         log.info("noticboard: " + noticeBoard);
         return "/admin/cs/notice/modify";
+    }
+
+    @PostMapping("/admin/cs/notice/modify")
+    public String adminNoticeUpdate(@ModelAttribute NoticeDTO dto){
+        dto.setRdate(LocalDateTime.now());
+        csService.adminUpdateNoticeBoard(dto);
+        log.info("updateNoticeBoardDTO--------" + dto);
+        int noticeno = dto.getNoticeno();
+        log.info("updateNoticeBoardNoticeno---------"+ noticeno);
+        return "redirect:/admin/cs/notice/view?noticeno="+noticeno;
+    }
+
+    //🎈 공지사항 삭제
+    @GetMapping("/admin/cs/notice/delete")
+    public String adminDeleteNoticeBoard(int noticeno) {
+        csService.adminDeleteNoticeBoard(noticeno);
+        log.info("noticeno : " + noticeno);
+
+        return "redirect:/admin/cs/notice/list?noticeno="+noticeno;
     }
 
 
@@ -205,6 +225,17 @@ public class AdminCsController {
     public String adminFaqModify(){
         return "/admin/cs/faq/modify";
     }
+
+
+    //🎈 자주묻는질문 삭제
+    @GetMapping("/admin/cs/faq/delete")
+    public String adminDeleteFaqBoard(int faqno) {
+        csService.adminDeleteFaqBoard(faqno);
+        log.info("noticeno : " + faqno);
+
+        return "redirect:/admin/cs/faq/list?faqno="+faqno;
+    }
+
 
 }
 
