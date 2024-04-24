@@ -4,22 +4,19 @@ import kr.co.lotteon.dto.ProductDTO;
 import kr.co.lotteon.dto.ReviewDTO;
 import kr.co.lotteon.service.ProductService;
 import kr.co.lotteon.service.ReviewService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RequiredArgsConstructor
 @Controller
 public class ReviewController {
 
     private final ProductService productService;
     private final ReviewService reviewService;
 
-    public ReviewController(ProductService productService, ReviewService reviewService) {
-        this.productService = productService;
-        this.reviewService = reviewService;
-    }
 
     // pno에 해당하는 상품을 조회하여 모델에 추가하고, 리뷰 작성 페이지로 이동합니다.
     @GetMapping("/mypage/writeReview")
@@ -40,6 +37,7 @@ public class ReviewController {
     }
 
     // 리뷰 페이지로 이동합니다.
+/*
     @GetMapping("/mypage/review")
     public String myReviews(Model model, String uid) {
         // 여기서 리뷰 목록을 가져오는 서비스 메서드 호출
@@ -50,6 +48,6 @@ public class ReviewController {
         // 해당하는 뷰 이름 반환
         return "/mypage/writeReview";
     }
-
+*/
 
 }

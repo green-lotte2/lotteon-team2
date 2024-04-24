@@ -52,13 +52,13 @@ public class MyController {
     public String coupon() {
         return "/mypage/coupon";
     }
-
+/*
     @GetMapping("/mypage/review")
     public String review() {
         return "/mypage/review";
     }
 
-
+*/
 
     @RequestMapping("/mypage/qna")
     public String qna(@AuthenticationPrincipal MyUserDetails myUserDetails,
