@@ -16,7 +16,7 @@
     </ul>
 
     <section>
-        <a href="#"><img src="./img/my_banner2.png" alt="패션, 타운 하나로 끝" class="banner"></a>
+        <a th:href="@{/}"><img th:src="@{/img/my_banner2.png}" alt="패션, 타운 하나로 끝" class="banner"></a>
         <article>
             <h3>나의리뷰</h3>
 
@@ -28,49 +28,27 @@
                     <th>평점</th>
                     <th>작성일</th>
                 </tr>
-                <tr>
-                    <td class="no">5</td>
-                    <td class="prodName"><a href="#">상품명</a></td>
-                    <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td class="score"><span class="rating star1">평점</span></td>
-                    <td class="date">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="no">4</td>
-                    <td class="prodName"><a href="#">상품명</a></td>
-                    <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td class="score"><span class="rating star2">평점</span></td>
-                    <td class="date">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="no">3</td>
-                    <td class="prodName"><a href="#">상품명</a></td>
-                    <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td class="score"><span class="rating star3">평점</span></td>
-                    <td class="date">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="no">2</td>
-                    <td class="prodName"><a href="#">상품명</a></td>
-                    <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td class="score"><span class="rating star4">평점</span></td>
-                    <td class="date">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="no">1</td>
-                    <td class="prodName"><a href="#">상품명</a></td>
-                    <td class="content">배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td class="score"><span class="rating star5">평점</span></td>
-                    <td class="date">2024-12-12</td>
+                <tr th:each="review, iterStat : ${reviews}">
+                    <td class="no" th:text="${iterStat.index + 1}">5</td>
+                    <td class="prodName"><a href="#" th:text="${review.productName}">상품명</a></td>
+                    <td class="content" th:text="${review.content}">내용</td>
+                    <td class="score" th:classappend="'rating star' + ${review.rating}">평점</td>
+                    <td class="date" th:text="${#dates.format(review.date, 'yyyy-MM-dd')}">작성일</td>
                 </tr>
             </table>
             <p class="page">
-                <a href="#" class="prev">이전</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="next">다음</a>
+                <!-- 이전 페이지 링크 -->
+                <a th:if="${result.pg > 1}" th:href="@{/product/list(cate=${result.cate}, pg=${result.pg - 1})}" class="prev">이전</a>
+                <!-- 숫자 페이지 링크 -->
+                <span th:each="pageNum : ${#numbers.sequence(result.start, result.end)}">
+        <a th:href="@{/product/list(cate=${result.cate}, pg=${pageNum})}"
+           th:text="${pageNum}"
+           th:class="${pageNum == result.pg ? 'num on' : 'num'}"></a>
+    </span>
+                <!-- 다음 페이지 링크 -->
+                <a th:if="${result.pg < result.totalPage}" th:href="@{/product/list(cate=${result.cate}, pg=${result.pg + 1})}" class="next">다음</a>
             </p>
+
         </article>
     </section>
 </div>

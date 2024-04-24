@@ -39,24 +39,26 @@ public class MyController {
     }
 
     @GetMapping("/mypage/order")
-    public String order(){
+    public String order() {
         return "/mypage/order";
     }
 
     @GetMapping("/mypage/point")
-    public String point(){
+    public String point() {
         return "/mypage/point";
     }
 
     @GetMapping("/mypage/coupon")
-    public String coupon(){
+    public String coupon() {
         return "/mypage/coupon";
     }
 
     @GetMapping("/mypage/review")
-    public String review(){
+    public String review() {
         return "/mypage/review";
     }
+
+
 
     @RequestMapping("/mypage/qna")
     public String qna(@AuthenticationPrincipal MyUserDetails myUserDetails,

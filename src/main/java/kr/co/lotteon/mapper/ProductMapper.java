@@ -18,4 +18,8 @@ public interface ProductMapper {
     List<ProductDTO> selectCartWithProductsByUid(String uid);
 
     ProductDTO selectProductWithImagesById(int pno);
+
+    List<ProductDTO> searchProducts(String search, Integer minPrice, Integer maxPrice, String category);
+
+    int countSearchProducts(String search, Integer minPrice, Integer maxPrice, String category);
 }
