@@ -34,5 +34,46 @@
         WHERE p.pno = #{pno}
     </select>
 
+    <!-- 상품 검색 -->
+    <select id="searchProducts" resultType="kr.co.lotteon.dto.ProductDTO">
+        SELECT p.*, img.mainImg, img.subImg, img.detailImg
+        FROM product p
+        LEFT JOIN productimg img ON p.pno = img.pno
+        WHERE 1=1
+        <if test="search != null and search != ''">
+            AND p.pname LIKE CONCAT('%', #{search}, '%')
+        </if>
+        <if test="minPrice != null">
+            AND p.price >= #{minPrice}
+        </if>
+        <if test="maxPrice != null">
+            AND p.price &lt;= #{maxPrice}
+        </if>
+        <if test="category != null and category != ''">
+            AND p.cate = #{category}
+        </if>
+        ORDER BY p.rdate DESC
+    </select>
+
+    <!-- 상품 검색 갯수 -->
+    <select id="countSearchProducts" resultType="int">
+        SELECT COUNT(*)
+        FROM product p
+        LEFT JOIN productimg img ON p.pno = img.pno
+        WHERE 1=1
+        <if test="search != null and search != ''">
+            AND p.pname LIKE CONCAT('%', #{search}, '%')
+        </if>
+        <if test="minPrice != null">
+            AND p.price >= #{minPrice}
+        </if>
+        <if test="maxPrice != null">
+            AND p.price &lt;= #{maxPrice}
+        </if>
+        <if test="category != null and category != ''">
+            AND p.cate = #{category}
+        </if>
+    </select>
+
 
 </mapper>

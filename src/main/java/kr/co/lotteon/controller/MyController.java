@@ -1,5 +1,6 @@
 package kr.co.lotteon.controller;
 
+import kr.co.lotteon.dto.ProductDTO;
 import kr.co.lotteon.dto.QnaDTO;
 import kr.co.lotteon.entity.User;
 import kr.co.lotteon.security.MyUserDetails;
@@ -26,30 +27,32 @@ public class MyController {
     private final UserService userService;
     private final CsService csService;
 
-    @GetMapping(value = {"/mypage/","/mypage/index"})
-    public String myPage(){
+    @GetMapping(value = {"/mypage/", "/mypage/index"})
+    public String myPage() {
         return "/mypage/home";
     }
 
     @GetMapping("/mypage/order")
-    public String order(){
+    public String order() {
         return "/mypage/order";
     }
 
     @GetMapping("/mypage/point")
-    public String point(){
+    public String point() {
         return "/mypage/point";
     }
 
     @GetMapping("/mypage/coupon")
-    public String coupon(){
+    public String coupon() {
         return "/mypage/coupon";
     }
 
     @GetMapping("/mypage/review")
-    public String review(){
+    public String review() {
         return "/mypage/review";
     }
+
+
 
     @RequestMapping("/mypage/qna")
     public String qna(@AuthenticationPrincipal MyUserDetails myUserDetails,

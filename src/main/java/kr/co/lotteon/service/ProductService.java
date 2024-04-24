@@ -1,6 +1,10 @@
 package kr.co.lotteon.service;
 
 import com.querydsl.core.Tuple;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.*;
 
@@ -16,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -330,6 +335,18 @@ public class ProductService {
                 .total(total)
                 .build();
     }
+
+    // 상품 검색 서비스 메서드
+    public List<ProductDTO> searchProducts(String search, Integer minPrice, Integer maxPrice, String category) {
+        return productMapper.searchProducts(search, minPrice, maxPrice, category);
+    }
+
+    public int countSearchProducts(String search, Integer minPrice, Integer maxPrice, String category) {
+        return productMapper.countSearchProducts(search, minPrice, maxPrice, category);
+    }
+
+
+
 
     public PageResponseDTO searchArticles(PageRequestDTO pageRequestDTO){
 
