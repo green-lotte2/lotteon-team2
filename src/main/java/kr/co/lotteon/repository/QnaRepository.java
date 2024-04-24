@@ -19,5 +19,6 @@ public interface QnaRepository extends JpaRepository<CsQna, Integer> {
 
 
     public List<CsQna> findByQnano(int qnano);
+    public CsQna findFirstByQnano(int qnano);
 
 }

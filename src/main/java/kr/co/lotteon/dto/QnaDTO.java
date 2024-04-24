@@ -1,10 +1,7 @@
 package kr.co.lotteon.dto;
 
 import kr.co.lotteon.entity.CsQna;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -12,6 +9,9 @@ import java.time.format.DateTimeFormatter;
 
 @Data
 @Builder
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class QnaDTO {
@@ -43,12 +43,12 @@ public class QnaDTO {
 
 
     private QnaDTO comment;
-
+/*
     public String getRdateSub() {
         String formatDate = rdate.format(DateTimeFormatter.ofPattern("yy.MM.dd"));
         return formatDate;
     }
-
+*/
     public CsQna toEntity(){
         return CsQna.builder()
                 .qnano(qnano)

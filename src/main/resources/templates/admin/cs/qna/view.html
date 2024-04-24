@@ -2,7 +2,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/adminLayout}"
 >
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,10 +11,106 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <script th:src="@{/js/util.js}"></script>
 
 </head>
 
 <main layout:fragment="content">
+    <script th:inline="javascript">
+
+
+
+        //🎈댓글 불러오기
+        const commentList = document.getElementById('commentList');
+        const commentPlaceholder = document.getElementById('commentPlaceholder');
+
+        // 상단 <script> 선언 태그에 th:inline="javascript" 속성 추가
+        const qnano = [[${qnaBoard.qnano}]];
+
+        // fetchGet 함수는 await 비동기 실행되기 때문에 이벤트 핸들러 function 앞에 async 추가(문법적인 사항)
+        // 페이지 로드 후 바로 댓글목록 데이터를 요청하기 보다는 약간 2초정도 시간 뒤에 요청을 하면 좀더 안정적
+
+        setTimeout(async function (){
+
+            const comments = await fetchGet(`/lotteon/admin/cs/qna/reply/${qnano}`);
+            console.log('comments : ' + comments);
+            commentPlaceholder.remove();
+            for(const comment of comments){
+                let commentArticle;
+                if(document.getElementById('userCheck').value === comment.writer) {
+                    commentArticle = `<div class="mb-3 comment" data-no="${comment.qnano}">
+                                                <ol class="breadcrumb mb-1">
+                                                    <li class="breadcrumb-item">${comment.writer}</li>
+                                                    <li class="breadcrumb-item">${comment.rdate.substring(0, 10)}</li>
+                                                </ol>
+
+                                                <textarea class="form-control" rows="3" readonly>${comment.content}</textarea>
+                                                <div class="text-start mt-1">
+                                                    <button type="button" class="btn btn-primary btn-sm btnModify" data-mode="modify" data-no="${comment.qnano}">수정</button>
+                                                    <button type="button" class="btn btn-primary btn-sm btnRemove" data-mode="remove" data-no="${comment.qnano}">삭제</button>
+                                                </div>
+                                            </div>`;
+
+                }else{
+
+                    commentArticle = `<div class="mb-3 comment" data-no="${comment.qnano}">
+                                                <ol class="breadcrumb mb-1">
+                                                    <li class="breadcrumb-item">${comment.writer}</li>
+                                                    <li class="breadcrumb-item">${comment.rdate.substring(0, 10)}</li>
+                                                </ol>
+
+                                                <textarea class="form-control" rows="3" readonly>${comment.content}</textarea>
+                                                <div class="text-end mt-1"></div>
+                                            </div>`;
+                }
+
+
+                // 태그 문자열 삽입
+                commentList.insertAdjacentHTML('beforeend', commentArticle);
+
+            }
+        }, 2000);
+
+
+        // 🎈댓글 등록
+        alert('댓글시작!');
+        const commentForm = document.commentForm;
+
+        commentForm.onsubmit = async function (e) {
+            e.preventDefault();
+            alert('댓글시작2!');
+
+            const jsonData = {
+                "qnano": commentForm.qnano.value,
+               // "writer": commentForm.writer.value,
+                "content": commentForm.content.value
+            };
+
+            console.log(jsonData);
+
+            // POST용 fetchData 호출(util.js 확인, 기존 fetchData 이름을 fetchGet으로 변경)
+            const data = await fetchPost(`/lotteon/admin/cs/qna/reply`, jsonData);
+            console.log(data);
+
+            // 댓글목록 동적처리
+            const commentArticle = `<div class="mb-3 comment" data-no="${data.qnano}">
+                                            <ol class="breadcrumb mb-1">
+                                                <li class="breadcrumb-item">${data.writer}</li>
+                                                <li class="breadcrumb-item">${data.rdate.substring(0, 10)}</li>
+                                            </ol>
+
+                                            <textarea class="form-control" rows="3" readonly>${data.content}</textarea>
+                                            <div class="text-start mt-1">
+                                                <button type="button" class="btn btn-primary btn-sm" data-no="${data.qnano}">수정</button>
+                                                <button type="button" class="btn btn-primary btn-sm" data-no="${data.qnano}">삭제</button>
+                                            </div>
+                                        </div>`;
+
+            // 태그 문자열 삽입
+            commentList.insertAdjacentHTML('beforeend', commentArticle);
+        }*/
+    </script>
+
     <section id="adminBoard">
         <div class="board qna">
             <div class="view">
@@ -33,12 +128,12 @@
                             [[${qnaBoard.content}]]
                         </p><br><br>
                         <p class="warningText">
-                            ※ 피싱 관련 피해신고<br /><br />
+                            ※ 피싱 관련 피해신고<br/><br/>
                             ▶ 경찰청 사이버수사국 (국번없이)182 :
-                            http://cyberbureau.police.go.kr<br />
+                            http://cyberbureau.police.go.kr<br/>
                             ▶ KISA 인터넷침해대응센터 (국번없이)118 :
-                            http://www.krcert.or.kr<br />
-                            감사합니다.<br />
+                            http://www.krcert.or.kr<br/>
+                            감사합니다.<br/>
                         </p>
                     </div>
                 </article>
@@ -62,6 +157,51 @@
         </div>
 
     </section>
+
+    <!--🎈답변목록 시작-->
+
+    <div id="commentList">
+        <label class="form-label fw-bold">댓글목록</label> -->
+
+    <!--
+        처음 글을 불러올때 댓글은 플레이스홀더로 표시하고 이후 AJAX(fetch)로
+        댓글 불러와서 플레이스홀더를 제거하고 댓글을 출력
+    -->
+
+    <div class="mb-3 placeholder-glow" id="commentPlaceholder">
+        <ol class="breadcrumb mb-1">
+            <li class="breadcrumb-item bg-secondary placeholder col-1 me-1"></li>
+            <li class="breadcrumb-item bg-secondary placeholder col-1"></li>
+        </ol>
+
+        <textarea class="form-control bg-secondary placeholder" rows="3" readonly></textarea>
+        <div class="text-start mt-1">
+            <button type="button" class="btn btn-primary btn-sm placeholder disabled col-1"></button>
+            <button type="button" class="btn btn-primary btn-sm placeholder disabled col-1"></button>
+        </div>
+    </div>
+</div>
+
+
+    <!--🎈답변Form-->
+
+    <form name="commentForm">
+        <input type="hidden" name="qnano" th:value="${qnaBoard.qnano}" >-->
+    <!-- <input type="hidden" name="writer">-->
+    <!--<div th:if="${#authorization.expression('isAuthenticated()')}">
+        <input type="hidden" name="writer" th:value="${#authentication.principal.user.uid}">
+    </div>-->
+    
+        <div class="input-group">
+            <span class="input-group-text">댓글입력</span>
+            <textarea name="content" rows="5" cols="100"></textarea>
+        </div>
+
+        <div>
+            <input type="submit" class="submitBtn" value="등록"/>
+            <button type="button" class="btn btn-danger">취소</button>
+        </div>
+    </form>
 
 
 

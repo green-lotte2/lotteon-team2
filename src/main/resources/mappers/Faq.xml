@@ -34,6 +34,18 @@
         WHERE `faqno` = #{faqno}
     </select>
 
+    <!--🎈admin Faq 수정-->
+    <select id="adminSelectFaqBoard" resultType="kr.co.lotteon.dto.FaqDTO">
+        SELECT * FROM `faq` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
+        WHERE `faqno` = #{faqno}
+    </select>
+
+    <update id="adminUpdateFaqBoard">
+        UPDATE `faq` SET `content`=#{content} WHERE `faqno`=#{faqno}
+    </update>
+
     <!--🎈admin Faq 삭제-->
     <delete id="adminDeleteFaqBoard">
         DELETE FROM `faq` WHERE `faqno`=#{faqno}

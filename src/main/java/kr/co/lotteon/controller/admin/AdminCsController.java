@@ -1,21 +1,21 @@
 package kr.co.lotteon.controller.admin;
 
 
-import kr.co.lotteon.dto.Cate2DTO;
-import kr.co.lotteon.dto.FaqDTO;
-import kr.co.lotteon.dto.NoticeDTO;
-import kr.co.lotteon.dto.QnaDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteon.dto.*;
+import kr.co.lotteon.entity.CsQna;
+import kr.co.lotteon.entity.Reply;
 import kr.co.lotteon.service.AdminCsService;
 import kr.co.lotteon.service.CsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -144,6 +144,72 @@ public class AdminCsController {
 
 
 
+    ////////////////////////
+    // 🎈자주 묻는 질문 ////////
+    ///////////////////////
+    @GetMapping("/admin/cs/faq/list")
+    public String adminFaqList(Model model){
+        List<FaqDTO> faqDTOList = csService.selectFaqList();
+        List<Cate2DTO> cate2list = csService.adminSelectCate2();
+        model.addAttribute("faqDTOList", faqDTOList);
+        model.addAttribute("cate2List", cate2list);
+        log.info("faqDTOList : " + faqDTOList);
+        log.info("cate2List : " + cate2list);
+        return "/admin/cs/faq/list";
+    }
+    //🎈 자주묻는질문 view
+    @GetMapping("/admin/cs/faq/view")
+    public String adminFaqView(int faqno, Model model){
+
+        FaqDTO faqBoard = csService.adminSelectFaqView(faqno);
+        model.addAttribute("faqBoard",faqBoard);
+
+        log.info("faqno : " + faqno);
+        log.info("faqBoard : " + faqBoard);
+
+        return "/admin/cs/faq/view";
+    }
+
+    @GetMapping("/admin/cs/faq/write")
+    public String adminFaqWrite(){
+        return "/admin/cs/faq/write";
+    }
+
+    //🎈 자주묻는질문 수정
+    @GetMapping("/admin/cs/faq/modify")
+    public String adminFaqModify(int faqno, Model model){
+        FaqDTO faqBoard = csService.adminSelectFaqBoard(faqno);
+        model.addAttribute("faqBoard", faqBoard);
+        log.info("faqno: " + faqno);
+        log.info("faqboard: " + faqBoard);
+        return "/admin/cs/faq/modify";
+    }
+
+    @PostMapping("/admin/cs/faq/modify")
+    public String adminFaqUpdate(@ModelAttribute FaqDTO dto){
+        dto.setRdate(LocalDateTime.now());
+        csService.adminUpdateFaqBoard(dto);
+        log.info("updateFaqBoardDTO--------" + dto);
+        int faqno = dto.getFaqno();
+        log.info("updateFaqBoardFaqno---------"+ faqno);
+        return "redirect:/admin/cs/faq/view?faqno="+faqno;
+    }
+
+
+
+
+    //🎈 자주묻는질문 삭제
+    @GetMapping("/admin/cs/faq/delete")
+    public String adminDeleteFaqBoard(int faqno) {
+        csService.adminDeleteFaqBoard(faqno);
+        log.info("noticeno : " + faqno);
+
+        return "redirect:/admin/cs/faq/list?faqno="+faqno;
+    }
+
+
+
+
 
     /////////////////////////
     // 🎈1:1 질문 /////////////
@@ -157,7 +223,7 @@ public class AdminCsController {
     }
 
     @GetMapping("/admin/cs/qna/view")
-    public String adminQnaView(int qnano, Model model){
+    public String adminQnaView(int qnano, int cate2, Model model){
         QnaDTO qnaBoard = csService.adminSelectQnaView(qnano);
         model.addAttribute("qnaBoard", qnaBoard);
 
@@ -187,55 +253,29 @@ public class AdminCsController {
         return "redirect:/admin/cs/qna/view?qnano="+qnano;
     }
 
+    //🎈1:1질문 답변//
 
+    /*
+    @ResponseBody
+    @GetMapping("/admin/cs/qna/reply/{qnano}")
+    public ResponseEntity<List<ReplyDTO>> reply(@PathVariable("qnano") int qnano){
 
-
-    ////////////////////////
-    // 🎈자주 묻는 질문 ////////
-    ///////////////////////
-    @GetMapping("/admin/cs/faq/list")
-    public String adminFaqList(Model model){
-        List<FaqDTO> faqDTOList = csService.selectFaqList();
-        List<Cate2DTO> cate2list = csService.adminSelectCate2();
-        model.addAttribute("faqDTOList", faqDTOList);
-        model.addAttribute("cate2List", cate2list);
-        log.info("faqDTOList : " + faqDTOList);
-        log.info("cate2List : " + cate2list);
-        return "/admin/cs/faq/list";
+        log.info("replyQnano : " + qnano);
+        return  csService.selectReplies(qnano);
     }
 
-    @GetMapping("/admin/cs/faq/view")
-    public String adminFaqView(int faqno, Model model){
+     */
+    /*
 
-        FaqDTO faqBoard = csService.adminSelectFaqView(faqno);
-        model.addAttribute("faqBoard",faqBoard);
+    @ResponseBody
+    @PostMapping("/admin/cs/qna/reply")
+    public ResponseEntity<Reply> reply(@RequestBody ReplyDTO replyDTO){
+        log.info("replyDTO.. : " + replyDTO);
 
-        log.info("faqno : " + faqno);
-        log.info("faqBoard : " + faqBoard);
-
-        return "/admin/cs/faq/view";
+        replyDTO.setWriter("hello");
+        return csService.insertReply(replyDTO);
     }
-
-    @GetMapping("/admin/cs/faq/write")
-    public String adminFaqWrite(){
-        return "/admin/cs/faq/write";
-    }
-
-    @GetMapping("/admin/cs/faq/modify")
-    public String adminFaqModify(){
-        return "/admin/cs/faq/modify";
-    }
-
-
-    //🎈 자주묻는질문 삭제
-    @GetMapping("/admin/cs/faq/delete")
-    public String adminDeleteFaqBoard(int faqno) {
-        csService.adminDeleteFaqBoard(faqno);
-        log.info("noticeno : " + faqno);
-
-        return "redirect:/admin/cs/faq/list?faqno="+faqno;
-    }
-
+*/
 
 }
 
