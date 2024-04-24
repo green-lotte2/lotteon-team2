@@ -46,6 +46,26 @@
                     <th>상태</th>
                     <th>확인/신청</th>
                 </tr>
+                <tr th:each="order:${orders}">
+                    <td class="date">[[${order.odate}]]</td>
+                    <td>
+                        <a href="#" class="thumb"><img width="80" height="80" th:src="@{|/product/${order.cate}/${order.mainimg}|}" alt=""></a>
+                        <ul>
+                            <li class="company">[[${order.company}]]</li>
+                            <li class="prodName"><a href="#">[[${order.pname}]]</a></li>
+                            <li>수량 : <span class="prodCount">[[${order.pcount}]]</span>개 / 주문번호 : <span class="ordNo">[[${order.ono}]]</span>
+                            </li>
+                            <li class="prodPrice">34,000</li>
+                        </ul>
+                    </td>
+                    <td class="status">배송완료</td>
+                    <td class="confirm">
+                        <a href="#" class="receive">수취확인</a>
+                        <a th:href="@{/mypage/writeReview(pno=${order.pno})}" class="review">상품평</a>
+                        <a href="#" class="refund">반품신청</a>
+                        <a href="#" class="exchange">교환신청</a>
+                    </td>
+                </tr>
                 <tr>
                     <td class="date">2022-12-13</td>
                     <td>

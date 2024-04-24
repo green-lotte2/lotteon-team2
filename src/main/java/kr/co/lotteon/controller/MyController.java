@@ -38,10 +38,7 @@ public class MyController {
         return "/mypage/home";
     }
 
-    @GetMapping("/mypage/order")
-    public String order() {
-        return "/mypage/order";
-    }
+
 
     @GetMapping("/mypage/point")
     public String point() {

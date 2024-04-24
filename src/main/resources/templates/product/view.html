@@ -7,6 +7,69 @@
 
     <script th:inline="javascript">
         document.addEventListener("DOMContentLoaded", function () {
+
+            if([[${product.cate}]] != null){
+                const paramCate = parseInt([[${product.cate}]]);
+                const cateMap = document.getElementById('cate');
+
+                const cateList = [[${cate}]];
+
+                if (paramCate % 100 !== 0){
+                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
+                    const typeB = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].cname;
+                    const typeC = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].children[Math.floor((paramCate % 100))-1].cname;
+                    const span = document.createElement('span');
+                    span.innerText = typeA;
+                    cateMap.appendChild(span);
+                    cateMap.innerText += " > ";
+                    span.innerText = typeB;
+                    cateMap.appendChild(span);
+                    cateMap.innerText += " > ";
+                    span.innerText = typeC;
+                    cateMap.appendChild(span);
+
+                }else if(paramCate % 10000 !== 0){
+                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
+                    const typeB = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].cname;
+                    const span = document.createElement('span');
+                    span.innerText = typeA;
+                    cateMap.appendChild(span);
+                    cateMap.innerText += " > ";
+                    span.innerText = typeB;
+                    cateMap.appendChild(span);
+                }else{
+                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
+                    const span = document.createElement('span');
+                    span.innerText = typeA;
+                    cateMap.appendChild(span);
+                }
+            }
+
+            // 카테고리 동적 표기
+            if([[${param.cate}]] != null){
+                const paramCate = parseInt([[${param.cate}]]);
+                const cateMap = document.getElementById('cate');
+
+                const cateList = [[${cate}]];
+
+                if (paramCate % 100 !== 0){
+                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
+                    const typeB = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].cname;
+                    const typeC = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].children[Math.floor((paramCate % 100))-1].cname;
+                    cateMap.innerText += typeA + " >  ";
+                    cateMap.innerText += typeB + " >  ";
+                    cateMap.innerText += typeC;
+                }else if(paramCate % 10000 !== 0){
+                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
+                    const typeB = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].cname;
+                    cateMap.innerText += typeA + " >  ";
+                    cateMap.innerText += typeB;
+                }else{
+                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
+                    cateMap.innerText += typeA;
+                }
+            }
+
             // 플러스 버튼 클릭 시 수량 증가
             document.querySelector('.increase').onclick = function () {
                 //document.querySelector('.increase').addEventListener('click', function() {
@@ -176,8 +239,8 @@
     <!-- 제목, 페이지 네비게이션 -->
     <nav>
         <h1>상품보기</h1>
-        <p>
-            HOME > <span>패션·의류·뷰티</span> > <strong>남성의류</strong>
+        <p id="cate">
+            HOME >
         </p>
     </nav>
 

@@ -27,4 +27,10 @@ public class OrdersDTO {
     private int total;
     private int pcount;
     private String options;
+
+    // add
+    private String cate;
+    private String mainimg;
+    private String company;
+    private String pname;
 }
