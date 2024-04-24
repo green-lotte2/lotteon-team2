@@ -29,9 +29,7 @@
                             </p>
                         </nav>
                         <div class="content">
-                            <p>
-                                [[${qnaBoard.content}]]
-                            </p><br><br>
+                            <textarea name="content">[[${qnaBoard.content}]]</textarea><br><br>
                             <p class="warningText">
                                 ※ 피싱 관련 피해신고<br /><br />
                                 ▶ 경찰청 사이버수사국 (국번없이)182 :
@@ -46,19 +44,6 @@
             </div>
 
 
-        <form action="/admin/cs/qna/modify" method="post">
-            <th:block th:if="${qnaBoard.answercomplete != 1}">
-                <input type="hidden" th:text="${qnaBoard.qnano}">
-                <nav>
-                    <h2 class="title" th:text="'☞[답변]' + ${qnaChildBoard.title}"></h2>
-                </nav>
-                <div class="content">
-                    <textarea>
-                        답변내용
-                    </textarea>
-                </div>
-            </th:block>
-        </form>
 
         <div class="bottomBtn">
             <a th:href="@{/admin/cs/qna/list}" class="listBtn">목록</a>
@@ -67,6 +52,7 @@
         </div>
 
     </section>
+
 
     <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

@@ -1,21 +1,23 @@
 package kr.co.lotteon.dto;
 
 
+import jakarta.persistence.JoinColumn;
 import kr.co.lotteon.entity.CsReply;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReplyDTO {
 
     private int replyno;
+
     private int qnano;
     private String title;
     private String content;

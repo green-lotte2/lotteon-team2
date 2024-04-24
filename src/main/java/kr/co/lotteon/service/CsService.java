@@ -2,11 +2,16 @@ package kr.co.lotteon.service;
 
 import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.CsQna;
+import kr.co.lotteon.entity.Reply;
 import kr.co.lotteon.mapper.*;
 import kr.co.lotteon.repository.QnaRepository;
+import kr.co.lotteon.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -229,6 +234,8 @@ public class CsService {
     /////////////////////////////////////////
     ////////////////////////////////////////
 
+    //✨공지사항✨//
+
     // 🎈Admin Notice view
     public NoticeDTO adminSelectNoticeView(int noticeno){
         return noticeMapper.adminSelectNoticeView(noticeno);
@@ -239,6 +246,7 @@ public class CsService {
         log.info("noticeno" + noticeno);
         return noticeMapper.adminSelectNoticeBoard(noticeno);
     }
+
     public void adminUpdateNoticeBoard(NoticeDTO dto) {
         noticeMapper.adminUpdateNoticeBoard(dto);
     }
@@ -248,6 +256,7 @@ public class CsService {
         noticeMapper.adminDeleteNoticeBoard(noticeno);
     }
 
+    //✨자주묻는질문✨//
 
     // 🎈Admin Faq 리스트
     public List<FaqDTO> selectFaqList(){
@@ -259,22 +268,32 @@ public class CsService {
         return cateMapper.adminSelectCate2();
     }
 
+    // 🎈Admin Faq view
+    public FaqDTO adminSelectFaqView(int faqno){
+        return faqMapper.adminSelectFaqView(faqno);
+    }
+
+    // 🎈Admin Faq 수정
+    public FaqDTO adminSelectFaqBoard(int faqno){
+        log.info("faqno : " + faqno);
+        return faqMapper.adminSelectFaqBoard(faqno);
+    }
+
+    public void adminUpdateFaqBoard(FaqDTO dto){
+        faqMapper.adminUpdateFaqBoard(dto);
+    }
+
     // 🎈 Admin Faq 삭제
     public void adminDeleteFaqBoard(int faqno) {
         faqMapper.adminDeleteFaqBoard(faqno);
     }
 
 
+    //✨1:1 문의✨//
 
     // 🎈 Admin Qna 리스트
     public List<QnaDTO> adminSelectQnaList(){
         return  qnaMapper.adminSelectQnaList();
-    }
-
-
-    // 🎈Admin Faq view
-    public FaqDTO adminSelectFaqView(int faqno){
-        return faqMapper.adminSelectFaqView(faqno);
     }
 
 
@@ -326,5 +345,33 @@ public class CsService {
     public List<QnaDTO> selectCsQnaComment(int qnano){
         return mypageMapper.selectCsQnaComment(qnano);
     }
+
+    // 🎈Qna 답변 등록
+    private final ReplyRepository replyRepository;
+    private final ModelMapper modelMapper;
+
+    public ResponseEntity<Reply> insertReply(ReplyDTO replyDTO) {
+        Reply reply = modelMapper.map(replyDTO,Reply.class);
+        Reply savedQna = replyRepository.save(reply);
+        log.info("savedQna : " + savedQna);
+
+        return ResponseEntity.ok().body(savedQna);
+    }
+
+    /*
+    // 🎈 Qna 답변 목록
+    public ResponseEntity<List<ReplyDTO>> selectReplies(int qnano){
+
+        // ArticleRepository > findByParent() 쿼리 메서드 정의
+        List<Reply> replyList = replyRepository.findByQnano(qnano);
+
+        List<ReplyDTO> replyDTOS = replyList.stream()
+                .map(entity -> modelMapper.map(entity, ReplyDTO.class))
+                .toList();
+        return ResponseEntity.ok().body(replyDTOS);
+    }
+
+     */
+
 
 }

@@ -16,6 +16,33 @@
 </head>
 
 <main layout:fragment="content">
+    <section id="adminBoard">
+        <form th:action="@{/admin/cs/faq/modify}" method="post">
+            <input type="hidden" name="faqno" th:value="${faqBoard.faqno}">
+            <div class="board faq">
+                <div class="view">
+                    <h2>자주묻는질문</h2>
+                    <article>
+                        <nav>
+                            <h2 class="title" th:text="'[' + ${faqBoard.c2name} + ']' + ${faqBoard.title}"></h2>
+                            <span th:text="${#temporals.format(faqBoard.rdate, 'yyyy-MM-dd')}"></span>
+                        </nav>
+
+                        <div class="content">
+                            <textarea name="content">[[${faqBoard.content}]]</textarea>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="bottomBtn">
+                <a th:href="@{/admin/cs/faq/list}" class="listbtn">목록</a>
+                <input type="submit" class="modifyBtn" value="수정완료">
+                <a th:href="@{/admin/cs/faq/delete}" class="deleteBtn">삭제</a>
+            </div>
+        </form>
+    </section>
+
+
 
     <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
