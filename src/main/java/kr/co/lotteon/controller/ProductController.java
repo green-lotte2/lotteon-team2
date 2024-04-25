@@ -4,10 +4,7 @@ import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.Orders;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.entity.User;
-import kr.co.lotteon.service.AdminService;
-import kr.co.lotteon.service.CartService;
-import kr.co.lotteon.service.ProductService;
-import kr.co.lotteon.service.UserService;
+import kr.co.lotteon.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +39,7 @@ public class ProductController {
     private final ProductService productService;
     private final CartService cartService;
     private final UserService userService;
+    private final OrdersService ordersService;
 
     @PostMapping("/product/register")
     public String productRegister(ProductDTO productDTO,
@@ -134,9 +132,14 @@ public class ProductController {
     }
         */
 
-
-    @GetMapping("/product/complete")
-    public String complete() {
+    @GetMapping("/product/complete/{ono}")
+    public String complete(@PathVariable("ono") int ono, Model model) {
+        OrdersDTO orderDetails = ordersService.getOrderDetails(ono);
+        if (orderDetails == null) {
+            // 주문 정보가 없으면 에러 페이지나 주문 목록으로 리다이렉트
+            return "redirect:/product/list";
+        }
+        model.addAttribute("orderDetails", orderDetails);
         return "/product/complete";
     }
 
@@ -257,6 +260,8 @@ public class ProductController {
         log.info("pnos : " + pnos);
         return cartService.deleteCartItems(principal.getName(), pnos);
     }
+
+
 
 }
 

@@ -41,7 +41,6 @@ public class OrdersService {
     private final ModelMapper modelMapper;
     private final OrdersMapper ordersMapper;
 
-
     private final ProductimgRepository productimgRepository;
 
     /////////////////////////주문/////////////////////////////////
@@ -58,6 +57,13 @@ public class OrdersService {
 
     public List<OrdersDTO> selectOrders(String uid){
         return ordersMapper.selectOrders(uid);
+    }
+
+    @Transactional(readOnly = true)
+    public OrdersDTO getOrderDetails(int ono) {
+        return orderRepository.findById(ono)
+                .map(order -> modelMapper.map(order, OrdersDTO.class))
+                .orElse(null); // 주문을 찾을 수 없는 경우 null 반환
     }
 
 }

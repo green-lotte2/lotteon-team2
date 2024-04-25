@@ -27,6 +27,8 @@ public class OrdersDTO {
     private int total;
     private int pcount;
     private String options;
+    private int discount;
+    private int dfee;
 
     // add
     private String cate;

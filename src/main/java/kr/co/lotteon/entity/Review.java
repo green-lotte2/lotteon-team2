@@ -31,6 +31,8 @@ public class Review {
 
     @PrePersist
     protected void onCreate() {
-        redate = LocalDateTime.now();
+        if (redate == null) {
+            redate = LocalDateTime.now();
+        }
     }
 }

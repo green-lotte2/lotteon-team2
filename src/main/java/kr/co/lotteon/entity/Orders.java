@@ -32,4 +32,7 @@ public class Orders {
     private String payment;
     private String request;
     private int total;
+
+    private int discount;
+    private int dfee;
 }

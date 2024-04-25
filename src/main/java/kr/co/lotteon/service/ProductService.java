@@ -346,36 +346,6 @@ public class ProductService {
     }
 
 
-
-
-    public PageResponseDTO searchArticles(PageRequestDTO pageRequestDTO){
-
-        Pageable pageable = pageRequestDTO.getPageable("pg");
-        Page<Tuple> pageArticle = productRepository.searchProducts(pageRequestDTO, pageable);
-
-        List<ProductDTO> dtoList = pageArticle.getContent().stream()
-                .map(tuple ->
-                        {
-                            log.info("tuple : " + tuple);
-                            Product product = tuple.get(0, Product.class);
-                            int pno = tuple.get(1, int.class);
-                            product.setPno(pno);
-
-                            log.info("product : " + pno);
-
-                            return modelMapper.map(product, ProductDTO.class);
-                        }
-                )
-                .toList();
-
-        int total = (int) pageArticle.getTotalElements();
-
-        return PageResponseDTO.builder()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(dtoList)
-                .total(total)
-                .build();
-    }
 }
 
 
