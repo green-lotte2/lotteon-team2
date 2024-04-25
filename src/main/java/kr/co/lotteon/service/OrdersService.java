@@ -60,6 +60,10 @@ public class OrdersService {
         return ordersMapper.selectOrders(uid);
     }
 
+    public List<OrdersDTO> selectOrdersGroup(String uid){
+        return ordersMapper.selectOrdersGroup(uid);
+    }
+
 }
 
 

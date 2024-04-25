@@ -23,5 +23,6 @@ public class OrderDetail {
     private int pno;
     private int pcount;
     private String options;
+    private int price;
 
 }
