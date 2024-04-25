@@ -8,6 +8,7 @@
     <script th:inline="javascript">
         document.addEventListener("DOMContentLoaded", function () {
 
+            // 카테고리 분류 동적 생성
             if([[${product.cate}]] != null){
                 const paramCate = parseInt([[${product.cate}]]);
                 const cateMap = document.getElementById('cate');
@@ -45,30 +46,6 @@
                 }
             }
 
-            // 카테고리 동적 표기
-            if([[${param.cate}]] != null){
-                const paramCate = parseInt([[${param.cate}]]);
-                const cateMap = document.getElementById('cate');
-
-                const cateList = [[${cate}]];
-
-                if (paramCate % 100 !== 0){
-                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
-                    const typeB = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].cname;
-                    const typeC = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].children[Math.floor((paramCate % 100))-1].cname;
-                    cateMap.innerText += typeA + " >  ";
-                    cateMap.innerText += typeB + " >  ";
-                    cateMap.innerText += typeC;
-                }else if(paramCate % 10000 !== 0){
-                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
-                    const typeB = cateList[Math.floor(paramCate/10000)-1].children[Math.floor((paramCate % 10000)/100)-1].cname;
-                    cateMap.innerText += typeA + " >  ";
-                    cateMap.innerText += typeB;
-                }else{
-                    const typeA = cateList[Math.floor(paramCate/10000)-1].cname;
-                    cateMap.innerText += typeA;
-                }
-            }
 
             // 플러스 버튼 클릭 시 수량 증가
             document.querySelector('.increase').onclick = function () {
@@ -181,7 +158,7 @@
                         "pcount": count,
                         "options": optionText.slice(0, -1)
                     };
-                    const url = actionType === 'order' ? '/lotteon/product/order' : '/lotteon/product/cart/insert';
+                    const url = '/lotteon/product/cart/insert';
                     fetch(url, {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
@@ -206,9 +183,7 @@
                 }
             }
 
-            btnOrder.addEventListener('click', function () {
-                window.location.href = '/lotteon/product/order'; // 바로 주문 페이지로 이동
-            });
+
 
             const optionField = document.getElementById('option');
             const optionName = [[${product.opname}]];
