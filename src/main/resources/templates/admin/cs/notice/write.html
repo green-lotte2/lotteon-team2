@@ -16,6 +16,60 @@
 </head>
 
 <main layout:fragment="content">
+    <script>
+        window.onload = function (){
+            const btnSubmit = document.getElementById('btnSubmit');
+            btnSubmit.onclick = function (e){
+                e.preventDefault();
+                document.formWrite.submit();
+            }
+        }
+    </script>
+
+    <section id="adminBoard">
+        <div class="board notice">
+            <div class="write">
+
+                <article>
+                    <form th:action="@{/admin/cs/notice/write}" name="formWrite" method="post" >
+                        <table>
+                            <tr>
+                                <td>공지사항 유형</td>
+                                <td>
+                                    <select name="cate1" id="category1">
+                                        <option selected>전체</option>
+                                        <option value="10">고객서비스</option>
+                                        <option value="11">안전거래</option>
+                                        <option value="12">위해상품</option>
+                                        <option value="13">이벤트당첨</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>제목</td>
+                                <td>
+                                    <input type="text" class="title" name="title" placeholder="제목을 입력하세요."/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>내용</td>
+                                <td>
+                                    <textarea class="contentText" name="content" placeholder="내용을 입력하세요."></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </article>
+            </div>
+        </div>
+
+        <div class="bottomBtn">
+            <a th:href="@{/admin/cs/notice/list}" style="background-color:tomato" class="listbtn">취소</a>
+            <a th:href="@{#}" id="btnSubmit">등록</a>
+        </div>
+    </section>
+
+
 
     <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

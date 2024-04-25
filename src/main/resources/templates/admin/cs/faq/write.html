@@ -16,6 +16,137 @@
 </head>
 
 <main layout:fragment="content">
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js}"></script>
+    <script>
+        window.onload = function (){
+            const btnSubmit = document.getElementById('btnSubmit');
+            btnSubmit.onclick = function (e){
+                e.preventDefault();
+                document.formWrite.submit();
+            }
+            $(function (){
+                const jsonData = {};
+
+                // cate1 데이터를 서버에서 불러옴
+                $.ajax({
+                    url: '/lotteon/cs/cate1',
+                    type: 'GET',
+                    data: jsonData,
+                    success: function (cate1Data){
+                        console.log(cate1Data);
+
+                        // 문의유형의 select 요소 찾기
+                        const typeSelect = $('select[name="type1"]');
+
+                        // cate1 데이터를 반복하여 1차 선택 옵션 추가
+                        cate1Data.forEach(function (cate1){
+                            typeSelect.append($('<option>', {
+                                value: cate1.cate1,
+                                text: cate1.c1name
+                            }));
+                        });
+                    }
+                });
+
+                $('#category1').change(function (){
+                    const selectedCategory1 = $(this).val();
+                    console.log(selectedCategory1);
+
+                    // 1차 카테고리 선택 값을 cate1 input 필드의 값으로 설정
+                    $('#cate1').val(selectedCategory1);
+
+                    // 1차 카테고리 선택 값(selectedCategory1)을 서버로 전송
+                    const jsonData = {
+                        cate1: selectedCategory1
+                    };
+
+                    $.ajax({
+                        url: '/lotteon/cs/cate2',
+                        type: 'GET',
+                        data: jsonData,
+                        success: function (cate2List){
+                            console.log(cate2List);
+
+                            // 문의유형2 select 요소 찾기
+                            const typeSelect2 = $('select[name="category2"]');
+                            typeSelect2.empty();
+
+                            // cate2 데이터를 반복하여 2차 선택 옵션 추가
+                            cate2List.forEach(function (cate2){
+                                typeSelect2.append($('<option>',{
+                                    value: cate2.cate2,
+                                    text: cate2.c2name
+                                }));
+                            });
+                            // 2차 카테고리가 업데이트되면 첫번째 옵션 선택
+                            typeSelect2.find('option:first').prop('selected', true);
+                            const firstCate2Value = typeSelect2.val();
+                            $('#cate2').val(firstCate2Value);
+
+                            console.log(typeSelect2);
+                        }
+                    });
+                });
+                $('#category2').change(function (){
+                    const selectedCategory2 = $(this).val();
+                    console.log(selectedCategory2);
+
+                    // 2차 카테고리 선택값을 cate2 input 필드의 값으로 설정
+                    $('#cate2').val(selectedCategory2);
+                });
+            }); // function 종료
+
+        }
+
+    </script>
+
+
+
+    <section id="adminBoard">
+        <div class="board faq">
+                <div class="write">
+
+                    <article>
+                        <form th:action="@{/admin/cs/faq/write}" name="formWrite" method="post" >
+                            <table>
+                                <tr>
+                                    <td>문의유형</td>
+                                    <input type="hidden" name="cate1" id="cate1" value="" />
+                                    <input type="hidden" name="cate2" id="cate2" value="" />
+                                    <td>
+                                        <select name="type1" id="category1">
+                                            <option selected>1차 선택</option>
+                                        </select>
+                                        <select name="category2" id="category2">
+                                            <option selected>2차 선택</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>제목</td>
+                                    <td>
+                                        <input type="text" class="title" name="title" placeholder="제목을 입력하세요."/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>내용</td>
+                                    <td>
+                                        <textarea class="contentText" name="content" placeholder="내용을 입력하세요."></textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </article>
+                </div>
+        </div>
+
+        <div class="bottomBtn">
+            <a th:href="@{/admin/cs/faq/list}" style="background-color:tomato" class="listbtn">취소</a>
+            <a th:href="@{#}" id="btnSubmit">등록</a>
+        </div>
+    </section>
+
 
     <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

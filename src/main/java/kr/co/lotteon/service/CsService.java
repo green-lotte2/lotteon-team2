@@ -1,9 +1,13 @@
 package kr.co.lotteon.service;
 
 import kr.co.lotteon.dto.*;
+import kr.co.lotteon.entity.CsFaq;
+import kr.co.lotteon.entity.CsNotice;
 import kr.co.lotteon.entity.CsQna;
 import kr.co.lotteon.entity.Reply;
 import kr.co.lotteon.mapper.*;
+import kr.co.lotteon.repository.FaqRepository;
+import kr.co.lotteon.repository.NoticeRepository;
 import kr.co.lotteon.repository.QnaRepository;
 import kr.co.lotteon.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +38,8 @@ public class CsService {
     private final FaqMapper faqMapper;
     private final MypageMapper mypageMapper;
 
+    private final NoticeRepository noticeRepository;
+    private final FaqRepository faqRepository;
     private final QnaRepository qnaRepository;
 
     public List<NoticeDTO> selectNotices(){
@@ -236,6 +242,19 @@ public class CsService {
 
     //✨공지사항✨//
 
+    // 🎈Admin Notice 글등록
+    public void adminInsertNotice(NoticeDTO noticeDTO){
+
+        // noticeDTO를 noticeEntity로 변환
+        CsNotice notice = modelMapper.map(noticeDTO, CsNotice.class);
+        log.info(notice.toString());
+
+        CsNotice savedNoticeBoard = noticeRepository.save(notice);
+        log.info("insertNotice : " + savedNoticeBoard);
+    }
+
+
+
     // 🎈Admin Notice view
     public NoticeDTO adminSelectNoticeView(int noticeno){
         return noticeMapper.adminSelectNoticeView(noticeno);
@@ -257,6 +276,18 @@ public class CsService {
     }
 
     //✨자주묻는질문✨//
+
+    // 🎈Admin Faq 글등록
+    public void adminInsertFaq(FaqDTO faqDTO){
+
+        // faqDTO를 faqEntity로 변환
+        CsFaq faq = modelMapper.map(faqDTO, CsFaq.class);
+        log.info(faq.toString());
+
+        CsFaq savedFaqBoard = faqRepository.save(faq);
+        log.info("insertFaq : " + savedFaqBoard);
+    }
+
 
     // 🎈Admin Faq 리스트
     public List<FaqDTO> selectFaqList(){

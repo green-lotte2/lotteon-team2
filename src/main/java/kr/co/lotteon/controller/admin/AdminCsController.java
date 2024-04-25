@@ -108,10 +108,28 @@ public class AdminCsController {
         return "/admin/cs/notice/view";
     }
 
+
+    // 🎈공지사항 글등록
     @GetMapping("/admin/cs/notice/write")
     public String adminNoticeWrite(){
         return "/admin/cs/notice/write";
     }
+
+    @PostMapping("/admin/cs/notice/write")
+    public String adminNoticeWrite(HttpServletRequest req, @RequestParam("cate1") int cate1, NoticeDTO noticeDTO, Model model){
+        String regip = req.getRemoteAddr();
+        noticeDTO.setRegip(regip);
+        noticeDTO.setCate1(cate1);
+        noticeDTO.setCate2(cate1);
+        //📢 로그인 설정, 조회수 변경하기//
+        noticeDTO.setUid("hello");
+        noticeDTO.setHit(noticeDTO.getHit());
+        csService.adminInsertNotice(noticeDTO);
+        model.addAttribute("noticeDTO", noticeDTO);
+        log.info("notie글등록 : " + noticeDTO);
+        return "redirect:/admin/cs/notice/list?noticeno="+noticeDTO.getNoticeno();
+    }
+
 
     //🎈 공지사항 수정
     @GetMapping("/admin/cs/notice/modify")
@@ -170,9 +188,21 @@ public class AdminCsController {
         return "/admin/cs/faq/view";
     }
 
+    // 🎈자주묻는질문 글등록
     @GetMapping("/admin/cs/faq/write")
     public String adminFaqWrite(){
         return "/admin/cs/faq/write";
+    }
+
+    @PostMapping("/admin/cs/faq/write")
+    public String adminFaqWrite(HttpServletRequest req, FaqDTO faqDTO){
+        String regip = req.getRemoteAddr();
+        faqDTO.setRegip(regip);
+        //📢 로그인 설정, 조회수 변경하기//
+        faqDTO.setUid("hello");
+        faqDTO.setHit(faqDTO.getHit());
+        csService.adminInsertFaq(faqDTO);
+        return "redirect:/admin/cs/faq/list?faqno="+faqDTO.getFaqno();
     }
 
     //🎈 자주묻는질문 수정
@@ -265,7 +295,6 @@ public class AdminCsController {
     }
 
      */
-    /*
 
     @ResponseBody
     @PostMapping("/admin/cs/qna/reply")
@@ -275,7 +304,7 @@ public class AdminCsController {
         replyDTO.setWriter("hello");
         return csService.insertReply(replyDTO);
     }
-*/
+
 
 }
 
