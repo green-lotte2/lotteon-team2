@@ -1,8 +1,11 @@
 package kr.co.lotteon.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.PrePersist;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,6 +20,7 @@ public class ReviewDTO {
     private String uid;
     private String content;
     private int rating;
-    private LocalDate redate;
+    private LocalDateTime redate;
+
 
 }
