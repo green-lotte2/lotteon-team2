@@ -33,4 +33,6 @@ public class OrdersDTO {
     private String mainimg;
     private String company;
     private String pname;
+    private int price;
+    private int count;
 }

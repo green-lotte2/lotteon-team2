@@ -75,7 +75,7 @@
                         const pointNum = parseInt(point[i].innerText);
                         countSum += countNum;
                         priceSum += priceNum * countNum;
-                        pointSum += pointNum;
+                        pointSum += pointNum * countNum;
                         calcPriceSum += calcPriceNum;
                         console.log(pointSum);
                         if (delivery[i].innerText === "무료배송") {
@@ -130,7 +130,7 @@
             </tr>
             <tr th:each="product : ${cartProducts}" th:unless="${cartProducts == null or cartProducts.isEmpty()}">
                 <td>
-                    <input type="checkbox" name="checkbox" th:value="${product.pno} + '%' + ${product.pcount} + '%' + ${product.options}" checked>
+                    <input type="checkbox" name="checkbox" th:value="${product.pno} + '%' + ${product.pcount} + '%' + ${product.price} + '%' + ${product.options}" checked>
                 </td>
                 <td>
                     <article>
@@ -142,6 +142,7 @@
                                 <a th:href="@{/product/view(pno=${product.pno})}">상품명</a>
                             </h2>
                             <p th:text="${product.info}">상품설명</p>
+                            <p th:text="${product.options}">상품설명</p>
                         </div>
                     </article>
                 </td>

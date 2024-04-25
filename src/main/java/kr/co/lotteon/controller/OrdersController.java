@@ -74,9 +74,10 @@ public class OrdersController {
 
             ordersDTO1.setPno(Integer.parseInt(productInfo[0]));
             ordersDTO1.setPcount(Integer.parseInt(productInfo[1]));
-            ordersDTO1.setOptions(null);
+            ordersDTO1.setPrice(Integer.parseInt(productInfo[2]));
 
-            if (productInfo.length > 2){
+            ordersDTO1.setOptions(null);
+            if (productInfo.length > 3){
                 ordersDTO1.setOptions(productInfo[2]);
             }
             String uid = ordersDTO.getUid();
@@ -98,7 +99,9 @@ public class OrdersController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String uid = userDetails.getUsername();  // 인증된 사용자 ID 추출
         List<OrdersDTO> orders = ordersService.selectOrders(uid);
+        List<OrdersDTO> ordersGroup = ordersService.selectOrdersGroup(uid);
         model.addAttribute("orders", orders);
+        model.addAttribute("ordersGroup", ordersGroup);
         log.info(orders.toString());
         return "/mypage/order";
     }
