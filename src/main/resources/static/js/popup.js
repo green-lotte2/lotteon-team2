@@ -30,6 +30,8 @@ $(function(){
         e.preventDefault();
         $('#popReview').addClass('on');
     });
+
+
                
     // 팝업 닫기
     $('.btnClose').click(function(){                

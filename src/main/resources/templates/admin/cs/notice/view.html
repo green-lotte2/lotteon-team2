@@ -38,7 +38,7 @@
         <div class="bottomBtn">
             <a th:href="@{/admin/cs/notice/list}" class="listbtn">목록</a>
             <a th:href="@{/admin/cs/notice/modify(noticeno=${noticeBoard.noticeno})}" class="modifyBtn">수정</a>
-            <a th:href="@{/admin/cs/notice/delete}" class="deleteBtn">삭제</a>
+            <a th:href="@{/admin/cs/notice/delete(noticeno=${noticeBoard.noticeno})}" class="deleteBtn">삭제</a>
         </div>
 
     </section>

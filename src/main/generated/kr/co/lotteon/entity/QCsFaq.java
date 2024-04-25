@@ -34,6 +34,8 @@ public class QCsFaq extends EntityPathBase<CsFaq> {
 
     public final NumberPath<Integer> faqno = createNumber("faqno", Integer.class);
 
+    public final NumberPath<Integer> hit = createNumber("hit", Integer.class);
+
     public final DateTimePath<java.time.LocalDateTime> rdate = createDateTime("rdate", java.time.LocalDateTime.class);
 
     public final StringPath regip = createString("regip");
