@@ -163,6 +163,7 @@ public class ProductController {
         // 서비스 메소드 호출
         ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, cate);
         responseDTO.setCate(cateInt); // cate 값을 responseDTO에 설정
+
         model.addAttribute("products", responseDTO.getDtoList());
         model.addAttribute("result", responseDTO);
         model.addAttribute("cate", productService.getCategoryList()); // 카테고리 리스트 추가

@@ -272,10 +272,21 @@ public class ProductService {
                 .pno(product.getPno())
                 .cate(product.getCate())
                 .pname(product.getPname())
+                .rdate(product.getRdate())
                 .price(product.getPrice())
                 .stock(product.getStock())
+                .deliprice(product.getDeliprice())
                 .company(product.getCompany())
-                .mainimg(null)  // 초기 이미지 정보를 null로 설정
+                .discount(product.getDiscount()) // 할인율 추가
+                .point(product.getPoint())
+                .info(product.getInfo())
+                .delprice(product.getDelprice())
+                .size(product.getSize())
+                .color(product.getColor())
+                .hit(product.getHit())
+                .opname(product.getOpname())
+                .opvalue(product.getOpvalue())
+                .mainimg(null) // 초기 이미지 정보를 null로 설정
                 .subimg(null)
                 .detailimg(null)
                 .build();
