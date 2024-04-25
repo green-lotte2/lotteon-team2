@@ -22,4 +22,13 @@
         GROUP BY od.ono
     </select>
 
+    <select id="selectOrderDetails" resultType="kr.co.lotteon.dto.OrdersDTO">
+        SELECT o.*, p.pno, p.cate, p.pname, p.company, pi.mainimg, od.pcount, od.options, od.price
+        FROM `orders` AS o
+        JOIN `orderdetail` AS od ON o.ono = od.ono
+        JOIN `product` AS p ON p.pno = od.pno
+        JOIN `productimg` AS pi ON p.pno = pi.pno
+        WHERE o.ono = #{ono}
+    </select>
+
 </mapper>

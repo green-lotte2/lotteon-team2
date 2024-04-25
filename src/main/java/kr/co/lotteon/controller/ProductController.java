@@ -1,6 +1,7 @@
 package kr.co.lotteon.controller;
 
 import kr.co.lotteon.dto.*;
+import kr.co.lotteon.entity.OrderDetail;
 import kr.co.lotteon.entity.Orders;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.entity.User;
@@ -134,12 +135,13 @@ public class ProductController {
 
     @GetMapping("/product/complete/{ono}")
     public String complete(@PathVariable("ono") int ono, Model model) {
-        OrdersDTO orderDetails = ordersService.getOrderDetails(ono);
-        if (orderDetails == null) {
-            // 주문 정보가 없으면 에러 페이지나 주문 목록으로 리다이렉트
-            return "redirect:/product/list";
-        }
-        model.addAttribute("orderDetails", orderDetails);
+        List<OrdersDTO> ordersDTO = ordersService.getOrderDetails(ono);
+        int totalProductPrice = ordersDTO.stream()
+                .mapToInt(order -> order.getPrice() * order.getPcount())
+                .sum();
+
+        model.addAttribute("totalProductPrice", totalProductPrice);
+        model.addAttribute("ordersDTO", ordersDTO);
         return "/product/complete";
     }
 

@@ -19,7 +19,7 @@
   <!-- 상품정보 -->
   <article class="info">
     <h1>상품 정보</h1>
-    <table border="0">
+    <table border="0" >
       <tr>
         <th>상품명</th>
         <th>상품금액</th>
@@ -27,20 +27,20 @@
         <th>수량</th>
         <th>주문금액</th>
       </tr>
-      <tr>
+      <tr th:each="detail : ${ordersDTO}">
         <td>
-          <article>
-            <img th:src="@{|/product/${orderDetails.cate}/${orderDetails.mainimg}|}" alt="상품 이미지">
+          <article >
+            <img th:src="@{|/product/${detail.cate}/${detail.mainimg}|}" alt="상품 이미지">
             <div>
-              <h2 th:text="${orderDetails.pname}">상품명</h2>
+              <h2 th:text="${detail.pname}">상품명</h2>
               <p>상품 설명</p>
             </div>
           </article>
         </td>
-        <td th:text="${orderDetails.total}">17,000원</td>
-        <td>1,000원</td>
-        <td th:text="${orderDetails.pcount}">1</td>
-        <td th:text="${orderDetails.total}">16,000원</td>
+        <td th:text="${#numbers.formatInteger(detail.price, 3, 'COMMA')}">17,000원</td>
+        <td th:text="${#numbers.formatInteger(detail.discount, 3, 'COMMA')}">1,000원</td>
+        <td th:text="${detail.pcount}">1</td>
+        <td th:text="${#numbers.formatInteger(detail.price - detail.discount, 3, 'COMMA')}">16,000원</td>
       </tr>
 
       <!-- 주문 요약 -->
@@ -50,19 +50,19 @@
           <table border="0">
             <tr>
               <td>총 상품금액</td>
-              <td><span th:text="${orderDetails.total}">34,000</span>원</td>
+              <td><span th:text="${#numbers.formatInteger(totalProductPrice, 3, 'COMMA')}">0</span>원</td>
             </tr>
             <tr>
               <td>총 할인금액</td>
-              <td><span th:text="${orderDetails.discount}">-2,000</span>원</td>
+              <td><span th:text="${ordersDTO[0].discount}">0</span>원</td>
             </tr>
             <tr>
               <td>배송비</td>
-              <td><span th:text="${orderDetails.dfee}">3,000</span>원</td>
+              <td><span th:text="${#numbers.formatInteger(ordersDTO[0].dfee, 3, 'COMMA')}">0</span>원</td>
             </tr>
             <tr>
               <td>총 결제금액</td>
-              <td><span th:text="${orderDetails.total}">35,000</span>원</td>
+              <td><span th:text="${#numbers.formatInteger(ordersDTO[0].total, 3, 'COMMA')}">0</span>원</td>
             </tr>
           </table>
         </td>
@@ -77,17 +77,17 @@
       <tbody>
       <tr>
         <td>주문번호</td>
-        <td th:text="${orderDetails.ono}">2008101324568</td>
+        <td th:text="${ordersDTO[0].ono}">2008101324568</td>
         <td rowspan="3">총 결제금액</td>
-        <td rowspan="3"><span th:text="${orderDetails.total}">35,000</span>원</td>
+        <td rowspan="3"><span th:text="${ordersDTO[0].total}">35,000</span>원</td>
       </tr>
       <tr>
         <td>결제방법</td>
-        <td th:text="${orderDetails.payment}">신용카드</td>
+        <td th:text="${ordersDTO[0].payment}">신용카드</td>
       </tr>
       <tr>
         <td>주문자/연락처</td>
-        <td th:text="${orderDetails.hp}">홍길동/010-1234-1234</td>
+        <td th:text="${ordersDTO[0].hp}">홍길동/010-1234-1234</td>
       </tr>
       </tbody>
     </table>
@@ -99,13 +99,13 @@
     <table border="0">
       <tr>
         <td>수취인</td>
-        <td th:text="${orderDetails.receiver}">홍길동</td>
+        <td th:text="${ordersDTO[0].receiver}">홍길동</td>
         <td>주문자 정보</td>
       </tr>
       <tr>
         <td>연락처</td>
-        <td th:text="${orderDetails.hp}">010-1234-1234</td>
-        <td rowspan="2" th:text="|${orderDetails.addr1}, ${orderDetails.addr2}|">
+        <td th:text="${ordersDTO[0].hp}">010-1234-1234</td>
+        <td rowspan="2" th:text="|${ordersDTO[0].addr1}, ${ordersDTO[0].addr2}|">
           부산광역시 강남구 대연동 123 10층
         </td>
       </tr>

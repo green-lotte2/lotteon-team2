@@ -44,18 +44,18 @@ public class OrdersService {
     private final ProductimgRepository productimgRepository;
 
     /////////////////////////주문/////////////////////////////////
-    public Orders insertOrder(OrdersDTO ordersDTO){
+    public Orders insertOrder(OrdersDTO ordersDTO) {
         Orders orders = modelMapper.map(ordersDTO, Orders.class);
 
         return orderRepository.save(orders);
     }
 
-    public void insertOrderDetail(OrdersDTO ordersDTO){
+    public void insertOrderDetail(OrdersDTO ordersDTO) {
         OrderDetail orderDetail = modelMapper.map(ordersDTO, OrderDetail.class);
         orderDetailRepository.save(orderDetail);
     }
 
-    public List<OrdersDTO> selectOrders(String uid){
+    public List<OrdersDTO> selectOrders(String uid) {
         return ordersMapper.selectOrders(uid);
     }
 
@@ -63,13 +63,11 @@ public class OrdersService {
     public List<OrdersDTO> selectOrdersGroup(String uid) {
         return ordersMapper.selectOrdersGroup(uid);
     }
+
     @Transactional(readOnly = true)
-    public OrdersDTO getOrderDetails(int ono) {
-        return orderRepository.findById(ono)
-                .map(order -> modelMapper.map(order, OrdersDTO.class))
-                .orElse(null); // 주문을 찾을 수 없는 경우 null 반환
+    public List<OrdersDTO> getOrderDetails(int ono) {
+        List<OrdersDTO> ordersDTO = ordersMapper.selectOrderDetails(ono);
+        return ordersDTO;
     }
-
 }
-
 
