@@ -21,7 +21,6 @@ public class MainController {
 
     @GetMapping(value = {"/","/index"})
     public String index(Model model){
-
         List<CategoryDTO> cate = productService.getCategoryList();
         List<ProductDTO> newProduct = productService.findNewProduct();
         log.info(newProduct.toString());
