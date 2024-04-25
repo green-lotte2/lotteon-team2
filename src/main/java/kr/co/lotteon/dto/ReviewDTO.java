@@ -2,6 +2,8 @@ package kr.co.lotteon.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Builder
@@ -15,5 +17,6 @@ public class ReviewDTO {
     private String uid;
     private String content;
     private int rating;
+    private LocalDate redate;
 
 }

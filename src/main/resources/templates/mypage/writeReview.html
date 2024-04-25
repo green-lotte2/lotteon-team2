@@ -17,7 +17,7 @@
 
     <form th:action="@{/product/review}" method="post">
         <input type="hidden" th:value="${product.pno}" name="pno"/>
-        <input type="hidden" th:value="${#authentication.principal.user.uid}" name="uid"/>
+        <input type="hidden" th:value="${#authentication.principal.username}" name="uid"/>
 
         <div>
             <label for="rating">평점:</label>

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -25,4 +26,11 @@ public class Review {
     private String content;
     private int rating;
 
+    @Column(nullable = false)
+    private LocalDateTime redate;
+
+    @PrePersist
+    protected void onCreate() {
+        redate = LocalDateTime.now();
+    }
 }
