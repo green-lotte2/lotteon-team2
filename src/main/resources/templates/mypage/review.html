@@ -16,7 +16,7 @@
     </ul>
 
     <section>
-        <a th:href="@{/}"><img th:src="@{/img/my_banner2.png}" alt="패션, 타운 하나로 끝" class="banner"></a>
+        <a href="#"><img th:src="@{/images/my_banner2.png}" alt="패션, 타운 하나로 끝" class="banner"></a>
         <article>
             <h3>나의리뷰</h3>
 
@@ -50,8 +50,8 @@
                 <a th:if="${result.prev}" th:href="@{/mypage/review(pg=${result.start - 1})}" class="prev">이전</a>
                 <!-- 숫자 페이지 링크 -->
                 <span th:each="pageNum : ${#numbers.sequence(result.start, result.end)}">
-        <a th:href="@{/mypage/review(pg=${pageNum})}" th:text="${pageNum}" th:class="${pageNum == result.pg ? 'num on' : 'num'}"></a>
-    </span>
+                    <a th:href="@{/mypage/review(pg=${pageNum})}" th:text="${pageNum}" th:class="${pageNum == result.pg ? 'num on' : 'num'}"></a>
+                </span>
                 <!-- 다음 페이지 링크 -->
                 <a th:if="${result.next}" th:href="@{/mypage/review(pg=${result.end + 1})}" class="next">다음</a>
             </p>
