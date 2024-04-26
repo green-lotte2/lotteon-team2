@@ -136,4 +136,22 @@ public class UserService {
         return null;
     }
 
+    public UserDTO findByNameAndEmail(String name, String email){
+        log.info("name :" + name);
+        log.info("email :" + email);
+        Optional<User> optUser = userRepository.findUserByNameAndEmail(name, email);
+        UserDTO userDTO = null;
+
+        log.info("findUser..." + optUser);
+
+        if (optUser.isPresent()){
+            User user = optUser.get();
+            userDTO = modelMapper.map(user, UserDTO.class);
+
+            return userDTO;
+        }else {
+            return null; // 또는 예외를 던지거나 다른 방식으로 처리
+        }
+    }
+
 }

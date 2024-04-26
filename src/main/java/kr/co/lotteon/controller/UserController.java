@@ -192,7 +192,35 @@ public class UserController {
         return resultMap;
     }
 
+    @GetMapping("/findId")
+    public String findId(){
+        return "/member/findId";
+    }
+    @PostMapping("/findId")
+    public ResponseEntity<UserDTO> findId(@RequestBody UserDTO userDTO){
+        String name =userDTO.getName();
+        log.info("findId...... :" + name);
+        String email =userDTO.getEmail();
+        UserDTO foundUserDTO = userService.findByNameAndEmail(name, email);
 
+        if (foundUserDTO != null) {
+            return ResponseEntity.ok(foundUserDTO);
+            // 사용자를 찾은 경우 200 OK 응답으로 사용자 정보 반환
+        } else {
+            return ResponseEntity.notFound().build();
+            // 사용자를 찾지 못한 경우 404 Not Found 응답 반환
+        }
+    }
+
+    @PostMapping("/findIdResult")
+    public String findIdResult(String name, String email, Model model){
+        UserDTO userDTO = userService.findByNameAndEmail(name, email);
+        log.info("result....:" + userDTO.toString());
+        model.addAttribute("userDTO" , userDTO);
+        log.info(userDTO.toString());
+
+        return "/member/findIdResult";
+    }
 
 
 }
