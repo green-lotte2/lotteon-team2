@@ -1,7 +1,6 @@
 package kr.co.lotteon.repository.impl;
 
 import com.querydsl.core.QueryResults;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.core.Tuple;
 import kr.co.lotteon.dto.PageRequestDTO;

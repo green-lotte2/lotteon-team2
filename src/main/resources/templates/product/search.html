@@ -86,22 +86,21 @@
   <!-- 상품목록 페이지번호 -->
   <div class="paging">
     <!-- 이전 페이지 링크 -->
-    <span class="prev">
-        <a th:if="${result.pg > 1}" th:href="@{/product/list(cate=${result.cate}, pg=${result.pg - 1})}">&lt;&nbsp;이전</a>
-    </span>
+    <span th:if="${result.prev}" class="prev">
+    <a th:href="@{/product/search(pg=${result.start - 1}, search=${searchKeyword}, min=${minPrice}, max=${maxPrice})}">&lt; 이전</a>
+  </span>
 
     <!-- 숫자 페이지 링크 -->
     <span class="num">
-        <a th:each="pageNum : ${#numbers.sequence(result.start, result.end)}"
-           th:href="@{/product/list(cate=${result.cate}, pg=${pageNum})}"
-           th:text="${pageNum}"
-           th:class="${pageNum == result.pg ? 'on' : ''}"></a>
-    </span>
+    <a th:each="pageNum : ${#numbers.sequence(result.start, result.end)}"
+       th:href="@{/product/search(pg=${pageNum}, search=${searchKeyword}, min=${minPrice}, max=${maxPrice})}"
+       th:text="${pageNum}" th:class="${pageNum == result.pg ? 'on' : ''}"></a>
+  </span>
 
     <!-- 다음 페이지 링크 -->
-    <span class="next">
-        <a th:if="${result.pg < result.totalPage}" th:href="@{/product/list(cate=${result.cate}, pg=${result.pg + 1})}">다음&nbsp;&gt;</a>
-    </span>
+    <span th:if="${result.next}" class="next">
+    <a th:href="@{/product/search(pg=${result.end + 1}, search=${searchKeyword}, min=${minPrice}, max=${maxPrice})}">다음 &gt;</a>
+  </span>
   </div>
 
 

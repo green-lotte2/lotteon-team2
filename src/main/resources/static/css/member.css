@@ -482,6 +482,110 @@ header {
 }
 
 /* member > .findId */
+#member > .find {
+  width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+#member > .find > nav {
+  border-bottom: 2px solid #ef2a23;
+}
+
+#member > .find > nav > h1 {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+#member > .find table {
+  position: relative;
+  width: 100%;
+  table-layout: fixed;
+  border-top: 1px solid #b6bdc7;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+#member > .find table * {
+}
+#member > .find table caption {
+  text-align: left;
+  font-size: 16px;
+  padding-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+#member > .find table th {
+  width: 200px;
+  padding: 20px 20px;
+  vertical-align: top;
+  background: #f4f6f9;
+  font-weight: 500;
+  text-align: left;
+  line-height: 1.4;
+  border-bottom: 1px solid #dfe5ed;
+  word-break: break-word;
+  font-size: 14px;
+}
+#member > .find table td {
+  position: relative;
+  vertical-align: middle;
+  padding: 10px 20px;
+  text-align: left;
+  line-height: 1.4;
+  border-bottom: 1px solid #dfe5ed;
+  word-break: break-word;
+  font-size: 14px;
+  font-weight: 500;
+}
+#member > .find table input {
+  padding: 0 8px;
+  height: 31px;
+  font-size: 14px;
+  border: 1px solid #dfe5ed;
+  vertical-align: middle;
+}
+#member > .find table label {
+  display: inline-block;
+  width: 60px;
+  font-size: 17px;
+}
+
+#member > .find form .btnArea{
+  display: block;
+  text-align:center;
+  margin: 20px auto;
+  padding-left:200px;
+}
+
+#member > .find form .findIdResult {
+  float: left;
+  position: relative;
+  display: block;
+  background: #ef3f43;
+  color: #fff;
+  font-size: 20px;
+  padding: 10px 72px;
+  border: 0;
+  outline: 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+#member > .find form .loginPg{
+  float: left;
+  position: relative;
+  display: block;
+  background: #fff;
+  color: #ef3f43;
+  font-size: 20px;
+  box-sizing: border-box;
+  border: 1px solid #ef3f43;
+  padding: 10px 72px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
 #member > .findId {
   width: 900px;
   height: auto;
@@ -588,6 +692,7 @@ header {
   display: inline-block;
   width: 60px;
 }
+
 
 /* member > .passConfirm */
 #member > .passConfirm {                        

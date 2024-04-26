@@ -11,4 +11,40 @@
         WHERE u.uid = #{uid}
     </select>
 
+    <select id="selectCountUser" resultType="int">
+        select count(*) from user
+            <where>
+                <if test="type == 'uid'">uid=#{value}</if>
+                <if test="type == 'nick'">nick=#{value}</if>
+                <if test="type == 'hp'">hp=#{value}</if>
+                <if test="type == 'email'">email=#{value}</if>
+            </where>
+    </select>
+
+    <insert id="insertUser">
+        insert into user set
+                        uid=#{uid},
+                        pass=#{pass},
+                        name=#{name},
+                        nick=#{nick},
+                        email=#{email},
+                        hp=#{hp},
+                        role=#{role},
+                        zip=#{zip},
+                        addr1=#{addr1},
+                        addr2=#{addr2},
+                        regip=#{regip},
+                        sms=#{sms},
+                        regDate=NOW()
+    </insert>
+
+
+    <update id="updateUserZip">
+        update `user` set
+                    zip=#{zip},
+                    addr1=#{addr1},
+                    addr2=#{addr2}
+                    where uid = #{uid}
+    </update>
+
 </mapper>

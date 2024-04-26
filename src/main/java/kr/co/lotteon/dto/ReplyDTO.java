@@ -19,7 +19,6 @@ public class ReplyDTO {
     private int replyno;
 
     private int qnano;
-    private String title;
     private String content;
     private LocalDateTime rdate;
     private String writer;
@@ -28,7 +27,6 @@ public class ReplyDTO {
         return CsReply.builder()
                 .replyno(replyno)
                 .qnano(qnano)
-                .title(title)
                 .content(content)
                 .rdate(rdate)
                 .writer(writer)

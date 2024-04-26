@@ -50,4 +50,4 @@ public class ProductPageResponseDTO {
         this.prev = this.start > 1;
         this.next = this.pg < this.totalPage;
     }
-}
+    }
