@@ -27,10 +27,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
         String defaultPath = System.getProperty("user.dir");
         String path = defaultPath + File.separator + "product" + File.separator;
         registry
-                .addResourceHandler("/product/**")
+                .addResourceHandler("product/**")
                 .addResourceLocations("file:///" + path);
         log.info(registry.toString());
-        log.info("aa"+path);
+        log.info("file:///" + path);
     }
 
 }
