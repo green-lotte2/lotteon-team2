@@ -85,7 +85,7 @@ public class OrdersController {
             ordersService.insertOrderDetail(ordersDTO1);
             cartService.orderCartItems(uid, ordersDTO1.getPno());
         }
-        return "redirect:/product/list";
+        return "redirect:/product/complete/"+ono;
     }
 
     @GetMapping("/mypage/order")
