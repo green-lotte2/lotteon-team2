@@ -96,8 +96,7 @@ public class ProductService {
         }
 
         imgDTO.setMainimg(fileNames.get(0));
-        imgDTO.setSubimg(fileNames.get(1));
-        imgDTO.setDetailimg(fileNames.get(2));
+        imgDTO.setDetailimg(fileNames.get(1));
 
 
         // 저장한 파일 정보 리스트 반환

@@ -12,5 +12,7 @@ public interface OrdersMapper {
     public List<OrdersDTO> selectOrders(String uid);
     public List<OrdersDTO> selectOrdersGroup(String uid);
 
+    public List<OrdersDTO> selectAllOrders();
+
     List<OrdersDTO> selectOrderDetails(int ono);
 }

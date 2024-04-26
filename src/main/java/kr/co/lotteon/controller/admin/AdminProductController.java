@@ -1,10 +1,12 @@
 package kr.co.lotteon.controller.admin;
 
 import kr.co.lotteon.dto.CategoryDTO;
+import kr.co.lotteon.dto.OrdersDTO;
 import kr.co.lotteon.dto.ProductDTO;
 import kr.co.lotteon.dto.ProductimgDTO;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.service.AdminService;
+import kr.co.lotteon.service.OrdersService;
 import kr.co.lotteon.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +32,8 @@ public class AdminProductController {
     private final ProductService productService;
     private final AdminService adminService;
 
+    private final OrdersService ordersService;
+
 
     @GetMapping("/admin/product/register")
     public String adminProductRegister(Model model){
@@ -43,8 +47,6 @@ public class AdminProductController {
     @PostMapping("/admin/product/register")
     public String adminProductRegister(ProductDTO productDTO,
                                        @RequestParam("mainImg") MultipartFile fileA,
-                                       @RequestParam("subImg1") MultipartFile fileB,
-                                       @RequestParam("subImg2") MultipartFile fileC,
                                        @RequestParam("detailImg") MultipartFile fileD){
         log.info("adminProductRegister2");
         log.info(productDTO.toString());
@@ -55,7 +57,6 @@ public class AdminProductController {
 
         List<MultipartFile> files = new ArrayList<>();
         files.add(fileA);
-        files.add(fileB);
         files.add(fileD);
 
         ProductimgDTO imgDTO = new ProductimgDTO();
@@ -81,6 +82,12 @@ public class AdminProductController {
         return "/admin/product/list";
     }
 
+    @GetMapping("/admin/product/delete")
+    public String adminDeleteProduct(int pno){
+        adminService.adminDeleteProduct(pno);
+        return "redirect:/admin/product/list";
+    }
+
     @PostMapping("/admin/product/delete")
     public String adminDeleteProduct(@RequestParam List<String> checkbox){
         for(String pno : checkbox){
@@ -100,7 +107,11 @@ public class AdminProductController {
     }
 
     @GetMapping("/admin/order/list")
-    public String adminOrderList(){
+    public String adminOrderList(Model model){
+
+        List<OrdersDTO> ordersDTOS = ordersService.selectAllOrders();
+        log.info(ordersDTOS.toString());
+        model.addAttribute("orders", ordersDTOS);
         return "/admin/order/list";
     }
 

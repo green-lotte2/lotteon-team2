@@ -35,8 +35,6 @@ public class OrdersService {
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
 
-    @Value("${img.upload.path}")
-    private String imgUploadPath;
 
     private final ModelMapper modelMapper;
     private final OrdersMapper ordersMapper;
@@ -59,6 +57,9 @@ public class OrdersService {
         return ordersMapper.selectOrders(uid);
     }
 
+    public List<OrdersDTO> selectAllOrders() {
+        return ordersMapper.selectAllOrders();
+    }
 
     public List<OrdersDTO> selectOrdersGroup(String uid) {
         return ordersMapper.selectOrdersGroup(uid);

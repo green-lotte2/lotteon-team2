@@ -21,6 +21,15 @@
             const selectAllCheckbox = document.getElementsByName('all')[0];
             const checkBoxes = document.getElementsByName('checkbox');
 
+            const pdelete = document.getElementById('delete');
+            pdelete.onclick = function (){
+                if (confirm('삭제하시겠습니까?')){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
             delBtn.onclick = function(){
                 let Checked = false; // 최소한 하나의 체크박스가 선택되었는지 여부를 나타내는 변수
                 for (let i = 0; i < checkBoxes.length; i++) {
@@ -122,7 +131,7 @@
                                             <td>[[${product.hit}]]</td>
                                             <td th:text="${#temporals.format(product.rdate, 'yyyy-MM-dd')}"></td>
                                             <td>
-                                                <a th:href="@{/admin/product/delete}">[삭제]</a>
+                                                <a th:href="@{/admin/product/delete(pno=${product.pno})}" id="delete">[삭제]</a>
                                                 <a th:href="@{/admin/product/modify}">[수정]</a>
                                             </td>
                                         </tr>
