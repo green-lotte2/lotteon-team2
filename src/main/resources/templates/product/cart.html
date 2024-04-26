@@ -80,7 +80,7 @@
 
 
                 document.getElementById('totalItems').innerText = totalItems;
-                document.getElementById('price').innerText = price1.toLocaleString() + '원';
+                document.getElementById('price').innerText = (price1 * totalItems).toLocaleString() + '원';
                 document.getElementById('totalAmount').innerText = totalAmount.toLocaleString() + '원';
                 document.getElementById('totalDiscount').innerText = (discount * -1).toLocaleString() + '원';
                 document.getElementById('totalDelivery').innerText = deliveryFee.toLocaleString() + '원';
