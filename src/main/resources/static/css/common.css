@@ -248,7 +248,7 @@ main > aside > .category ol {
 main > aside > .category ol > li {
   width: 100%;
   height: 24px;
-  padding: 10px;
+  padding: 16px;
   box-sizing: border-box;
 }
 main > aside > .category ol > li > a:hover {
