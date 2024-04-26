@@ -91,7 +91,7 @@
         </p>
     </nav>
 
-    <form id="deleteForm">
+    <form id="deleteForm" th:action="@{/product/order}" method="get">
 
         <!-- 장바구니 목록 -->
         <table>
@@ -165,7 +165,7 @@
                     <td name="totalOrderAmount">0</td>
                 </tr>
             </table>
-            <input th:href="@{/product/order}" type="submit" name="" class="order-button" value="주문하기">
+            <input type="submit" name="" class="order-button" value="주문하기">
         </div>
     </form>
 </section>

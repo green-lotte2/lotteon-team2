@@ -174,8 +174,12 @@
                                 // 구매 요청이 성공적이면 주문 페이지로 리다이렉션
                                 window.location.href = '/lotteon/product/order';
                             } else {
-                                alert('Request processed successfully');
-                                window.location.href = "/lotteon/product/cart";
+                                if(confirm("장바구니로 이동하시겠습니까?")){
+                                    window.location.href = "/lotteon/product/cart";
+                                }else{
+                                    return false;
+                                }
+
                             }
                         })
                         .catch(err => console.error('Error:', err));
