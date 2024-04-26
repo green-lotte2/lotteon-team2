@@ -9,6 +9,6 @@ import java.util.List;
 public interface ReplyRepository  extends JpaRepository<Reply, Integer> {
 
 
-    //public List<Reply> findByQnano(int qnano);
+    public List<Reply> findByQnano(int qnano);
 
 }

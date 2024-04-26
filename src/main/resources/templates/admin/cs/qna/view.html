@@ -17,8 +17,7 @@
 
 <main layout:fragment="content">
     <script th:inline="javascript">
-
-
+    window.onload = function (){
 
         //🎈댓글 불러오기
         const commentList = document.getElementById('commentList');
@@ -30,59 +29,61 @@
         // fetchGet 함수는 await 비동기 실행되기 때문에 이벤트 핸들러 function 앞에 async 추가(문법적인 사항)
         // 페이지 로드 후 바로 댓글목록 데이터를 요청하기 보다는 약간 2초정도 시간 뒤에 요청을 하면 좀더 안정적
 
-        setTimeout(async function (){
+                setTimeout(async function (){
 
-            const comments = await fetchGet(`/lotteon/admin/cs/qna/reply/${qnano}`);
-            console.log('comments : ' + comments);
-            commentPlaceholder.remove();
-            for(const comment of comments){
-                let commentArticle;
-                if(document.getElementById('userCheck').value === comment.writer) {
-                    commentArticle = `<div class="mb-3 comment" data-no="${comment.qnano}">
-                                                <ol class="breadcrumb mb-1">
-                                                    <li class="breadcrumb-item">${comment.writer}</li>
-                                                    <li class="breadcrumb-item">${comment.rdate.substring(0, 10)}</li>
-                                                </ol>
+                    const comments = await fetchGet(`/lotteon/admin/cs/qna/reply/${qnano}`);
+                    console.log('comments : ' + comments);
+                    commentPlaceholder.remove();
+                    for(const comment of comments){
+                        let commentArticle;
+                        if(document.getElementById('userCheck').value === comment.writer) {
+                            commentArticle = `<div class="mb-3 comment" data-no="${comment.qnano}">
+                                                        <ol class="breadcrumb mb-1">
+                                                            <li class="breadcrumb-item">${comment.writer}</li>
+                                                            <li class="breadcrumb-item">${comment.rdate.substring(0, 10)}</li>
+                                                        </ol>
 
-                                                <textarea class="form-control" rows="3" readonly>${comment.content}</textarea>
-                                                <div class="text-start mt-1">
-                                                    <button type="button" class="btn btn-primary btn-sm btnModify" data-mode="modify" data-no="${comment.qnano}">수정</button>
-                                                    <button type="button" class="btn btn-primary btn-sm btnRemove" data-mode="remove" data-no="${comment.qnano}">삭제</button>
-                                                </div>
-                                            </div>`;
+                                                        <textarea class="form-control" rows="3" readonly>${comment.content}</textarea>
+                                                        <div class="text-start mt-1">
+                                                            <button type="button" class="btn btn-primary btn-sm btnModify" data-mode="modify" data-no="${comment.qnano}">수정</button>
+                                                            <button type="button" class="btn btn-primary btn-sm btnRemove" data-mode="remove" data-no="${comment.qnano}">삭제</button>
+                                                        </div>
+                                                    </div>`;
 
-                }else{
+                        }else{
 
-                    commentArticle = `<div class="mb-3 comment" data-no="${comment.qnano}">
-                                                <ol class="breadcrumb mb-1">
-                                                    <li class="breadcrumb-item">${comment.writer}</li>
-                                                    <li class="breadcrumb-item">${comment.rdate.substring(0, 10)}</li>
-                                                </ol>
+                            commentArticle = `<div class="mb-3 comment" data-no="${comment.qnano}">
+                                                        <ol class="breadcrumb mb-1">
+                                                            <li class="breadcrumb-item">${comment.writer}</li>
+                                                            <li class="breadcrumb-item">${comment.rdate.substring(0, 10)}</li>
+                                                        </ol>
 
-                                                <textarea class="form-control" rows="3" readonly>${comment.content}</textarea>
-                                                <div class="text-end mt-1"></div>
-                                            </div>`;
-                }
+                                                        <textarea class="form-control" rows="3" readonly>${comment.content}</textarea>
+                                                        <div class="text-end mt-1"></div>
+                                                    </div>`;
+                        }
 
 
-                // 태그 문자열 삽입
-                commentList.insertAdjacentHTML('beforeend', commentArticle);
+                        // 태그 문자열 삽입
+                        commentList.insertAdjacentHTML('beforeend', commentArticle);
 
-            }
-        }, 2000);
+                    }
+                }, 2000);
+
+
 
 
         // 🎈댓글 등록
         alert('댓글시작!');
         const commentForm = document.commentForm;
-
+        console.log(commentForm);
         commentForm.onsubmit = async function (e) {
             e.preventDefault();
             alert('댓글시작2!');
 
             const jsonData = {
                 "qnano": commentForm.qnano.value,
-               // "writer": commentForm.writer.value,
+                // "writer": commentForm.writer.value,
                 "content": commentForm.content.value
             };
 
@@ -109,6 +110,8 @@
             // 태그 문자열 삽입
             commentList.insertAdjacentHTML('beforeend', commentArticle);
         }
+
+    }
     </script>
 
     <section id="adminBoard">
@@ -161,7 +164,7 @@
     <!--🎈답변목록 시작-->
 
     <div id="commentList">
-        <label class="form-label fw-bold">댓글목록</label> -->
+        <label class="form-label fw-bold">댓글목록</label>
 
     <!--
         처음 글을 불러올때 댓글은 플레이스홀더로 표시하고 이후 AJAX(fetch)로
@@ -186,11 +189,12 @@
     <!--🎈답변Form-->
 
     <form name="commentForm">
-        <input type="hidden" name="qnano" th:value="${qnaBoard.qnano}" >-->
-    <!-- <input type="hidden" name="writer">-->
-    <!--<div th:if="${#authorization.expression('isAuthenticated()')}">
-        <input type="hidden" name="writer" th:value="${#authentication.principal.user.uid}">
-    </div>-->
+        <input type="hidden" name="qnano" th:value="${qnaBoard.qnano}" >
+        <input type="hidden" name="cate2" th:value="${qnaBoard.cate2}" >
+    <input type="hidden" name="writer">
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <input type="hidden" id="userCheck" name="writer" th:value="${#authentication.principal.user.uid}">
+    </div>
 
         <div class="input-group">
             <span class="input-group-text">댓글입력</span>

@@ -255,8 +255,9 @@ public class AdminCsController {
     @GetMapping("/admin/cs/qna/view")
     public String adminQnaView(int qnano, int cate2, Model model){
         QnaDTO qnaBoard = csService.adminSelectQnaView(qnano);
+        model.addAttribute("cate2", cate2);
         model.addAttribute("qnaBoard", qnaBoard);
-
+        log.info("cate2 : " + cate2);
         log.info("qnano : " + qnano);
         log.info("qnaBoard : " + qnaBoard);
 
@@ -283,9 +284,19 @@ public class AdminCsController {
         return "redirect:/admin/cs/qna/view?qnano="+qnano;
     }
 
+    //🎈 1:1문의 삭제
+    @GetMapping("/admin/cs/qna/delete")
+    public String adminDeleteQnaBoard(int qnano) {
+        csService.adminDeleteQnaBoard(qnano);
+        log.info("qnano : " + qnano);
+
+        return "redirect:/admin/cs/qna/list?qnano="+qnano;
+    }
+
+
     //🎈1:1질문 답변//
 
-    /*
+
     @ResponseBody
     @GetMapping("/admin/cs/qna/reply/{qnano}")
     public ResponseEntity<List<ReplyDTO>> reply(@PathVariable("qnano") int qnano){
@@ -294,7 +305,6 @@ public class AdminCsController {
         return  csService.selectReplies(qnano);
     }
 
-     */
 
     @ResponseBody
     @PostMapping("/admin/cs/qna/reply")

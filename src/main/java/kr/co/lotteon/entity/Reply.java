@@ -22,10 +22,8 @@ public class Reply {
     private int replyno;
 
 
-    @ManyToOne
-    @JoinColumn(name = "qnano", nullable = false)
-    private CsQna qnano;
-    private String title;
+
+    private int qnano;
     private String content;
 
     @CreationTimestamp
@@ -35,8 +33,7 @@ public class Reply {
     public ReplyDTO toDTO(){
         return ReplyDTO.builder()
                 .replyno(replyno)
-                .qnano(qnano.getQnano())
-                .title(title)
+                .qnano(qnano)
                 .content(content)
                 .rdate(rdate)
                 .writer(writer)
