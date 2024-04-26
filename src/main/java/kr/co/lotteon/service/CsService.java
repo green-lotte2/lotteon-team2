@@ -389,8 +389,9 @@ public class CsService {
         return ResponseEntity.ok().body(savedQna);
     }
 
-    /*
+
     // 🎈 Qna 답변 목록
+
     public ResponseEntity<List<ReplyDTO>> selectReplies(int qnano){
 
         // ArticleRepository > findByParent() 쿼리 메서드 정의
@@ -402,7 +403,7 @@ public class CsService {
         return ResponseEntity.ok().body(replyDTOS);
     }
 
-     */
+
 
 
 }

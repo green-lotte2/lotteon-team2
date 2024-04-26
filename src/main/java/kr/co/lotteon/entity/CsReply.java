@@ -33,7 +33,6 @@ public class CsReply {
         return  ReplyDTO.builder()
                 .replyno(replyno)
                 .qnano(qnano)
-                .title(title)
                 .content(content)
                 .rdate(rdate)
                 .writer(writer)
