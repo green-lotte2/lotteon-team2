@@ -3,6 +3,60 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/myLayout}">
 <div class="ordered" layout:fragment="content">
+    <script th:inline="javascript">
+        window.onload = function(){
+            const btnDetail = document.getElementsByClassName('detail');
+            for(let i = 0; i < btnDetail.length; i++){
+                btnDetail[i].onclick = function (e){
+                    const checkTable = document.getElementById('orderDetail');
+                    console.log(checkTable);
+                    if(checkTable != null){
+
+                        checkTable.remove();
+                    }
+                    e.preventDefault();
+                    console.log(btnDetail[i].id);
+                    const orderID = btnDetail[i].id;
+                    console.log(btnDetail[i].closest("tr"));
+                    const insertTarget = btnDetail[i].closest("table");
+                    const orders = [[${orders}]];
+
+                    const table = document.createElement('table');
+                    table.id = 'orderDetail';
+                    table.innerHTML = '<tr><th>상품정보</th><th>상태</th><th>신청</th></tr>';
+                    orders.forEach(function (item){
+                        if (item.ono == orderID){
+                            const row = document.createElement('tr');
+                            const prodInfo = document.createElement('td');
+
+                            prodInfo.innerHTML = '<a href="#" class="thumb"><img width="80" height="80" src="/lotteon/product/' + item.cate + '/' + item.mainimg + '" alt=""></a>\n' +
+                                '                                <ul>\n' +
+                                '                                    <li class="company">' + item.company + '</li>\n' +
+                                '                                    <li class="prodName"><a href="#">' + item.pname + '</a></li>\n' +
+                                '                                    <li>\n' +
+                                '                                        수량 : <span class="prodCount">' + item.pcount + '</span>개 / 주문번호 : <span class="ordNo">' + item.ono +'</span>\n' +
+                                '                                    </li>\n' +
+                                '                                    <li class="prodPrice">' + item.price + '</li>\n' +
+                                '                                </ul>';
+                            row.appendChild(prodInfo);
+                            const prodState = document.createElement('td');
+                            prodState.innerHTML = '배송완료';
+                            row.appendChild(prodState);
+                            const prodApplication = document.createElement('td');
+                            prodApplication.innerHTML = '                                <a href="#" class="receive">수취확인</a>\n' +
+                                '                                <a href="/mypage/writeReview?pno=' + item.pno + '" class="review">상품평</a>\n' +
+                                '                                <a href="#" class="refund">반품신청</a>\n' +
+                                '                                <a href="#" class="exchange">교환신청</a>';
+                            row.appendChild(prodApplication);
+                            table.appendChild(row);
+                        }
+                    })
+                    console.log(orders);
+                    insertTarget.after(table);
+                }
+            }
+        }
+    </script>
     <ul>
         <span class="menu_else"></span>
         <li><a th:href="@{/mypage/order}">전체주문내역</a></li>
@@ -56,38 +110,7 @@
                             <li class="prodPrice">[[${group.total}]]</li>
                         </ul>
                     </td>
-                    <td><a>자세히 보기</a></td>
-                    <table>
-                        <tr>
-                            <th>날짜</th>
-                            <th>상품정보</th>
-                            <th>상태</th>
-                            <th>신청</th>
-                        </tr>
-                        <tr th:each="order:${orders}" th:if="${group.ono} == ${order.ono}">
-                            <td class="date">[[${order.odate}]]</td>
-                            <td>
-                                <a href="#" class="thumb"><img width="80" height="80" th:src="@{|/product/${order.cate}/${order.mainimg}|}" alt=""></a>
-                                <ul>
-                                    <li class="company">[[${order.company}]]</li>
-                                    <li class="prodName"><a href="#">[[${order.pname}]]</a></li>
-                                    <li>
-                                        수량 : <span class="prodCount">[[${order.pcount}]]</span>개 / 주문번호 : <span class="ordNo">[[${order.ono}]]</span>
-                                    </li>
-                                    <li class="prodPrice">34,000</li>
-                                </ul>
-                            </td>
-                            <td class="status">배송완료</td>
-                            <td class="confirm">
-                                <a href="#" class="receive">수취확인</a>
-                                <a th:href="@{/mypage/writeReview(pno=${order.pno})}" class="review">상품평</a>
-                                <a href="#" class="refund">반품신청</a>
-                                <a href="#" class="exchange">교환신청</a>
-                            </td>
-                        </tr>
-                    </table>
-
-
+                    <td><a href="#" th:id="${group.ono}" class="detail">자세히 보기</a></td>
                 </tr>
 
             </table>
