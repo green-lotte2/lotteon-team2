@@ -10,6 +10,7 @@ import kr.co.lotteon.service.CsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -89,11 +91,6 @@ public class AdminCsController {
         log.info("lastPage: " + lastPageNum);
         log.info("cate1last : " + cate1);
 
-/*
-        List<NoticeDTO> noticeList = adminCsService.noticeList();
-        model.addAttribute("noticeList", noticeList);
-        log.info("noticeList : " + noticeList);
-*/
         return "/admin/cs/notice/list";
 
     }
@@ -253,13 +250,16 @@ public class AdminCsController {
     }
 
     @GetMapping("/admin/cs/qna/view")
-    public String adminQnaView(int qnano, int cate2, Model model){
+    public String adminQnaView(int qnano, int cate2, String c2name, String writer, Model model){
         QnaDTO qnaBoard = csService.adminSelectQnaView(qnano);
         model.addAttribute("cate2", cate2);
         model.addAttribute("qnaBoard", qnaBoard);
+        model.addAttribute("c2name", c2name);
+        model.addAttribute("writer", writer);
         log.info("cate2 : " + cate2);
         log.info("qnano : " + qnano);
         log.info("qnaBoard : " + qnaBoard);
+        log.info("writer : " + writer);
 
         return "/admin/cs/qna/view";
     }
@@ -296,7 +296,7 @@ public class AdminCsController {
 
     //🎈1:1질문 답변//
 
-
+    // 🎈답변 목록
     @ResponseBody
     @GetMapping("/admin/cs/qna/reply/{qnano}")
     public ResponseEntity<List<ReplyDTO>> reply(@PathVariable("qnano") int qnano){
@@ -305,15 +305,31 @@ public class AdminCsController {
         return  csService.selectReplies(qnano);
     }
 
-
+    //🎈 답변 등록
     @ResponseBody
     @PostMapping("/admin/cs/qna/reply")
     public ResponseEntity<Reply> reply(@RequestBody ReplyDTO replyDTO){
+       // replyDTO.setWriter("hello");
+        replyDTO.setWriter(replyDTO.getWriter());
+        replyDTO.setReplyno(replyDTO.getReplyno());
         log.info("replyDTO.. : " + replyDTO);
-
-        replyDTO.setWriter("hello");
         return csService.insertReply(replyDTO);
     }
+
+    // 🎈답변 삭제
+    @DeleteMapping("/admin/cs/qna/reply/{qnano}")
+    public ResponseEntity<?> deleteComment(@PathVariable("qnano") int qnano) {
+
+        return csService.deleteReply(qnano);
+    }
+
+    @PutMapping("/admin/cs/qna/reply")
+    public ResponseEntity<?> putReply(@RequestBody ReplyDTO replyDTO, HttpServletRequest req) {
+        return csService.updateReply(replyDTO);
+    }
+
+
+
 
 
 }

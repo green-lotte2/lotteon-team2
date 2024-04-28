@@ -1,6 +1,7 @@
 package kr.co.lotteon.mapper;
 
 import kr.co.lotteon.dto.QnaDTO;
+import kr.co.lotteon.dto.ReplyDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

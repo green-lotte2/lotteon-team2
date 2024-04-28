@@ -40,7 +40,6 @@ public class QnaDTO {
     private String rdateSub;
 
 
-    private QnaDTO comment;
 /*
     public String getRdateSub() {
         String formatDate = rdate.format(DateTimeFormatter.ofPattern("yy.MM.dd"));

@@ -15,16 +15,14 @@ import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Log4j2
@@ -330,20 +328,26 @@ public class CsService {
 
     // 🎈 Admin Qna 뷰
     public QnaDTO adminSelectQnaView(int qnano){
+
         return qnaMapper.adminSelectQnaView(qnano);
     }
+
+
 
     // 🎈 Admin Qna 수정
     public QnaDTO adminSelectQnaBoard(int qnano){
         log.info("qnano" + qnano);
         return qnaMapper.adminSelectQnaBoard(qnano);
     }
+
     public void adminUpdateQnaBoard(QnaDTO dto) {
+
         qnaMapper.adminUpdateQnaBoard(dto);
     }
 
     // 🎈 Admin Qna 삭제
     public void adminDeleteQnaBoard(int qnano){
+
         qnaMapper.adminDeleteQnaBoard(qnano);
     }
 
@@ -401,6 +405,61 @@ public class CsService {
                 .map(entity -> modelMapper.map(entity, ReplyDTO.class))
                 .toList();
         return ResponseEntity.ok().body(replyDTOS);
+    }
+
+
+    // 🎈 Qna 답변 수정
+    public ResponseEntity<?> updateReply(ReplyDTO replyDTO){
+        // 수정하기 전에 먼저 존재여부 확인
+        Optional<Reply> optArticle = replyRepository.findById(replyDTO.getQnano());
+
+        if(optArticle.isPresent()) {
+
+            Reply reply = optArticle.get();
+            // 어쩔수 없이 Article 엔티티에 @Setter 선언해서 수정하기
+            reply.setContent(replyDTO.getContent());
+
+            log.info("reply : " + reply);
+
+            Reply modifiedReply = replyRepository.save(reply);
+
+            // 수정 후 데이터 반환
+            return ResponseEntity.status(HttpStatus.OK).body(modifiedReply);
+        }else{
+            // 사용자가 존재하지 않으면 NOT_FOUND 응답데이터와 user not found 메세지
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("not found");
+        }
+    }
+
+
+    // 🎈 Qna 답변 삭제
+    public ResponseEntity<?> deleteReply(int qnano){
+
+        log.info("replyno : " + qnano);
+
+        // 삭제 전 조회
+
+        Optional<Reply> optReply = replyRepository.findById(qnano);
+
+        log.info("optReply : " + optReply);
+
+        if(optReply.isPresent()){
+            log.info("here1");
+
+            replyRepository.deleteById(qnano);
+
+            return ResponseEntity
+                    .ok()
+                    .body(optReply.get());
+        }else{
+            log.info("here2");
+
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("not found");
+        }
     }
 
 

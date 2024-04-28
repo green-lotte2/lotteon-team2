@@ -8,6 +8,42 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
     <link th:href="@{css/sb-admin-2.min.css}" rel="stylesheet">
+    <style>
+        .notice_qna {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .card h6 {
+            color: #333333;
+        }
+
+        .card-body.table {
+            padding: 0;
+        }
+
+        .table td, .table th {
+            padding: 7px;
+        }
+        .table tbody {
+            color: #333333;
+        }
+
+        .table-bordered {
+            border: none;
+        }
+
+        .table-bordered td, .table-bordered th {
+            border: none;
+        }
+        .table-bordered tr td:nth-child(2) {
+            text-align: left;
+        }
+        .card-header:first-child {
+            border-bottom: 2px solid #333;
+        }
+    </style>
 
 </head>
 
@@ -25,7 +61,7 @@
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
                                         주문건수 (Weekly)</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">4,000건</div>
                                 </div>
@@ -113,7 +149,7 @@
                         <!-- Card Header - Dropdown -->
                         <div
                                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">주간 주문금액</h6>
+                            <h6 class="m-0 font-weight-bold">주간 주문금액</h6>
                             <div class="dropdown no-arrow">
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -144,7 +180,7 @@
                         <!-- Card Header - Dropdown -->
                         <div
                                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">쇼핑몰 방문</h6>
+                            <h6 class="m-0 font-weight-bold ">쇼핑몰 방문</h6>
                             <div class="dropdown no-arrow">
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                      aria-labelledby="dropdownMenuLink2">
@@ -157,7 +193,7 @@
                             </div>
                         </div>
                         <!-- Card Body -->
-                        <div class="card-body">
+                        <div class="card-body ">
                             <div class="chart-pie pt-4 pb-2">
                                 <canvas id="myPieChart"></canvas>
                             </div>
@@ -206,6 +242,71 @@
         </div>
     </div>
 </div>
+
+<div class="notice_qna">
+    <!-- 🎈공지사항 -->
+    <div id="noticeList" class="container-fluid">
+
+        <div class="card mb-4">
+            <div class="card-header py-3" >
+                <h6 class="m-0 font-weight-bold">공지사항</h6>
+            </div>
+
+            <div class="card-body table">
+                <div class="table-responsive">
+                    <form th:action="@{/admin/product/delete}" method="post">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                            <tbody>
+                            <tr th:each="noticeDTOS: ${noticeDTOS}">
+                                <td th:text="'['+ ${noticeDTOS.c2name} + ']'"></td>
+                                <td>
+                                    <a th:href="@{/admin/cs/notice/view(noticeno=${noticeDTOS.noticeno}, cate2=${noticeDTOS.cate2})}">[[${noticeDTOS.title}]]</a>
+                                </td>
+                                <td th:text="${#temporals.format(noticeDTOS.rdate, 'yyyy-MM-dd')}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!--notice end-->
+    <div id="qnaList" class="container-fluid">
+            <!--🎈Qna -->
+            <div class="card mb-4">
+                <div class="card-header py-3" >
+                    <h6 class="m-0 font-weight-bold">1:1문의</h6>
+                </div>
+
+                <div class="card-body table">
+                    <div class="table-responsive">
+                        <form th:action="@{/admin/product/delete}" method="post">
+                            <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                                <thead>
+                                <tbody>
+                                <tr th:each="qnaDTOS:${qnaDTOS}">
+                                    <td th:text="'[' + ${qnaDTOS.c2name} + ']'">유형</td>
+                                    <td>
+                                        <a th:href="@{/admin/cs/qna/view(qnano=${qnaDTOS.qnano}, cate2=${qnaDTOS.cate2})}">[[${qnaDTOS.title}]]</a>
+                                    </td>
+                                    <td th:text="${#temporals.format(qnaDTOS.rdate, 'yy-MM-dd')}"></td>
+                                    <th:block class="answercomplete">
+                                        <td th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
+                                        <td th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
+                                    </th:block>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div><!--notice & Qna end-->
+
+
     <script th:src="@{css/vendor/chart.js/Chart.min.js}"></script>
     <script th:src="@{js/demo/chart-area-demo.js}"></script>
     <script th:src="@{js/demo/chart-pie-demo.js}"></script>

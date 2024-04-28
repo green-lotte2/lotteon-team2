@@ -63,6 +63,7 @@ public class CsQna {
         return formatDate;
     }
 
+
     public QnaDTO toDTO() {
         return QnaDTO.builder()
                 .qnano(qnano)

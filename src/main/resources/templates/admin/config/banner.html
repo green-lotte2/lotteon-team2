@@ -7,16 +7,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>롯데온::관리자 메인배너</title>
-    <link th:href="@{/admin/css/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+   <link th:href="@{/admin/css/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
     <link th:href="@{/admin/css/admin2.css}">
 
 </head>
@@ -24,11 +22,19 @@
 <main layout:fragment="content">
 
     <style>
+       #tabs {
+            font-size: 14px;
+        }
+
+       th {
+           padding: 10px;
+       }
+
         img.thumb {
             width: 100px;
         }
         main > section {
-            min-width: 1300px;
+            min-width: 1200px;
             margin: 0 auto;
         }
         .ui-tabs .ui-tabs-panel {
@@ -51,9 +57,11 @@
         }
 
         .popup {
+            font-size: 13px;
             position: fixed;
-            left: 0;
-            top: 0;
+            left: 50%;
+            top: 40%;
+            transform: translate(-50%,-50%);
             display: none;
             width: 100%;
             height: 100%;
@@ -167,6 +175,18 @@
             width: 360px;
         }
 
+       .popup > div > section > article table tr > td > select {
+           border: 1px solid #333333;
+       }
+
+       .popup > div > section > article table tr > td input {
+           border: 1px solid #333333;
+       }
+
+       main table span {
+           display: inline-block;
+       }
+
         .popup > div > section > article > form > div {
             padding: 16px 0;
             text-align: center;
@@ -177,31 +197,51 @@
         }
 
         .btnPositive {
-            padding: 10px !important;
-            background: #0e9d05;
-            border: 1px solid #0b8404;
-            box-sizing: border-box;
-            color: white;
-            margin: 0 auto;
-            cursor: pointer;
+            float: right;
+            margin-top: 10px;
+            width: 100px;
+            background-color: #777777;
+            color: #ffffff;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 15px;
+            border: none;
         }
+
+       .btnNegative {
+           width: 100px;
+           background-color: #ff661a;
+           border-radius: 5px;
+           color: #fff;
+           padding: 8px;
+           border: none;
+           margin-top: 10px;
+           font-size: 14px;
+       }
+       p.ico.info {
+           font-size: 12px;
+           background-color: #9baac2;
+           border: 1px solid #677ba3;
+           padding: 15px;
+       }
+
+
     </style>
     <script>
-        $(function() {
-            $("#tabs").tabs();
+            $(function() {
+                $("#tabs").tabs();
 
-            // 팝업 닫기
-            $('.btnClose').click(function(){
-                $(this).closest('.popup').removeClass('on');
+                // 팝업 닫기
+                $('.btnClose').click(function(){
+                    $(this).closest('.popup').removeClass('on');
+                });
+
+                // 배너등록 팝업 띄우기
+                $('.btnRegister').click(function(e){
+                    e.preventDefault();
+                    $('#bannerRegister').addClass('on');
+                });
             });
-
-            // 배너등록 팝업 띄우기
-            $('.btnRegister').click(function(e){
-                e.preventDefault();
-                $('#bannerRegister').addClass('on');
-            });
-        });
-
     </script>
 
     <section id="admin-config-banner">
@@ -212,13 +252,28 @@
             </p>
         </nav>
 
-        <article id="tabs">
-            <ul>
-                <li><a href="#tabs1">메인 상단 배너</a></li>
-                <li><a href="#tabs2">메인 슬라이더 배너</a></li>
-                <li><a href="#tabs3">상품 상세보기 배너</a></li>
-                <li><a href="#tabs4">회원 로그인 배너</a></li>
-                <li><a href="#tabs5">마이페이지 배너</a></li>
+        <article id="tabs" class="ui-tabs ui-corner-all ui-widget ui-widget-content">
+            <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+                <li role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active" aria-controls="tabs1"
+                    aria-labelledby="ui-id-1" aria-selected="true" aria-expanded="true" >
+                    <a href="#tabs1" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-1">메인 상단 배너</a>
+                </li>
+                <li  role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs2"
+                     aria-labelledby="ui-id-2" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs2" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-2">메인 슬라이더 배너</a>
+                </li>
+                <li  role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs3"
+                     aria-labelledby="ui-id-3" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs3" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-3">상품 상세보기 배너</a>
+                </li>
+                <li  role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs4"
+                     aria-labelledby="ui-id-4" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs4" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-4">회원 로그인 배너</a>
+                </li>
+                <li  role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs5"
+                     aria-labelledby="ui-id-5" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs5" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-5">마이페이지 배너</a>
+                </li>
             </ul>
 
             <!-- 메인 상단 배너-->
@@ -477,7 +532,7 @@
                     <tr>
                         <td><input type="checkbox" name="배너번호"/></td>
                         <td>201603292</td>
-                        <td><img th:src="@{/member/images/member_login_banner.jpg}" class="thumb"></td>
+                        <td><img th:src="@{/images/member_login_banner.jpg}" class="thumb"></td>
                         <td>
                             <ul>
                                 <li class="name">배너이름</li>
@@ -524,7 +579,7 @@
                     <tr>
                         <td><input type="checkbox" name="배너번호"/></td>
                         <td>201603292</td>
-                        <td><img th:src="@{/my/images/my_banner1.jpg}" class="thumb"></td>
+                        <td><img th:src="@{/images/my_banner1.jpg}" class="thumb"></td>
                         <td>
                             <ul>
                                 <li class="name">배너이름</li>
@@ -546,7 +601,7 @@
                     <tr>
                         <td><input type="checkbox" name="배너번호"/></td>
                         <td>201603292</td>
-                        <td><img th:src="@{/my/images/my_banner2.png}" class="thumb"></td>
+                        <td><img th:src="@{/images/my_banner2.png}" class="thumb"></td>
                         <td>
                             <ul>
                                 <li class="name">배너이름</li>
@@ -575,108 +630,101 @@
             전자상거래 등에서의 상품 등의 정보제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.
         </p>
     </section>
-</main>
-<footer>
-    <div>
-        <p>Copyright ©lotteon.com All rights reserved. ADMINISTRATOR Version 5.4.1.2</p>
-    </div>
-</footer>
+
+    <!--🎈배너등록-->
+    <div id="bannerRegister" class="popup">
+        <div>
+            <nav>
+                <h1>배너등록</h1>
+                <button class="btnClose">X</button>
+            </nav>
+            <section>
+                <article>
+                    <h3>배너 정보입력</h3>
+                    <form action="#" method="post">
+                        <table border="0">
+                            <tr>
+                                <td>배너이름</td>
+                                <td>
+                                    <p>배너명을 입력하세요.</p>
+                                    <input type="text" name="name" placeholder="배너명 입력"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너파일</td>
+                                <td>
+                                    <p>배너 이미지 파일을 추가하세요.</p>
+                                    <input type="file" name="file" placeholder="배너 이미지 파일 선택"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너크기</td>
+                                <td>
+                                    <p>배너의 크기를 입력하세요.</p>
+                                    <input type="text" name="size" placeholder="배너크기"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배경색</td>
+                                <td>
+                                    <p>메인 상단 배너에 적용되는 배너 배경색입니다. ex) #ffff00</p>
+                                    <input type="text" name="color" placeholder="배너 배경색 입력"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너링크</td>
+                                <td>
+                                    <p>배너를 클릭했을 떄 이동할 페이지 링크주소를 입력하세요.</p>
+                                    <input type="text" name="link" placeholder="링크주소 입력"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너위치</td>
+                                <td>
+                                    <p>배너가 노출되는 위치를 선택하십시요.</p>
+                                    <select name="position">
+                                        <option value="0">선택</option>
+                                        <option value="MAIN1">메인-상단</option>
+                                        <option value="MAIN2">메인-슬라이더</option>
+                                        <option value="PRODUCT1">상품-상세보기</option>
+                                        <option value="MEMBER1">회원-로그인</option>
+                                        <option value="MY1">마이페이지</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너 노출날짜</td>
+                                <td>
+                                    <p>배너가 노출되는 기간을 선택하십시요.</p>
+                                    <input type="date" name="begin"/>
+                                    <span>~</span>
+                                    <input type="date" name="end"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너 노출시간</td>
+                                <td>
+                                    <p>배너가 노출되는 시간을 선택하십시요.</p>
+                                    <input type="time" name="begin"/>
+                                    <span>~</span>
+                                    <input type="time" name="end"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div>
+                            <input type="submit" class="btnPositive" value="등록하기"/>
+                        </div>
+
+                    </form>
+                </article>
+            </section>
+        </div>
+    </div>   <!--내용끝-->
 
 
-<div id="bannerRegister" class="popup">
-    <div>
-        <nav>
-            <h1>배너등록</h1>
-            <button class="btnClose">X</button>
-        </nav>
-        <section>
-            <article>
-                <h3>배너 정보입력</h3>
-                <form action="#" method="post">
-                    <table border="0">
-                        <tr>
-                            <td>배너이름</td>
-                            <td>
-                                <p>배너명을 입력하세요.</p>
-                                <input type="text" name="name" placeholder="배너명 입력"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>배너파일</td>
-                            <td>
-                                <p>배너 이미지 파일을 추가하세요.</p>
-                                <input type="file" name="file" placeholder="배너 이미지 파일 선택"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>배너크기</td>
-                            <td>
-                                <p>배너의 크기를 입력하세요.</p>
-                                <input type="text" name="size" placeholder="배너크기"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>배경색</td>
-                            <td>
-                                <p>메인 상단 배너에 적용되는 배너 배경색입니다. ex) #ffff00</p>
-                                <input type="text" name="color" placeholder="배너 배경색 입력"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>배너링크</td>
-                            <td>
-                                <p>배너를 클릭했을 떄 이동할 페이지 링크주소를 입력하세요.</p>
-                                <input type="text" name="link" placeholder="링크주소 입력"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>배너위치</td>
-                            <td>
-                                <p>배너가 노출되는 위치를 선택하십시요.</p>
-                                <select name="position">
-                                    <option value="0">선택</option>
-                                    <option value="MAIN1">메인-상단</option>
-                                    <option value="MAIN2">메인-슬라이더</option>
-                                    <option value="PRODUCT1">상품-상세보기</option>
-                                    <option value="MEMBER1">회원-로그인</option>
-                                    <option value="MY1">마이페이지</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>배너 노출날짜</td>
-                            <td>
-                                <p>배너가 노출되는 기간을 선택하십시요.</p>
-                                <input type="date" name="begin"/>
-                                <span>~</span>
-                                <input type="date" name="end"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>배너 노출시간</td>
-                            <td>
-                                <p>배너가 노출되는 시간을 선택하십시요.</p>
-                                <input type="time" name="begin"/>
-                                <span>~</span>
-                                <input type="time" name="end"/>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <div>
-                        <input type="submit" class="btnPositive" value="등록하기"/>
-                    </div>
-
-                </form>
-            </article>
-        </section>
-    </div>
-</div>
-
-    <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/admin/css/vendor/jquery-easing/jquery.easing.min.js}"></script>
-    <script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
+
 </main>
 
 </html>

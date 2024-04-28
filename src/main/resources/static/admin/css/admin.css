@@ -140,11 +140,11 @@ tr:hover {
 
 /*✨선택삭제 버튼*/
 input#delBtn {
-    width: 80px;
+    width: 100px;
     background-color: #ff661a;
     border-radius: 5px;
     color: #fff;
-    padding: 6px;
+    padding: 8px;
     border: none;
     margin-top: 10px;
     font-size: 14px;
@@ -157,11 +157,11 @@ input#delBtn:hover {
 
 input#writeBtn {
     position: relative;
-    width: 80px;
+    width: 100px;
     background: #6e6b6b;
     border-radius: 5px;
     color: #fff;
-    padding: 6px;
+    padding: 8px;
     border: none;
     font-size: 15px;
 }
@@ -413,9 +413,13 @@ main table span {
 }
 
 .btnSubmit {
+    width: 100px;
+    float: right;
+    text-align: center;
+    margin-top: 10px;
     background-color: #777777;
     color: #ffffff;
-    padding: 6px;
+    padding: 8px;
     border-radius: 5px;
     font-size: 15px;
 }
@@ -443,3 +447,94 @@ main table span {
     color: #777777;
 }
 
+/*🎈1:1문의하기 댓글 */
+#commentList {
+    width: 1000px;
+    margin-left: 125px;
+}
+
+.qna.form-control {
+    resize: none;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+ol.qna.breadcrumb {
+    padding: 0;
+    font-size: 16px;
+    background-color: #f8f9fc;
+}
+
+.qna.btnModify {
+    background-color: #eab43e;
+    color: #ffffff;
+    border: none;
+}
+
+.qna.btnModify:hover {
+    background-color: #e7970d;
+    color: #ffffff;
+    border: none;
+}
+
+.qna.btnRemove {
+    background-color: #e74a3b;
+    border: none;
+    color: #ffffff;
+}
+.qna.btnRemove:hover {
+    background-color: #e02d1b;
+    color: #ffffff;
+}
+
+.qna.input-group {
+    position: relative;
+    display: flex;
+    justify-content: left;
+    margin-left: 125px;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.qna.input-group-text {
+    border-radius: 5px 0 0 5px;
+}
+
+.qna.text-area {
+    min-width: 800px;
+    overflow: auto;
+    resize: none;
+    border-radius: 0 5px 5px 0;
+    padding: 5px;
+}
+
+.qna.btnSet {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    margin-left: 115px;
+}
+
+.qna.submitBtn {
+    margin-left: 10px;
+    width: 50px;
+    padding: 4px;
+    border-radius: 5px;
+    border: none;
+    background-color: #888;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.qna.btn-danger {
+    width: 50px;
+    padding: 4px;
+    color: #fff;
+    background-color: #e74a3b;
+    border-color: #e74a3b;
+}
+
+/*🎈footer*/
+footer.sticky-footer {
+    background-color: #ddd9;
+}

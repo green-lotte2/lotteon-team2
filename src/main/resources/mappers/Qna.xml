@@ -81,13 +81,14 @@
     </select>
 
     <!--🎈admin_qna_view-->
-    <select id="adminSelectQnaView" resultType="kr.co.lotteon.dto.QnaDTO">
-        SELECT * FROM `qna` AS a
-        JOIN `cate1` as b
-        JOIN `cate2` as c
-        ON a.cate1 = c.cate1 AND a.cate2 = c.cate2 AND a.cate1 = b.cate1
-        WHERE `qnano` = #{qnano}
+   <select id="adminSelectQnaView" resultType="kr.co.lotteon.dto.QnaDTO">
+       SELECT * FROM `qna` AS a
+       JOIN `cate1` as b
+       JOIN `cate2` as c
+       ON a.cate1 = c.cate1 AND a.cate2 = c.cate2 AND a.cate1 = b.cate1
+       WHERE `qnano` = #{qnano}
     </select>
+
 
     <!--🎈admin_qna_modify-->
     <select id="adminSelectQnaBoard" resultType="kr.co.lotteon.dto.QnaDTO">

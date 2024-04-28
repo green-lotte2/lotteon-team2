@@ -23,6 +23,7 @@ public class ReplyDTO {
     private LocalDateTime rdate;
     private String writer;
 
+
     public CsReply toEntity() {
         return CsReply.builder()
                 .replyno(replyno)
