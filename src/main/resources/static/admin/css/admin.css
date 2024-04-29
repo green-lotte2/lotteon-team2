@@ -225,7 +225,7 @@ input#writeBtn:hover {
 
 
 main > section {
-    width: 1000px;
+    width: 960px;
     min-height: 600px;
     padding: 20px;
     box-sizing: border-box;
@@ -308,11 +308,23 @@ main table span {
 }
 
 /*🎈product list*/
+#productList table{
+    font-size: 14px;
+}
+
 #productList table tr th{
     padding: 8px;
     text-align: center;
     background-color: #676767;
     color: #ffff;
+}
+
+#productList table tr td:nth-child(4) {
+    width: 200px;
+}
+
+#productList table tr .prodName {
+    width: 200px;
 }
 
 #productList table tr td {
@@ -430,7 +442,6 @@ main table span {
 }
 /*🎈자주묻는질문 글쓰기*/
 .title {
-    min-width: 800px;
 }
 .contentText {
     padding: 5px;
@@ -498,14 +509,14 @@ ol.qna.breadcrumb {
 }
 
 .qna.input-group-text {
-    border-radius: 5px 0 0 5px;
+    border-radius: 5px 5px 0 0;
 }
 
 .qna.text-area {
-    min-width: 800px;
+    min-width: 960px;
     overflow: auto;
     resize: none;
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 5px 5px 5px;
     padding: 5px;
 }
 

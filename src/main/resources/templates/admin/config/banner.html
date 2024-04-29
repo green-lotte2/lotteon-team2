@@ -122,10 +122,13 @@
             background-color: transparent;
             background-position: 227px -25px;
             border: none;
-            font-size: 0;
             color: white;
             cursor: pointer;
         }
+
+       .popup > div > nav > button > span {
+           color: #333333;
+       }
         .popup > div > section {
             padding: 16px;
             box-sizing: border-box;
@@ -642,41 +645,41 @@
             <section>
                 <article>
                     <h3>배너 정보입력</h3>
-                    <form th:action="@{/admin/config/banner}" method="post">
+                    <form th:action="@{/admin/config/banner}" method="post" enctype="multipart/form-data">
                         <table border="0">
                             <tr>
                                 <td>배너이름</td>
                                 <td>
                                     <p>배너명을 입력하세요.</p>
-                                    <input type="text" name="bname" placeholder="배너명 입력"/>
+                                    <input type="text" name="bannerDTO.bname"  placeholder="배너명 입력"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>배너파일</td>
                                 <td>
                                     <p>배너 이미지 파일을 추가하세요.</p>
-                                    <input type="file" name="bfile" placeholder="배너 이미지 파일 선택"/>
+                                    <input type="file" name="file" placeholder="배너 이미지 파일 선택"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>배경색</td>
                                 <td>
                                     <p>메인 상단 배너에 적용되는 배너 배경색입니다. ex) #ffff00</p>
-                                    <input type="text" name="bcolor" placeholder="배너 배경색 입력"/>
+                                    <input type="text" name="bannerDTO.bcolor" placeholder="배너 배경색 입력"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>배너링크</td>
                                 <td>
                                     <p>배너를 클릭했을 때 이동할 페이지 링크주소를 입력하세요.</p>
-                                    <input type="text" name="blink" placeholder="링크주소 입력"/>
+                                    <input type="text" name="bannerDTO.blink" placeholder="링크주소 입력"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>배너위치</td>
                                 <td>
                                     <p>배너가 노출되는 위치를 선택하십시요.</p>
-                                    <select name="blocation">
+                                    <select name="bannerDTO.blocation">
                                         <option value="0">선택</option>
                                         <option value="MAIN1">메인-상단</option>
                                         <option value="MAIN2">메인-슬라이더</option>
@@ -690,22 +693,22 @@
                                 <td>배너 노출날짜</td>
                                 <td>
                                     <p>배너가 노출되는 기간을 선택하십시요.</p>
-                                    <input type="date" name="bstartDate"/>
+                                    <input type="date" name="bannerDTO.bstartDate"/>
                                     <span>~</span>
-                                    <input type="date" name="bendDate"/>
+                                    <input type="date" name="bannerDTO.bendDate"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>배너 노출시간</td>
                                 <td>
                                     <p>배너가 노출되는 시간을 선택하십시요.</p>
-                                    <input type="time" name="bstartTime"/>
+                                    <input type="time" name="bannerDTO.bstartTime"/>
                                     <span>~</span>
-                                    <input type="time" name="bendTime"/>
+                                    <input type="time" name="bannerDTO.bendTime"/>
                                 </td>
                             </tr>
                             <tr>
-                                <input type="hidden" name="bmanage">
+                                <input type="hidden" name="bannerDTO.bno">
                             </tr>
                         </table>
 

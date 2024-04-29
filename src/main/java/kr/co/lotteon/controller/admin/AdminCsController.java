@@ -157,6 +157,18 @@ public class AdminCsController {
         return "redirect:/admin/cs/notice/list?noticeno="+noticeno;
     }
 
+    @PostMapping("/admin/cs/notice/delete")
+    public String adminDeleteNoticeBoard(@RequestParam List<String> checkbox){
+        for(String noticeno : checkbox){
+            int noticeId = Integer.parseInt(noticeno);
+            csService.adminDeleteNoticeBoard(noticeId);
+            log.info("noticeno : " + noticeId);
+        }
+        log.info(checkbox.toString());
+
+        return "redirect:/admin/cs/notice/list";
+    }
+
 
 
     ////////////////////////
@@ -229,9 +241,22 @@ public class AdminCsController {
     @GetMapping("/admin/cs/faq/delete")
     public String adminDeleteFaqBoard(int faqno) {
         csService.adminDeleteFaqBoard(faqno);
-        log.info("noticeno : " + faqno);
+        log.info("faqno : " + faqno);
 
         return "redirect:/admin/cs/faq/list?faqno="+faqno;
+    }
+
+
+    @PostMapping("/admin/cs/faq/delete")
+    public String adminDeleteFaqBoard(@RequestParam List<String> checkbox){
+        for(String faqno : checkbox){
+            int faqId = Integer.parseInt(faqno);
+            csService.adminDeleteFaqBoard(faqId);
+            log.info("deleteFaqno : " + faqId);
+        }
+        log.info(checkbox.toString());
+
+        return "redirect:/admin/cs/faq/list";
     }
 
 
@@ -292,6 +317,19 @@ public class AdminCsController {
 
         return "redirect:/admin/cs/qna/list?qnano="+qnano;
     }
+
+    @PostMapping("/admin/cs/qna/delete")
+    public String adminDeleteQnaBoard(@RequestParam List<String> checkbox){
+        for(String qnano : checkbox){
+            int qnaId = Integer.parseInt(qnano);
+            csService.adminDeleteQnaBoard(qnaId);
+            log.info("deleteQnano : " + qnaId);
+        }
+        log.info(checkbox.toString());
+
+        return "redirect:/admin/cs/qna/list";
+    }
+
 
 
     //🎈1:1질문 답변//

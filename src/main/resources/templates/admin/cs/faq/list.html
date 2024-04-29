@@ -17,6 +17,51 @@
 </head>
 
 <main layout:fragment="content">
+    <script>
+        window.onload = function () {
+            const delBtn = document.getElementById('delBtn');
+            const selectAllCheckbox = document.getElementsByName('all')[0];
+            const checkBoxes = document.getElementsByName('checkbox');
+
+            const fdelete = document.getElementById('delete');
+            fdelete.onclick = function (){
+                if (confirm('삭제하시겠습니까?')){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
+            delBtn.onclick = function(){
+                let Checked = false; // 최소한 하나의 체크박스가 선택되었는지 여부를 나타내는 변수
+                for (let i = 0; i < checkBoxes.length; i++) {
+                    if (checkBoxes[i].checked) {
+                        Checked = true;
+                        break; // 하나라도 체크되어 있으면 반복문 종료
+                    }
+                }
+
+                if (!Checked) {
+                    alert('삭제할 상품을 선택해주세요.');
+                    console.log('check..');
+                    return false;
+                } else {
+                    let confirmed = confirm('정말 삭제하시겠습니까?');
+                    if (!confirmed) {
+                        return false;
+                    }
+                }
+            };
+
+            selectAllCheckbox.addEventListener('change', function () {
+                for (let i = 0; i < checkBoxes.length; i++) {
+                    checkBoxes[i].checked = selectAllCheckbox.checked;
+                }
+            });
+        }
+
+
+    </script>
 
     <div id="faqList" class="container-fluid">
 
@@ -50,7 +95,7 @@
                             </form>
 
 
-                        <form th:action="@{/admin/product/delete}" method="post">
+                        <form th:action="@{/admin/cs/faq/delete}" method="post">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr class="tableTitle">
@@ -67,7 +112,7 @@
                                 <tbody>
                                 <tr th:each="faqDTOList: ${faqDTOList}">
                                     <td>
-                                        <input type="checkbox" name="checkbox" value="">
+                                        <input type="checkbox" name="checkbox" th:value="${faqDTOList.faqno}">
                                     </td>
                                     <td>[[${faqDTOList.faqno}]]</td>
                                     <td th:text="'[' + ${faqDTOList.c2name} + ']'"></td>
@@ -76,7 +121,7 @@
                                     </td>
                                     <td th:text="${#temporals.format(faqDTOList.rdate, 'yyyy-MM-dd')}"></td>
                                     <td>
-                                        <a th:href="@{/admin/cs/faq/delete(faqno=${faqDTOList.faqno})}">[삭제]</a>
+                                        <a th:href="@{/admin/cs/faq/delete(faqno=${faqDTOList.faqno})}" id="delete">[삭제]</a>
                                         <a th:href="@{/admin/cs/faq/modify(faqno=${faqDTOList.faqno})}">[수정]</a>
                                     </td>
                                 </tr>
