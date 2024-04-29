@@ -119,7 +119,7 @@
         <td th:text="${#numbers.formatInteger(detail.price, 3, 'COMMA')}">17,000원</td>
         <td th:text="${detail.discount + '%'}">1,000원</td>
         <td th:text="${detail.pcount}">1</td>
-        <td th:text="${#numbers.formatInteger(detail.price - detail.discount, 3, 'COMMA')}">16,000원</td>
+        <td th:text="${#numbers.formatInteger(detail.total, 3, 'COMMA')}">16,000원</td>
       </tr>
 
       <!-- 주문 요약 -->

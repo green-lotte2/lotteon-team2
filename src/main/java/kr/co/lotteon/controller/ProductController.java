@@ -136,22 +136,9 @@ public class ProductController {
     @GetMapping("/product/complete/{ono}")
     public String complete(@PathVariable("ono") int ono, Model model) {
         List<OrdersDTO> ordersDTO = ordersService.getOrderDetails(ono);
-        int totalProductPrice = ordersDTO.stream()
-                .mapToInt(order -> order.getPrice() * order.getPcount())
-                .sum();
-        int totalDiscount = ordersDTO.stream()
-                .mapToInt(OrdersDTO::getDiscount)
-                .sum();
-        int totalDeliveryFee = ordersDTO.stream()
-                .mapToInt(OrdersDTO::getDfee)
-                .sum();
-        int finalPrice = totalProductPrice - totalDiscount + totalDeliveryFee;
 
-        model.addAttribute("totalProductPrice", totalProductPrice);
-        model.addAttribute("totalDiscount", totalDiscount);
-        model.addAttribute("totalDeliveryFee", totalDeliveryFee);
-        model.addAttribute("finalPrice", finalPrice);
         model.addAttribute("ordersDTO", ordersDTO);
+
         return "/product/complete";
     }
 
