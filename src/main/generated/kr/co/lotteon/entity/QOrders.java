@@ -29,7 +29,7 @@ public class QOrders extends EntityPathBase<Orders> {
 
     public final StringPath hp = createString("hp");
 
-    public final DateTimePath<java.time.LocalDateTime> odate = createDateTime("odate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> odate = createDate("odate", java.time.LocalDate.class);
 
     public final NumberPath<Integer> ono = createNumber("ono", Integer.class);
 

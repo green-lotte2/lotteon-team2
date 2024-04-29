@@ -106,14 +106,15 @@ public class OrdersController {
         return "/mypage/order";
     }
 
-    @GetMapping("/records")
     @ResponseBody
+    @GetMapping("/records")
     public List<Orders> getRecords(
             @RequestParam("begin")LocalDate beginDate,
             @RequestParam("end")LocalDate endDate
             ) {
-        List<Orders> records = ordersService.getRecordsBetween(beginDate, endDate);
-        return records;
+        log.info(beginDate.toString());
+        log.info(endDate.toString());
+        return ordersService.getRecordsBetween(beginDate, endDate);
     }
 
 }
