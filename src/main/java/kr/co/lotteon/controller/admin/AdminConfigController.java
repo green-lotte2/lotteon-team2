@@ -20,7 +20,7 @@ public class AdminConfigController {
     CsService csService;
 
 
-    @GetMapping(value = {"/admin", "/admin/index"})
+    @GetMapping(value = {"/admin/", "/admin/index"})
     public String index(@RequestParam(name="pg", defaultValue = "1") String pg,
                         @RequestParam(name="cate1", required = false) String cate1, Model model){
 
