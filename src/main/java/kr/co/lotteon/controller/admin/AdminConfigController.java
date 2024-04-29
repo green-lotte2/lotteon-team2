@@ -1,13 +1,17 @@
 package kr.co.lotteon.controller.admin;
 
+import kr.co.lotteon.dto.BannerDTO;
 import kr.co.lotteon.dto.NoticeDTO;
 import kr.co.lotteon.dto.QnaDTO;
+import kr.co.lotteon.entity.Banner;
+import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.CsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -19,6 +23,8 @@ public class AdminConfigController {
     @Autowired
     CsService csService;
 
+    @Autowired
+    AdminService adminService;
 
     @GetMapping(value = {"/admin/", "/admin/index"})
     public String index(@RequestParam(name="pg", defaultValue = "1") String pg,
@@ -89,9 +95,18 @@ public class AdminConfigController {
 
     @GetMapping("/admin/config/banner")
     public String banner(){
-
         return "/admin/config/banner";
     }
+
+    // 🎈banner 등록
+   /* @PostMapping("/admin/config/banner")
+    public List<BannerDTO> banner(BannerDTO bannerDTO){
+
+        return adminService.insertBanner();
+    }*/
+
+
+
 
     @GetMapping("/admin/config/info")
     public String info(){
