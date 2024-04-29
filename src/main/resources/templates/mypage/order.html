@@ -55,7 +55,61 @@
                     insertTarget.after(table);
                 }
             }
-        }
+
+            const confirmButton = document.querySelector(".btnConfirm");
+
+            confirmButton.addEventListener("click", function() {
+                const beginDate = document.querySelector("input[name='begin']").value;
+                const endDate = document.querySelector("input[name='end']").value;
+
+                fetch(`/records?begin=${beginDate}&end=${endDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const recordsList = document.getElementById("recordList");
+                        recordsList.innerHTML = "";
+
+                        data.forEach(record => {
+                            const li = document.createElement("li");
+                            li.textContent = `${record.description} - ${record.date}`;
+                            recordsList.appendChild(li);
+                        });
+                    });
+            });
+
+                            // 날짜별 선택 옵션에 대한 이벤트 리스너 추가
+                            const date3eaLinks = document.querySelectorAll(".date_3ea a");
+                            date3eaLinks.forEach(link => {
+                                link.addEventListener("click", function(e) {
+                                    e.preventDefault(); // 기본 동작 차단
+                                    const text = this.textContent;
+
+                                    // 선택된 옵션에 따라 날짜 범위 계산
+                                    let beginDate, endDate;
+                                    const now = new Date();
+                                    if (text.includes("주일")) {
+                                        beginDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // 7일 전
+                                    } else if (text.includes("일")) {
+                                        beginDate = new Date(now.getTime() - 15 * 24 * 60 * 60 * 1000); // 15일 전
+                                    } else if (text.includes("개월")) {
+                                        beginDate = new Date(now.setMonth(now.getMonth() - 1)); // 1개월 전
+                                    }
+                                    endDate = new Date();
+
+                                    fetch(`/records?begin=${beginDate.toISOString().split("T")[0]}&end=${endDate.toISOString().split("T")[0]}`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            const recordsList = document.getElementById("recordsList");
+                                            recordsList.innerHTML = ""; // 기존 내용 초기화
+
+                                            data.forEach(record => {
+                                                const li = document.createElement("li");
+                                                li.textContent = `${record.description} - ${record.date}`;
+                                                recordsList.appendChild(li);
+                                            });
+                                        });
+                                });
+                            });
+                        };
     </script>
     <ul>
         <span class="menu_else"></span>
@@ -74,11 +128,11 @@
             <h3>전체주문내역</h3>
 
             <div class="byDate">
-                <span class="tit">기간별조회</span>
+                <span class="tit">기간별 조회</span>
                 <ul class="date_3ea">
                     <li><a href="#"><em>1</em>주일</a></li>
                     <li><a href="#"><em>15</em>일</a></li>
-                    <li><a href="#" class="on"><em>1</em>개월</a></li>
+                    <li><a href="#"><em>1</em>개월</a></li>
                 </ul>
                 <ul class="date_5ea">
                     <li><a href="#"><em>11</em>월</a></li>
@@ -92,6 +146,7 @@
                 </p>
                 <button class="btnConfirm">조회하기</button>
             </div>
+
 
             <table border="0">
                 <tr>

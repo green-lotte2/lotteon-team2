@@ -29,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.Console;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.*;
 
 @Slf4j
@@ -103,6 +104,16 @@ public class OrdersController {
         model.addAttribute("ordersGroup", ordersGroup);
         log.info(orders.toString());
         return "/mypage/order";
+    }
+
+    @GetMapping("/records")
+    @ResponseBody
+    public List<Orders> getRecords(
+            @RequestParam("begin")LocalDate beginDate,
+            @RequestParam("end")LocalDate endDate
+            ) {
+        List<Orders> records = ordersService.getRecordsBetween(beginDate, endDate);
+        return records;
     }
 
 }

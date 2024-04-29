@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,6 +70,10 @@ public class OrdersService {
     public List<OrdersDTO> getOrderDetails(int ono) {
         List<OrdersDTO> ordersDTO = ordersMapper.selectOrderDetails(ono);
         return ordersDTO;
+    }
+
+    public List<Orders> getRecordsBetween(LocalDate beginDate, LocalDate endDate){
+        return orderRepository.findRecordsBetween(beginDate, endDate);
     }
 }
 
