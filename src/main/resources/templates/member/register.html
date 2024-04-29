@@ -139,12 +139,12 @@
 						.then(data => {
 							console.log(data);
 							if(!data.result){
-								result_email.innerText='인증번호가 발송 되었습니다.';
-								result_email.style.color='green';
+								resultEmail.innerText='인증번호가 발송 되었습니다.';
+								resultEmail.style.color='green';
 								isEmailOk = true;
 							}else{
-								result_email.innerText='이미 사용중인 이메일 입니다.';
-								result_email.style.color = 'red';
+								resultEmail.innerText='이미 사용중인 이메일 입니다.';
+								resultEmail.style.color = 'red';
 								isEmailOk = false;
 							}
 						});
