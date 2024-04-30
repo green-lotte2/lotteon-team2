@@ -102,7 +102,14 @@ public class AdminProductController {
 
 
     @GetMapping("/admin/product/modify")
-    public String adminProductModify(){
+    public String adminProductModify(Model model, int pno){
+
+        Product product = productService.findProduct(pno);
+        List<CategoryDTO> cate = productService.getCategoryList();
+
+        model.addAttribute("product", product);
+        model.addAttribute("cate", cate);
+
         return "/admin/product/modify";
     }
 

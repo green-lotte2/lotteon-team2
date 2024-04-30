@@ -112,9 +112,16 @@ public class ProductService {
 
 
     /////////////////////////상품///////////////////////////////
-    /*
-        상품 등록
-     */
+
+    public Product findProduct(int pno){
+        Optional<Product> optProduct = productRepository.findById(pno);
+        Product product = null;
+        if(optProduct.isPresent()){
+            product = optProduct.get();
+        }
+        return product;
+    }
+
     public Product insertProduct(ProductDTO productDTO) {
 
         Product product = modelMapper.map(productDTO, Product.class);
