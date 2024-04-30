@@ -136,17 +136,38 @@
             }
 
             document.getElementById('test').onclick = function (){
-                const options = [document.getElementById('options').children[0].children];
-                console.log(options);
+                const options = Array.from(document.getElementById('options').children[0].children);
+                let optionNames = "";
+                let optionValues = "";
                 options.forEach(function (tr){
-                    console.log(tr);
-                    [tr.children].forEach(function (td){
-                        console.log(td);
+                    Array.from(tr.children).forEach(function (td){
+                       if (td.children[0].tagName === 'input' || td.children[0].tagName === 'INPUT' ){
+                           optionNames += td.children[0].value;
+                       }else{
+                           Array.from(td.children).forEach(function (inputTag){
+                                optionValues += inputTag.children[0].value + '/';
+                           });
+                       }
                     });
+                    optionNames += "%";
+                    optionValues += "$";
                 });
+                console.log(optionNames);
+                console.log(optionValues);
+                if (optionNames != null){
+                    const hidOptionName = document.createElement('input');
+                    const hidOptionValue = document.createElement('input');
+
+                    hidOptionName.type = 'text';
+                    hidOptionName.name = 'opname';
+                    hidOptionName.value = optionNames;
+                    hidOptionValue.type = 'text';
+                    hidOptionValue.name = 'opvalue';
+                    hidOptionValue.value = optionValues;
+                    document.getElementById('option').appendChild(hidOptionName);
+                    document.getElementById('option').appendChild(hidOptionValue);
+                }
             }
-
-
         }
         /*]]>*/
 
@@ -162,7 +183,7 @@
                     <div>
                         <input type="text" placeholder="옵션 값을 입력하세요">
                         <input type="button" onclick="addOptionValue(this)" value="옵션 추가">
-                        <input type="button" onclick="removeOption(this)" value="옵션 삭제"><br>
+                        <input type="button" onclick="removeOption(this)" value="옵션 삭제">
                     </div>
 
                 </td>
