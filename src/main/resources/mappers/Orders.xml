@@ -29,6 +29,15 @@
         GROUP BY od.ono
     </select>
 
+    <select id="selectOrdersGroupByDate" resultType="kr.co.lotteon.dto.OrdersDTO">
+        SELECT od.ono, o.odate, COUNT(od.ono) AS `count`, o.total ,ANY_VALUE(p.pname) AS pname
+        FROM `orderdetail` AS od
+        JOIN `orders` AS o ON o.ono = od.ono
+        JOIN `product` AS p ON od.pno = p.pno
+        WHERE o.uid = #{uid} AND o.odate BETWEEN #{searchDate} AND #{nowDate}
+        GROUP BY od.ono
+    </select>
+
     <select id="selectOrderDetails" resultType="kr.co.lotteon.dto.OrdersDTO">
         SELECT o.*, p.pno, p.cate, p.pname, p.company, pi.mainimg, od.pcount, od.options, od.price, p.discount
         FROM `orders` AS o

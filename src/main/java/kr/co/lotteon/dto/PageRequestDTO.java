@@ -1,14 +1,13 @@
 package kr.co.lotteon.dto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.domain.*;
 
-@Data
-@Builder
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 public class PageRequestDTO {
 
     @Builder.Default
@@ -27,6 +26,8 @@ public class PageRequestDTO {
     private String search = "";
 
     private int pno;
+
+    private int ono;
 
     public Pageable getPageable(String sort){
         return PageRequest.of(

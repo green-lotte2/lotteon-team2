@@ -57,36 +57,17 @@
             }
 
 
-
-            const confirmButton = document.querySelector(".btnConfirm");
-            confirmButton.addEventListener("click", function() {
-                const beginDate = document.querySelector("input[name='begin']").value;
-                const endDate = document.querySelector("input[name='end']").value;
-
-                fetch(`/records?begin=${beginDate}&end=${endDate}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const recordsList = document.getElementById("recordsList");
-                        recordsList.innerHTML = "";
-
-                        data.forEach(record => {
-                            const li = document.createElement("li");
-                            li.textContent = `${record.description} - ${record.date}`;
-                            recordsList.appendChild(li);
-                        });
-                    });
-            });
-
-
             // 날짜별 선택 옵션에 대한 이벤트 리스너 추가
             const date3eaLinks = document.querySelectorAll(".date_3ea a");
             date3eaLinks.forEach(link => {
                 link.addEventListener("click", function(e) {
                     e.preventDefault(); // 기본 동작 차단
+
                     const text = this.textContent;
                     // 선택된 옵션에 따라 날짜 범위 계산
                     let beginDate, endDate;
                     const now = new Date();
+
                     if (text.includes("주일")) {
                         beginDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // 7일 전
                     } else if (text.includes("일")) {
@@ -105,36 +86,37 @@
                             recordsList.innerHTML = ""; // 기존 내용 초기화
 
                             data.forEach(record => {
-                                console.log("re" + record);
-                                const listArticle = `<div class="mb-3 list" data-date="${record.date}">
-                                                        <ol class="breadcrumb mb-1">
-                                                            <li class="breadcrumb-item">${record.date}</li>
-                                                            <li class="breadcrumb-item">${record.odate ? record.odate.substring(0, 10) : 'N/A'}</li>
-                                                        </ol>
-                                                        <textarea class="form-control" rows="3" readonly>${record.content ?? 'No Content'}</textarea>
-                                                    </div>`;
-
-                                recordsList.insertAdjacentHTML('beforeend', listArticle);
+                                const item = `
+                                        <tr>
+                                            <td>${record.date}</td>
+                                            <td>
+                                                <ul>
+                                                    <li class="prodName">${record.pname}</li>
+                                                    <li>주문번호 : ${record.ono}</li>
+                                                    <li class="prodPrice">${record.price}</li>
+                                                </ul>
+                                            </td>
+                                            <td><a href="#" class="detail">자세히 보기</a></td>
+                                        </tr>`;
+                                recordsList.insertAdjacentHTML("beforeend", item);
                             });
                         })
-                        .catch(err => {
-                            console.error("데이터 로드 실패:", err);
-                        });
+                        .catch(err => console.error("데이터 로드 실패:", err));
                 });
             });
 
-        async function fetchGet(url) {
-            const response = await fetch(url);
-            if (response.ok) {
-                return await response.json();
+            async function fetchGet(url) {
+                const response = await fetch(url);
+                if (response.ok) {
+                    return await response.json();
+                }
+                throw new Error(`Failed to fetch data from ${url}`);
             }
-            throw new Error(`Failed to fetch data from ${url}`);
-        }
 
             const date5eaLinks = document.querySelectorAll(".date_5ea");
             console.log(date5eaLinks[0].children);
             const now = new Date();
-            for(let i = 0; i < date5eaLinks[0].children.length; i++){
+            for (let i = 0; i < date5eaLinks[0].children.length; i++){
                 const liList = date5eaLinks[0].children;
                 console.log(now.getMonth());
                 let result = now.getMonth() + 1 - i;
@@ -178,6 +160,8 @@
                 <span class="tit">기간별 조회</span>
                 <ul class="date_3ea">
                     <li><a href="#"><em>1</em>주일</a></li>
+                    <!--href="컨트롤러주소(type=???, keyword=???)"-->
+                    <!--href="컨트롤러주소(type=date, keyword=oneWeek)"-->
                     <li><a href="#"><em>15</em>일</a></li>
                     <li><a href="#"><em>1</em>개월</a></li>
                 </ul>
@@ -217,12 +201,20 @@
 
             </table>
             <p class="page">
-                <a href="#" class="prev">이전</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="next">다음</a>
+                <a th:if="${pageResponseDTO.pg} > 1"
+                   th:href="@{/mypage/order(pg=${pageResponseDTO.pg - 1})}"
+                   class="prev">이전</a>
+
+                <span th:each="i : ${#numbers.sequence(1, pageResponseDTO.totalPage)}">
+                    <a th:href="@{/mypage/order(pg=${i})}"
+                       th:class="${i == pageResponseDTO.pg ? 'num on' : 'num'}">[[${i}]]</a>
+                </span>
+
+                <a th:if="${pageResponseDTO.pg} < ${pageResponseDTO.totalPage}"
+                   th:href="@{/mypage/order(pg=${pageResponseDTO.pg + 1})}"
+                   class="next">다음</a>
             </p>
+
         </article>
     </section>
 </div>

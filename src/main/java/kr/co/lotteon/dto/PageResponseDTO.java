@@ -8,11 +8,12 @@ import java.util.Optional;
 
 @Data
 public class PageResponseDTO {
-    private Optional<List<NoticeDTO>> noticeList;
-    private Optional<List<FaqDTO>> faqList;
-    private Optional<List<QnaDTO>> qnaList;
-    // 상품검색
-    private Optional<List<ProductDTO>> dtoList;
+    private List<NoticeDTO> noticeList;
+    private List<FaqDTO> faqList;
+    private List<QnaDTO> qnaList;
+    private List<OrdersDTO> orderList;
+    // 상품검색 결과
+    private List<ProductDTO> dtoList;
 
     private int pg;
     private int size;
@@ -28,7 +29,7 @@ public class PageResponseDTO {
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO,
                            List<NoticeDTO> noticeList, int total,
-                           List<FaqDTO> faqList, List<QnaDTO> qnaList, List<ProductDTO> dtoList) {
+                           List<FaqDTO> faqList, List<QnaDTO> qnaList, List<ProductDTO> dtoList, List<OrdersDTO> orderList) {
 
         this.cate1 = pageRequestDTO.getCate1();
         this.cate2 = pageRequestDTO.getCate2();
@@ -38,11 +39,11 @@ public class PageResponseDTO {
         this.totalPage = (int) Math.ceil((double) total / this.size);
         this.search = pageRequestDTO.getSearch();
 
-        this.noticeList = Optional.ofNullable(noticeList);
-        this.faqList = Optional.ofNullable(faqList);
-        this.qnaList = Optional.ofNullable(qnaList);
-        //🎈상품검색
-        this.dtoList = Optional.ofNullable(dtoList);
+        this.noticeList = noticeList;
+        this.faqList = faqList;
+        this.qnaList = qnaList;
+        this.dtoList = dtoList;
+        this.orderList = orderList;
 
         this.end = (int) (Math.ceil((double) this.pg / 10.0)) * 10;
         this.end = Math.min(this.end, this.totalPage);

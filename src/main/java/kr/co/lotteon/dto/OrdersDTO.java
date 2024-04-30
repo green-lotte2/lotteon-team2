@@ -1,6 +1,7 @@
 package kr.co.lotteon.dto;
 
 import kr.co.lotteon.entity.OrderDetail;
+import kr.co.lotteon.entity.Orders;
 import lombok.*;
 
 import java.time.LocalDate;
