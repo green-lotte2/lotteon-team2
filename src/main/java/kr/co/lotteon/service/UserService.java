@@ -5,15 +5,19 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
 import kr.co.lotteon.dto.UserDTO;
+import kr.co.lotteon.entity.Seller;
 import kr.co.lotteon.entity.User;
 import kr.co.lotteon.entity.UserDetail;
 import kr.co.lotteon.mapper.UserMapper;
+import kr.co.lotteon.repository.SellerRepository;
 import kr.co.lotteon.repository.UserDetailRepository;
 import kr.co.lotteon.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +34,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final SellerRepository sellerRepository;
     private final UserDetailRepository userDetailRepository;
     private final UserMapper userMapper;
     private final ModelMapper modelMapper;
@@ -53,6 +58,27 @@ public class UserService {
 
         userRepository.save(user);
         userDetailRepository.save(userDetail);
+
+
+    }
+
+    @Transactional
+    public void insertSeller(UserDTO userDTO) {
+
+        // 비밀번호 암호화
+        userDTO.setPass(passwordEncoder.encode(userDTO.getPass()));
+
+        // 기본권한
+        userDTO.setGrade(1);
+
+        User user = modelMapper.map(userDTO, User.class);
+        Seller seller = modelMapper.map(userDTO, Seller.class);
+
+        log.info(user);
+        log.info(seller);
+
+        userRepository.save(user);
+        sellerRepository.save(seller);
 
 
     }
@@ -151,6 +177,48 @@ public class UserService {
             return userDTO;
         }else {
             return null; // 또는 예외를 던지거나 다른 방식으로 처리
+        }
+    }
+
+    public UserDTO findPassword(String uid, String email){
+        Optional<User> optUser = userRepository.findUserByUidAndEmail(uid, email);
+        UserDTO userDTO = null;
+
+        log.info("findpass..." + optUser);
+
+        if (optUser.isPresent()){
+            User user = optUser.get();
+            userDTO = modelMapper.map(user, UserDTO.class);
+
+
+            return userDTO;
+        }else {
+            return null; // 또는 예외를 던지거나 다른 방식으로 처리
+        }
+    }
+
+    public ResponseEntity<?> updateUserPass(UserDTO userDTO){
+        Optional<User> optUser = userRepository.findById(userDTO.getUid());
+
+        if (optUser.isPresent()){
+            User user = optUser.get();
+
+            String encoded = passwordEncoder.encode(userDTO.getPass());
+            log.info(encoded);
+            user.setPass(encoded);
+
+
+            log.info("updateUser....."+ user);
+
+            User updateUser = userRepository.save(user);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(updateUser);
+        }else {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("not found");
         }
     }
 

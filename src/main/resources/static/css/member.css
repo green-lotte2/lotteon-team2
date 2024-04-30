@@ -746,6 +746,39 @@ header {
   cursor: pointer;
 }
 
+/* 아이디&비밀번호 결과 화면 */
+#member > .find .btnResultArea{
+  margin-top: 45px;
+  padding-left: 265px;
+}
+#member > .find .btnResultArea > .btnAreaCancel{
+  float: left;
+  margin-right: 10px;
+  position: relative;
+  display: inline-block;
+  background: #e7e5e5;
+  color: #222;
+  font-size: 18px;
+  box-sizing: border-box;
+  padding: 15px 50px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: center;
+}
+#member > .find .btnResultArea > .btnAreaNext {
+  float: left;
+  position: relative;
+  display: block;
+  background: #ef3f43;
+  color: #fff;
+  font-size: 18px;
+  padding: 15px 50px;
+  border: 0;
+  outline: 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
 /* member > .passConfirm */
 #member > .passConfirm {                        
 }
