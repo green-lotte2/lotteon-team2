@@ -1,4 +1,9 @@
 package kr.co.lotteon.repository;
 
-public interface SellerRepository {
+import kr.co.lotteon.entity.Seller;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SellerRepository extends JpaRepository<Seller, String> {
+
+
 }

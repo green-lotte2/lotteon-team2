@@ -34,4 +34,11 @@ public class UserDTO {
     private int grade;
     private String location;
 
+    private String company;
+    private String represent;
+    private String regnum;
+    private String reportnum;
+    private String cohp;
+    private String fax;
+
 }

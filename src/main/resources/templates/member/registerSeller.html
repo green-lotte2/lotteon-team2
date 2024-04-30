@@ -3,12 +3,14 @@
 	  layout:decorate="~{/layout/MemberLayout}">
 
 	<main class="content" id="member" layout:fragment="content">
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script th:src="@{/js/registerSeller.js}"></script>
+
             <div class="registerSeller">
 				<nav>
 					<h1>판매자 회원가입</h1>
 				</nav>
-                
-				<form th:action="@{/member/login}" method="POST">
+				<form th:action="@{/member/registerSeller}" name="formRegisterSeller" method="POST">
 					<section>
 						<table>
 							<caption>필수 정보입력</caption>
@@ -80,21 +82,34 @@
 							</tr>
 							<tr>
 								<th><span class="essential">*</span>EMAIL</th>
-								<td>
-									<input type="email" name="email" placeholder="이메일 입력" required />
+								<td><input id="inputEmail" type="email" name="email" placeholder="이메일 입력"
+										   required/>
+									<button class="btnSubmit" type="button" id="btn_email" data-type="email">이메일 인증</button>
+									<span id="result_email"></span>
+
+									<div id="divEmailCode">
+										<input class="form-control" id="inputEmailCode" name="code" type="text" placeholder="이메일 인증코드 입력"/>
+										<button type="button" class="btnSubmit" id="btnCheckEmailCode"
+												data-type="email">
+											<span class="" role="status">인증코드 확인</span>
+										</button>
+										<div id="resultEmailCode" class="d-block"></div>
+									</div>
 								</td>
 							</tr>
 							<tr class="addr">
 								<th>회사주소</th>
 								<td>
 									<div>
-										<input type="text" name="zip" id="zip" placeholder="우편번호 입력 클릭" readonly />
+										<input type="text" name="zip" id="inputZip" placeholder="우편번호 찾기 클릭" readonly/>
+										<button type="button" id="findZip">우편번호 찾기</button>
+									</div>
+
+									<div>
+										<input type="text" name="addr1" id="addr1" size="50" placeholder="주소를 검색하세요." readonly/>
 									</div>
 									<div>
-										<input type="text" name="addr1" id="addr1" size="50" placeholder="주소를 검색하세요." readonly />
-									</div>
-									<div>
-										<input type="text" name="addr2" id="addr2" size="50" placeholder="상세주소를 입력하세요." />
+										<input type="text" name="addr2" id="addr2" size="50" placeholder="상세주소를 입력하세요."/>
 									</div>
 								</td>
 							</tr>
@@ -107,6 +122,7 @@
 								<th><span class="essential">*</span>이름</th>
 								<td>
 									<input type="text" name="name" placeholder="이름을 입력" required />
+									<span class="msgName"></span>
 								</td>
 							</tr>
 							<tr>
