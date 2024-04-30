@@ -4,8 +4,10 @@ package kr.co.lotteon.dto;
 import kr.co.lotteon.entity.Banner;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
 @Getter
 @Setter
 @Builder
@@ -20,13 +22,13 @@ public class BannerDTO {
     private String bcolor;
     private String blink;
     private String blocation;
-    private String bstartDate;
-    private String bendDate;
-    private String bstartTime;
-    private String bendTime;
+    private LocalDateTime bstartDate;
+    private LocalDateTime bendDate;
+    private LocalDateTime bstartTime;
+    private LocalDateTime bendTime;
     private String bmanage;
-
-    private List<BannerDTO> bannerDTOS;
+    
+    public List<BannerDTO> bannerDTO;
 
     public Banner toEntity(){
         return  Banner.builder()
@@ -35,11 +37,15 @@ public class BannerDTO {
                     .bfile(bfile)
                     .bcolor(bcolor)
                     .blink(blink)
-                    .bloaction(blocation)
+                    .blocation(blocation)
+                    .bstartDate(bstartDate)
+                    .bendDate(bendDate)
+                    .bstartTime(bstartTime)
+                    .bendTime(bendTime)
                     .bmanage(bmanage)
                     .build();
     }
 
-    public List<BannerDTO> bannerDTO;
+
 
 }

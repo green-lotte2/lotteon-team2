@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -26,18 +27,15 @@ public class Banner {
     private String bfile;
     private String bcolor;
     private String blink;
-    private String bloaction;
-    @CreationTimestamp
+    private String blocation;
+
+
     private LocalDateTime bstartDate;
-    @CreationTimestamp
     private LocalDateTime bendDate;
-    @CreationTimestamp
     private LocalDateTime bstartTime;
-    @CreationTimestamp
-    private LocalDateTime endTime;
+    private LocalDateTime bendTime;
     private String bmanage;
 
-    //private List<BannerDTO> bannerList;
 }
 
 

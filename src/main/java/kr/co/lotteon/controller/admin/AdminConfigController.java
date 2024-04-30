@@ -7,12 +7,14 @@ import kr.co.lotteon.entity.Banner;
 import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.CsService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class AdminConfigController {
 
     @Autowired
     AdminService adminService;
+    ModelMapper modelMapper;
 
     @GetMapping(value = {"/admin/", "/admin/index"})
     public String index(@RequestParam(name="pg", defaultValue = "1") String pg,
@@ -98,13 +101,17 @@ public class AdminConfigController {
         return "/admin/config/banner";
     }
 
+
     // 🎈banner 등록
-   /* @PostMapping("/admin/config/banner")
-    public List<BannerDTO> banner(BannerDTO bannerDTO){
+    @PostMapping(value = "/admin/config/banner")
+    public ResponseEntity<BannerDTO> banner(@ModelAttribute BannerDTO bannerDTO,
+                                            @RequestParam("file") MultipartFile file)  {
+        Banner savedBanner = adminService.insertBanner(bannerDTO);
+        log.info("savedBanner" + savedBanner);
 
-        return adminService.insertBanner();
-    }*/
-
+        BannerDTO savedBannerDTO = modelMapper.map(savedBanner, BannerDTO.class);
+        return ResponseEntity.ok().body(savedBannerDTO);
+    }
 
 
 

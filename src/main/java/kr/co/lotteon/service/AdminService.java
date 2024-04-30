@@ -46,12 +46,12 @@ public class AdminService {
     private final BannerRepository bannerRepository;
     private final ModelMapper modelMapper;
 
-    public ResponseEntity<Banner> insertBanner(BannerDTO bannerDTO) {
+    public Banner insertBanner(BannerDTO bannerDTO) {
         Banner banner = modelMapper.map(bannerDTO,Banner.class);
         Banner savedBanner = bannerRepository.save(banner);
         log.info("savedBanner : " + savedBanner);
 
-        return ResponseEntity.ok().body(savedBanner);
+        return savedBanner;
     }
 
 
