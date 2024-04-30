@@ -37,10 +37,8 @@
    </select>
 
     <delete id="deleteBanner">
-        DELETE FROM 'banner' WHERE bno = #{bno}
+        DELETE FROM banner WHERE `bno` = #{bno}
     </delete>
-
-
 
 
 
