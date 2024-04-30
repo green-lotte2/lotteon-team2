@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -21,7 +22,7 @@ public class Orders {
     private int ono;
     private String uid;
     @CreationTimestamp
-    private LocalDateTime odate;
+    private LocalDate odate;
     private int usepoint;
     private int savepoint;
     private String receiver;
