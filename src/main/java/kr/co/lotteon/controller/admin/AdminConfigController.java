@@ -126,7 +126,7 @@ public class AdminConfigController {
             adminService.deleteBanner(bnoId);
             log.info("deleteBno : " + bnoId);
         }
-        log.info(checkbox.toString());
+        log.info("deleteCheckBox : " + checkbox);
 
         return "redirect:/admin/config/bannerList";
     }

@@ -233,41 +233,44 @@
     </style>
     <script>
             //🎈 체크박스 삭제
-            window.onload = function () {
-                const delBtn = document.getElementsByClassName('delBtn');
-                const selectAllCheckbox = document.getElementsByName('all')[0];
-                const checkBoxes = document.getElementsByName('checkbox');
 
-                delBtn.onclick = function(){
-                    let Checked = false; // 최소한 하나의 체크박스가 선택되었는지 여부를 나타내는 변수
-                    for (let i = 0; i < checkBoxes.length; i++) {
-                        if (checkBoxes[i].checked) {
-                            Checked = true;
-                            break; // 하나라도 체크되어 있으면 반복문 종료
-                        }
-                    }
+           window.onload = function () {
+               const selectAllCheckboxes = document.getElementsByName('all');
 
-                    if (!Checked) {
-                        alert('삭제할 상품을 선택해주세요.');
-                        console.log('check..');
-                        return false;
-                    } else {
-                        let confirmed = confirm('정말 삭제하시겠습니까?');
-                        if (!confirmed) {
-                            return false;
-                        }
-                    }
-                };
+                // selectAllCheckboxes를 forEach로 반복
+               selectAllCheckboxes.forEach(function (selectAllCheckbox, index) {
+                   const checkboxNumber = index + 1; // 체크박스 번호 계산 (1부터 시작)
+                   const delBtn = document.getElementById(`delBtn${checkboxNumber}`);
+                   const checkBoxes = document.getElementsByClassName(`checkbox${checkboxNumber}`);
 
-                selectAllCheckbox.addEventListener('change', function () {
-                    for (let i = 0; i < checkBoxes.length; i++) {
-                        checkBoxes[i].checked = selectAllCheckbox.checked;
-                    }
-                });
+                   delBtn.onclick = function () {
+                       let Checked = false; // 최소한 하나의 체크박스가 선택되었는지 여부를 나타내는 변수
+                       for (let j = 0; j < checkBoxes.length; j++) {
+                           if (checkBoxes[j].checked) {
+                               Checked = true;
+                               break; // 하나라도 체크되어 있으면 반복문 종료
+                           }
+                       }
 
+                       if (!Checked) {
+                           alert('삭제할 상품을 선택해주세요.');
+                           console.log('check..');
+                           return false;
+                       } else {
+                           let confirmed = confirm('정말 삭제하시겠습니까?');
+                           if (!confirmed) {
+                               return false;
+                           }
+                       }
+                   };
 
-            }
-
+                   selectAllCheckbox.addEventListener('change', function () {
+                       for (let j = 0; j < checkBoxes.length; j++) {
+                           checkBoxes[j].checked = selectAllCheckbox.checked;
+                       }
+                   });
+               });
+           }
 
             $(function() {
                 $("#tabs").tabs();
@@ -326,10 +329,10 @@
                 <p>
                     쇼핑몰 메인 상단에 출력되는 배너입니다.
                 </p>
-                <form th:action="@{/admin/config/bannerDelete}">
+                <form th:action="@{/admin/config/bannerDelete}" method="post">
                     <table>
                         <tr>
-                            <th><input type="checkbox" name="all"/></th>
+                            <th><input type="checkbox"  name="all"/></th>
                             <th>배너번호</th>
                             <th>이미지</th>
                             <th>배너정보</th>
@@ -342,7 +345,7 @@
                         </tr>
 
                         <tr th:each="banner:${banners}" th:if="${banner.blocation} == 'MAIN1'">
-                            <td><input type="checkbox" name="checkbox" th:value="${banner.bno}"></td>
+                            <td><input type="checkbox"  class="checkbox1" name="checkbox" th:value="${banner.bno}"></td>
                             <td>[[${banner.bno}]]</td>
                             <td>
                                 <a><img th:src="@{/admin/img/topBanner2.png}" class="thumb"></a>
@@ -366,7 +369,7 @@
                             </td>
                         </tr>
                     </table>
-                    <input type="button"  class="btnNegative delBtn" value="선택삭제"/>
+                    <input type="submit" id="delBtn1" class="btnNegative" value="선택삭제"/>
                     <input type="button" class="btnPositive btnRegister" value="등록하기"/>
                 </form>
 
@@ -378,10 +381,10 @@
                 <p>
                     쇼핑몰 메인 슬라이더 영역에 노출되는 배너입니다.
                 </p>
-                <form th:action="@{/admin/config/bannerDelete}">
+                <form th:action="@{/admin/config/bannerDelete}" method="post">
                     <table>
                         <tr>
-                            <th><input type="checkbox" name="all"/></th>
+                            <th><input type="checkbox"  name="all"/></th>
                             <th>배너번호</th>
                             <th>이미지</th>
                             <th>배너정보</th>
@@ -390,11 +393,10 @@
                             <th>종료날짜</th>
                             <th>시작시간</th>
                             <th>종료시간</th>
-                            <th>조회</th>
                             <th>관리</th>
                         </tr>
                         <tr  th:each="banner:${banners}" th:if="${banner.blocation} == 'MAIN2'">
-                            <td><input type="checkbox" name="checkbox" th:value="${banner.bno}"/></td>
+                            <td><input type="checkbox" class="checkbox2" name="checkbox" th:value="${banner.bno}"/></td>
                             <td>[[${banner.bno}]]</td>
                             <td><img th:src="@{/admin/img/slider_item1.jpg}" class="thumb"></td>
                             <td>
@@ -416,7 +418,7 @@
                             </td>
                         </tr>
                     </table>
-                    <input type="button" class="btnNegative delBtn" value="선택삭제"/>
+                    <input type="submit" id="delBtn2" class="btnNegative" value="선택삭제"/>
                     <input type="button" class="btnPositive btnRegister" value="등록하기"/>
                 </form>
             </section>
@@ -427,10 +429,10 @@
                 <p>
                     상품 상세보기 상품수량 입력 상단부에 노출되는 배너입니다.
                 </p>
-                <form th:action="@{/admin/config/bannerDelete}">
+                <form th:action="@{/admin/config/bannerDelete}" method="post">
                     <table>
                         <tr>
-                            <th><input type="checkbox" name="all"/></th>
+                            <th><input type="checkbox"  name="all"/></th>
                             <th>배너번호</th>
                             <th>이미지</th>
                             <th>배너정보</th>
@@ -439,11 +441,10 @@
                             <th>종료날짜</th>
                             <th>시작시간</th>
                             <th>종료시간</th>
-                            <th>조회</th>
                             <th>관리</th>
                         </tr>
                         <tr  th:each="banner:${banners}" th:if="${banner.blocation} == 'PRODUCT1'">
-                            <td><input  type="checkbox" name="checkbox" th:value="${banner.bno}"/></td>
+                            <td><input  type="checkbox"  class="checkbox3" name="checkbox" th:value="${banner.bno}"/></td>
                             <td>[[${banner.bno}]]</td>
                             <td><img th:src="@{/admin/img/vip_plcc_banner.png}" class="thumb"></td>
                             <td>
@@ -465,7 +466,7 @@
                             </td>
                         </tr>
                     </table>
-                    <input type="button" class="btnNegative delBtn" value="선택삭제"/>
+                    <input type="submit" id="delBtn3" class="btnNegative" value="선택삭제"/>
                     <input type="button" class="btnPositive btnRegister" value="등록하기"/>
                 </form>
             </section>
@@ -476,10 +477,10 @@
                 <p>
                     회원 로그인 폼 오른쪽에 노출되는 배너입니다.
                 </p>
-                <form th:action="@{/admin/config/bannerDelete}">
+                <form th:action="@{/admin/config/bannerDelete}" method="post">
                     <table>
                         <tr>
-                            <th><input type="checkbox" name="all"/></th>
+                            <th><input type="checkbox"  name="all"/></th>
                             <th>배너번호</th>
                             <th>이미지</th>
                             <th>배너정보</th>
@@ -488,11 +489,10 @@
                             <th>종료날짜</th>
                             <th>시작시간</th>
                             <th>종료시간</th>
-                            <th>조회</th>
                             <th>관리</th>
                         </tr>
                         <tr th:each="banner:${banners}" th:if="${banner.blocation} == 'MEMBER1'">
-                            <td><input type="checkbox" name="checkbox" th:value="${banner.bno}"/></td>
+                            <td><input type="checkbox" class="checkbox4" name="checkbox" th:value="${banner.bno}"/></td>
                             <td>[[${banner.bno}]]</td>
                             <td><img th:src="@{/images/member_login_banner.jpg}" class="thumb"></td>
                             <td>
@@ -514,7 +514,7 @@
                             </td>
                         </tr>
                     </table>
-                    <input type="button" class="btnNegative delBtn" value="선택삭제"/>
+                    <input type="submit" id="delBtn4" class="btnNegative" value="선택삭제"/>
                     <input type="button" class="btnPositive btnRegister" value="등록하기"/>
                 </form>
             </section>
@@ -525,7 +525,7 @@
                 <p>
                     마이페이지 하위 모든 페이지에서 노출되는 배너입니다.
                 </p>
-                <form th:action="@{/admin/config/bannerDelete}">
+                <form th:action="@{/admin/config/bannerDelete}" method="post">
                     <table>
                         <tr>
                             <th><input type="checkbox" name="all"/></th>
@@ -537,11 +537,10 @@
                             <th>종료날짜</th>
                             <th>시작시간</th>
                             <th>종료시간</th>
-                            <th>조회</th>
                             <th>관리</th>
                         </tr>
                         <tr th:each="banner:${banners}" th:if="${banner.blocation} == 'MY1'">
-                            <td><input type="checkbox" name="checkbox" th:value="${banner.bno}"/></td>
+                            <td><input type="checkbox"  class="checkbox5" name="checkbox" th:value="${banner.bno}"/></td>
                             <td>[[${banner.bno}]]</td>
                             <td><img th:src="@{/images/my_banner1.jpg}" class="thumb"></td>
                             <td>
@@ -563,7 +562,7 @@
                             </td>
                         </tr>
                     </table>
-                    <input type="button"  class="btnNegative delBtn" value="선택삭제"/>
+                    <input type="submit"  id="delBtn5" class="btnNegative" value="선택삭제"/>
                     <input type="button" class="btnPositive btnRegister" value="등록하기"/>
                 </form>
             </section>
