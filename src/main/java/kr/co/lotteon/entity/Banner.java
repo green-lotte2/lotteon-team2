@@ -5,8 +5,11 @@ import jakarta.persistence.*;
 import kr.co.lotteon.dto.BannerDTO;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +33,10 @@ public class Banner {
     private String blocation;
 
 
-    private LocalDateTime bstartDate;
-    private LocalDateTime bendDate;
-    private LocalDateTime bstartTime;
-    private LocalDateTime bendTime;
+    private LocalDate bstartDate;
+    private LocalDate bendDate;
+    private LocalTime bstartTime;
+    private LocalTime bendTime;
     private String bmanage;
 
 }

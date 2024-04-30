@@ -1,11 +1,8 @@
 package kr.co.lotteon.mapper;
 
-import kr.co.lotteon.dto.FaqDTO;
-import kr.co.lotteon.dto.NoticeDTO;
-import kr.co.lotteon.dto.ProductDTO;
+import kr.co.lotteon.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
-import kr.co.lotteon.dto.UserDTO;
 
 
 @Mapper
@@ -37,6 +34,12 @@ public interface AdminMapper{
     public FaqDTO adminFaqView(int faqno);
 
 
+    //🎈배너
+    // 목록
+    public List<BannerDTO> selectBanner();
+
+    // 삭제
+    public void deleteBanner(int bno);
 
 
 }

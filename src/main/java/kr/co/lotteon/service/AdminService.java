@@ -54,6 +54,14 @@ public class AdminService {
         return savedBanner;
     }
 
+    // 🎈 배너 리스트
+    public List<BannerDTO> selectBanner() {
+        return adminMapper.selectBanner();
+    }
+
+    public void deleteBanner(int bno){
+        adminMapper.deleteBanner(bno);
+    }
 
 
 }

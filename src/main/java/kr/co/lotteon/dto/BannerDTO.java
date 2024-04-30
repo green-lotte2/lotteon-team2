@@ -3,8 +3,11 @@ package kr.co.lotteon.dto;
 
 import kr.co.lotteon.entity.Banner;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -19,13 +22,14 @@ public class BannerDTO {
     private int bno;
     private String bname;
     private String bfile;
+    private MultipartFile file;
     private String bcolor;
     private String blink;
     private String blocation;
-    private LocalDateTime bstartDate;
-    private LocalDateTime bendDate;
-    private LocalDateTime bstartTime;
-    private LocalDateTime bendTime;
+    private LocalDate bstartDate;
+    private LocalDate bendDate;
+    private LocalTime bstartTime;
+    private LocalTime bendTime;
     private String bmanage;
     
     public List<BannerDTO> bannerDTO;

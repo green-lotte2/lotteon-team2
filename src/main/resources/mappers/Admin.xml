@@ -12,7 +12,7 @@
             <if test="role == 'SELLER'"> role=#{role}</if>
             <if test="role == 'ADMIN'"> role=#{role}</if>
             <if test="keyword != null and keyword != ''"> AND uid=#{uid}</if>
-        </where> -->
+        </where>-->
     </select>
 
     <!--🎈admin_product_list-->
@@ -29,6 +29,15 @@
     <delete id="adminDeleteProduct">
         DELETE FROM `product` WHERE pno = #{pno}
 
+    </delete>
+
+    <!--🎈 banner_list-->
+    <select id="selectBanner" resultType="kr.co.lotteon.dto.BannerDTO">
+        SELECT * FROM `banner`
+   </select>
+
+    <delete id="deleteBanner">
+        DELETE FROM 'banner' WHERE bno = #{bno}
     </delete>
 
 

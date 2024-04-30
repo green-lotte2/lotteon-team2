@@ -21,9 +21,9 @@ public class QBanner extends EntityPathBase<Banner> {
 
     public final StringPath bcolor = createString("bcolor");
 
-    public final DateTimePath<java.time.LocalDateTime> bendDate = createDateTime("bendDate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> bendDate = createDate("bendDate", java.time.LocalDate.class);
 
-    public final DateTimePath<java.time.LocalDateTime> bendTime = createDateTime("bendTime", java.time.LocalDateTime.class);
+    public final TimePath<java.time.LocalTime> bendTime = createTime("bendTime", java.time.LocalTime.class);
 
     public final StringPath bfile = createString("bfile");
 
@@ -37,9 +37,9 @@ public class QBanner extends EntityPathBase<Banner> {
 
     public final NumberPath<Integer> bno = createNumber("bno", Integer.class);
 
-    public final DateTimePath<java.time.LocalDateTime> bstartDate = createDateTime("bstartDate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> bstartDate = createDate("bstartDate", java.time.LocalDate.class);
 
-    public final DateTimePath<java.time.LocalDateTime> bstartTime = createDateTime("bstartTime", java.time.LocalDateTime.class);
+    public final TimePath<java.time.LocalTime> bstartTime = createTime("bstartTime", java.time.LocalTime.class);
 
     public QBanner(String variable) {
         super(Banner.class, forVariable(variable));
