@@ -13,9 +13,379 @@
             rel="stylesheet">
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
 
+    <style>
+        .option{
+            border: 1px solid #1e1e1e;
+            display: inline-block;
+        }
+    </style>
+    <script th:inline="javascript">
+
+
+    /*<![CDATA[*/
+        window.onload = function () {
+
+            const price = document.getElementsByName('price')[0];
+            const discount = document.getElementsByName('discount')[0];
+            const point = document.getElementsByName('point')[0];
+
+            price.onchange = function(){
+                point.value = Math.floor((parseInt(price.value)- (parseInt(price.value) * parseInt(discount.value)) / 100) / 100);
+            }
+            discount.onchange = function(){
+                point.value = Math.floor((parseInt(price.value)- (parseInt(price.value) * parseInt(discount.value)) / 100) / 100);
+            }
+
+            // 카테고리 설정
+            const cateList = [[${cate}]];
+            const category1 = document.getElementsByName('category1')[0];
+            cateList.forEach(function (item) {
+                category1.innerHTML += `<option value="` + item.cate + `">` + item.cname + `</option>`;
+            });
+
+            const category2 = document.getElementsByName('category2')[0];
+            category1.onchange = function (e) {
+                cateList.forEach(function (item1) {
+
+                    if (category1.value == item1.cate) {
+
+                        category2.innerHTML = `<option>2차 분류 선택</option>`;
+                        item1.children.forEach(function (item2) {
+
+                            category2.innerHTML += `<option value="` + item2.cate + `">` + item2.cname + `</option>`;
+                        })
+
+                    }
+                });
+            }
+
+            const category3 = document.getElementsByName('cate')[0];
+            category2.onchange = function (e) {
+                cateList.forEach(function (item1) {
+                    if (category1.value == item1.cate) {
+                        item1.children.forEach(function (item2) {
+                            if (category2.value == item2.cate) {
+                                category3.innerHTML = `<option value="cate0">3차 분류 선택 </option>`;
+                                item2.children.forEach(function (item3) {
+                                    category3.innerHTML += `<option value="` + item3.cate + `">` + item3.cname + `</option>`;
+                                });
+                            }
+                        })
+                    }
+                });
+            }
+
+            // 카테고리 초기값
+            const productInfo = [[${product.cate}]];
+            const type1 = Math.floor(productInfo/10000);
+            const type2 = Math.floor((productInfo % 10000)/100);
+            const type3 = Math.floor(productInfo % 100);
+            category1.children[type1].selected = true;
+            category1.dispatchEvent(new Event('change'));
+            category2.children[type2].selected = true;
+            category2.dispatchEvent(new Event('change'));
+            category3.children[type3].selected = true;
+
+
+
+            const regBtn = document.getElementsByName('regBtn')[0];
+            regBtn.onclick = function (e) {
+                e.preventDefault();
+
+                const optionField = document.getElementsByClassName('option');
+                let optionName = "";
+                let optionValue = "";
+                console.log(optionField);
+
+                for(let i = 0; i < optionField.length; i++){
+                    console.log(optionField[i].childNodes[1].value);
+                    optionName += optionField[i].childNodes[1].value;
+                    if(optionName == ""){
+                        optionName = null;
+                        optionValue = null;
+                        break;
+                    }
+                    for(let j = 2; j < optionField[i].childNodes.length; j++){
+                        console.log(optionField[i].childNodes[j]);
+                        optionValue += optionField[i].childNodes[j].childNodes[0].value + "/";
+                    }
+                    optionName += "%";
+                    optionValue += "$";
+                }
+                console.log(optionName);
+                console.log(optionValue);
+                if (optionName != null){
+                    hidOptionName = document.createElement('input');
+                    hidOptionValue = document.createElement('input');
+
+                    hidOptionName.type = 'hidden';
+                    hidOptionName.name = 'opname';
+                    hidOptionName.value = optionName;
+                    hidOptionValue.type = 'hidden';
+                    hidOptionValue.name = 'opvalue';
+                    hidOptionValue.value = optionValue;
+
+                    optionField[0].appendChild(hidOptionName);
+                    optionField[0].appendChild(hidOptionValue);
+                }
+
+
+                document.getElementById('register').submit();
+
+                alert('상품등록이 성공적으로 완료되었습니다!');
+            }
+
+            document.getElementById('test').onclick = function (){
+                const options = [document.getElementById('options').children[0].children];
+                console.log(options);
+                options.forEach(function (tr){
+                    console.log(tr);
+                    [tr.children].forEach(function (td){
+                        console.log(td);
+                    });
+                });
+            }
+
+
+        }
+        /*]]>*/
+
+        const addOptionField = (obj) => {
+            const field = obj.closest('tr').parentNode;
+            const tr = document.createElement('tr');
+            tr.innerHTML =
+            `<tr>
+                <td>
+                    <input type="text" placeholder="옵션 이름을 입력하세요">
+                </td>
+                <td>
+                    <div>
+                        <input type="text" placeholder="옵션 값을 입력하세요">
+                        <input type="button" onclick="addOptionValue(this)" value="옵션 추가">
+                        <input type="button" onclick="removeOption(this)" value="옵션 삭제"><br>
+                    </div>
+
+                </td>
+            </tr>`;
+            field.appendChild(tr);
+        }
+
+        const addOptionValue = (obj) => {
+            const box = obj.closest('td');
+            const div = document.createElement('div');
+            const input = document.createElement('input');
+            input.type = 'text';
+
+            div.appendChild(input);
+            box.appendChild(div);
+        }
+
+        const removeField = (obj) => {
+            const field = obj.closest('tr').parentNode.children;
+            if(field.length - 1 > 0){
+                field[field.length - 1].remove();
+            }else{
+                alert("최소 입력 필드 입니다.")
+            }
+        }
+
+        const removeOption = (obj) => {
+            const option = obj.closest('td').children;
+            if(option.length - 1 > 0){
+                option[option.length - 1].remove();
+            }else{
+                alert("최소 입력 필드 입니다.");
+            }
+        }
+
+
+    </script>
+
 </head>
 
 <main layout:fragment="content">
+
+
+    <section id="admin-product-register">
+        <nav>
+            <h3>상품수정</h3>
+            <p>
+                HOME > 상품관리 > <strong>상품수정</strong>
+            </p>
+        </nav>
+        <!-- 상품등록 컨텐츠 시작 -->
+        <article>
+            <form th:action="@{/admin/product/register}" method="post" id="register" enctype="multipart/form-data">
+                <!-- 상품분류 -->
+                <section>
+                    <h4>상품분류</h4>
+                    <p>
+                        기본분류는 반드시 선택하셔야 합니다. 하나의 상품에 1개의 분류를 지정 합니다.
+                    </p>
+                    <table>
+                        <tr>
+                            <td>1차 분류</td>
+                            <td>
+                                <select name="category1">
+                                    <option value="cate0">1차 분류 선택</option>
+
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2차 분류</td>
+                            <td>
+                                <select name="category2">
+                                    <option value="cate0">2차 분류 선택</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3차 분류</td>
+                            <td>
+                                <select name="cate">
+                                    <option value="cate0">3차 분류 선택</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <!-- 기본정보 -->
+                <section>
+                    <h4>기본정보</h4>
+                    <p>
+                        기본정보는 반드시 입력해야 합니다.
+                    </p>
+                    <table>
+                        <input type="hidden" name="pno" th:value="${product.pno}">
+                        <tr>
+                            <td>상품명</td>
+                            <td><input type="text" name="pname" th:value="${product.pname}"/></td>
+                        </tr>
+                        <tr>
+                            <td>기본설명</td>
+                            <td>
+                                <span>상품명 하단에 상품에 대한 추가적인 설명이 필요한 경우에 입력</span>
+                                <input type="text" name="info" th:value="${product.info}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>제조사</td>
+                            <td><input type="text" name="company" th:value="${product.company}"/></td>
+                        </tr>
+                        <tr>
+                            <td>판매가격</td>
+                            <td><input type="text" name="price" th:value="${product.price}"/>원</td>
+                        </tr>
+                        <tr>
+                            <td>할인율</td>
+                            <td>
+                                <span>0을 입력하면 할인율 없음</span>
+                                <input type="text" name="discount" th:value="${product.discount}"/>%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>포인트</td>
+                            <td>
+                                <span>할인이 적용된 상품 가격의 1%</span>
+                                <input type="text" name="point" th:value="${product.point}" readonly/>점
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>재고수량</td>
+                            <td><input type="text" name="stock" th:value="${product.stock}"/>개</td>
+                        </tr>
+                        <tr>
+                            <td>배송비</td>
+                            <td>
+                                <span>0을 입력하면 배송비 무료</span>
+                                <input type="text" name="deliprice" th:value="${product.deliprice}"/>원
+                            </td>
+                        </tr>
+
+
+
+
+                        <tr>
+                            <td>상품 옵션</td>
+                            <td>
+                                <table id="options">
+                                    <tr>
+                                        <td>
+                                            <input type="text" placeholder="옵션 이름을 입력하세요">
+                                            <input type="button" onclick="addOptionField(this)" value="옵션 추가">
+                                            <input type="button" onclick="removeField(this)" value="옵션 삭제">
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <input type="text" placeholder="옵션 값을 입력하세요">
+                                                <input type="button" onclick="addOptionValue(this)" value="옵션 추가">
+                                                <input type="button" onclick="removeOption(this)" value="옵션 삭제">
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+                            <input type="button" id="test">
+                            <td>상품 썸네일</td>
+                            <td>
+                                <span>크기 456 x 456, 상품 상세에 출력될 이미지 입니다. </span>
+                                <input type="file" name="mainImg"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>상세 상품정보</td>
+                            <td>
+                                <span>크기 가로 940px 높이 제약없음, 크기 최대 1MB, 상세페이지 상품정보에 출력될 이미지 입니다.</span>
+                                <input type="file" name="detailImg"/>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+
+                <!-- 상품정보 제공 고시 -->
+                <section>
+                    <h4>상품정보 제공고시</h4>
+                    <p>
+                        [전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의거 등록해야 되는 정보입니다.
+                    </p>
+                    <table>
+                        <tr>
+                            <td>부가세 면세여부</td>
+                            <td><input type="text" name="" value="과세상품"/></td>
+                        </tr>
+                        <tr>
+                            <td>영수증발행</td>
+                            <td><input type="text" name="" value="발행가능 - 신용카드 전표, 온라인 현금영수증"/></td>
+                        </tr>
+                        <tr>
+                            <td>사업자구분</td>
+                            <td><input type="text" name="" value="사업자 판매자"/></td>
+                        </tr>
+                        <tr>
+                            <td>원산지</td>
+                            <td><input type="text" name="" value="국내산"/></td>
+                        </tr>
+                    </table>
+                </section>
+
+                <input type="submit" name="regBtn" value="등록하기"/>
+            </form>
+        </article>
+
+        <p class="ico alert">
+            <strong>Warning!</strong>
+            전자상거래 등에서의 상품 등의 정보제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.
+        </p>
+        <!-- 상품등록 컨텐츠 끝 -->
+    </section>
 
     <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
