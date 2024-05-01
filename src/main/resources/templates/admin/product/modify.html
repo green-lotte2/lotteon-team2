@@ -14,7 +14,7 @@
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
 
     <style>
-        .option{
+        .option {
             border: 1px solid #1e1e1e;
             display: inline-block;
         }
@@ -22,18 +22,18 @@
     <script th:inline="javascript">
 
 
-    /*<![CDATA[*/
+        /*<![CDATA[*/
         window.onload = function () {
 
             const price = document.getElementsByName('price')[0];
             const discount = document.getElementsByName('discount')[0];
             const point = document.getElementsByName('point')[0];
 
-            price.onchange = function(){
-                point.value = Math.floor((parseInt(price.value)- (parseInt(price.value) * parseInt(discount.value)) / 100) / 100);
+            price.onchange = function () {
+                point.value = Math.floor((parseInt(price.value) - (parseInt(price.value) * parseInt(discount.value)) / 100) / 100);
             }
-            discount.onchange = function(){
-                point.value = Math.floor((parseInt(price.value)- (parseInt(price.value) * parseInt(discount.value)) / 100) / 100);
+            discount.onchange = function () {
+                point.value = Math.floor((parseInt(price.value) - (parseInt(price.value) * parseInt(discount.value)) / 100) / 100);
             }
 
             // 카테고리 설정
@@ -77,8 +77,8 @@
 
             // 카테고리 초기값
             const productInfo = [[${product.cate}]];
-            const type1 = Math.floor(productInfo/10000);
-            const type2 = Math.floor((productInfo % 10000)/100);
+            const type1 = Math.floor(productInfo / 10000);
+            const type2 = Math.floor((productInfo % 10000) / 100);
             const type3 = Math.floor(productInfo % 100);
             category1.children[type1].selected = true;
             category1.dispatchEvent(new Event('change'));
@@ -86,86 +86,83 @@
             category2.dispatchEvent(new Event('change'));
             category3.children[type3].selected = true;
 
+            const productOptionName = [[${product.opname}]];
+            const productOptionValue = [[${product.opvalue}]];
+
+            const optionNames = productOptionName.split("%");
+            const optionValues = productOptionValue.split("$");
+            console.log(optionNames);
+
+            const optionField = document.getElementById('options').children[0];
+            console.log(optionField);
+            for (let i = 0; i < optionNames.length - 1; i++) {
+                if (i === 0) {
+                    optionField.children[0].children[0].children[0].value = optionNames[i];
+                    const optionValue = optionValues[i].split("/");
+                    console.log(optionValue);
+                    for (let j = 0; j < optionValue.length - 1; j++) {
+                        if (j === 0) {
+                            optionField.children[0].children[1].children[0].children[0].value = optionValue[0];
+                        } else {
+                            addOptionValueSetting(optionField.children[0].children[1].children[0], optionValue[j]);
+                        }
+                    }
+                } else {
+                    addOptionField(optionField.children[0].children[0]);
+                    optionField.children[i].children[0].children[0].value = optionNames[i];
+                    const optionValue = optionValues[i].split("/");
+                    console.log(optionValue);
+                    for (let j = 0; j < optionValue.length - 1; j++) {
+                        if (j === 0) {
+                            optionField.children[i].children[1].children[0].children[0].value = optionValue[0];
+                        } else {
+                            addOptionValueSetting(optionField.children[i].children[1].children[0], optionValue[j]);
+                        }
+                    }
+                }
+            }
 
 
             const regBtn = document.getElementsByName('regBtn')[0];
             regBtn.onclick = function (e) {
                 e.preventDefault();
 
-                const optionField = document.getElementsByClassName('option');
-                let optionName = "";
-                let optionValue = "";
-                console.log(optionField);
-
-                for(let i = 0; i < optionField.length; i++){
-                    console.log(optionField[i].childNodes[1].value);
-                    optionName += optionField[i].childNodes[1].value;
-                    if(optionName == ""){
-                        optionName = null;
-                        optionValue = null;
-                        break;
-                    }
-                    for(let j = 2; j < optionField[i].childNodes.length; j++){
-                        console.log(optionField[i].childNodes[j]);
-                        optionValue += optionField[i].childNodes[j].childNodes[0].value + "/";
-                    }
-                    optionName += "%";
-                    optionValue += "$";
-                }
-                console.log(optionName);
-                console.log(optionValue);
-                if (optionName != null){
-                    hidOptionName = document.createElement('input');
-                    hidOptionValue = document.createElement('input');
-
-                    hidOptionName.type = 'hidden';
-                    hidOptionName.name = 'opname';
-                    hidOptionName.value = optionName;
-                    hidOptionValue.type = 'hidden';
-                    hidOptionValue.name = 'opvalue';
-                    hidOptionValue.value = optionValue;
-
-                    optionField[0].appendChild(hidOptionName);
-                    optionField[0].appendChild(hidOptionValue);
-                }
-
+                setOption();
 
                 document.getElementById('register').submit();
 
-                alert('상품등록이 성공적으로 완료되었습니다!');
+                alert('상품 수정이 성공적으로 완료되었습니다!');
             }
 
-            document.getElementById('test').onclick = function (){
+            function setOption() {
                 const options = Array.from(document.getElementById('options').children[0].children);
                 let optionNames = "";
                 let optionValues = "";
-                options.forEach(function (tr){
-                    Array.from(tr.children).forEach(function (td){
-                       if (td.children[0].tagName === 'input' || td.children[0].tagName === 'INPUT' ){
-                           optionNames += td.children[0].value;
-                       }else{
-                           Array.from(td.children).forEach(function (inputTag){
+                options.forEach(function (tr) {
+                    Array.from(tr.children).forEach(function (td) {
+                        if (td.children[0].tagName === 'input' || td.children[0].tagName === 'INPUT') {
+                            optionNames += td.children[0].value;
+                        } else {
+                            Array.from(td.children).forEach(function (inputTag) {
                                 optionValues += inputTag.children[0].value + '/';
-                           });
-                       }
+                            });
+                        }
                     });
                     optionNames += "%";
                     optionValues += "$";
                 });
-                console.log(optionNames);
-                console.log(optionValues);
-                if (optionNames != null){
+                if (optionNames != null) {
                     const hidOptionName = document.createElement('input');
                     const hidOptionValue = document.createElement('input');
 
-                    hidOptionName.type = 'text';
+                    hidOptionName.type = 'hidden';
                     hidOptionName.name = 'opname';
                     hidOptionName.value = optionNames;
-                    hidOptionValue.type = 'text';
+                    hidOptionValue.type = 'hidden';
                     hidOptionValue.name = 'opvalue';
                     hidOptionValue.value = optionValues;
-                    document.getElementById('option').appendChild(hidOptionName);
-                    document.getElementById('option').appendChild(hidOptionValue);
+                    document.getElementById('options').appendChild(hidOptionName);
+                    document.getElementById('options').appendChild(hidOptionValue);
                 }
             }
         }
@@ -175,7 +172,7 @@
             const field = obj.closest('tr').parentNode;
             const tr = document.createElement('tr');
             tr.innerHTML =
-            `<tr>
+                `
                 <td>
                     <input type="text" placeholder="옵션 이름을 입력하세요">
                 </td>
@@ -187,7 +184,7 @@
                     </div>
 
                 </td>
-            </tr>`;
+            `;
             field.appendChild(tr);
         }
 
@@ -201,25 +198,34 @@
             box.appendChild(div);
         }
 
+        const addOptionValueSetting = (obj, value) => {
+            const box = obj.closest('td');
+            const div = document.createElement('div');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = value;
+
+            div.appendChild(input);
+            box.appendChild(div);
+        }
+
         const removeField = (obj) => {
             const field = obj.closest('tr').parentNode.children;
-            if(field.length - 1 > 0){
+            if (field.length - 1 > 0) {
                 field[field.length - 1].remove();
-            }else{
+            } else {
                 alert("최소 입력 필드 입니다.")
             }
         }
 
         const removeOption = (obj) => {
             const option = obj.closest('td').children;
-            if(option.length - 1 > 0){
+            if (option.length - 1 > 0) {
                 option[option.length - 1].remove();
-            }else{
+            } else {
                 alert("최소 입력 필드 입니다.");
             }
         }
-
-
     </script>
 
 </head>
@@ -326,8 +332,6 @@
                         </tr>
 
 
-
-
                         <tr>
                             <td>상품 옵션</td>
                             <td>
@@ -354,7 +358,6 @@
 
 
                         <tr>
-                            <input type="button" id="test">
                             <td>상품 썸네일</td>
                             <td>
                                 <span>크기 456 x 456, 상품 상세에 출력될 이미지 입니다. </span>
@@ -397,7 +400,7 @@
                     </table>
                 </section>
 
-                <input type="submit" name="regBtn" value="등록하기"/>
+                <input type="submit" name="regBtn" value="수정하기"/>
             </form>
         </article>
 
