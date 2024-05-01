@@ -19,7 +19,11 @@ import kr.co.lotteon.dto.UserDTO;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -27,6 +31,7 @@ import java.util.List;
 public class AdminService {
 
     private final AdminMapper adminMapper;
+    private final BannerRepository bannerRepository;
 
     public List<UserDTO> selectUsers(){
         log.info("selectUsers... ");
@@ -43,17 +48,63 @@ public class AdminService {
     }
 
     // 🎈배너 등록
-    private final BannerRepository bannerRepository;
     private final ModelMapper modelMapper;
 
-    public ResponseEntity<Banner> insertBanner(BannerDTO bannerDTO) {
+    public Banner insertBanner(BannerDTO bannerDTO) {
         Banner banner = modelMapper.map(bannerDTO,Banner.class);
         Banner savedBanner = bannerRepository.save(banner);
         log.info("savedBanner : " + savedBanner);
 
-        return ResponseEntity.ok().body(savedBanner);
+        return savedBanner;
     }
 
+    // 🎈 배너 리스트
+    public List<BannerDTO> selectBanner() {
+        return adminMapper.selectBanner();
+    }
 
+    // 🎈 배너 삭제
+    public void deleteBanner(int bno){
+        adminMapper.deleteBanner(bno);
+    }
+
+    // 🎈 배너 활성화
+ /*   public void activateBanner(int bno) {
+        Optional<Banner> optionalBanner = bannerRepository.findById(bno);
+        if(optionalBanner.isPresent()) {
+            Banner banner = optionalBanner.get();
+            if(isBannerValid(banner)){
+            //    banner.setBmanage(1);
+                bannerRepository.save(banner);
+            }
+        }
+
+    }*/
+
+    /*
+    private boolean isBannerValid(Banner banner) {
+        LocalDate now = LocalDate.now();
+        LocalDate startDate = banner.getBstartDate();
+        LocalDate endDate = banner.getBendDate();
+        LocalTime startTime = banner.getBstartTime();
+        LocalTime endTime = banner.getBendTime();
+
+    return now.isAfter(startDate) && now.isBefore(endDate)&&
+            now.isAfter(startTime) && now.isBefore(endTime);
+    }
+
+     */
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

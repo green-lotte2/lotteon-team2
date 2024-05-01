@@ -1,0 +1,670 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/adminLayout}"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>롯데온::관리자 메인배너</title>
+   <link th:href="@{/admin/css/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link th:href="@{/admin/css/admin2.css}">
+
+</head>
+
+<main layout:fragment="content">
+
+    <style>
+       #tabs {
+            font-size: 14px;
+        }
+
+       th {
+           padding: 10px;
+       }
+
+        img.thumb {
+            width: 100px;
+        }
+        main > section {
+            min-width: 1200px;
+            margin: 0 auto;
+        }
+        .ui-tabs .ui-tabs-panel {
+            padding: 16px 0 0;
+        }
+
+        .ui-widget-content {
+            border: none;
+        }
+
+        .ui-widget.ui-widget-content {
+            border: none;
+        }
+        .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+            border-radius: 0;
+        }
+
+        .ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+            border-radius: 0;
+        }
+
+        .popup {
+            font-size: 13px;
+            position: fixed;
+            left: 50%;
+            top: 40%;
+            transform: translate(-50%,-50%);
+            display: none;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .popup.on {display: block;}
+
+        .popup input {
+            width: 120px;
+            padding: 4px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .popup input[type=file] {
+            width: 240px;
+        }
+
+        .popup select {
+            width: 120px;
+            padding: 4px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+
+        .popup > div {
+            display: table;
+            width: auto;
+            height: auto;
+            margin: 100px auto;
+            background: #fff;
+            border: 2px solid #565656;
+
+        }
+
+        .popup > div > nav {
+            width: 100%;
+            height: auto;
+            padding: 10px;
+            box-sizing: border-box;
+            background: #0e3a47;
+            overflow: hidden;
+        }
+        .popup > div > nav > h1 {
+            float: left;
+            font-size: 18px;
+            color: white;
+
+        }
+        .popup > div > nav > button {
+            float: right;
+            width: 30px;
+            height: 30px;
+            <!--background-image: url('../../admin/img/ico_sprites.png');-->
+            background-color: transparent;
+            background-position: 227px -25px;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+       .popup > div > nav > button > span {
+           color: #333333;
+       }
+        .popup > div > section {
+            padding: 16px;
+            box-sizing: border-box;
+            height: 665px;
+        }
+
+        .popup > div > section > article {}
+        .popup > div > section > article > h3 {
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .popup > div > section > article table {
+            width: 600px;
+            border-top: 2px solid #444;
+            border-bottom: 1px solid #aaa;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        .popup > div > section > article table label {
+            margin-right: 10px;
+        }
+
+        .popup > div > section > article table input[type=text] {
+            width: 100%;
+            padding: 4px;
+            box-sizing: border-box;
+            border: 1px solid #f1f1f1;
+            vertical-align: middle;
+        }
+
+        .popup > div > section > article table td:first-child {
+            width: 120px;
+            border-left: 0;
+        }
+
+        .popup > div > section > article table tr {
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .popup > div > section > article table tr > td {
+            padding: 10px;
+            border-left: 1px solid #f1f1f1;
+            box-sizing: border-box;
+        }
+
+        .popup > div > section > article table tr > td:nth-child(2) {
+            width: 360px;
+        }
+
+       .popup > div > section > article table tr > td > select {
+           border: 1px solid #333333;
+       }
+
+       .popup > div > section > article table tr > td input {
+           border: 1px solid #333333;
+       }
+
+       main table span {
+           display: inline-block;
+       }
+
+        .popup > div > section > article > form > div {
+            padding: 16px 0;
+            text-align: center;
+        }
+
+        .popup > div > section > article table p {
+            margin-bottom: 6px;
+        }
+
+        .btnPositive {
+            float: right;
+            margin-top: 10px;
+            width: 100px;
+            background-color: #777777;
+            color: #ffffff;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 15px;
+            border: none;
+        }
+
+       .btnNegative {
+           width: 100px;
+           background-color: #ff661a;
+           border-radius: 5px;
+           color: #fff;
+           padding: 8px;
+           border: none;
+           margin-top: 10px;
+           font-size: 14px;
+       }
+       p.ico.info {
+           font-size: 12px;
+           background-color: #9baac2;
+           border: 1px solid #677ba3;
+           padding: 15px;
+       }
+
+       .hidden {
+           display: none;
+       }
+
+
+    </style>
+    <script>
+            //🎈 체크박스 삭제
+
+           window.onload = function () {
+               const selectAllCheckboxes = document.getElementsByName('all');
+
+                // selectAllCheckboxes를 forEach로 반복
+               selectAllCheckboxes.forEach(function (selectAllCheckbox, index) {
+                   const checkboxNumber = index + 1; // 체크박스 번호 계산 (1부터 시작)
+                   const delBtn = document.getElementById(`delBtn${checkboxNumber}`);
+                   const checkBoxes = document.getElementsByClassName(`checkbox${checkboxNumber}`);
+
+                   delBtn.onclick = function () {
+                       let Checked = false; // 최소한 하나의 체크박스가 선택되었는지 여부를 나타내는 변수
+                       for (let j = 0; j < checkBoxes.length; j++) {
+                           if (checkBoxes[j].checked) {
+                               Checked = true;
+                               break; // 하나라도 체크되어 있으면 반복문 종료
+                           }
+                       }
+
+                       if (!Checked) {
+                           alert('삭제할 상품을 선택해주세요.');
+                           console.log('check..');
+                           return false;
+                       } else {
+                           let confirmed = confirm('정말 삭제하시겠습니까?');
+                           if (!confirmed) {
+                               return false;
+                           }
+                       }
+                   };
+
+                   selectAllCheckbox.addEventListener('change', function () {
+                       for (let j = 0; j < checkBoxes.length; j++) {
+                           checkBoxes[j].checked = selectAllCheckbox.checked;
+                       }
+                   });
+               });
+
+           }
+
+            $(function() {
+                $("#tabs").tabs();
+
+                // 팝업 닫기
+                $('.btnClose').click(function(){
+                    $(this).closest('.popup').removeClass('on');
+                });
+
+                // 배너등록 팝업 띄우기
+                $('.btnRegister').click(function(e){
+                    e.preventDefault();
+                    $('#bannerRegister').addClass('on');
+                });
+            });
+
+
+
+    </script>
+
+    <section id="admin-config-banner">
+        <nav>
+            <h3>배너관리</h3>
+            <p>
+                HOME > 환경설정 > <strong>배너관리</strong>
+            </p>
+        </nav>
+
+        <article id="tabs" class="ui-tabs ui-corner-all ui-widget ui-widget-content">
+            <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+                <li role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active" aria-controls="tabs1"
+                    aria-labelledby="ui-id-1" aria-selected="true" aria-expanded="true" >
+                    <a href="#tabs1" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-1">메인 상단 배너</a>
+                </li>
+                <li  role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs2"
+                     aria-labelledby="ui-id-2" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs2" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-2">메인 슬라이더 배너</a>
+                </li>
+                <li  role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs3"
+                     aria-labelledby="ui-id-3" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs3" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-3">상품 상세보기 배너</a>
+                </li>
+                <li  role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs4"
+                     aria-labelledby="ui-id-4" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs4" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-4">회원 로그인 배너</a>
+                </li>
+                <li  role="tab" tabindex="-1" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab" aria-controls="tabs5"
+                     aria-labelledby="ui-id-5" aria-selected="false" aria-expanded="false">
+                    <a href="#tabs5" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="ui-id-5">마이페이지 배너</a>
+                </li>
+            </ul>
+
+            <!-- 메인 상단 배너-->
+            <section id="tabs1" >
+                <h4>메인 상단배너</h4>
+                <p>
+                    쇼핑몰 메인 상단에 출력되는 배너입니다.
+                </p>
+                <form th:action="@{/admin/config/bannerDelete}" method="post">
+                    <table>
+                        <tr>
+                            <th><input type="checkbox"  name="all"/></th>
+                            <th>배너번호</th>
+                            <th>이미지</th>
+                            <th>배너정보</th>
+                            <th>배너위치</th>
+                            <th>시작날짜</th>
+                            <th>종료날짜</th>
+                            <th>시작시간</th>
+                            <th>종료시간</th>
+                            <th>관리</th>
+                        </tr>
+
+                        <tr th:each="banner:${banners}" th:if="${banner.blocation} == 'MAIN1'">
+                            <td><input type="checkbox"  class="checkbox1" name="checkbox" th:value="${banner.bno}"></td>
+                            <td>[[${banner.bno}]]</td>
+                            <td>
+                                <a><img th:src="@{/admin/img/topBanner2.png}" class="thumb" th:id="'bannerImage_' + ${banner.bno}"></a>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li class="name">[[${banner.bname}]]</li>
+                                    <li class="size">크기 : 1200 x 80</li>
+                                    <li class="size">[[${banner.bcolor}]]</li>
+                                    <li class="link"><a th:href="@{/}">링크</a></li>
+                                </ul>
+                            </td>
+                            <td>[[${banner.blocation}]]</td>
+                            <td>[[${banner.bstartDate}]]</td>
+                            <td>[[${banner.bendDate}]]</td>
+                            <td>[[${banner.bstartTime}]]</td>
+                            <td>[[${banner.bendTime}]]</td>
+                            <td>
+                                <a th:href="@{/admin/config/bannerList/active(bno=${banner.bno})}" class="activate-link" >[활성]</a>
+                                <a th:href="@{/admin/config/bannerList/deActivate(bno=${banner.bno})}" class="deactivate-link">[비활성]</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" id="delBtn1" class="btnNegative" value="선택삭제"/>
+                    <input type="button" class="btnPositive btnRegister" value="등록하기"/>
+                </form>
+
+            </section>
+
+            <!-- 메인 슬라이더 배너-->
+            <section id="tabs2">
+                <h4>메인 슬라이더배너</h4>
+                <p>
+                    쇼핑몰 메인 슬라이더 영역에 노출되는 배너입니다.
+                </p>
+                <form th:action="@{/admin/config/bannerDelete}" method="post">
+                    <table>
+                        <tr>
+                            <th><input type="checkbox"  name="all"/></th>
+                            <th>배너번호</th>
+                            <th>이미지</th>
+                            <th>배너정보</th>
+                            <th>배너위치</th>
+                            <th>시작날짜</th>
+                            <th>종료날짜</th>
+                            <th>시작시간</th>
+                            <th>종료시간</th>
+                            <th>관리</th>
+                        </tr>
+                        <tr  th:each="banner:${banners}" th:if="${banner.blocation} == 'MAIN2'">
+                            <td><input type="checkbox" class="checkbox2" name="checkbox" th:value="${banner.bno}"/></td>
+                            <td>[[${banner.bno}]]</td>
+                            <td><img th:src="@{/admin/img/slider_item1.jpg}" class="thumb"></td>
+                            <td>
+                                <ul>
+                                    <li class="name">[[${banner.bname}]]</li>
+                                    <li class="size">크기 : 1200 x 80</li>
+                                    <li class="size">[[${banner.bcolor}]]</li>
+                                    <li class="link"><a th:href="@{/}">링크</a></li>
+                                </ul>
+                            </td>
+                            <td>[[${banner.blocation}]]</td>
+                            <td>[[${banner.bstartDate}]]</td>
+                            <td>[[${banner.bendDate}]]</td>
+                            <td>[[${banner.bstartTime}]]</td>
+                            <td>[[${banner.bendTime}]]</td>
+                            <td>
+                                <a href="#">[활성]</a>
+                                <a href="#">[비활성]</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" id="delBtn2" class="btnNegative" value="선택삭제"/>
+                    <input type="button" class="btnPositive btnRegister" value="등록하기"/>
+                </form>
+            </section>
+
+            <!-- 상품 상세보기 배너-->
+            <section id="tabs3">
+                <h4>상품 상세보기 배너</h4>
+                <p>
+                    상품 상세보기 상품수량 입력 상단부에 노출되는 배너입니다.
+                </p>
+                <form th:action="@{/admin/config/bannerDelete}" method="post">
+                    <table>
+                        <tr>
+                            <th><input type="checkbox"  name="all"/></th>
+                            <th>배너번호</th>
+                            <th>이미지</th>
+                            <th>배너정보</th>
+                            <th>배너위치</th>
+                            <th>시작날짜</th>
+                            <th>종료날짜</th>
+                            <th>시작시간</th>
+                            <th>종료시간</th>
+                            <th>관리</th>
+                        </tr>
+                        <tr  th:each="banner:${banners}" th:if="${banner.blocation} == 'PRODUCT1'">
+                            <td><input  type="checkbox"  class="checkbox3" name="checkbox" th:value="${banner.bno}"/></td>
+                            <td>[[${banner.bno}]]</td>
+                            <td><img th:src="@{/admin/img/vip_plcc_banner.png}" class="thumb"></td>
+                            <td>
+                                <ul>
+                                    <li class="name">[[${banner.bname}]]</li>
+                                    <li class="size">크기 : 1200 x 80</li>
+                                    <li class="size">[[${banner.bcolor}]]</li>
+                                    <li class="link"><a th:href="@{/}">링크</a></li>
+                                </ul>
+                            </td>
+                            <td>[[${banner.blocation}]]</td>
+                            <td>[[${banner.bstartDate}]]</td>
+                            <td>[[${banner.bendDate}]]</td>
+                            <td>[[${banner.bstartTime}]]</td>
+                            <td>[[${banner.bendTime}]]</td>
+                            <td>
+                                <a href="#">[활성]</a>
+                                <a href="#">[비활성]</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" id="delBtn3" class="btnNegative" value="선택삭제"/>
+                    <input type="button" class="btnPositive btnRegister" value="등록하기"/>
+                </form>
+            </section>
+
+            <!-- 회원 로그인 배너-->
+            <section id="tabs4" >
+                <h4>회원 로그인 배너</h4>
+                <p>
+                    회원 로그인 폼 오른쪽에 노출되는 배너입니다.
+                </p>
+                <form th:action="@{/admin/config/bannerDelete}" method="post">
+                    <table>
+                        <tr>
+                            <th><input type="checkbox"  name="all"/></th>
+                            <th>배너번호</th>
+                            <th>이미지</th>
+                            <th>배너정보</th>
+                            <th>배너위치</th>
+                            <th>시작날짜</th>
+                            <th>종료날짜</th>
+                            <th>시작시간</th>
+                            <th>종료시간</th>
+                            <th>관리</th>
+                        </tr>
+                        <tr th:each="banner:${banners}" th:if="${banner.blocation} == 'MEMBER1'">
+                            <td><input type="checkbox" class="checkbox4" name="checkbox" th:value="${banner.bno}"/></td>
+                            <td>[[${banner.bno}]]</td>
+                            <td><img th:src="@{/images/member_login_banner.png}" src="피카츄" class="thumb"></td>
+                            <td>
+                                <ul>
+                                    <li class="name">[[${banner.bname}]]</li>
+                                    <li class="size">크기 : 1200 x 80</li>
+                                    <li class="size">[[${banner.bcolor}]]</li>
+                                    <li class="link"><a th:href="@{/}">링크</a></li>
+                                </ul>
+                            </td>
+                            <td>[[${banner.blocation}]]</td>
+                            <td>[[${banner.bstartDate}]]</td>
+                            <td>[[${banner.bendDate}]]</td>
+                            <td>[[${banner.bstartTime}]]</td>
+                            <td>[[${banner.bendTime}]]</td>
+                            <td>
+                                <a href="#">[활성]</a>
+                                <a href="#">[비활성]</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" id="delBtn4" class="btnNegative" value="선택삭제"/>
+                    <input type="button" class="btnPositive btnRegister" value="등록하기"/>
+                </form>
+            </section>
+
+            <!-- 마이페이지 배너-->
+            <section id="tabs5">
+                <h4>마이페이지 배너</h4>
+                <p>
+                    마이페이지 하위 모든 페이지에서 노출되는 배너입니다.
+                </p>
+                <form th:action="@{/admin/config/bannerDelete}" method="post">
+                    <table>
+                        <tr>
+                            <th><input type="checkbox" name="all"/></th>
+                            <th>배너번호</th>
+                            <th>이미지</th>
+                            <th>배너정보</th>
+                            <th>배너위치</th>
+                            <th>시작날짜</th>
+                            <th>종료날짜</th>
+                            <th>시작시간</th>
+                            <th>종료시간</th>
+                            <th>관리</th>
+                        </tr>
+                        <tr th:each="banner:${banners}" th:if="${banner.blocation} == 'MY1'">
+                            <td><input type="checkbox"  class="checkbox5" name="checkbox" th:value="${banner.bno}"/></td>
+                            <td>[[${banner.bno}]]</td>
+                            <td><img th:src="@{/images/my_banner1.jpg}" class="thumb"></td>
+                            <td>
+                                <ul>
+                                    <li class="name">[[${banner.bname}]]</li>
+                                    <li class="size">크기 : 1200 x 80</li>
+                                    <li class="size">[[${banner.bcolor}]]</li>
+                                    <li class="link"><a th:href="@{/}">링크</a></li>
+                                </ul>
+                            </td>
+                            <td>[[${banner.blocation}]]</td>
+                            <td>[[${banner.bstartDate}]]</td>
+                            <td>[[${banner.bendDate}]]</td>
+                            <td>[[${banner.bstartTime}]]</td>
+                            <td>[[${banner.bendTime}]]</td>
+                            <td>
+                                <a href="#">[활성]</a>
+                                <a href="#">[비활성]</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit"  id="delBtn5" class="btnNegative" value="선택삭제"/>
+                    <input type="button" class="btnPositive btnRegister" value="등록하기"/>
+                </form>
+            </section>
+        </article>
+        <p class="ico info">
+            <strong>Tip!</strong>
+            전자상거래 등에서의 상품 등의 정보제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.
+        </p>
+    </section>
+
+    <!--🎈배너등록-->
+    <div id="bannerRegister" class="popup">
+        <div>
+            <nav>
+                <h1>배너등록</h1>
+                <button class="btnClose"><span>X</span></button>
+            </nav>
+            <section>
+                <article>
+                    <h3>배너 정보입력</h3>
+                    <form th:action="@{/admin/config/banner/register}" method="post" enctype="multipart/form-data">
+                        <table border="0">
+                            <tr>
+                                <td>배너이름</td>
+                                <td>
+                                    <p>배너명을 입력하세요.</p>
+                                    <input type="text" name="bname"  placeholder="배너명 입력"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너파일</td>
+                                <td>
+                                    <p>배너 이미지 파일을 추가하세요.</p>
+                                    <input type="file" name="file" placeholder="배너 이미지 파일 선택"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배경색</td>
+                                <td>
+                                    <p>메인 상단 배너에 적용되는 배너 배경색입니다. ex) #ffff00</p>
+                                    <input type="text" name="bcolor" placeholder="배너 배경색 입력"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너링크</td>
+                                <td>
+                                    <p>배너를 클릭했을 때 이동할 페이지 링크주소를 입력하세요.</p>
+                                    <input type="text" name="blink" placeholder="링크주소 입력"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너위치</td>
+                                <td>
+                                    <p>배너가 노출되는 위치를 선택하십시요.</p>
+                                    <select name="blocation">
+                                        <option value="" selected>선택</option>
+                                        <option value="MAIN1">메인-상단</option>
+                                        <option value="MAIN2">메인-슬라이더</option>
+                                        <option value="PRODUCT1">상품-상세보기</option>
+                                        <option value="MEMBER1">회원-로그인</option>
+                                        <option value="MY1">마이페이지</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너 노출날짜</td>
+                                <td>
+                                    <p>배너가 노출되는 기간을 선택하십시요.</p>
+                                    <input type="date" name="bstartDate"/>
+                                    <span>~</span>
+                                    <input type="date" name="bendDate"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>배너 노출시간</td>
+                                <td>
+                                    <p>배너가 노출되는 시간을 선택하십시요.</p>
+                                    <input type="time" name="bstartTime"/>
+                                    <span>~</span>
+                                    <input type="time" name="bendTime"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div>
+                            <input type="submit" class="btnPositive" value="등록하기"/>
+                        </div>
+
+                    </form>
+                </article>
+            </section>
+        </div>
+    </div>   <!--내용끝-->
+
+
+    <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</main>
+
+</html>

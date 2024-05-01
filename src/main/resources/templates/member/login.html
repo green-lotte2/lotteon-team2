@@ -1,90 +1,110 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/MemberLayout}">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>롯데ON::2조</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
+    <link rel="stylesheet" th:href="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/member.css}"/>
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <link rel="stylesheet" th:href="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css}">
+    <script th:src="@{https://kit.fontawesome.com/20962f3e4b.js}" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css}">
+    <script th:src="@{/js/util.js}"></script>
+    <script th:inline="javascript">
 
-    <main class="content" id="member" layout:fragment="content">
-        <script th:inline="javascript">
+        window.onload = function (){
 
-            window.onload = function (){
+            const success = [[${success}]];
 
-                const success = [[${success}]];
-
-                if(success == 100){
-                    alertModal('로그인에 실패했습니다.\n다시 한번 아이디, 비밀번호를 확인 하시기 바랍니다. 😢');
-                }else if(success == 200) {
-                    alertModal('회원 가입 되었습니다. 😊');
-                }else if(success == 300){
-                    alertModal('로그아웃 되었습니다. 안녕히 가세요. 😃');
-                }
-
-                // 페이지 로드 시, 저장된 아이디와 비밀번호를 불러와서 입력 필드에 채움
-                const savedUid = localStorage.getItem('savedUid');
-                if (savedUid) {
-                    document.getElementById('inputUid').value = savedUid;
-                }
-
-                // 체크박스 상태 변경 시, 아이디와 비밀번호를 저장하거나 삭제함
-                const rememberCheckbox = document.getElementById('inputRememberId');
-
-                // 저장된 아이디가 있으면 체크박스를 체크함
-                if (savedUid) {
-                    rememberCheckbox.checked = true;
-                }
-
-                rememberCheckbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        rememberUid();
-                    } else {
-                        clearSavedUid();
-                    }
-                });
-
+            if(success == 100){
+                alertModal('로그인에 실패했습니다.\n다시 한번 아이디, 비밀번호를 확인 하시기 바랍니다. 😢');
+            }else if(success == 200) {
+                alertModal('회원 가입 되었습니다. 😊');
+            }else if(success == 300){
+                alertModal('로그아웃 되었습니다. 안녕히 가세요. 😃');
             }
 
-            function rememberUid() {
-                // 아이디 입력 필드에서 아이디를 가져와서 로컬 스토리지에 저장
-                const uid = document.getElementById('inputUid').value;
-                localStorage.setItem('savedUid', uid);
+            // 페이지 로드 시, 저장된 아이디와 비밀번호를 불러와서 입력 필드에 채움
+            const savedUid = localStorage.getItem('savedUid');
+            if (savedUid) {
+                document.getElementById('inputUid').value = savedUid;
             }
 
-            function clearSavedUid() {
-                // 저장된 아이디를 삭제함
-                localStorage.removeItem('savedUid');
+            // 체크박스 상태 변경 시, 아이디와 비밀번호를 저장하거나 삭제함
+            const rememberCheckbox = document.getElementById('inputRememberId');
+
+            // 저장된 아이디가 있으면 체크박스를 체크함
+            if (savedUid) {
+                rememberCheckbox.checked = true;
             }
 
-        </script>
+            rememberCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    rememberUid();
+                } else {
+                    clearSavedUid();
+                }
+            });
 
+        }
+
+        function rememberUid() {
+            // 아이디 입력 필드에서 아이디를 가져와서 로컬 스토리지에 저장
+            const uid = document.getElementById('inputUid').value;
+            localStorage.setItem('savedUid', uid);
+        }
+
+        function clearSavedUid() {
+            // 저장된 아이디를 삭제함
+            localStorage.removeItem('savedUid');
+        }
+
+    </script>
+</head>
+
+<body>
+    <main class="content" id="member">
 
         <div class="login">
-                <nav>
-                    <h1>로그인</h1>
-                </nav>
 
-				<form method="post">
+            <form method="post">
+                <a th:href="@{/}">
+                    <img class="loginLogo" th:src="@{/images/logo_lotte_on_login.png}" alt="로그인로고">
+                </a>
 
-                    <table border="0">
-                        <tr>
-                            <td>아이디</td>
-                            <td><input type="text" id="inputUid" name="uid" placeholder="아이디 입력"></td>
-                        </tr>
-                        <tr>
-                            <td>비밀번호</td>
-                            <td><input type="password" name="pass" placeholder="비밀번호 입력"></td>
-                        </tr>
-                    </table>
-					<input type="submit" value="로그인" />
-					<span>
-                        <label><input type="checkbox" id="inputRememberId" value="" onchange="if(this.checked) {rememberUid();} else {clearSavedUid();}" />아이디 기억하기</label>
-						<a th:href="@{/member/findId}">아이디찾기</a>
-						<a th:href="@{#}">비밀번호찾기</a>
-						<a th:href="@{/member/join}">회원가입</a>
-					</span>
+                <table border="0">
+                    <tr>
+                        <td><input type="text" id="inputUid" name="uid" placeholder="아이디 입력"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="password" name="pass" placeholder="8~15자리 영문+숫자+특수문자 조합"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" class="loginBtn" value="로그인" /></td>
+                    </tr>
 
-                    <a th:href="@{#}" class="banner"><img th:src="@{/images/member_login_banner.jpg}" alt="1만원 할인 쿠폰 받기"></a>
+                </table>
 
-				</form>
-				<img th:src="@{/images/member_certifi_logo.gif}" alt="banner">
-            </div>
+                <span>
+                            <label><input type="checkbox" id="inputRememberId" value="" onchange="if(this.checked) {rememberUid();} else {clearSavedUid();}" />아이디 기억하기</label>
+                            <a th:href="@{/member/findId}">아이디찾기</a>
+                            <a th:href="@{/member/findPassword}">비밀번호찾기</a>
+                            <a th:href="@{/member/join}">회원가입</a>
+                        </span>
+
+
+
+            </form>
+            <a th:href="@{/}" class="banner">
+                <img th:src="@{/images/member_login_banner.png}" alt="로그인배너">
+            </a>
+        </div>
     </main>
+</body>
+
 </html>

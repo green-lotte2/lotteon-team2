@@ -4,6 +4,7 @@ import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.Orders;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.entity.User;
+import kr.co.lotteon.mapper.OrdersMapper;
 import kr.co.lotteon.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,7 @@ public class OrdersController {
     private final OrdersService ordersService;
     private final CartService cartService;
     private final UserService userService;
+    private final OrdersMapper ordersMapper;
 
     @GetMapping("/product/order")
     public String order(Authentication authentication, Model model) {
@@ -89,32 +91,33 @@ public class OrdersController {
         return "redirect:/product/complete/"+ono;
     }
 
-    @GetMapping("/mypage/order")
-    public String myOrder(Authentication authentication, Model model) {
 
+
+    @GetMapping("/mypage/order")
+    public String myOrder(Authentication authentication, Model model, PageRequestDTO pageRequestDTO) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
         }
+
+
         // 사용자 정보 가져오기
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String uid = userDetails.getUsername();  // 인증된 사용자 ID 추출
-        List<OrdersDTO> orders = ordersService.selectOrders(uid);
+
+        List<OrdersDTO> orders = ordersService.selectOrders(uid, pageRequestDTO);
+        log.info(orders+"이거봐랑 ㅣ거보라알몬아리ㅓ");
         List<OrdersDTO> ordersGroup = ordersService.selectOrdersGroup(uid);
+
+
+        PageResponseDTO pageResponseDTO = ordersService.findOrderListByUid(uid, pageRequestDTO);
+
+
         model.addAttribute("orders", orders);
         model.addAttribute("ordersGroup", ordersGroup);
+        model.addAttribute("pageResponseDTO", pageResponseDTO); // 페이지 응답 전달
+
         log.info(orders.toString());
         return "/mypage/order";
     }
-
-    @GetMapping("/records")
-    @ResponseBody
-    public List<Orders> getRecords(
-            @RequestParam("begin")LocalDate beginDate,
-            @RequestParam("end")LocalDate endDate
-            ) {
-        List<Orders> records = ordersService.getRecordsBetween(beginDate, endDate);
-        return records;
-    }
-
 }
 

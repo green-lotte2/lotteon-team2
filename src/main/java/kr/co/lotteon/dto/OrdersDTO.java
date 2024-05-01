@@ -1,8 +1,10 @@
 package kr.co.lotteon.dto;
 
 import kr.co.lotteon.entity.OrderDetail;
+import kr.co.lotteon.entity.Orders;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class OrdersDTO {
     private int ono;
     private String uid;
     private int pno;
-    private LocalDateTime odate;
+    private LocalDate odate;
     private int usepoint;
     private int savepoint;
     private String receiver;

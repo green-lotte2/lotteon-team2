@@ -83,73 +83,94 @@
             regBtn.onclick = function (e) {
                 e.preventDefault();
 
-                const optionField = document.getElementsByClassName('option');
-                let optionName = "";
-                let optionValue = "";
-                console.log(optionField);
-
-                for(let i = 0; i < optionField.length; i++){
-                    console.log(optionField[i].childNodes[1].value);
-                    optionName += optionField[i].childNodes[1].value;
-                    if(optionName == ""){
-                        optionName = null;
-                        optionValue = null;
-                        break;
-                    }
-                    for(let j = 2; j < optionField[i].childNodes.length; j++){
-                        console.log(optionField[i].childNodes[j]);
-                        optionValue += optionField[i].childNodes[j].childNodes[0].value + "/";
-                    }
-                    optionName += "%";
-                    optionValue += "$";
-                }
-                console.log(optionName);
-                console.log(optionValue);
-                if (optionName != null){
-                    hidOptionName = document.createElement('input');
-                    hidOptionValue = document.createElement('input');
-
-                    hidOptionName.type = 'hidden';
-                    hidOptionName.name = 'opname';
-                    hidOptionName.value = optionName;
-                    hidOptionValue.type = 'hidden';
-                    hidOptionValue.name = 'opvalue';
-                    hidOptionValue.value = optionValue;
-
-                    optionField[0].appendChild(hidOptionName);
-                    optionField[0].appendChild(hidOptionValue);
-                }
-
+                setOption();
 
                 document.getElementById('register').submit();
 
-                alert('상품등록이 성공적으로 완료되었습니다!');
-
-
+                alert('상품 수정이 성공적으로 완료되었습니다!');
             }
 
+            function setOption() {
+                const options = Array.from(document.getElementById('options').children[0].children);
+                let optionNames = "";
+                let optionValues = "";
+                options.forEach(function (tr) {
+                    Array.from(tr.children).forEach(function (td) {
+                        if (td.children[0].tagName === 'input' || td.children[0].tagName === 'INPUT') {
+                            optionNames += td.children[0].value;
+                        } else {
+                            Array.from(td.children).forEach(function (inputTag) {
+                                optionValues += inputTag.children[0].value + '/';
+                            });
+                        }
+                    });
+                    optionNames += "%";
+                    optionValues += "$";
+                });
+                if (optionNames != null) {
+                    const hidOptionName = document.createElement('input');
+                    const hidOptionValue = document.createElement('input');
+
+                    hidOptionName.type = 'hidden';
+                    hidOptionName.name = 'opname';
+                    hidOptionName.value = optionNames;
+                    hidOptionValue.type = 'hidden';
+                    hidOptionValue.name = 'opvalue';
+                    hidOptionValue.value = optionValues;
+                    document.getElementById('options').appendChild(hidOptionName);
+                    document.getElementById('options').appendChild(hidOptionValue);
+                }
+            }
         }
         /*]]>*/
 
-        const addTextBox = (obj) => {
-            const box = obj.parentNode.parentNode;
-            console.log(box);
-            const newP = document.createElement('p');
-            newP.innerHTML = "<input type=\"text\" name=\"optionValue\" placeholder=\"옵션 값을 입력하세요\">\n" +
-                "<input type=\"button\" value=\"삭제\" onclick=\"remove(this)\">";
 
-            box.appendChild(newP);
-        }
-        const addField = () => {
-            const box = document.getElementById("box");
-            const newP = document.createElement('div');
-            newP.className = 'option';
-            newP.innerHTML = "<input type=\"button\" value=\"삭제\" onclick=\"remove(this)\"><input type=\"text\" name=\"optionName\" placeholder=\"옵션 이름을 입력하세요\"><p><input type=\"text\" name=\"optionValue\" placeholder=\"옵션 값을 입력하세요\"><input type=\"button\" value=\"추가\" onclick=\"addTextBox(this)\"></p>";
-            box.appendChild(newP);
+        const addOptionField = (obj) => {
+            const field = obj.closest('tr').parentNode;
+            const tr = document.createElement('tr');
+            tr.innerHTML =
+                `
+                <td>
+                    <input type="text" placeholder="옵션 이름을 입력하세요">
+                </td>
+                <td>
+                    <div>
+                        <input type="text" placeholder="옵션 값을 입력하세요">
+                        <input type="button" onclick="addOptionValue(this)" value="옵션 추가">
+                        <input type="button" onclick="removeOption(this)" value="옵션 삭제">
+                    </div>
 
+                </td>
+            `;
+            field.appendChild(tr);
         }
-        const remove = (obj) => {
-            obj.parentNode.remove();
+
+        const addOptionValue = (obj) => {
+            const box = obj.closest('td');
+            const div = document.createElement('div');
+            const input = document.createElement('input');
+            input.type = 'text';
+
+            div.appendChild(input);
+            box.appendChild(div);
+        }
+
+        const removeField = (obj) => {
+            const field = obj.closest('tr').parentNode.children;
+            if (field.length - 1 > 0) {
+                field[field.length - 1].remove();
+            } else {
+                alert("최소 입력 필드 입니다.")
+            }
+        }
+
+        const removeOption = (obj) => {
+            const option = obj.closest('td').children;
+            if (option.length - 1 > 0) {
+                option[option.length - 1].remove();
+            } else {
+                alert("최소 입력 필드 입니다.");
+            }
         }
 
     </script>
@@ -254,22 +275,28 @@
                                 <input type="text" name="deliprice" value="0"/>원
                             </td>
                         </tr>
-
-
-
-
                         <tr>
                             <td>상품 옵션</td>
-                            <td id="box">
+                            <td>
+                                <table id="options">
+                                    <tr>
+                                        <td>
+                                            <input type="text" placeholder="옵션 이름을 입력하세요">
+                                            <input type="button" onclick="addOptionField(this)" value="옵션 추가">
+                                            <input type="button" onclick="removeField(this)" value="옵션 삭제">
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <input type="text" placeholder="옵션 값을 입력하세요">
+                                                <input type="button" onclick="addOptionValue(this)" value="옵션 추가">
+                                                <input type="button" onclick="removeOption(this)" value="옵션 삭제">
+                                            </div>
 
-                                <div class="option"><input type="button" value="추가" onclick="addField()"><input type="text" name="optionName" placeholder="옵션 이름을 입력하세요"><p><input type="text" name="optionValue" placeholder="옵션 값을 입력하세요"><input type="button" value="추가" onclick="addTextBox(this)"></p></div>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
-
                         </tr>
-
-
-
-
                         <tr>
                             <td>상품 썸네일</td>
                             <td>

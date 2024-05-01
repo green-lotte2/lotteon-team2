@@ -5,8 +5,12 @@ import jakarta.persistence.*;
 import kr.co.lotteon.dto.BannerDTO;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -26,18 +30,15 @@ public class Banner {
     private String bfile;
     private String bcolor;
     private String blink;
-    private String bloaction;
-    @CreationTimestamp
-    private LocalDateTime bstartDate;
-    @CreationTimestamp
-    private LocalDateTime bendDate;
-    @CreationTimestamp
-    private LocalDateTime bstartTime;
-    @CreationTimestamp
-    private LocalDateTime endTime;
+    private String blocation;
+
+
+    private LocalDate bstartDate;
+    private LocalDate bendDate;
+    private LocalTime bstartTime;
+    private LocalTime bendTime;
     private String bmanage;
 
-    //private List<BannerDTO> bannerList;
 }
 
 

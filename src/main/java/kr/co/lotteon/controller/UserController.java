@@ -103,19 +103,21 @@ public class UserController {
 
     // 판매자 회원 가입 처리
     @PostMapping("/registerSeller")
-    public String registerSeller(HttpServletRequest request) {
-        boolean agree1 = Boolean.parseBoolean(request.getParameter("agree1"));
-        boolean agree2 = Boolean.parseBoolean(request.getParameter("agree2"));
-        boolean agree3 = Boolean.parseBoolean(request.getParameter("agree3"));
+    public String registerSeller(HttpServletRequest request, UserDTO userDTO) {
 
-        if (agree1 && agree2 && agree3) {
 
+            // 사용자 아이피 구하기
+            String regip = request.getRemoteAddr();
+
+            userDTO.setRegip(regip);
+
+            log.info(userDTO);
+
+            userService.insertSeller(userDTO);
 
 
             return "redirect:/member/login";
-        } else {
-            return "redirect:/member/registerSeller";
-        }
+
     }
 
 
@@ -144,6 +146,26 @@ public class UserController {
 
         // 중복 없으면 이메일 인증코드 발송
         if(!isExist){
+            log.info("email : " + value);
+            userService.sendEmailCode(session, value);
+        }
+
+        // Json 생성
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("result", isExist);
+
+        return ResponseEntity.ok().body(resultMap);
+    }
+
+    @ResponseBody
+    @GetMapping("/checkFindEmail/{value}")
+    public ResponseEntity<?> checkFindEmail(HttpSession session, @PathVariable("value") String value){
+
+        boolean isExist = userService.existsByEmail(value);
+        log.info("isExist : " + isExist);
+
+        // 중복 있으면 이메일 인증코드 발송
+        if(isExist){
             log.info("email : " + value);
             userService.sendEmailCode(session, value);
         }
@@ -192,6 +214,66 @@ public class UserController {
         return resultMap;
     }
 
+    @ResponseBody
+    @GetMapping("/checkCohp")
+    public Map<String, Integer> checkCohp(String cohp) {
+        log.info("cohp: " + cohp);
+
+        boolean exists = userService.existsByCohp(cohp);
+        int result = exists ? 1 : 0;
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
+    @ResponseBody
+    @GetMapping("/checkRegnum")
+    public Map<String, Integer> checkRegnum(String regnum) {
+        log.info("regnum: " + regnum);
+
+        boolean exists = userService.existsByRegnum(regnum);
+        int result = exists ? 1 : 0;
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
+    @ResponseBody
+    @GetMapping("/checkReportnum")
+    public Map<String, Integer> checkReportnum(String reportnum) {
+        log.info("reportnum: " + reportnum);
+
+        boolean exists = userService.existsByReportnum(reportnum);
+        int result = exists ? 1 : 0;
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
+    @ResponseBody
+    @GetMapping("/checkFax")
+    public Map<String, Integer> checkFax(String fax) {
+        log.info("fax: " + fax);
+
+        boolean exists = userService.existsByFax(fax);
+        int result = exists ? 1 : 0;
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
     @GetMapping("/findId")
     public String findId(){
         return "/member/findId";
@@ -220,6 +302,46 @@ public class UserController {
         log.info(userDTO.toString());
 
         return "/member/findIdResult";
+    }
+
+    @GetMapping("/findPassword")
+    public String findPassword(){
+        return "/member/findPassword";
+    }
+
+    @PostMapping("/findPassword")
+    public ResponseEntity<UserDTO> findPassword(@RequestBody UserDTO userDTO){
+
+        String uid = userDTO.getUid();
+        String email = userDTO.getEmail();
+        log.info("findPass.....uid: " + uid);
+        log.info("findPass.....email: " + email);
+        UserDTO foundUserDTO = userService.findPassword(uid, email);
+        log.info("findPass...... :" + foundUserDTO);
+
+        if (foundUserDTO != null) {
+            return ResponseEntity.ok(foundUserDTO);
+            // 사용자를 찾은 경우 200 OK 응답으로 사용자 정보 반환
+        } else {
+            return ResponseEntity.notFound().build();
+            // 사용자를 찾지 못한 경우 404 Not Found 응답 반환
+        }
+
+    }
+
+    @PostMapping("/findPasswordChange")
+    public String findPasswordChange(String uid, String email, Model model){
+        UserDTO userDTO = userService.findPassword(uid, email);
+        log.info("result....:" + userDTO.toString());
+        model.addAttribute("userDTO" , userDTO);
+        log.info(userDTO.toString());
+
+        return "/member/findPasswordChange";
+    }
+
+    @PutMapping("/updatePass")
+    public ResponseEntity<?> putPass(@RequestBody UserDTO userDTO, HttpServletRequest req){
+        return userService.updateUserPass(userDTO);
     }
 
 

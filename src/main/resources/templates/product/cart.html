@@ -4,13 +4,43 @@
 
 <!-- 장바구니 페이지 시작 -->
 <section class="cart" layout:fragment="content">
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    <script th:inline="javascript">
+        window.onunload = function () {
+            const pnos = document.getElementsByName('productSelect');
+            const pcounts = document.getElementsByName('pcount');
+
+
+            const products = [[${cartProducts}]];
+            products.forEach(function (product, i){
+                const pnoValue = pnos[i].value;
+                const pcountValue = pcounts[i].value;
+
+                if (parseInt(product.pno) === parseInt(pnoValue) && parseInt(product.pcount) !== parseInt(pcountValue)){
+                    const jsonData = {
+                        "pno": pnoValue,
+                        "pcount": pcountValue
+                    };
+
+                    const url = '/lotteon/product/cart/update';
+                    const data = fetchPost(url, jsonData);
+                    console.log(data);
+                    pcounts[i].value = data.pcount;
+                }
+            })
+        }
+        document.addEventListener('DOMContentLoaded', function () {
             updateTotalSum(); // 페이지 로드 시 전체 금액 업데이트
+
+            const count = document.getElementsByName('pcount');
+            count.forEach(function (tag) {
+                tag.onchange = function () {
+                    updateTotalSum();
+                }
+            });
 
             // 전체 선택 체크박스 이벤트 핸들러 추가
             const selectAllCheckbox = document.getElementById('selectAll');
-            selectAllCheckbox.addEventListener('change', function() {
+            selectAllCheckbox.addEventListener('change', function () {
                 toggleSelectAll(this);
                 updateTotalSum(); // 전체 선택 시 합계 다시 계산
             });
@@ -19,7 +49,7 @@
                 checkbox.addEventListener('change', updateTotalSum); // 체크박스 변경 시 합계 업데이트
             });
 
-            window.submitDeleteForm = function() {
+            window.submitDeleteForm = function () {
                 const checkboxes = document.querySelectorAll('input[name="productSelect"]:checked');
                 if (checkboxes.length === 0) {
                     alert('삭제할 상품을 선택하세요.');
@@ -30,7 +60,7 @@
                 fetch('/lotteon/cart/delete', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ pnos: pnos })
+                    body: JSON.stringify({pnos: pnos})
                 })
                     .then(response => response.json())
                     .then(data => {
@@ -64,7 +94,8 @@
 
 
                 document.querySelectorAll('tr.cart-item-row').forEach(row => {
-                    const quantity = parseInt(row.querySelector('.pcount').innerText);
+                    console.log(row.querySelector('.pcount').children[0].value);
+                    const quantity = parseInt(row.querySelector('.pcount').children[0].value);
                     const price = parseFloat(row.querySelector('.price').innerText.replace(/,/g, ''));
                     const itemDiscount = parseFloat(row.querySelector('.discount').innerText.replace('%', '')) / 100;
                     const itemDeliveryFee = parseFloat(row.querySelector('.delivery').innerText.replace(/,/g, '').replace('무료배송', '0'));
@@ -96,7 +127,6 @@
             HOME > <span>패션·의류·뷰티</span> > <strong>장바구니</strong>
         </p>
     </nav>
-
     <form id="deleteForm" th:action="@{/product/order}" method="get">
 
         <!-- 장바구니 목록 -->
@@ -118,21 +148,25 @@
                 <td colspan="8">장바구니에 상품이 없습니다.</td>
             </tr>
             <tr th:each="product : ${cartProducts}" class="cart-item-row">
-                <td><input type="checkbox" name="productSelect" th:value="${product.pno}" th:data-price="${product.price}"
-                           th:data-pcount="${product.pcount}" th:data-discount="${product.discount}" th:data-delivery="${product.deliprice}">
+                <td><input type="checkbox" name="productSelect" th:value="${product.pno}"
+                           th:data-price="${product.price}"
+                           th:data-pcount="${product.pcount}" th:data-discount="${product.discount}"
+                           th:data-delivery="${product.deliprice}">
                 </td>
                 <td>
                     <article>
                         <a th:href="@{/product/view(pno=${product.pno})}">
                             <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지"></a>
                         <div>
-                            <h2 class="name" th:text="${product.pname}"><a th:href="@{/product/view(pno=${product.pno})}">상품명</a></h2>
+                            <h2 class="name" th:text="${product.pname}"><a
+                                    th:href="@{/product/view(pno=${product.pno})}">상품명</a></h2>
                             <p th:text="${product.info}">상품설명</p>
                             <p th:text="${product.options}">상품설명</p>
                         </div>
                     </article>
                 </td>
-                <td class="pcount" th:text="${product.pcount}"></td>
+                <td class="pcount"><input type="number" name="pcount" th:value="${product.pcount}" style="width: 40px"/>
+                </td>
                 <td class="price" th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}"></td>
                 <td class="discount" th:text="${product.discount + '%'}"></td>
                 <td th:text="${#numbers.formatInteger(product.point, 0, 'COMMA')}"></td>

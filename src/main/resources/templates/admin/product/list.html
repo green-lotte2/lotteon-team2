@@ -132,7 +132,7 @@
                                             <td th:text="${#temporals.format(product.rdate, 'yyyy-MM-dd')}"></td>
                                             <td>
                                                 <a th:href="@{/admin/product/delete(pno=${product.pno})}" id="delete">[삭제]</a>
-                                                <a th:href="@{/admin/product/modify}">[수정]</a>
+                                                <a th:href="@{/admin/product/modify(pno=${product.pno})}">[수정]</a>
                                             </td>
                                         </tr>
                                         </tbody>

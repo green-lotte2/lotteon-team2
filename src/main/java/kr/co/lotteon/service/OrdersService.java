@@ -9,6 +9,7 @@ import kr.co.lotteon.mapper.ProductMapper;
 import kr.co.lotteon.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.javassist.compiler.ast.Keyword;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,11 +38,11 @@ public class OrdersService {
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
 
-
     private final ModelMapper modelMapper;
     private final OrdersMapper ordersMapper;
 
     private final ProductimgRepository productimgRepository;
+
 
     /////////////////////////주문/////////////////////////////////
     public Orders insertOrder(OrdersDTO ordersDTO) {
@@ -54,8 +56,20 @@ public class OrdersService {
         orderDetailRepository.save(orderDetail);
     }
 
-    public List<OrdersDTO> selectOrders(String uid) {
-        return ordersMapper.selectOrders(uid);
+    public List<OrdersDTO> selectOrders(String uid, PageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("ono"); // 페이지 설정
+
+        Page<Tuple> pageOrder = orderRepository.selectOrders(pageRequestDTO, pageable, uid); // OrderRepository에서 데이터 가져오기
+        return pageOrder.getContent().stream()
+                .map(tuple -> {
+                    Orders orders = tuple.get(0, Orders.class);
+                    orders.setOno(tuple.get(1, Integer.class));
+                    OrdersDTO ordersDTO = modelMapper.map(orders, OrdersDTO.class);
+                    ordersDTO.setPcount(tuple.get(6, Integer.class));
+                    return ordersDTO;
+                })
+                .toList(); // 변환 결과를 직접 반환
+
     }
 
     public List<OrdersDTO> selectAllOrders() {
@@ -63,8 +77,32 @@ public class OrdersService {
     }
 
     public List<OrdersDTO> selectOrdersGroup(String uid) {
-        return ordersMapper.selectOrdersGroup(uid);
+        PageRequestDTO pageRequestDTO = new PageRequestDTO();
+
+        if ("date".equals(pageRequestDTO.getType()) && pageRequestDTO.getKeyword() != null) {
+            LocalDate nowDate = LocalDate.now();
+            LocalDate searchDate = null;
+
+            switch (pageRequestDTO.getKeyword()) {
+                case "oneWeek":
+                    searchDate = nowDate.minusDays(7);
+                    break;
+                case "15day":
+                    searchDate = nowDate.minusDays(15);
+                    break;
+                case "Month":
+                    searchDate = nowDate.minusMonths(1);
+                    break;
+            }
+
+            return ordersMapper.selectOrdersGroupByDate(uid, searchDate, nowDate);
+        } else {
+            return ordersMapper.selectOrdersGroup(uid);
+        }
     }
+
+
+
 
     @Transactional(readOnly = true)
     public List<OrdersDTO> getOrderDetails(int ono) {
@@ -72,8 +110,24 @@ public class OrdersService {
         return ordersDTO;
     }
 
-    public List<Orders> getRecordsBetween(LocalDate beginDate, LocalDate endDate){
-        return orderRepository.findRecordsBetween(beginDate, endDate);
+
+
+    public PageResponseDTO findOrderListByUid(String uid,PageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("ono");
+        Page<Orders> results = orderRepository.findAllByUid(uid, pageable);
+
+        List<OrdersDTO> orderList = results.getContent().stream()
+                .map(order -> modelMapper.map(order, OrdersDTO.class))
+                .toList();
+
+        int total = (int) results.getTotalElements();
+
+        PageResponseDTO pageResponseDTO =  PageResponseDTO.builder()
+                .pageRequestDTO(pageRequestDTO)
+                .total(total)
+                .orderList(orderList)
+                .build();
+        return pageResponseDTO;
     }
 }
 

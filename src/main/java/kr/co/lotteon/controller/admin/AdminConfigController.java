@@ -6,25 +6,25 @@ import kr.co.lotteon.dto.QnaDTO;
 import kr.co.lotteon.entity.Banner;
 import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.CsService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class AdminConfigController {
 
-    @Autowired
-    CsService csService;
-
-    @Autowired
-    AdminService adminService;
+    private final CsService csService;
+    private final AdminService adminService;
+    private final ModelMapper modelMapper;
 
     @GetMapping(value = {"/admin/", "/admin/index"})
     public String index(@RequestParam(name="pg", defaultValue = "1") String pg,
@@ -93,19 +93,60 @@ public class AdminConfigController {
     }
 
 
-    @GetMapping("/admin/config/banner")
-    public String banner(){
-        return "/admin/config/banner";
+    // 🎈banner 등록
+    @PostMapping( "/admin/config/banner/register")
+    public String banner(BannerDTO bannerDTO,
+                         @RequestParam("file") MultipartFile file)  {
+        bannerDTO.setBfile(String.valueOf(file));
+        bannerDTO.setBmanage(Integer.toString(1));
+        log.info("bfile : " + bannerDTO.getBfile());
+        log.info("BannerDTO : " + bannerDTO);
+        Banner savedBanner = adminService.insertBanner(bannerDTO);
+        log.info("savedBanner" + savedBanner);
+
+
+        BannerDTO savedBannerDTO = modelMapper.map(savedBanner, BannerDTO.class);
+        log.info("savedBannerDTO : " + savedBannerDTO);
+        return "redirect:/admin/config/bannerList";
     }
 
-    // 🎈banner 등록
-   /* @PostMapping("/admin/config/banner")
-    public List<BannerDTO> banner(BannerDTO bannerDTO){
+    // 🎈 banner 리스트
+    @GetMapping("/admin/config/bannerList")
+    public String selectBanner(Model model){
+        List<BannerDTO> banners = adminService.selectBanner();
+        model.addAttribute("banners", banners);
+        log.info("banners: " + banners);
+        return "/admin/config/bannerList";
+    }
 
-        return adminService.insertBanner();
-    }*/
+    // 🎈 banner 삭제
+    @PostMapping("/admin/config/bannerDelete")
+    public String deleteBanner(@RequestParam List<String> checkbox){
+        for(String bno : checkbox){
+            int bnoId = Integer.parseInt(bno);
+            adminService.deleteBanner(bnoId);
+            log.info("deleteBno : " + bnoId);
+        }
+        log.info("deleteCheckBox : " + checkbox);
 
+        return "redirect:/admin/config/bannerList";
+    }
 
+    // 🎈 banner 활성
+    @GetMapping("/admin/config/bannerList/active")
+    public String activeBanner(Model model, int bno){
+        model.addAttribute("bno", bno);
+        log.info("activeBno: " + bno);
+        return "redirect:/admin/config/bannerList";
+    }
+
+    // 🎈 banner 비활성
+    @GetMapping("/admin/config/bannerList/deActivate")
+    public String deActiveBanner(Model model, int bno){
+        model.addAttribute("bno", bno);
+        log.info("deActivateBno :" + bno);
+        return "redirect:/admin/config/bannerList";
+    }
 
 
     @GetMapping("/admin/config/info")
