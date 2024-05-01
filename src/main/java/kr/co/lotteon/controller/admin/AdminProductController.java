@@ -50,22 +50,27 @@ public class AdminProductController {
                                        @RequestParam("detailImg") MultipartFile fileD){
         log.info("adminProductRegister2");
         log.info(productDTO.toString());
-
+        log.info(fileA.isEmpty()+"");
+        if(productDTO.getPno()!=0){
+            Product product = productService.findProductById(productDTO.getPno()).get();
+            productDTO.setRdate(product.getRdate());
+        }
 
         Product product = productService.insertProduct(productDTO);
 
+        if (!fileA.isEmpty()){
+            List<MultipartFile> files = new ArrayList<>();
+            files.add(fileA);
+            files.add(fileD);
 
-        List<MultipartFile> files = new ArrayList<>();
-        files.add(fileA);
-        files.add(fileD);
+            ProductimgDTO imgDTO = new ProductimgDTO();
+            imgDTO.setPno(productDTO.getPno());
+            imgDTO.setFiles(files);
+            imgDTO.setPno(product.getPno());
 
-        ProductimgDTO imgDTO = new ProductimgDTO();
-        imgDTO.setPno(productDTO.getPno());
-        imgDTO.setFiles(files);
-        imgDTO.setPno(product.getPno());
-
-        productService.imgUpload(imgDTO, productDTO.getCate());
-        productService.insertImg(imgDTO);
+            productService.imgUpload(imgDTO, productDTO.getCate());
+            productService.insertImg(imgDTO);
+        }
 
         return "redirect:/admin/product/list";
     }

@@ -42,37 +42,6 @@ public class ProductController {
     private final UserService userService;
     private final OrdersService ordersService;
 
-    @PostMapping("/product/register")
-    public String productRegister(ProductDTO productDTO,
-                                  @RequestParam("imgMain") MultipartFile fileA,
-                                  @RequestParam("imgSub1") MultipartFile fileB,
-                                  @RequestParam("imgSub2") MultipartFile fileC,
-                                  @RequestParam("imgDetail") MultipartFile fileD) {
-
-        log.info("productRegister");
-        log.info("" + productDTO);
-
-        List<MultipartFile> files = new ArrayList<>();
-        files.add(fileA);
-        files.add(fileB);
-        files.add(fileD);
-
-        ProductimgDTO imgDTO = new ProductimgDTO();
-
-        imgDTO.setPno(productDTO.getPno());
-        imgDTO.setFiles(files);
-
-        productService.imgUpload(imgDTO, productDTO.getCate());
-        Product product = productService.insertProduct(productDTO);
-        log.info("" + product.getPno());
-        imgDTO.setPno(product.getPno());
-        productService.insertImg(imgDTO);
-
-        return "/admin/product/list";
-    }
-
-
-
     @GetMapping("/product/cart")
     public String cart(Authentication authentication, Model model) {
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -100,6 +69,19 @@ public class ProductController {
         log.info("insertCart : " + cartDTO);
 
         cartService.insertCart(cartDTO);
+
+        return ResponseEntity.ok(cartDTO);
+    }
+
+    @ResponseBody
+    @PostMapping("/product/cart/update")
+    public ResponseEntity<CartDTO> cartUpdate(Principal principal, @RequestBody CartDTO cartDTO) {
+        String uid = principal.getName();
+        log.info("uid : " + uid);
+        cartDTO.setUid(uid);
+        log.info("insertCart : " + cartDTO);
+
+        cartService.updateCate(cartDTO);
 
         return ResponseEntity.ok(cartDTO);
     }
