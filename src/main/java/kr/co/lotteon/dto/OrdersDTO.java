@@ -35,7 +35,7 @@ public class OrdersDTO {
     private int dfee;
 
     // add
-    private String cate;
+    private int cate;
     private String mainimg;
     private String company;
     private String pname;

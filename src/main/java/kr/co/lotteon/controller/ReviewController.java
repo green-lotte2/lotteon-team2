@@ -30,6 +30,7 @@ public class ReviewController {
     @GetMapping("/mypage/writeReview")
     public String writeReviewForm(@RequestParam("pno") int pno, Model model) {
         ProductDTO product = productService.findProductDTOById(pno);
+        log.info("product4533123" + product);
         if (product == null) {
             return "redirect:/product/list";
         }
