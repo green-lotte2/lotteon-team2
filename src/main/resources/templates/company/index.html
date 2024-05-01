@@ -1,10 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <title>lotteCompany::index</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link th:href="@{/css/company.css}" rel="stylesheet">
+    <script th:src="@{/js/jquery-3.7.0.min.js}"></script>
+
 </head>
+
 <body>
+    <div id="wrapper">
+        <header>
+            <div class="logo">
+                <a th:href="@{/}">
+                    <img th:src="@{/images/company/company_index_logo.png}" alt="logo">
+                </a>
+            </div>
+            <div class="gnb">
+                <ul>
+                    <li>
+                        <a th:href="@{/company}">HOME</a>
+                    </li>
+                    <li>
+                        <a th:href="@{#}">기업문화</a>
+                    </li>
+                    <li>
+                        <a th:href="@{#}">소식과 이야기</a>
+                    </li>
+                    <li>
+                        <a th:href="@{#}">채용</a>
+                    </li>
+                    <li>
+                        <a th:href="@{#}">미디어</a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <main>
+            <section id="main_visual">
+                <img th:src="@{/images/company/company_index_main.png}" alt="메인이미지">
+                <p class="mainText">취향을, 브랜드를, 혜택을 발견하는 즐거움<br>
+                   지금 롯데온에서 만나요
+                </p>
+            </section>
+            <section id="cont1">
+                <p>
+                    쇼핑 좀 해본 사람들이 만든 플랫폼,<br>
+                    롯데ON은 풍부한 오프라인 쇼핑 인프라, 온라인 쇼핑 노하우,<br>
+                    IT기술로 세상에 없던 새로운 쇼핑 경험을 제공하고<br>
+                    꼭 이용하고 싶은 온라인 쇼핑 플랫폼으로 발전하고 있어요.
+                </p>
+            </section>
+
+            <section id="cont2" class="slider">
+                <div class="sliderTitle">
+                    <h2>쇼핑을 새롭게, 세상을 이롭게 만들어나가요.</h2>
+                </div>
+
+                <!-- Swiper -->
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                                <img th:src="@{/images/company/company_index_pic1.png}" alt="슬라이더1">
+                                <div class="title">
+                                    <p>
+                                        고객이 원하고 만족하는<br>
+                                        서비스를 만들어요
+                                    </p>
+                                </div>
+                                <div class="text">
+                                    <p>
+                                        롯데ON은 단순히 상품만을 판매하는 플랫폼이 아니라,<br>
+                                        상품에 대한 경험을 함께 제공할 수 있는 플랫폼을 목표로 하고 있어요.<br>
+                                        새로운 서비스를 만들어가고 있어요.<br>
+                                        해외직구, 뷰티, 그로서리, 선물하기 등 다양한 영역에서
+                                    </p>
+                                </div>
+                        </div><!--slide1 end-->
+                        <div class="swiper-slide">
+                            <img th:src="@{/images/company/company_index_pic2.png}" alt="슬라이더2">
+                            <div class="title">
+                                <p>
+                                    하이앤드테크로 온/오프라인<br>
+                                    시너지를 만들어요
+                                </p>
+                            </div>
+                            <div>
+                                <p>
+                                    많은 전문가들이 MSA, AWS 등 최신 기술을 운영하고 있으며,<br>
+                                    최신기술과 롯데의 온/오프라인 4000만+ 고객 데이터를 결합하여<br>
+                                    롯데 오프라인 매장과 연계한 다양한 서비스로<br>
+                                    고객들에게 온-오프라인을 넘나드는 새로운 쇼핑 경험을 드려요.
+                                </p>
+                            </div>
+                        </div><!--slide2 end-->
+                        <div class="swiper-slide">
+                            <img th:src="@{/images/company/company_index_pic3.png}" alt="슬라이더3">
+                            <div class="title">
+                                <p>
+                                    함께하는 성장,<br>
+                                    세상을 더 이롭게 만들어요
+                                </p>
+                            </div>
+                            <div>
+                                <p>
+                                    'Dream Together for a Better Earth'를 목표로<br>
+                                    ESG를 실천해나가고 있으며, 롯데ON 플랫폼을 활용한<br>
+                                    크라우드 펀딩 기부 릴레이, 상품기부 등 이로운 세상을 위한<br>
+                                    다양한 사회공헌 활동들을 진행하고 있어요.
+                                </p>
+                            </div>
+                        </div><!--slide3 end-->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+
+            </section>
+
+            <section id="cont3">
+                <h2>롯데ON은 이렇게 성장해가고 있어요.</h2>
+                <div class="notice">
+                    <div>
+                        <h4>2024.04</h4>
+                        <div class="list">
+                            <a th:href="@{#}">
+                                <p>오늘 주문하면, 내일 도착!! ‘내일온(ON)다’ 론칭!</p>
+                            </a>
+                            <a th:href="@{#}">
+                                <img th:src="@{/images/company/company_index_rightBtn.png}" alt="화살표버튼">
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>2024.04</h4>
+                        <div class="list">
+                            <a th:href="@{#}">
+                                <p>오늘 주문하면, 내일 도착!! ‘내일온(ON)다’ 론칭!</p>
+                            </a>
+                            <a th:href="@{#}">
+                                <img th:src="@{/images/company/company_index_rightBtn.png}" alt="화살표버튼">
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>2024.04</h4>
+                        <div class="list">
+                            <a th:href="@{#}">
+                                <p>오늘 주문하면, 내일 도착!! ‘내일온(ON)다’ 론칭!</p>
+                            </a>
+                            <a th:href="@{#}">
+                                <img th:src="@{/images/company/company_index_rightBtn.png}" alt="화살표버튼">
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>2024.04</h4>
+                        <div class="list">
+                            <a th:href="@{#}">
+                                <p>오늘 주문하면, 내일 도착!! ‘내일온(ON)다’ 론칭!</p>
+                            </a>
+                            <a th:href="@{#}">
+                                <img th:src="@{/images/company/company_index_rightBtn.png}" alt="화살표버튼">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="cont4">
+                <h2>국내 최초의 온라인 종합쇼핑몰로 출발해<br>
+                    쇼핑 경험의 변화를 이끌어내고 있어요.</h2>
+                <img th:src="@{/images/company/company_index_pic4.png}" alt="연혁">
+            </section>
+
+            <section id="cont5">
+                <a th:href="@{#}">
+                    <img th:src="@{/images/company/company_index_banner.png}" alt="인덱스배너">
+                </a>
+            </section>
+        </main>
+        <footer>
+
+        </footer>
+    </div>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    let swiper = new Swiper(".mySwiper", {
+        slidesPerView: 2,
+        spaceBetween: 30,
+        pagination: {
+            el: ".swiper-pagination",
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+</script>
 </html>
