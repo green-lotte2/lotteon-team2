@@ -98,6 +98,7 @@ public class AdminConfigController {
     public String banner(BannerDTO bannerDTO,
                          @RequestParam("file") MultipartFile file)  {
         bannerDTO.setBfile(String.valueOf(file));
+        bannerDTO.setBmanage(Integer.toString(1));
         log.info("bfile : " + bannerDTO.getBfile());
         log.info("BannerDTO : " + bannerDTO);
         Banner savedBanner = adminService.insertBanner(bannerDTO);
@@ -131,6 +132,21 @@ public class AdminConfigController {
         return "redirect:/admin/config/bannerList";
     }
 
+    // 🎈 banner 활성
+    @GetMapping("/admin/config/bannerList/active")
+    public String activeBanner(Model model, int bno){
+        model.addAttribute("bno", bno);
+        log.info("activeBno: " + bno);
+        return "redirect:/admin/config/bannerList";
+    }
+
+    // 🎈 banner 비활성
+    @GetMapping("/admin/config/bannerList/deActivate")
+    public String deActiveBanner(Model model, int bno){
+        model.addAttribute("bno", bno);
+        log.info("deActivateBno :" + bno);
+        return "redirect:/admin/config/bannerList";
+    }
 
 
     @GetMapping("/admin/config/info")

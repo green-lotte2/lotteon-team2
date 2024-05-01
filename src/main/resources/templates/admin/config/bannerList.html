@@ -229,6 +229,10 @@
            padding: 15px;
        }
 
+       .hidden {
+           display: none;
+       }
+
 
     </style>
     <script>
@@ -270,6 +274,7 @@
                        }
                    });
                });
+
            }
 
             $(function() {
@@ -348,7 +353,7 @@
                             <td><input type="checkbox"  class="checkbox1" name="checkbox" th:value="${banner.bno}"></td>
                             <td>[[${banner.bno}]]</td>
                             <td>
-                                <a><img th:src="@{/admin/img/topBanner2.png}" class="thumb"></a>
+                                <a><img th:src="@{/admin/img/topBanner2.png}" class="thumb" th:id="'bannerImage_' + ${banner.bno}"></a>
                             </td>
                             <td>
                                 <ul>
@@ -364,8 +369,8 @@
                             <td>[[${banner.bstartTime}]]</td>
                             <td>[[${banner.bendTime}]]</td>
                             <td>
-                                <a href="#">[활성]</a>
-                                <a href="#">[비활성]</a>
+                                <a th:href="@{/admin/config/bannerList/active(bno=${banner.bno})}" class="activate-link" >[활성]</a>
+                                <a th:href="@{/admin/config/bannerList/deActivate(bno=${banner.bno})}" class="deactivate-link">[비활성]</a>
                             </td>
                         </tr>
                     </table>
@@ -404,7 +409,7 @@
                                     <li class="name">[[${banner.bname}]]</li>
                                     <li class="size">크기 : 1200 x 80</li>
                                     <li class="size">[[${banner.bcolor}]]</li>
-                                    <li class="link"><a th:href="@{/}"></a></li>
+                                    <li class="link"><a th:href="@{/}">링크</a></li>
                                 </ul>
                             </td>
                             <td>[[${banner.blocation}]]</td>
@@ -494,7 +499,7 @@
                         <tr th:each="banner:${banners}" th:if="${banner.blocation} == 'MEMBER1'">
                             <td><input type="checkbox" class="checkbox4" name="checkbox" th:value="${banner.bno}"/></td>
                             <td>[[${banner.bno}]]</td>
-                            <td><img th:src="@{/images/member_login_banner.jpg}" class="thumb"></td>
+                            <td><img th:src="@{/images/member_login_banner.png}" src="피카츄" class="thumb"></td>
                             <td>
                                 <ul>
                                     <li class="name">[[${banner.bname}]]</li>
