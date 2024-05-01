@@ -4,6 +4,10 @@ let isPassOk  = false;
 let isNameOk  = false;
 let isEmailOk = false;
 let isHpOk    = false;
+let isRepresentOk    = false;
+let isCompanyOk   = false;
+let isBizRegNumOk = false;
+let isReportNumOk = false;
 let isTelOk   = false;
 let isFaxOk   = false;
 
@@ -13,6 +17,10 @@ const rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,1
 const reName  = /^[가-힣]{2,10}$/
 const reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 const reHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
+const reRepresent  = /^[가-힣]{2,10}$/
+const reCompany = /^[a-zA-Z가-힣0-9]{1,12}$/;                      // 회사이름
+const reBizRegNum = /^[0-9]{3}-[0-9]{2}-[0-9]{5}$/;               // 사업자등록번호
+const reReportNum = /^[0-9]{4}-[가-힣]{2,6}-[0-9]{4,5}$/;         // 통신판매업신고 번호
 const reTel   = /^(0[2-8][0-5]?)-?([1-9]{1}[0-9]{2,3})-?([0-9]{4})$/;
 const reFax   = /^\d{2,3}-\d{3,4}-\d{4}$/;
 
@@ -25,8 +33,18 @@ window.onload = function (){
     const spanMsgPass = document.getElementsByClassName('msgPass')[0];
     const inputName = document.getElementsByName('name')[0];
     const spanMsgName = document.getElementsByClassName('msgName')[0];
-    const inputCohp = document.getElementsByName('cohp')[0];
+    const inputRepresent = document.getElementsByName('represent')[0];
+    const spanMsgRepresent = document.getElementsByClassName('msgRepresent')[0];
+    const inputCompany = document.getElementsByName('company')[0];
+    const spanMsgCompany = document.getElementsByClassName('msgCompany')[0];
+    const inputRegNum = document.getElementsByName('regnum')[0];
+    const spanMsgCorp = document.getElementsByClassName('msgCorp')[0];
+    const inputReportNum = document.getElementsByName('reportnum')[0];
+    const spanMsgOnline = document.getElementsByClassName('msgOnline')[0];
+    const inputCoHp = document.getElementsByName('cohp')[0];
     const spanMsgTel = document.getElementsByClassName('msgTel')[0];
+    const inputFax = document.getElementsByName('fax')[0];
+    const spanMsgFax = document.getElementsByClassName('msgFax')[0];
     const inputHp = document.getElementsByName('hp')[0];
     const spanMsgHp = document.getElementsByClassName('msgHp')[0];
 
@@ -173,10 +191,10 @@ window.onload = function (){
     }
 
     // 전화번호 유효성 검사
-    inputCohp.onkeyup = function () {
-        const hp = inputCohp.value.trim();
+    inputCoHp.onkeyup = function () {
+        const cohp = inputCoHp.value.trim();
 
-        if (!hp.match(reTel)) {
+        if (!cohp.match(reTel)) {
             spanMsgTel.innerText = '올바른 전화번호 형식이 아닙니다.';
             spanMsgTel.style.color = 'red';
             isTelOk = false;
@@ -185,7 +203,7 @@ window.onload = function (){
             isTelOk = true;
 
             // 중복 확인
-            fetch(`/lotteon/member/checkHp?hp=${hp}`)
+            fetch(`/lotteon/member/checkCohp?cohp=${cohp}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.result > 0) {
@@ -230,6 +248,121 @@ window.onload = function (){
         }
     };
 
+    // 대표이름 유효성 검사
+    inputRepresent.onkeyup = function () {
+        const value = inputRepresent.value;
+
+        if (!value.match(reRepresent)) {
+            spanMsgRepresent.innerText = '올바른 이름 형식이 아닙니다.';
+            spanMsgRepresent.style.color = 'red';
+            isRepresentOk = false;
+        } else {
+            spanMsgRepresent.innerText = '';
+            isRepresentOk = true;
+        }
+    };
+
+    // 회사이름 유효성 검사
+    inputCompany.onkeyup = function () {
+        const value = inputCompany.value;
+
+        if (!value.match(reCompany)) {
+            spanMsgCompany.innerText = '올바른 회사이름 형식이 아닙니다.';
+            spanMsgCompany.style.color = 'red';
+            isCompanyOk = false;
+        } else {
+            spanMsgCompany.innerText = '';
+            isCompanyOk = true;
+        }
+    };
+
+    // 사업자등록번호 유효성 검사
+    inputRegNum.onkeyup = function () {
+        const regnum = inputRegNum.value.trim();
+
+        if (!regnum.match(reBizRegNum)) {
+            spanMsgCorp.innerText = '올바른 사업자등록번호 형식이 아닙니다.';
+            spanMsgCorp.style.color = 'red';
+            isBizRegNumOk = false;
+        } else {
+            spanMsgCorp.innerText = '';
+            isBizRegNumOk = true;
+
+            // 중복 확인
+            fetch(`/lotteon/member/checkRegnum?regnum=${regnum}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result > 0) {
+                        spanMsgCorp.innerText = '이미 사용 중인 사업자등록번호입니다.';
+                        spanMsgCorp.style.color = 'red';
+                        isBizRegNumOk = false;
+                    } else {
+                        spanMsgCorp.innerText = '사용 가능한 사업자등록번호입니다.';
+                        spanMsgCorp.style.color = 'green';
+                        isBizRegNumOk = true;
+                    }
+                });
+        }
+    };
+
+    // 통신판매업신고 번호 유효성 검사
+    inputReportNum.onkeyup = function () {
+        const reportnum = inputReportNum.value.trim();
+
+        if (!reportnum.match(reReportNum)) {
+            spanMsgOnline.innerText = '올바른 통신판매업신고 번호 형식이 아닙니다.';
+            spanMsgOnline.style.color = 'red';
+            isReportNumOk = false;
+        } else {
+            spanMsgOnline.innerText = '';
+            isReportNumOk = true;
+
+            // 중복 확인
+            fetch(`/lotteon/member/checkReportnum?reportnum=${reportnum}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result > 0) {
+                        spanMsgOnline.innerText = '이미 사용 중인 통신판매업신고 번호입니다.';
+                        spanMsgOnline.style.color = 'red';
+                        isReportNumOk = false;
+                    } else {
+                        spanMsgOnline.innerText = '사용 가능한 통신판매업신고 번호입니다.';
+                        spanMsgOnline.style.color = 'green';
+                        isReportNumOk = true;
+                    }
+                });
+        }
+    };
+
+    // 팩스 번호 유효성 검사
+    inputFax.onkeyup = function () {
+        const fax = inputFax.value.trim();
+
+        if (!fax.match(reFax)) {
+            spanMsgFax.innerText = '올바른 팩스 번호 형식이 아닙니다.';
+            spanMsgFax.style.color = 'red';
+            isFaxOk = false;
+        } else {
+            spanMsgFax.innerText = '';
+            isFaxOk = true;
+
+            // 중복 확인
+            fetch(`/lotteon/member/checkFax?fax=${fax}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result > 0) {
+                        spanMsgFax.innerText = '이미 사용 중인 팩스 번호입니다.';
+                        spanMsgFax.style.color = 'red';
+                        isFaxOk = false;
+                    } else {
+                        spanMsgFax.innerText = '사용 가능한 팩스 번호입니다.';
+                        spanMsgFax.style.color = 'green';
+                        isFaxOk = true;
+                    }
+                });
+        }
+    };
+
     // 우편번호 주소검색
     // 다음 우편번호 API 스크립트 상단 추가, postcode 함수 util.js 파일 추가
     const inputZip = document.getElementById('findZip');
@@ -254,6 +387,31 @@ window.onload = function (){
 
         if (!isNameOk) {
             alert('이름을 다시 확인하시기 바랍니다.');
+            return false;
+        }
+
+        if (!isRepresentOk) {
+            alert('대표자 이름을 다시 확인하시기 바랍니다.');
+            return false;
+        }
+
+        if (!isCompanyOk) {
+            alert('회사이름을 다시 확인하시기 바랍니다.');
+            return false;
+        }
+
+        if (!isBizRegNumOk) {
+            alert('사업자등록번호를 다시 확인하시기 바랍니다.');
+            return false;
+        }
+
+        if (!isReportNumOk) {
+            alert('통신판매업신고 번호를 다시 확인하시기 바랍니다.');
+            return false;
+        }
+
+        if (!isFaxOk) {
+            alert('팩스 번호를 다시 확인하시기 바랍니다.');
             return false;
         }
 

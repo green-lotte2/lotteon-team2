@@ -70,7 +70,7 @@ public class UserService {
 
         // 기본권한
         userDTO.setGrade(1);
-
+        userDTO.setRole("SELLER");
         User user = modelMapper.map(userDTO, User.class);
         Seller seller = modelMapper.map(userDTO, Seller.class);
 
@@ -104,6 +104,22 @@ public class UserService {
 
     public boolean existsByHp(String hp) {
         return userRepository.existsByHp(hp);
+    }
+
+    public boolean existsByCohp(String cohp){
+        return sellerRepository.existsByCohp(cohp);
+    }
+
+    public boolean existsByRegnum(String regnum){
+        return sellerRepository.existsByRegnum(regnum);
+    }
+
+    public boolean existsByReportnum(String reportnum){
+        return sellerRepository.existsByReportnum(reportnum);
+    }
+
+    public boolean existsByFax(String fax){
+        return sellerRepository.existsByFax(fax);
     }
 
     @Value("${spring.mail.username}")

@@ -104,11 +104,6 @@ public class UserController {
     // 판매자 회원 가입 처리
     @PostMapping("/registerSeller")
     public String registerSeller(HttpServletRequest request, UserDTO userDTO) {
-        boolean agree1 = Boolean.parseBoolean(request.getParameter("agree1"));
-        boolean agree2 = Boolean.parseBoolean(request.getParameter("agree2"));
-        boolean agree3 = Boolean.parseBoolean(request.getParameter("agree3"));
-
-        if (agree1 && agree2 && agree3) {
 
 
             // 사용자 아이피 구하기
@@ -122,9 +117,7 @@ public class UserController {
 
 
             return "redirect:/member/login";
-        } else {
-            return "redirect:/member/registerSeller";
-        }
+
     }
 
 
@@ -212,6 +205,66 @@ public class UserController {
 
         // 휴대폰 번호 중복 여부 확인 서비스 호출
         boolean exists = userService.existsByHp(hp);
+        int result = exists ? 1 : 0;
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
+    @ResponseBody
+    @GetMapping("/checkCohp")
+    public Map<String, Integer> checkCohp(String cohp) {
+        log.info("cohp: " + cohp);
+
+        boolean exists = userService.existsByCohp(cohp);
+        int result = exists ? 1 : 0;
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
+    @ResponseBody
+    @GetMapping("/checkRegnum")
+    public Map<String, Integer> checkRegnum(String regnum) {
+        log.info("regnum: " + regnum);
+
+        boolean exists = userService.existsByRegnum(regnum);
+        int result = exists ? 1 : 0;
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
+    @ResponseBody
+    @GetMapping("/checkReportnum")
+    public Map<String, Integer> checkReportnum(String reportnum) {
+        log.info("reportnum: " + reportnum);
+
+        boolean exists = userService.existsByReportnum(reportnum);
+        int result = exists ? 1 : 0;
+
+        // JSON 출력
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
+    @ResponseBody
+    @GetMapping("/checkFax")
+    public Map<String, Integer> checkFax(String fax) {
+        log.info("fax: " + fax);
+
+        boolean exists = userService.existsByFax(fax);
         int result = exists ? 1 : 0;
 
         // JSON 출력

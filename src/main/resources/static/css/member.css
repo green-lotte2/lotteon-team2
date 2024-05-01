@@ -837,3 +837,11 @@ header {
 #member > .passConfirm table tr > td > input[type=submit]:hover {
   background-color: #036dde;
 }
+
+#member > .find table .valid-feedback {
+  color: green;
+}
+
+#member > .find table .invalid-feedback {
+  color: red;
+}
