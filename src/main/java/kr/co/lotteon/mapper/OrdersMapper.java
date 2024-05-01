@@ -11,6 +11,7 @@ import java.util.List;
 public interface OrdersMapper {
 
     public List<OrdersDTO> selectOrders(String uid);
+
     public List<OrdersDTO> selectOrdersGroup(String uid);
 
     public List<OrdersDTO> selectAllOrders();
