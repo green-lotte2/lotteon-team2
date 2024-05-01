@@ -92,7 +92,8 @@ header {
   padding-top: 60px;
   padding-left: 10px;
   box-sizing: border-box;
-  border: 1px solid #ebebeb;
+  border: 1px solid  #c9c9c9;
+  border-radius: 5px;
 }
 
 #member > .login > form > div {
@@ -133,16 +134,18 @@ header {
   height: 45px;
   margin-bottom: 4px;
   padding: 0 13px;
-  font-size: 12px;
-  border: 1px solid #e3e3e3;
+  font-size: 15px;
+  border: 1px solid  #c9c9c9;
   border-radius: 4px;
   box-sizing: border-box;
 }
 
 #member > .login > form > table input.loginBtn {
-  background-color: tomato;
+  background-color:#d14a32;
   color: #ffffff;
   height: 50px;
+  border: none;
+  font-size: 18px;
 }
 
 #member > .login > form > span {
@@ -185,6 +188,19 @@ header {
 #member > .login > form label > span {
   display: inline-block;
   width: 60px;
+}
+
+#member > .login > a.banner {
+  display: block;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+#member > .login > .banner > img {
+  width: 500px ;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 /* member > .join */
