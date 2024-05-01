@@ -2,13 +2,18 @@ package kr.co.lotteon.service;
 
 import kr.co.lotteon.dto.BannerDTO;
 import kr.co.lotteon.dto.ProductDTO;
+import kr.co.lotteon.dto.ProductimgDTO;
 import kr.co.lotteon.entity.Banner;
 import kr.co.lotteon.entity.Product;
+import kr.co.lotteon.entity.Productimg;
 import kr.co.lotteon.mapper.AdminMapper;
+import kr.co.lotteon.mapper.ProductMapper;
 import kr.co.lotteon.repository.BannerRepository;
+import kr.co.lotteon.repository.ProductimgRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,9 +24,11 @@ import kr.co.lotteon.dto.UserDTO;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,10 +39,16 @@ public class AdminService {
 
     private final AdminMapper adminMapper;
     private final BannerRepository bannerRepository;
+    private final ProductimgRepository productimgRepository;
+    private final ProductMapper productMapper;
 
     public List<UserDTO> selectUsers(){
         log.info("selectUsers... ");
         return adminMapper.adminSelectUsers();
+    }
+
+    public List<ProductDTO> selectProductsBySearch(String search, String searchOption){
+        return  adminMapper.selectProductsBySearch(search, searchOption);
     }
 
     public List<ProductDTO> selectProducts(){
@@ -45,6 +58,40 @@ public class AdminService {
 
     public void adminDeleteProduct(int pno){
         adminMapper.adminDeleteProduct(pno);
+    }
+
+
+    @Value("${img.upload.path}")
+    private String imgUploadPath;
+
+    public void adminDeleteProductImg(int pno, int cate){
+        Optional<Productimg> optionalProductimg = productimgRepository.findById(pno);
+        if(optionalProductimg.isPresent()){
+            Productimg productimg = optionalProductimg.get();
+
+            List<String> delImgList = new ArrayList<>();
+            delImgList.add(productimg.getMainimg());
+            delImgList.add(productimg.getDetailimg());
+
+            String path = new File(imgUploadPath + "/" + cate + "/").getAbsolutePath();
+
+
+
+            for(String img : delImgList){
+                File delFile = new File(path + File.separator + img);
+                log.info(delFile.toString());
+                if(delFile.exists()){
+                    if(delFile.delete()){
+                        log.info("파일 삭제 완료");
+                    }else{
+                        log.error("파일 삭제 실패");
+                    }
+                }else{
+                    log.warn("파일이 존재하지 않습니다.");
+                }
+            }
+        }
+        productimgRepository.deleteById(pno);
     }
 
     // 🎈배너 등록

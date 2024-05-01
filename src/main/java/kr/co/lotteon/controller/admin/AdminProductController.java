@@ -77,9 +77,14 @@ public class AdminProductController {
 
 
     @GetMapping("/admin/product/list")
-    public String adminProductList(Model model){
+    public String adminProductList(Model model, String search, String searchOption){
 
-        List<ProductDTO> adminProducts = adminService.selectProducts();
+        List<ProductDTO> adminProducts = null;
+        if(search == null){
+            adminProducts = adminService.selectProducts();
+        }else{
+            adminProducts = adminService.selectProductsBySearch(search, searchOption);
+        }
         log.info("adminProducts" + adminProducts);
 
         model.addAttribute("adminProducts", adminProducts);
@@ -89,6 +94,10 @@ public class AdminProductController {
 
     @GetMapping("/admin/product/delete")
     public String adminDeleteProduct(int pno){
+        Product product = productService.findProduct(pno);
+        int cate = product.getCate();
+
+        adminService.adminDeleteProductImg(pno, cate);
         adminService.adminDeleteProduct(pno);
         return "redirect:/admin/product/list";
     }

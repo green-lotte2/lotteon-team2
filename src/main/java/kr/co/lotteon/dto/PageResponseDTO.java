@@ -15,6 +15,7 @@ public class PageResponseDTO {
     // 상품검색 결과
     private List<ProductDTO> dtoList;
 
+
     private int pg;
     private int size;
     private int total;

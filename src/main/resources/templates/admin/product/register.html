@@ -26,8 +26,6 @@
             const discount = document.getElementsByName('discount')[0];
             const point = document.getElementsByName('point')[0];
 
-
-
             price.onchange = function(){
                 point.value = Math.floor((parseInt(price.value)- (parseInt(price.value) * parseInt(discount.value)) / 100) / 100);
             }

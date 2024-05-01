@@ -16,6 +16,8 @@ public interface AdminMapper{
     // admin 상품삭제
     public void adminDeleteProduct(int pno);
 
+    public List<ProductDTO> selectProductsBySearch(String search, String searchOption);
+
     
     //🎈공지사항//
     //  목록

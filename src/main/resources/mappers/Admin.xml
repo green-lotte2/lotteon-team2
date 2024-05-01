@@ -25,6 +25,20 @@
         ORDER BY a.rdate DESC, a.pno ASC
     </select>
 
+    <select id="selectProductsBySearch" resultType="kr.co.lotteon.dto.ProductDTO">
+        SELECT a.*, b.mainImg
+        FROM `product` AS a
+        LEFT JOIN `productimg` AS b ON a.pno = b.pno
+        LEFT JOIN `seller` AS c ON a.sid = c.uid
+        <where>
+            <if test="searchOption == 'pname'">a.pname like CONCAT('%',#{search},'%')</if>
+            <if test="searchOption == 'company'">a.company like CONCAT('%',#{search},'%')</if>
+            <if test="searchOption == 'seller'">a.seller like CONCAT('%',#{search},'%')</if>
+            <if test="searchOption == 'pno'">a.pno=#{search}</if>
+        </where>
+        ORDER BY a.rdate DESC, a.pno ASC
+    </select>
+
     <!--🎈 admin_product_delete-->
     <delete id="adminDeleteProduct">
         DELETE FROM `product` WHERE pno = #{pno}

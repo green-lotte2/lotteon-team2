@@ -78,12 +78,13 @@
                 <div class="card-body">
                     <div class="table-responsive">
 
-                        <form th:action="@{/admin/product/search}" method="get">
+                        <form th:action="@{/admin/product/list}" method="get">
                             <div id="searchBox">
                                 <select name="searchOption" id="searchOption">
                                     <option value="pname">상품명</option>
+                                    <option value="pno">상품번호</option>
+                                    <option value="seller">판매자</option>
                                     <option value="company">제조사</option>
-                                    <option value="seller">판매사</option>
                                 </select>
                                 <input type="search" class="searchInput" name="search" placeholder="검색어를 입력하세요.">
                                 <button class="searchBtn">
