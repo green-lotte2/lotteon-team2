@@ -24,7 +24,7 @@ public class Reply {
 
 
     private int qnano;
-    private String content;
+    private String rcontent;
 
     @CreationTimestamp
     private LocalDateTime rdate;
@@ -34,7 +34,7 @@ public class Reply {
         return ReplyDTO.builder()
                 .replyno(replyno)
                 .qnano(qnano)
-                .content(content)
+                .rcontent(rcontent)
                 .rdate(rdate)
                 .writer(writer)
                 .build();

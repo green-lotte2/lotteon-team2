@@ -19,9 +19,9 @@ public class QCsReply extends EntityPathBase<CsReply> {
 
     public static final QCsReply csReply = new QCsReply("csReply");
 
-    public final StringPath content = createString("content");
-
     public final NumberPath<Integer> qnano = createNumber("qnano", Integer.class);
+
+    public final StringPath rcontent = createString("rcontent");
 
     public final DateTimePath<java.time.LocalDateTime> rdate = createDateTime("rdate", java.time.LocalDateTime.class);
 
