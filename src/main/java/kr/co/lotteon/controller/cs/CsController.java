@@ -225,6 +225,7 @@ public class CsController {
 
         log.info("qnano : " + qnano);
         log.info("qnaBoard : " + qnaBoard.toString());
+        log.info("qnaChildBoard : " + qnaChildBoard);
 
         return "/cs/qna/view";
     }

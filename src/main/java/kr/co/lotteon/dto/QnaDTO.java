@@ -32,13 +32,15 @@ public class QnaDTO {
     private MultipartFile mFile1;
 
 
+
     //추가 필드
     private String writername;
     private String c1name;
     private String c2name;
     private String writermarking;
     private String rdateSub;
-
+    //🎈댓글 컨텐츠
+    private String rcontent;
 
 /*
     public String getRdateSub() {

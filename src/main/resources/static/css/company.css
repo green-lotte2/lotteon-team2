@@ -40,6 +40,10 @@ header .gnb ul li {
     font-weight: bold;
 }
 
+header .gnb ul li:hover {
+    color: #ea3434;
+}
+
 /* 🎈footer */
 footer {
     width: 100%;
@@ -179,6 +183,7 @@ main #cont2 h2 {
 /* 🎈슬라이더 */
 .swiper {
     max-width: 1200px;
+    margin: 0 auto;
 }
 
 .swiper.mySwiper.swiper-initialized.swiper-horizontal.swiper-backface-hidden {
@@ -187,14 +192,19 @@ main #cont2 h2 {
     padding-left: 25px;
 }
 
+.swiper-slide.swiper-slide-active {
+    width: 570px;
+}
+
 .swiper-slide {
     width: 590px;
     padding-left: 20px;
 }
 .swiper-slide > img {
-        width: 500px;
-        border-radius: 10px;
-        object-fit: cover;
+    width: 500px;
+    border-radius: 10px;
+    object-fit: cover;
+    padding-left: 30px;
 
 }
 
@@ -208,17 +218,29 @@ main #cont2 h2 {
 }
 
 
-.swiper-button-next:after, .swiper-button-prev:after {
-    position: absolute;
-    left: 0;
-    bottom: 110px;
-}
-
-
-.swiper-button-next:after, .swiper-button-next:after {
+.swiper-button-prev {
     position: absolute;
     right: 0;
     bottom: 110px;
+    font-size: 20px;
+}
+
+.swiper-button-next {
+    position: absolute;
+    right: 20px;
+    font-size: 20px;
+}
+
+.swiper-button-next:after, .swiper-button-prev:after {
+    font-size: 20px;
+    position: absolute;
+    bottom: 80px;
+    color: #fff;
+    background-color: #818181;
+    padding: 8px;
+    border-radius: 50%;
+    width: 20px;
+    text-align: center;
 }
 
 .swiper-button-next, .swiper-button-prev {
@@ -469,21 +491,78 @@ main > #cont5 img {
     cursor: pointer;
 }
 
-#blog .blog .gnb .items {
+#blog .blog .items {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-top: 40px;
 }
 
-#blog .blog .gnb .items .card {
+#blog .blog .items .card {
+    position: relative;
     width: 400px;
 }
 
-#blog .blog .gnb .items .card img {
-    width: 400px;
-    height: auto;
+#blog .blog  .items .card img {
+    width: 320px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
 }
 
+#blog .blog  .items .card span {
+    display: block;
+    width: 70px;
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 12px;
+    background-color: #f94b2c;
+    color: #ffffff;
+    padding: 5px;
+}
+#blog .blog  .items .card a {
+    width: 320px;
+    display: block;
+}
+
+#blog .blog  .items .card a > div {
+    text-align: center;
+}
+
+#blog .blog  .items .card a > div h4{
+    font-weight: bold;
+    font-size: 22px;
+}
+#blog .blog  .items .card a > div p{
+    font-size: 15px;
+    color: #777777;
+}
+
+#blog .blog .more {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#blog .more div {
+    text-align: center;
+    margin: 50px 0 100px;
+}
+
+#blog .more div button{
+    width: 140px;
+    background-color: #fa3d1c;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
 
 
 

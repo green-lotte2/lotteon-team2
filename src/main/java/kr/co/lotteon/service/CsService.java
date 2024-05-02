@@ -427,7 +427,7 @@ public class CsService {
 
             Reply reply = optArticle.get();
             // 어쩔수 없이 Article 엔티티에 @Setter 선언해서 수정하기
-            reply.setContent(replyDTO.getContent());
+            reply.setRcontent(replyDTO.getRcontent());
 
             log.info("reply : " + reply);
 

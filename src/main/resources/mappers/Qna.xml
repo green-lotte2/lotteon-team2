@@ -54,9 +54,11 @@
 
     <select id="selectQnaBoard" resultType="kr.co.lotteon.dto.QnaDTO">
         SELECT * FROM `qna` AS a
-        JOIN `cate2` AS b
-        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `qnano`=#{qnano}
+        JOIN `cate2` AS b  ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
+        JOIN `reply` AS c ON a.qnano = c.qnano
+        WHERE a.qnano=#{qnano}
     </select>
+
 
     <update id="updateQnaBoard">
         UPDATE `qna` SET `content`=#{content} WHERE `qnano`=#{qnano}
@@ -67,7 +69,10 @@
     </delete>
 
     <select id="selectQnaChildBoard" resultType="kr.co.lotteon.dto.QnaDTO">
-        SELECT * FROM `qna` WHERE `qnano`=#{qnano}
+        SELECT a.*, b.rcontent
+        FROM `qna` AS a
+        LEFT JOIN `reply` AS b ON a.qnano = b.qnano
+        WHERE a.qnano = #{qnano};
     </select>
 
 

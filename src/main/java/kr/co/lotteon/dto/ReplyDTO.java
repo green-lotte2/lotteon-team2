@@ -19,7 +19,7 @@ public class ReplyDTO {
     private int replyno;
 
     private int qnano;
-    private String content;
+    private String rcontent;
     private LocalDateTime rdate;
     private String writer;
 
@@ -27,8 +27,8 @@ public class ReplyDTO {
     public CsReply toEntity() {
         return CsReply.builder()
                 .replyno(replyno)
+                .rcontent(rcontent)
                 .qnano(qnano)
-                .content(content)
                 .rdate(rdate)
                 .writer(writer)
                 .build();

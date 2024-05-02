@@ -23,7 +23,7 @@ public class CsReply {
 
     private int qnano;
     private String title;
-    private String content;
+    private String rcontent;
 
     @CreationTimestamp
     private LocalDateTime rdate;
@@ -33,7 +33,7 @@ public class CsReply {
         return  ReplyDTO.builder()
                 .replyno(replyno)
                 .qnano(qnano)
-                .content(content)
+                .rcontent(rcontent)
                 .rdate(rdate)
                 .writer(writer)
                 .build();
