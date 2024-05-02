@@ -1,10 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <title>lotteCompany::blog</title>
+    <link th:href="@{/css/company.css}" rel="stylesheet">
+
 </head>
 <body>
+<div id="wrapper" class="blog">
+    <!--🎈header-->
+    <header>
+        <div class="logo">
+            <a th:href="@{/}">
+                <img th:src="@{/images/company/company_index_logo.png}" alt="logo">
+            </a>
+        </div>
+        <div class="gnb">
+            <ul>
+                <li>
+                    <a th:href="@{/company}">HOME</a>
+                </li>
+                <li>
+                    <a th:href="@{/company/culture}">기업문화</a>
+                </li>
+                <li>
+                    <a th:href="@{/company/blog}">소식과 이야기</a>
+                </li>
+                <li>
+                    <a th:href="@{/company/jobPosting}">채용</a>
+                </li>
+                <li>
+                    <a th:href="@{/company/media}">미디어</a>
+                </li>
+            </ul>
+        </div>
+    </header>
 
+    <!--🎈main-->
+    <main id="blog">
+        <div class="title">
+            <h2>롯데ON을 더 알고 싶다면!</h2>
+            <p>우리의 다양한 이야기를 소개합니다</p>
+        </div>
+        <section class="blog">
+            <div>
+                <div class="gnb">
+                    <ul>
+                        <li><a th:href="@{#}">전체보기</a></li>
+                        <li><a th:href="@{#}">기업문화</a></li>
+                        <li><a th:href="@{#}">인터뷰</a></li>
+                        <li><a th:href="@{#}">채용</a></li>
+                        <li><a th:href="@{#}">롯데ON</a></li>
+                        <li><a th:href="@{#}">보도자료</a></li>
+                        <li><a th:href="@{#}">ESG</a></li>
+                    </ul>
+                </div><!--🎨목록 end-->
+                <div class="items">
+                    <div class="card card1">
+                        <a th:href="@{#}">
+                            <img th:src="@{/images/company/blog1.jpg}">
+                            <span>보도자료</span>
+                            <div>
+                                <h4>‘패션&뷰티 기획전’에서 나들이 및 가정의 달 선물 준비 끝!</h4>
+                                <p>5월 가정의 달 맞이 쇼핑은 롯데온에서!</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card card2">
+                        <a th:href="@{#}">
+                            <img th:src="@{/images/company/blog2.jpg}">
+                            <span>보도자료</span>
+                            <div>
+                                <h4>‘희망일 배송 서비스’ 활성화 위한 까사미아 역대 최대 혜택!</h4>
+                                <p>고객 문의 절반 이상 낮춘 서비스는?</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card card3">
+                        <a th:href="@{#}">
+                            <img th:src="@{/images/company/blog3.png}">
+                            <span>보도자료</span>
+                            <div>
+                                <h4>롯데e커머스 사람들 시리즈 14</h4>
+                                <p>DB엔지니어 민영님이 들려주는 ElasticSearch 구성 최적화 프로젝트와 직무 이야기 함께 들어볼까요❣</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card card4">
+                        <a th:href="@{#}">
+                            <img th:src="@{/images/company/blog4.jpg}">
+                            <span>인터뷰</span>
+                            <div>
+                                <h4>오늘 주문하면, 내일 도착!! ‘내일온(ON)다’ 론칭!</h4>
+                                <p>치열한 배송전쟁에서 익일배송으로 승부수!</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card card5">
+                        <a th:href="@{#}">
+                            <img th:src="@{/images/company/blog5.jpg}">
+                            <span>보도자료</span>
+                            <div>
+                                <h4>봄 스타일링 완성시킬 데님 브랜드 ‘와르’ 최대 75% 할인!</h4>
+                                <p>‘롯데온(ON)세상’에서 선보이는 인기 브랜드는?</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card card6">
+                        <a th:href="@{#}">
+                            <img th:src="@{/images/company/blog6.png}">
+                            <span>보도자료</span>
+                            <div>
+                                <h4>롯데 4천만 회원과 계열사 혜택이 연결되는 ‘롯데온세상’!</h4>
+                                <p>롯데를 연중 최대 혜택으로 만나는 기회!</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--🎈footer-->
+    <footer>
+        <div class="footerBox">
+            <div class="footerTop">
+                <ul>
+                    <li><a th:href="@{/}">HOME</a></li>
+                    <li><a th:href="@{/company/culture}">기업문화</a></li>
+                    <li><a th:href="@{/company/blog}">소식과 이야기</a></li>
+                    <li><a th:href="@{/company/jobPosting}">채용</a></li>
+                    <li><a th:href="@{/company/media}">미디어</a></li>
+                </ul>
+                <p>peoplevalue@lotte.net</p>
+            </div>
+            <div class="footerSns">
+                <a th:href="@{#}"><img th:src="@{/images/company/facebook_50.png}" alt="페이스북"></a>
+                <a th:href="@{#}"><img th:src="@{/images/company/twitter_50.png}" alt="트위터"></a>
+                <a th:href="@{#}"><img th:src="@{/images/company/instagram_50.png}" alt="인스타"></a>
+                <a th:href="@{#}"><img th:src="@{/images/company/pinterest_50.png}" alt="핀터레스트"></a>
+            </div>
+            <div class="footerBottom">
+                <p>© 2022 All rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+</div>
 </body>
 </html>
