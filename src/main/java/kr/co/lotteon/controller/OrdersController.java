@@ -57,7 +57,7 @@ public class OrdersController {
 
         List<ProductDTO> cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
         UserDTO user = userService.selectUserDetail(uid);
-        log.info("dddddd"+user);
+        log.info("dddddd" + user);
         model.addAttribute("user", user);
         model.addAttribute("cartProducts", cartProducts);  // 모델에 장바구니 상품 목록 추가
         model.addAttribute("cate", productService.getCategoryList());
@@ -70,7 +70,7 @@ public class OrdersController {
 
         Orders orders = ordersService.insertOrder(ordersDTO);
         int ono = orders.getOno();
-        for(String select : checkbox){
+        for (String select : checkbox) {
             OrdersDTO ordersDTO1 = new OrdersDTO();
             ordersDTO1.setOno(ono);
             String[] productInfo = select.split("%");
@@ -80,7 +80,7 @@ public class OrdersController {
             ordersDTO1.setPrice(Integer.parseInt(productInfo[2]));
 
             ordersDTO1.setOptions(null);
-            if (productInfo.length > 3){
+            if (productInfo.length > 3) {
                 ordersDTO1.setOptions(productInfo[2]);
             }
             String uid = ordersDTO.getUid();
@@ -88,9 +88,8 @@ public class OrdersController {
             ordersService.insertOrderDetail(ordersDTO1);
             cartService.orderCartItems(uid, ordersDTO1.getPno());
         }
-        return "redirect:/product/complete/"+ono;
+        return "redirect:/product/complete/" + ono;
     }
-
 
 
     @GetMapping("/mypage/order")
@@ -99,25 +98,20 @@ public class OrdersController {
             return "redirect:/member/login";
         }
 
-
         // 사용자 정보 가져오기
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String uid = userDetails.getUsername();
 
         List<OrdersDTO> orders = ordersService.selectOrders(uid, pageRequestDTO);
-        List<OrdersDTO> ordersGroup = ordersService.selectOrdersGroup(uid);
-        List<OrdersDTO> ordersDTOS = ordersService.selectAllOrders();
         PageResponseDTO pageResponseDTO = ordersService.findOrderListByUid(uid, pageRequestDTO);
 
-        model.addAttribute("ordersDTOS", ordersDTOS);
         model.addAttribute("orders", orders);
-        model.addAttribute("ordersGroup", ordersGroup);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
-
-
 
         log.info(orders.toString());
         return "/mypage/order";
     }
+
 }
+
 

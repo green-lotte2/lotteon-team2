@@ -34,6 +34,4 @@ public class Orders {
     private String request;
     private int total;
 
-    private int discount;
-    private int dfee;
 }

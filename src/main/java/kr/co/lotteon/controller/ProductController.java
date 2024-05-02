@@ -5,6 +5,7 @@ import kr.co.lotteon.entity.OrderDetail;
 import kr.co.lotteon.entity.Orders;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.entity.User;
+import kr.co.lotteon.repository.ProductRepository;
 import kr.co.lotteon.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,7 @@ public class ProductController {
     private final CartService cartService;
     private final UserService userService;
     private final OrdersService ordersService;
+    private final ProductRepository productRepository;
 
     @GetMapping("/product/cart")
     public String cart(Authentication authentication, Model model) {
@@ -119,7 +121,36 @@ public class ProductController {
     public String complete(@PathVariable("ono") int ono, Model model) {
         List<OrdersDTO> ordersDTO = ordersService.getOrderDetails(ono);
 
+        ordersDTO.forEach(detail -> {
+            // 상품 엔터티에서 추가 정보를 가져와 추가
+            Product product = productRepository.findById(detail.getPno())
+                    .orElseThrow(() -> new IllegalArgumentException("상품이 없습니다."));
+            detail.setPrice(product.getPrice()); // 제품 가격 정보 추가
+            // 필요한 다른 정보도 추가 가능
+        });
+
+
+            // 총 상품 금액, 할인 금액, 배송비 계산
+        int totalAmount = ordersDTO.stream()
+                .mapToInt(detail -> detail.getPrice() * detail.getPcount())
+                .sum();
+
+        int totalDiscount = ordersDTO.stream()
+                .mapToInt(detail -> (detail.getPrice() * detail.getDiscount() * detail.getPcount()))
+                .sum();
+
+        int deliveryFee = ordersDTO.stream()
+                .mapToInt(detail -> detail.getDfee())
+                .sum();
+
+        int finalPrice = totalAmount + deliveryFee - totalDiscount;
+
+        // 모델에 값 추가
         model.addAttribute("ordersDTO", ordersDTO);
+        model.addAttribute("totalAmount", totalAmount);
+        model.addAttribute("totalDiscount", totalDiscount);
+        model.addAttribute("deliveryFee", deliveryFee);
+        model.addAttribute("finalPrice", finalPrice);
 
         return "/product/complete";
     }
