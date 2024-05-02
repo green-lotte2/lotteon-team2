@@ -77,15 +77,8 @@ public class AdminProductController {
     @GetMapping("/admin/product/list")
     public String adminProductList(Model model, PageRequestDTO pageRequestDTO){
 
-        List<ProductDTO> adminProducts = null;
-        if(pageRequestDTO.getKeyword() == null){
-            adminProducts = adminService.selectProducts();
-        }else{
-            adminProducts = adminService.selectProductsBySearch(pageRequestDTO);
-        }
-        log.info("adminProducts" + adminProducts);
-
-        model.addAttribute("adminProducts", adminProducts);
+        TypePageResponseDTO typePageResponseDTO = adminService.selectProductsBySearch(pageRequestDTO);
+        model.addAttribute("adminProducts", typePageResponseDTO);
 
         return "/admin/product/list";
     }

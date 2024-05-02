@@ -26,7 +26,18 @@
     </select>
 
     <select id="selectProductsBySearch" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.ProductDTO">
-        SELECT a.*, b.mainImg
+        SELECT a.*, b.mainImg, (
+            SELECT COUNT(*)
+            FROM `product` AS a
+            LEFT JOIN `productimg` AS b ON a.pno = b.pno
+            LEFT JOIN `seller` AS c ON a.sid = c.uid
+            <where>
+                <if test="type == 'pname'">a.pname like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'company'">a.company like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'seller'">a.seller like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'pno'">a.pno=${keyword}</if>
+            </where>
+        ) as total
         FROM `product` AS a
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
         LEFT JOIN `seller` AS c ON a.sid = c.uid

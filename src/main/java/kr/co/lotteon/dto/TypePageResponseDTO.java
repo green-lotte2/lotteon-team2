@@ -15,7 +15,9 @@ public class TypePageResponseDTO {
     private int totalPage;
     private int cate1;
     private int cate2;
-    private String search;
+
+    private String type;
+    private String keyword;
 
     private List<?> anyList;
 
@@ -29,7 +31,9 @@ public class TypePageResponseDTO {
         this.size = pageRequestDTO.getSize();
         this.total = total;
         this.totalPage = (int) Math.ceil((double) total / this.size);
-        this.search = pageRequestDTO.getSearch();
+
+        this.type = pageRequestDTO.getType();
+        this.keyword = pageRequestDTO.getKeyword();
 
         this.anyList = anyList;
 

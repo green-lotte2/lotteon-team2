@@ -115,7 +115,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="product: ${adminProducts}">
+                                        <tr th:each="product: ${adminProducts.anyList}">
                                             <td>
                                                 <input type="checkbox" name="checkbox" th:value="${product.pno}">
                                             </td>
@@ -149,15 +149,21 @@
                 <nav aria-label="...">
                     <ul class="pagination">
                         <li class="page-item disabled">
-                            <a class="page-link">Previous</a>
+                            <a th:if="${adminProducts.pg} > 1 and ${adminProducts.keyword} == null"
+                               th:href="@{/admin/product/list(pg=${adminProducts.pg - 1})}"
+                               class="page-link">이전</a>
+                            <a th:if="${adminProducts.pg} > 1 and ${adminProducts.keyword} != null"
+                               th:href="@{/admin/product/list(pg=${adminProducts.pg - 1},type=${adminProducts.type},keyword=${adminProducts.keyword})}"
+                               class="page-link">이전</a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">2</a>
+                        <li th:class="${i == adminProducts.pg ? 'page-item active' : 'page-item'}" th:each="i : ${#numbers.sequence(1, adminProducts.totalPage)}">
+                            <a th:href="@{/admin/product/list(pg=${i})}"
+                               class="page-link">[[${i}]]</a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
+                            <a th:if="${adminProducts.pg} < ${adminProducts.totalPage}"
+                               th:href="@{/admin/product/list(pg=${adminProducts.pg + 1})}"
+                               class="page-link">다음</a>
                         </li>
                     </ul>
                 </nav>

@@ -45,8 +45,9 @@ public class AdminService {
         return adminMapper.adminSelectUsers();
     }
 
-    public List<ProductDTO> selectProductsBySearch(PageRequestDTO pageRequestDTO){
-        return  adminMapper.selectProductsBySearch(pageRequestDTO);
+    public TypePageResponseDTO selectProductsBySearch(PageRequestDTO pageRequestDTO) {
+        List<ProductDTO> productDTOS = adminMapper.selectProductsBySearch(pageRequestDTO);
+        return new TypePageResponseDTO(pageRequestDTO,productDTOS.get(0).getTotal(),productDTOS);
     }
 
     public List<ProductDTO> selectProducts(){
