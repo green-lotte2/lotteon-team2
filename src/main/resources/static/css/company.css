@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic&display=swap');
+
+/* 🎈공통 */
+body {
+    width: 100%;
+    margin: 0 auto;
+    font-family: "Gothic A1", sans-serif;
+}
+
+#wrapper {
+    width: 100%;
+    height: auto;
+    color: #333333;
+    box-sizing: border-box;
+}
+
+#wrapper a {
+    text-decoration: none;
+    color: inherit;
+}
+
+    /* 🎈header */
+header {
+    width: 1200px;
+    height: 100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo img {
+    width: 160px;
+}
+
+header .gnb ul li {
+    display: inline-block;
+    margin-left: 30px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+main #main_visual {
+    width: 100%;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+main #main_visual img {
+    width: 100%;
+    height: 700px;
+    object-fit: cover;
+}
+
+main #main_visual p {
+    font-size: 31px;
+    font-weight: bold;
+    color: #fff;
+    position: absolute;
+    bottom: 35px;
+    left: 170px;
+    line-height: 1.3;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translateZ(0);
+    }
+}
+
+.mainText {
+    position: relative;
+    animation: fadeInUp 1.5s;
+}
+
+
+main #cont1 {
+    width: 1200px;
+    height: 200px;
+    margin: 0px auto 70px;
+    position: relative;
+}
+
+main #cont1 p {
+    position: absolute;
+    font-size: 25px;
+    line-height: 1.3;
+    left: 25px;
+}
+
+
+main #cont2 {
+    width: 100%;
+    position: relative;
+    margin-bottom: 100px;
+}
+main #cont2 .sliderTitle {
+    width: 1200px;
+    margin: 0 auto 30px;
+}
+main #cont2 h2 {
+    font-size: 35px;
+    padding-left: 25px;
+}
+
+/* 🎈슬라이더 */
+.swiper.mySwiper.swiper-initialized.swiper-horizontal.swiper-backface-hidden {
+    margin: 0 auto;
+    width: 1200px;
+    padding-left: 25px;
+}
+
+.swiper-slide {
+    padding-left: 6px;
+}
+.swiper-slide > img {
+        width: 560px;
+        border-radius: 10px;
+        object-fit: cover;
+
+}
+
+.swiper-slide .title > p {
+    font-size: 25px;
+    font-weight: bold;
+}
+.swiper-slide .text > p {
+    font-size: 17px;
+    line-height: 1.3;
+}
+
+
+.swiper-button-next:after, .swiper-button-prev:after {
+    position: absolute;
+    padding-left: 160px;
+    bottom: 80px;
+}
+
+
+.swiper-button-next:after, .swiper-button-next:after {
+    position: absolute;
+    right: 70px;
+    bottom: 80px;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: #333333;
+}
+
+.swiper-pagination.swiper-pagination-bullets.swiper-pagination-horizontal {
+    position: relative;
+    top: 5px;
+}
+
+span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: #222222;
+}
+
+main > #cont3 {
+    width: 1200px;
+    margin: 0 auto 100px;
+}
+
+main > #cont3 > h2 {
+    font-size: 35px;
+}
+
+main > #cont3 .notice > div {
+    border-bottom: 1px solid #333333;
+    padding: 10px;
+}
+
+main > #cont3 .notice > div > h4 {
+    font-size: 15px;
+    margin-bottom: 0px;
+}
+
+main > #cont3 .notice > div .list {
+    display: flex;
+    justify-content: space-between;
+}
+
+main > #cont3 .notice > div .list a {
+    display: block;
+}
+
+main > #cont3 .notice > div .list a > p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+main > #cont4 {
+    width: 1200px;
+    margin: 0 auto 100px;
+}
+
+main > #cont4 h2 {
+    font-size: 35px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+main > #cont4 img {
+    width: 660px;
+}
+
+main > #cont5 {
+    width: 1200px;
+    margin: 0 auto 100px;
+}
+
+main > #cont5 img {
+    width: 1200px;
+    border-radius: 10px;
+}
