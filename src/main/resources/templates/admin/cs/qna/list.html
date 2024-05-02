@@ -127,7 +127,7 @@
                                             </td>
                                         <td>[[${qnaDTOS.uid}]]</td>
                                         <td th:text="${#temporals.format(qnaDTOS.rdate, 'yy-MM-dd')}"></td>
-                                        <th:block class="answercomplete">
+                                        <th:block class="answercomplete" name="answercomplete">
                                             <td th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
                                             <td th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
                                         </th:block>

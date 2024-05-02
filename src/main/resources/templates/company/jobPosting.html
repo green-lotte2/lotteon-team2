@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <title>lotteCompany::jobPosting</title>
+    <link th:href="@{/css/company.css}" rel="stylesheet">
+
 </head>
 <body>
+<div id="wrapper" class="jobPosting">
+    <!--🎈header-->
+    <header>
+        <div class="logo">
+            <a th:href="@{/}">
+                <img th:src="@{/images/company/company_index_logo.png}" alt="logo">
+            </a>
+        </div>
+        <div class="gnb">
+            <ul>
+                <li>
+                    <a th:href="@{/company}">HOME</a>
+                </li>
+                <li>
+                    <a th:href="@{/company/culture}">기업문화</a>
+                </li>
+                <li>
+                    <a th:href="@{/company/blog}">소식과 이야기</a>
+                </li>
+                <li>
+                    <a th:href="@{/company/jobPosting}">채용</a>
+                </li>
+                <li>
+                    <a th:href="@{/company/media}">미디어</a>
+                </li>
+            </ul>
+        </div>
+    </header>
 
+    <!--🎈main-->
+    <main>
+
+    </main>
+
+    <!--🎈footer-->
+    <footer>
+        <div class="footerBox">
+            <div class="footerTop">
+                <ul>
+                    <li><a th:href="@{/}">HOME</a></li>
+                    <li><a th:href="@{/company/culture}">기업문화</a></li>
+                    <li><a th:href="@{/company/blog}">소식과 이야기</a></li>
+                    <li><a th:href="@{/company/jobPosting}">채용</a></li>
+                    <li><a th:href="@{/company/media}">미디어</a></li>
+                </ul>
+                <p>peoplevalue@lotte.net</p>
+            </div>
+            <div class="footerSns">
+                <a th:href="@{#}"><img th:src="@{/images/company/facebook_50.png}" alt="페이스북"></a>
+                <a th:href="@{#}"><img th:src="@{/images/company/twitter_50.png}" alt="트위터"></a>
+                <a th:href="@{#}"><img th:src="@{/images/company/instagram_50.png}" alt="인스타"></a>
+                <a th:href="@{#}"><img th:src="@{/images/company/pinterest_50.png}" alt="핀터레스트"></a>
+            </div>
+            <div class="footerBottom">
+                <p>© 2022 All rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+</div>
 </body>
 </html>
