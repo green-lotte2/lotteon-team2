@@ -56,21 +56,32 @@ public class OrdersService {
         orderDetailRepository.save(orderDetail);
     }
 
-    public List<OrdersDTO> selectOrders(String uid, PageRequestDTO pageRequestDTO) {
-        Pageable pageable = pageRequestDTO.getPageable("ono"); // 페이지 설정
 
-        Page<Tuple> pageOrder = orderRepository.selectOrders(pageRequestDTO, pageable, uid); // OrderRepository에서 데이터 가져오기
+
+    public List<OrdersDTO> selectOrders(String uid, PageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("ono");
+
+        Page<Tuple> pageOrder = orderRepository.selectOrders(pageRequestDTO, pageable, uid);
+
         return pageOrder.getContent().stream()
                 .map(tuple -> {
                     Orders orders = tuple.get(0, Orders.class);
-                    orders.setOno(tuple.get(1, Integer.class));
                     OrdersDTO ordersDTO = modelMapper.map(orders, OrdersDTO.class);
+
                     ordersDTO.setPcount(tuple.get(6, Integer.class));
+                    ordersDTO.setPno(tuple.get(1, Integer.class));
+                    ordersDTO.setPname(tuple.get(3, String.class));
+                    ordersDTO.setCompany(tuple.get(4, String.class));
+                    ordersDTO.setMainimg(tuple.get(5, String.class));
+                    ordersDTO.setPrice(tuple.get(8, Integer.class));
+                    ordersDTO.setCate(tuple.get(2, Integer.class));
+
+
                     return ordersDTO;
                 })
-                .toList(); // 변환 결과를 직접 반환
-
+                .toList();
     }
+
 
     public List<OrdersDTO> selectAllOrders() {
         return ordersMapper.selectAllOrders();
@@ -127,6 +138,7 @@ public class OrdersService {
                 .total(total)
                 .orderList(orderList)
                 .build();
+
         return pageResponseDTO;
     }
 }

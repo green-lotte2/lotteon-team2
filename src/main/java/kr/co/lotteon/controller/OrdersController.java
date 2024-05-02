@@ -96,25 +96,25 @@ public class OrdersController {
     @GetMapping("/mypage/order")
     public String myOrder(Authentication authentication, Model model, PageRequestDTO pageRequestDTO) {
         if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
+            return "redirect:/member/login";
         }
 
 
         // 사용자 정보 가져오기
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String uid = userDetails.getUsername();  // 인증된 사용자 ID 추출
+        String uid = userDetails.getUsername();
 
         List<OrdersDTO> orders = ordersService.selectOrders(uid, pageRequestDTO);
-        log.info(orders+"이거봐랑 ㅣ거보라알몬아리ㅓ");
         List<OrdersDTO> ordersGroup = ordersService.selectOrdersGroup(uid);
-
-
+        List<OrdersDTO> ordersDTOS = ordersService.selectAllOrders();
         PageResponseDTO pageResponseDTO = ordersService.findOrderListByUid(uid, pageRequestDTO);
 
-
+        model.addAttribute("ordersDTOS", ordersDTOS);
         model.addAttribute("orders", orders);
         model.addAttribute("ordersGroup", ordersGroup);
-        model.addAttribute("pageResponseDTO", pageResponseDTO); // 페이지 응답 전달
+        model.addAttribute("pageResponseDTO", pageResponseDTO);
+
+
 
         log.info(orders.toString());
         return "/mypage/order";
