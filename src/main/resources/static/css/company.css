@@ -217,11 +217,14 @@ main #cont2 h2 {
     line-height: 1.3;
 }
 
+.pageBtn {
+    max-width: 1200px;
+    position: relative;
+}
 
 .swiper-button-prev {
     position: absolute;
     right: 0;
-    bottom: 110px;
     font-size: 20px;
 }
 
@@ -234,7 +237,6 @@ main #cont2 h2 {
 .swiper-button-next:after, .swiper-button-prev:after {
     font-size: 20px;
     position: absolute;
-    bottom: 80px;
     color: #fff;
     background-color: #818181;
     padding: 8px;
@@ -272,7 +274,7 @@ main > #cont3 .notice > div {
 
 main > #cont3 .notice > div > h4 {
     font-size: 15px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 main > #cont3 .notice > div .list {
@@ -399,6 +401,7 @@ main > #cont5 img {
 .culture #cont3 .cont3_content h4 {
     font-size: 30px;
     font-weight: bold;
+    padding-left: 10px;
 }
 .culture #cont3 .cont3_content .item {
     display: flex;
@@ -411,6 +414,14 @@ main > #cont5 img {
     object-fit: cover;
 }
 
+.culture #cont3 .cont3_content .bottom h4 {
+    position: relative;
+    bottom: 15px;
+}
+
+.culture #cont3 .cont3_content .bottom > div:nth-child(1) {
+    height: 80px;
+}
 .culture #cont3 .cont3_content .item div p {
     font-size: 20px;
 }
