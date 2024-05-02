@@ -4,6 +4,7 @@
       layout:decorate="~{/layout/myLayout}">
 
 <div class="info" layout:fragment="content">
+    <script th:src="@{/js/myInfo.js}"></script>
     <ul>
         <span class="menu_else"></span>
         <li><a th:href="@{/mypage/order}">전체주문내역</a></li>
@@ -20,9 +21,12 @@
             <h3>회원정보 설정</h3>
 
             <table border="0">
+                <input type="hidden" name="type" th:value="normal"/>
+                <input type="hidden" name="uid" th:value="${#authentication.principal.user.uid}"/>
+                <input type="hidden" name="name" th:value="${#authentication.principal.user.name}"/>
                 <tr>
                     <td>사용자 ID</td>
-                    <td>[[${#strings.substring(user.uid, 0, 3) + '***'}]]</td>
+                    <td>[[${#authentication.principal.user.uid}]]</td>
                 </tr>
                 <tr>
                     <td>비밀번호</td>
@@ -32,26 +36,18 @@
                 </tr>
                 <tr>
                     <td>이름</td>
-                    <td>[[${#strings.substring(user.name, 0, 1) + '*' + #strings.substring(user.name, 2, 3)}]]</td>
-                </tr>
-                <tr>
-                    <td>생년월일</td>
-                    <td>1983년 05월 03일</td>
+                    <td>[[${#authentication.principal.user.name}]]</td>
                 </tr>
                 <tr>
                     <td>E-mail</td>
                     <td>
-                        <input type="text" name="email1" value="chakh101">@
-                        <input type="text" name="email2" value="naver.com">
-                        <select>
-                            <option>직접입력</option>
-                            <option>naver.com</option>
-                            <option>daum.net</option>
-                            <option>gmail.com</option>
-                            <option>nate.com</option>
-                            <option>outlook.com</option>
-                        </select>
-                        <button id="btnChangeEmail">수정하기</button>
+                        <input type="email" id="inputEmail" name="email" th:value="${#authentication.principal.user.email}" required/>
+                        <button type="button" id="btnEmailCode">인증번호 받기</button>
+                        <span class="resultEmail"></span>
+                        <div class="auth">
+                            <input type="text" id="inputAuth" name="auth" placeholder="인증번호 입력" disabled/>
+                            <button type="button" id="btnEmailAuth">확인</button>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -68,11 +64,11 @@
                 <tr>
                     <td>주소</td>
                     <td>
-                        <input type="text" th:value="${user.zip}" name="zip"/>
-                        <button id="btnFindZip">주소검색</button>
+                        <input type="text" name="zip" id="inputZip" th:value="${#authentication.principal.user.zip}" placeholder="주소검색 클릭" readonly/>
+                        <button type="button" id="findZip">주소검색</button>
                         <p class="address">
-                            <input type="text" th:value="${user.addr1}" name="addr1"/>
-                            <input type="text" th:value="${user.addr2}" name="addr2"/>
+                            <input type="text" name="addr1" id="addr1" th:value="${#authentication.principal.user.addr1}" placeholder="주소를 검색하세요." readonly/>
+                            <input type="text" name="addr2" id="addr2" th:value="${#authentication.principal.user.addr2}" placeholder="상세주소를 입력하세요."/>
                         </p>
                     </td>
                 </tr>
