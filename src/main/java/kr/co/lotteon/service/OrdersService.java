@@ -32,31 +32,31 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrdersService {
 
-    private final CategoryRepository categoryRepository;
-    private final ProductRepository productRepository;
     private final OrderDetailRepository orderDetailRepository;
-    private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
-
     private final ModelMapper modelMapper;
     private final OrdersMapper ordersMapper;
-
-    private final ProductimgRepository productimgRepository;
-
+    private final ProductRepository productRepository;
 
     /////////////////////////주문/////////////////////////////////
+    @Transactional
     public Orders insertOrder(OrdersDTO ordersDTO) {
         Orders orders = modelMapper.map(ordersDTO, Orders.class);
 
         return orderRepository.save(orders);
     }
 
+
     public void insertOrderDetail(OrdersDTO ordersDTO) {
         OrderDetail orderDetail = modelMapper.map(ordersDTO, OrderDetail.class);
+        Optional<Product> optProduct = productRepository.findById(ordersDTO.getPno());
+        if(optProduct.isPresent()){
+            Product product = optProduct.get();
+            product.setStock(product.getStock() - ordersDTO.getPcount());
+            productRepository.save(product);
+        }
         orderDetailRepository.save(orderDetail);
     }
-
-
 
     public List<OrdersDTO> selectOrders(String uid, PageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable("ono");
@@ -87,40 +87,9 @@ public class OrdersService {
         return ordersMapper.selectAllOrders();
     }
 
-    public List<OrdersDTO> selectOrdersGroup(String uid) {
-        PageRequestDTO pageRequestDTO = new PageRequestDTO();
-
-        if ("date".equals(pageRequestDTO.getType()) && pageRequestDTO.getKeyword() != null) {
-            LocalDate nowDate = LocalDate.now();
-            LocalDate searchDate = null;
-
-            switch (pageRequestDTO.getKeyword()) {
-                case "oneWeek":
-                    searchDate = nowDate.minusDays(7);
-                    break;
-                case "15day":
-                    searchDate = nowDate.minusDays(15);
-                    break;
-                case "Month":
-                    searchDate = nowDate.minusMonths(1);
-                    break;
-            }
-
-            return ordersMapper.selectOrdersGroupByDate(uid, searchDate, nowDate);
-        } else {
-            return ordersMapper.selectOrdersGroup(uid);
-        }
-    }
-
-
-
-
-    @Transactional(readOnly = true)
     public List<OrdersDTO> getOrderDetails(int ono) {
-        List<OrdersDTO> ordersDTO = ordersMapper.selectOrderDetails(ono);
-        return ordersDTO;
+        return ordersMapper.selectOrderDetails(ono);
     }
-
 
 
     public PageResponseDTO findOrderListByUid(String uid,PageRequestDTO pageRequestDTO) {

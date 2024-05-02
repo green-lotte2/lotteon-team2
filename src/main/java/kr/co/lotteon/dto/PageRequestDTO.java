@@ -16,6 +16,9 @@ public class PageRequestDTO {
     @Builder.Default
     private int size=10;
 
+    private String beginDate; // 날짜 필터링 시작 날짜
+    private String endDate; // 날짜 필터링 종료 날짜
+
     @Builder.Default
     private int cate1 = 0;
     @Builder.Default

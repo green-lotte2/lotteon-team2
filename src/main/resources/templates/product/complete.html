@@ -45,40 +45,6 @@
                   console.error('Error:', error);
                   alert('삭제 처리 중 오류가 발생했습니다.');
                 });
-
-      }
-      function toggleSelectAll(source) {
-        const checkboxes = document.querySelectorAll('input[name="productSelect"]');
-        checkboxes.forEach(checkbox => {
-          checkbox.checked = source.checked;
-        });
-        updateTotalSum(); // 체크 상태가 바뀔 때 전체 합계를 업데이트
-      }
-
-      function updateTotalSum() {
-        const checkboxes = document.querySelectorAll('input[name="productSelect"]:checked');
-        let totalAmount = 0;
-        let totalItems = 0;
-        let discount = 0;
-        let deliveryFee = 0;
-        checkboxes.forEach(checkbox => {
-          const row = checkbox.closest('tr');
-          const quantity = parseInt(row.querySelector('[name="productSelect"]').getAttribute('data-pcount'));
-          const price = parseFloat(row.querySelector('[name="productSelect"]').getAttribute('data-price'));
-          const itemDiscount = parseFloat(row.querySelector('[name="productSelect"]').getAttribute('data-discount')) / 100;
-          const itemDeliveryFee = parseFloat(row.querySelector('[name="productSelect"]').getAttribute('data-delivery'));
-          totalAmount += (price * quantity) * (1 - itemDiscount);
-          discount += (price * itemDiscount) * quantity;
-          deliveryFee += itemDeliveryFee;
-          totalItems += quantity;
-        });
-
-        document.querySelector('.total [name="totalItems"]').innerText = totalItems;
-        document.querySelector('.total [name="totalAmount"]').innerText = totalAmount.toLocaleString();
-        document.querySelector('.total [name="totalDiscount"]').innerText = (discount * -1).toLocaleString();
-        document.querySelector('.total [name="totalDelivery"]').innerText = deliveryFee.toLocaleString();
-        document.querySelector('.total [name="totalOrderAmount"]').innerText = (totalAmount + deliveryFee - discount).toLocaleString();
-        console.log('Total sum updated.');  // 확인용 콘솔 로그
       }
     });
   </script>
@@ -129,15 +95,15 @@
           <table border="0">
             <tr>
               <td>총 상품금액</td>
-              <td><span th:text="${#numbers.formatInteger(totalProductPrice, 3, 'COMMA')}">0</span>원</td>
+              <td><span th:text="${#numbers.formatInteger(totalAmount, 3, 'COMMA')}">0</span>원</td>
             </tr>
             <tr>
               <td>총 할인금액</td>
-              <td name="totalDiscount">0</td>
+              <td><span th:text="${#numbers.formatInteger(totalDiscount, 3, 'COMMA')}">0</span>원</td>
             </tr>
             <tr>
               <td>배송비</td>
-              <td name="totalDelivery">0</td>
+              <td><span th:text="${#numbers.formatInteger(deliveryFee, 3, 'COMMA')}">0</span>원</td>
             </tr>
             <tr>
               <td>총 결제금액</td>
@@ -146,6 +112,7 @@
           </table>
         </td>
       </tr>
+
     </table>
   </article>
 

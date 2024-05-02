@@ -44,6 +44,7 @@ public class OrdersDTO {
 
     // 주문 상세 정보
     private List<OrderDetailDTO> orderDetails;
+
     // 계산된 금액들
     private int totalProductPrice;
     private int totalDiscount;
