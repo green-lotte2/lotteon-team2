@@ -7,12 +7,60 @@
 
 
     <!--product_list-->
-    <select id="selectProductsForNew" resultType="kr.co.lotteon.dto.ProductDTO">
+    <select id="selectProductsByScore" resultType="kr.co.lotteon.dto.ProductDTO">
+        SELECT a.*, b.mainImg
+        FROM `product` AS a
+        LEFT JOIN `productimg` AS b ON a.pno = b.pno
+        WHERE b.mainImg IS NOT NULL AND a.pno in (
+            SELECT r.pno AS rating
+            FROM `review` AS r
+            INNER JOIN `product` AS p ON p.pno = r.pno
+            GROUP BY r.pno
+            ORDER BY rating DESC
+        )
+        ORDER BY a.rdate DESC, a.pno ASC
+        LIMIT 8
+    </select>
+
+    <select id="selectProductsByNewest" resultType="kr.co.lotteon.dto.ProductDTO">
         SELECT a.*, b.mainImg
         FROM `product` AS a
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
         WHERE b.mainImg IS NOT NULL
         ORDER BY a.rdate DESC, a.pno ASC
+        LIMIT 8
+    </select>
+
+    <select id="selectProductsByHit" resultType="kr.co.lotteon.dto.ProductDTO">
+        SELECT a.*, b.mainImg
+        FROM `product` AS a
+        LEFT JOIN `productimg` AS b ON a.pno = b.pno
+        WHERE b.mainImg IS NOT NULL
+        ORDER BY a.hit DESC, a.pno ASC
+        LIMIT 8
+    </select>
+
+    <select id="selectProductsByOrder" resultType="kr.co.lotteon.dto.ProductDTO">
+        SELECT a.*, b.mainImg
+        FROM `product` AS a
+        LEFT JOIN `productimg` AS b ON a.pno = b.pno
+        WHERE b.mainImg IS NOT NULL AND a.pno in (
+            SELECT od.pno
+            FROM `orderdetail` AS od
+            INNER JOIN `product` AS p ON p.pno = od.pno
+            GROUP BY od.pno
+            ORDER BY pcount DESC
+        )
+        ORDER BY a.rdate DESC, a.pno ASC
+        LIMIT 5
+    </select>
+
+    <select id="selectProductsByDiscount" resultType="kr.co.lotteon.dto.ProductDTO">
+        SELECT a.*, b.mainImg
+        FROM `product` AS a
+        LEFT JOIN `productimg` AS b ON a.pno = b.pno
+        WHERE b.mainImg IS NOT NULL
+        ORDER BY a.discount DESC, a.pno ASC
         LIMIT 8
     </select>
 

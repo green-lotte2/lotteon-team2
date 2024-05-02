@@ -1,9 +1,6 @@
 package kr.co.lotteon.controller.admin;
 
-import kr.co.lotteon.dto.CategoryDTO;
-import kr.co.lotteon.dto.OrdersDTO;
-import kr.co.lotteon.dto.ProductDTO;
-import kr.co.lotteon.dto.ProductimgDTO;
+import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.OrdersService;
@@ -11,6 +8,7 @@ import kr.co.lotteon.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -77,13 +75,13 @@ public class AdminProductController {
 
 
     @GetMapping("/admin/product/list")
-    public String adminProductList(Model model, String search, String searchOption){
+    public String adminProductList(Model model, PageRequestDTO pageRequestDTO){
 
         List<ProductDTO> adminProducts = null;
-        if(search == null){
+        if(pageRequestDTO.getKeyword() == null){
             adminProducts = adminService.selectProducts();
         }else{
-            adminProducts = adminService.selectProductsBySearch(search, searchOption);
+            adminProducts = adminService.selectProductsBySearch(pageRequestDTO);
         }
         log.info("adminProducts" + adminProducts);
 

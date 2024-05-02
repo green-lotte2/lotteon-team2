@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -347,10 +348,7 @@ public class AdminCsController {
     @ResponseBody
     @PostMapping("/admin/cs/qna/reply")
     public ResponseEntity<Reply> reply(@RequestBody ReplyDTO replyDTO){
-       // replyDTO.setWriter("hello");
-        replyDTO.setWriter(replyDTO.getWriter());
-        replyDTO.setReplyno(replyDTO.getReplyno());
-        log.info("replyDTO.. : " + replyDTO);
+
         return csService.insertReply(replyDTO);
     }
 
@@ -362,7 +360,7 @@ public class AdminCsController {
     }
 
     @PutMapping("/admin/cs/qna/reply")
-    public ResponseEntity<?> putReply(@RequestBody ReplyDTO replyDTO, HttpServletRequest req) {
+    public ResponseEntity<?> putReply(@RequestBody ReplyDTO replyDTO) {
         return csService.updateReply(replyDTO);
     }
 

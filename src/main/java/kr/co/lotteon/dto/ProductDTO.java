@@ -1,8 +1,11 @@
 package kr.co.lotteon.dto;
 
+import kr.co.lotteon.entity.CsNotice;
+import kr.co.lotteon.entity.Product;
 import lombok.*;
 import org.springframework.cglib.core.Local;
 
+import java.rmi.server.UID;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -39,6 +42,16 @@ public class ProductDTO {
     private String mainimg;
     private String subimg;
     private String detailimg;
+
+    public Product toEntity(){
+        return Product.builder()
+                .pno(pno)
+                .uid(sid)
+                .cate(cate)
+                .pname(pname)
+
+                .build();
+    }
 
 
 }

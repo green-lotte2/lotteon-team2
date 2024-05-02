@@ -134,10 +134,25 @@ public class ProductService {
         상품 조회
      */
 
-    public List<ProductDTO> findNewProduct(){
-        return productMapper.selectProductsForNew();
+    public List<ProductDTO> findNewestProduct(){
+        return productMapper.selectProductsByNewest();
     }
 
+    public List<ProductDTO> findBestProduct(){
+        return productMapper.selectProductsByOrder();
+    }
+
+    public List<ProductDTO> findRecommendProduct(){
+        return productMapper.selectProductsByScore();
+    }
+
+    public List<ProductDTO> findHighHitProduct(){
+        return productMapper.selectProductsByHit();
+    }
+
+    public List<ProductDTO> findDiscountProduct(){
+        return productMapper.selectProductsByDiscount();
+    }
 
     public Page<Product> findAllProducts(Pageable pageable) {
         return productRepository.findAll(pageable);
@@ -304,6 +319,11 @@ public class ProductService {
         return productMapper.selectProductWithImagesById(pno);
     }
 
+    public void productHitUpdate(ProductDTO productDTO){
+        productDTO.setHit(productDTO.getHit() + 1);
+        Product product = modelMapper.map(productDTO,Product.class);
+        productRepository.save(product);
+    }
 
 
     //🎈 상품 조회

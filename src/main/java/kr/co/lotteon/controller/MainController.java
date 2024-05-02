@@ -22,10 +22,20 @@ public class MainController {
     @GetMapping(value = {"/","/index"})
     public String index(Model model){
         List<CategoryDTO> cate = productService.getCategoryList();
-        List<ProductDTO> newProduct = productService.findNewProduct();
+        List<ProductDTO> newProduct = productService.findNewestProduct();
+        List<ProductDTO> bestProduct = productService.findBestProduct();
+        List<ProductDTO> recommendProduct = productService.findRecommendProduct();
+        List<ProductDTO> hitProduct = productService.findHighHitProduct();
+        List<ProductDTO> discountProduct = productService.findDiscountProduct();
+
         log.info(newProduct.toString());
         model.addAttribute("cate", cate);
         model.addAttribute("newProduct", newProduct);
+        model.addAttribute("bestProduct", bestProduct);
+        model.addAttribute("recommendProduct", recommendProduct);
+        model.addAttribute("hitProduct", hitProduct);
+        model.addAttribute("discountProduct", discountProduct);
+
         model.addAttribute("cate", productService.getCategoryList());
         return "/index";
     }

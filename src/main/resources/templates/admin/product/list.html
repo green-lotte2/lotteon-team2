@@ -80,13 +80,13 @@
 
                         <form th:action="@{/admin/product/list}" method="get">
                             <div id="searchBox">
-                                <select name="searchOption" id="searchOption">
+                                <select name="type" id="searchOption">
                                     <option value="pname">상품명</option>
                                     <option value="pno">상품번호</option>
                                     <option value="seller">판매자</option>
                                     <option value="company">제조사</option>
                                 </select>
-                                <input type="search" class="searchInput" name="search" placeholder="검색어를 입력하세요.">
+                                <input type="search" class="searchInput" name="keyword" placeholder="검색어를 입력하세요.">
                                 <button class="searchBtn">
                                     <img th:src="@{/admin/img/search_30.png}" alt="검색">
                                 </button>

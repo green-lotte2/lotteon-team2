@@ -1,8 +1,6 @@
 package kr.co.lotteon.service;
 
-import kr.co.lotteon.dto.BannerDTO;
-import kr.co.lotteon.dto.ProductDTO;
-import kr.co.lotteon.dto.ProductimgDTO;
+import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.Banner;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.entity.Productimg;
@@ -15,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import kr.co.lotteon.dto.UserDTO;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -47,8 +45,8 @@ public class AdminService {
         return adminMapper.adminSelectUsers();
     }
 
-    public List<ProductDTO> selectProductsBySearch(String search, String searchOption){
-        return  adminMapper.selectProductsBySearch(search, searchOption);
+    public List<ProductDTO> selectProductsBySearch(PageRequestDTO pageRequestDTO){
+        return  adminMapper.selectProductsBySearch(pageRequestDTO);
     }
 
     public List<ProductDTO> selectProducts(){

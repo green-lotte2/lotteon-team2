@@ -386,6 +386,16 @@ public class CsService {
     private final ModelMapper modelMapper;
 
     public ResponseEntity<Reply> insertReply(ReplyDTO replyDTO) {
+
+        Optional<CsQna> optQna = qnaRepository.findById(replyDTO.getQnano());
+        if(optQna.isPresent()){
+            CsQna qna = optQna.get();
+            if(qna.getAnswercomplete() != 2){
+                qna.setAnswercomplete(2);
+                qnaRepository.save(qna);
+            }
+
+        }
         Reply reply = modelMapper.map(replyDTO,Reply.class);
         Reply savedQna = replyRepository.save(reply);
         log.info("savedQna : " + savedQna);
@@ -411,7 +421,7 @@ public class CsService {
     // 🎈 Qna 답변 수정
     public ResponseEntity<?> updateReply(ReplyDTO replyDTO){
         // 수정하기 전에 먼저 존재여부 확인
-        Optional<Reply> optArticle = replyRepository.findById(replyDTO.getQnano());
+        Optional<Reply> optArticle = replyRepository.findById(replyDTO.getReplyno());
 
         if(optArticle.isPresent()) {
 
