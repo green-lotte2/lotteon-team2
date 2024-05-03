@@ -90,7 +90,7 @@
                                     시너지를 만들어요
                                 </p>
                             </div>
-                            <div>
+                            <div class="text">
                                 <p>
                                     많은 전문가들이 MSA, AWS 등 최신 기술을 운영하고 있으며,<br>
                                     최신기술과 롯데의 온/오프라인 4000만+ 고객 데이터를 결합하여<br>
@@ -107,7 +107,7 @@
                                     세상을 더 이롭게 만들어요
                                 </p>
                             </div>
-                            <div>
+                            <div class="text">
                                 <p>
                                     'Dream Together for a Better Earth'를 목표로<br>
                                     ESG를 실천해나가고 있으며, 롯데ON 플랫폼을 활용한<br>
@@ -117,10 +117,10 @@
                             </div>
                         </div><!--slide3 end-->
                     </div>
-                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-pagination"></div>
                 </div>
                 <div class="pageBtn">
-                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
                 </div>
 
@@ -230,7 +230,10 @@
     var swiper = new Swiper(".mySwiper", {
         cssMode: true,
         slidesPerView: 2,
+        slidesToScroll: 1,
         spaceBetween: 10,
+        autoplay : true,
+        autoplaySpeed : 2000,
         navigation: {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
