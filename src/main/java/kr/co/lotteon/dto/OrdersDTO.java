@@ -19,6 +19,8 @@ public class OrdersDTO {
     private String uid;
     private int pno;
     private LocalDate odate;
+    private String month;
+
     private int usepoint;
     private int savepoint;
     private String receiver;
