@@ -7,8 +7,6 @@ import kr.co.lotteon.service.OrdersService;
 import kr.co.lotteon.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -127,6 +125,21 @@ public class AdminProductController {
         return "/admin/order/list";
     }
 
+    @GetMapping("/admin/order/sale")
+    public String adminOrderSaleList(Model model, PageRequestDTO pageRequestDTO){
+
+        TypePageResponseDTO ordersList = adminService.selectOrderByProduct(pageRequestDTO);
+        TypePageResponseDTO orderProductList = adminService.selectOrderByMonth(pageRequestDTO);
+
+        model.addAttribute("ordersList", ordersList);
+        model.addAttribute("orderProductList",orderProductList);
+
+        return "/admin/product/sale";
+    }
+
+
+
+
     @GetMapping("/admin/product/search")
     public String search(
             Model model,
@@ -140,7 +153,7 @@ public class AdminProductController {
         model.addAttribute("products", resultList);
         model.addAttribute("page", resultList);
         log.info("검색....1"); */
-        return "/admin/product/search";
+        return "sale";
     }
 
 

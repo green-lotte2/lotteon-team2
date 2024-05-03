@@ -94,7 +94,6 @@
 
 
                 document.querySelectorAll('tr.cart-item-row').forEach(row => {
-                    console.log(row.querySelector('.pcount').children[0].value);
                     const quantity = parseInt(row.querySelector('.pcount').children[0].value);
                     const price = parseFloat(row.querySelector('.price').innerText.replace(/,/g, ''));
                     const itemDiscount = parseFloat(row.querySelector('.discount').innerText.replace('%', '')) / 100;
@@ -105,13 +104,11 @@
                     deliveryFee += itemDeliveryFee;
                     totalItems += quantity;
                     price1 += price;
-
-                    console.log(totalAmount);
                 });
 
 
                 document.getElementById('totalItems').innerText = totalItems;
-                document.getElementById('price').innerText = (price1 * totalItems).toLocaleString() + '원';
+                document.getElementById('price').innerText = (price1).toLocaleString() + '원';
                 document.getElementById('totalAmount').innerText = totalAmount.toLocaleString() + '원';
                 document.getElementById('totalDiscount').innerText = (discount * -1).toLocaleString() + '원';
                 document.getElementById('totalDelivery').innerText = deliveryFee.toLocaleString() + '원';

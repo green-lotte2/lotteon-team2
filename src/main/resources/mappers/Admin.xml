@@ -24,7 +24,7 @@
         WHERE b.mainImg IS NOT NULL
         ORDER BY a.rdate DESC, a.pno ASC
     </select>
-
+    <!-- 상품 검색 및 리스트 출력 -->
     <select id="selectProductsBySearch" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.ProductDTO">
         SELECT a.*, b.mainImg, (
             SELECT COUNT(*)
@@ -49,6 +49,36 @@
         </where>
         ORDER BY a.rdate DESC, a.pno ASC
         LIMIT ${size} OFFSET ${(pg - 1) * size}
+    </select>
+
+    <select id="selectOrderByProduct" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.OrdersDTO">
+        SELECT
+            od.pno,
+            pi.mainImg,
+            p.pname,
+            p.cate,
+            SUM(od.pcount) AS pcount,
+            SUM(od.price) AS price
+        FROM `orderdetail` AS od
+        INNER JOIN `product` AS p ON od.pno = p.pno
+        INNER JOIN `productimg` AS pi ON od.pno = pi.pno
+        INNER JOIN `orders` AS o ON od.ono = o.ono
+        GROUP BY od.pno
+        ORDER BY od.pno
+    </select>
+
+    <select id="selectOrderByMonth" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.OrdersDTO">
+        SELECT
+            od.pno,
+            SUM(od.pcount) AS pcount,
+            SUM(od.price) AS price,
+            DATE_FORMAT(o.odate,'%y-%m') AS month
+        FROM `orderdetail` AS od
+        INNER JOIN `product` AS p ON od.pno = p.pno
+        INNER JOIN `productimg` AS pi ON od.pno = pi.pno
+        INNER JOIN `orders` AS o ON od.ono = o.ono
+        GROUP BY od.pno, DATE_FORMAT(o.odate,'%y-%m')
+        ORDER BY od.pno
     </select>
 
     <!--🎈 admin_product_delete-->

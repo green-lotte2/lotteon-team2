@@ -2,6 +2,7 @@ package kr.co.lotteon.mapper;
 
 import kr.co.lotteon.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,5 +11,6 @@ import java.util.List;
 public interface UserMapper {
 
     public UserDTO selectUser(String uid);
+    public void deleteUser(@Param("uid") String uid);
 
 }

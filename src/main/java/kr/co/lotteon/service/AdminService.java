@@ -50,6 +50,16 @@ public class AdminService {
         return new TypePageResponseDTO(pageRequestDTO,productDTOS.get(0).getTotal(),productDTOS);
     }
 
+    public TypePageResponseDTO selectOrderByMonth(PageRequestDTO pageRequestDTO) {
+        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderByMonth(pageRequestDTO);
+        return new TypePageResponseDTO(pageRequestDTO,ordersDTOS.get(0).getTotal(),ordersDTOS);
+    }
+
+    public TypePageResponseDTO selectOrderByProduct(PageRequestDTO pageRequestDTO) {
+        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderByProduct(pageRequestDTO);
+        return new TypePageResponseDTO(pageRequestDTO,ordersDTOS.get(0).getTotal(),ordersDTOS);
+    }
+
     public List<ProductDTO> selectProducts(){
         log.info("selectProducts...");
         return  adminMapper.adminSelectProducts();

@@ -157,12 +157,19 @@
                                class="page-link">이전</a>
                         </li>
                         <li th:class="${i == adminProducts.pg ? 'page-item active' : 'page-item'}" th:each="i : ${#numbers.sequence(1, adminProducts.totalPage)}">
-                            <a th:href="@{/admin/product/list(pg=${i})}"
+                            <a th:if="${adminProducts.keyword} == null"
+                               th:href="@{/admin/product/list(pg=${i})}"
+                               class="page-link">[[${i}]]</a>
+                            <a th:if="${adminProducts.keyword} != null"
+                               th:href="@{/admin/product/list(pg=${i},type=${adminProducts.type},keyword=${adminProducts.keyword})}"
                                class="page-link">[[${i}]]</a>
                         </li>
                         <li class="page-item">
-                            <a th:if="${adminProducts.pg} < ${adminProducts.totalPage}"
+                            <a th:if="${adminProducts.pg} < ${adminProducts.totalPage} and ${adminProducts.keyword} == null"
                                th:href="@{/admin/product/list(pg=${adminProducts.pg + 1})}"
+                               class="page-link">다음</a>
+                            <a th:if="${adminProducts.pg} < ${adminProducts.totalPage} and ${adminProducts.keyword} != null"
+                               th:href="@{/admin/product/list(pg=${adminProducts.pg + 1},type=${adminProducts.type},keyword=${adminProducts.keyword})}"
                                class="page-link">다음</a>
                         </li>
                     </ul>

@@ -68,7 +68,7 @@
       <tr>
         <th>상품명</th>
         <th>상품금액</th>
-        <th>할인금액</th>
+        <th>할인율</th>
         <th>수량</th>
         <th>주문금액</th>
       </tr>
@@ -85,10 +85,10 @@
         <td th:text="${#numbers.formatInteger(detail.price, 3, 'COMMA')}">17,000원</td>
         <td th:text="${detail.discount + '%'}">1,000원</td>
         <td th:text="${detail.pcount}">1</td>
-        <td th:text="${#numbers.formatInteger(detail.total, 3, 'COMMA')}">16,000원</td>
-      </tr>
+        <td th:text="${#numbers.formatInteger((detail.price - (detail.price * detail.discount / 100)) * detail.pcount, 3, 'COMMA')}">16,000원</td>
 
-      <!-- 주문 요약 -->
+
+        <!-- 주문 요약 -->
       <tr class="total">
         <td colspan="4"></td>
         <td>

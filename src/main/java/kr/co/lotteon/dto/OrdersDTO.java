@@ -19,6 +19,8 @@ public class OrdersDTO {
     private String uid;
     private int pno;
     private LocalDate odate;
+    private String month;
+
     private int usepoint;
     private int savepoint;
     private String receiver;
@@ -32,7 +34,7 @@ public class OrdersDTO {
     private int pcount;
     private String options;
     private int discount;
-    private int dfee;
+    private int deliveryPrice;
 
     // add
     private int cate;
@@ -50,4 +52,5 @@ public class OrdersDTO {
     private int totalDiscount;
     private int totalShipping;
     private int finalPrice;
+
 }
