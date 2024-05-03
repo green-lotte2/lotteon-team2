@@ -105,12 +105,16 @@
                                 <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
                             </div>
                             <h2>[[${product.pname}]]</h2>
-                            <div class="org_price">
-                                <del>[[${product.price}]]</del>
-                                <span>[[${product.discount}]]%</span>
+                            <div class="org_price" th:if="${product.discount} != 0">
+                                <del>[[${#numbers.formatInteger(product.price, 0, 'COMMA')}]]</del>
+                                <span>[[${#numbers.formatInteger(product.discount, 0, 'COMMA')}]]%</span>
                             </div>
-                            <div class="dis_price">
-                                <ins>[[${product.price} - ((${product.price} * ${product.discount})/100)]]</ins>
+                            <div class="dis_price" th:if="${product.discount} != 0">
+                                <ins>[[${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0, 'COMMA')}]]</ins>
+                                <span th:if="${product.deliprice == 0}" class="free">무료배송</span>
+                            </div>
+                            <div class="dis_price" th:if="${product.discount} == 0">
+                                <ins>[[${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0, 'COMMA')}]]</ins>
                                 <span th:if="${product.deliprice == 0}" class="free">무료배송</span>
                             </div>
                         </a>

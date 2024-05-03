@@ -101,18 +101,18 @@
         <h3><span>히트상품</span></h3>
 
         <article th:each="product:${hitProduct}">
-            <a href="#">
+            <a th:href="@{/product/view(pno=${product.pno})}">
                 <div class="thumb">
                     <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
                 </div>
                 <h2>[[${product.pname}]]</h2>
                 <p>[[${product.info}]]</p>
                 <div class="org_price">
-                    <del>[[${product.price}]]</del>
-                    <span>[[${product.discount}]]%</span>
+                    <del>[[${#numbers.formatInteger(product.price, 0, 'COMMA')}]]</del>
+                    <span>[[${#numbers.formatInteger(product.discount, 0, 'COMMA')}]]%</span>
                 </div>
                 <div class="dis_price">
-                    <ins>[[${product.price} - ((${product.price} * ${product.discount})/100)]]</ins>
+                    <ins>[[${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0, 'COMMA')}]]</ins>
                     <span th:if="${product.deliprice == 0}" class="free">무료배송</span>
                 </div>
             </a>
@@ -123,18 +123,18 @@
         <h3><span>추천상품</span></h3>
 
         <article th:each="product:${recommendProduct}">
-            <a href="#">
+            <a th:href="@{/product/view(pno=${product.pno})}">
                 <div class="thumb">
                     <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
                 </div>
                 <h2>[[${product.pname}]]</h2>
                 <p>[[${product.info}]]</p>
                 <div class="org_price">
-                    <del>[[${product.price}]]</del>
-                    <span>[[${product.discount}]]%</span>
+                    <del>[[${#numbers.formatInteger(product.price, 0, 'COMMA')}]]</del>
+                    <span>[[${#numbers.formatInteger(product.discount, 0, 'COMMA')}]]%</span>
                 </div>
                 <div class="dis_price">
-                    <ins>[[${product.price} - ((${product.price} * ${product.discount})/100)]]</ins>
+                    <ins>[[${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0, 'COMMA')}]]</ins>
                     <span th:if="${product.deliprice == 0}" class="free">무료배송</span>
                 </div>
             </a>
@@ -145,18 +145,18 @@
         <h3><span>최신상품</span></h3>
 
         <article th:each="product:${newProduct}">
-            <a href="#">
+            <a th:href="@{/product/view(pno=${product.pno})}">
                 <div class="thumb">
                     <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
                 </div>
                 <h2>[[${product.pname}]]</h2>
                 <p>[[${product.info}]]</p>
                 <div class="org_price">
-                    <del>[[${product.price}]]</del>
-                    <span>[[${product.discount}]]%</span>
+                    <del>[[${#numbers.formatInteger(product.price, 0, 'COMMA')}]]</del>
+                    <span>[[${#numbers.formatInteger(product.discount, 0, 'COMMA')}]]%</span>
                 </div>
                 <div class="dis_price">
-                    <ins>[[${product.price} - ((${product.price} * ${product.discount})/100)]]</ins>
+                    <ins>[[${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0, 'COMMA')}]]</ins>
                     <span th:if="${product.deliprice == 0}" class="free">무료배송</span>
                 </div>
             </a>
@@ -167,18 +167,18 @@
         <h3><span>할인상품</span></h3>
 
         <article th:each="product:${discountProduct}">
-            <a href="#">
+            <a th:href="@{/product/view(pno=${product.pno})}">
                 <div class="thumb">
                     <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
                 </div>
                 <h2>[[${product.pname}]]</h2>
                 <p>[[${product.info}]]</p>
                 <div class="org_price">
-                    <del>[[${product.price}]]</del>
-                    <span>[[${product.discount}]]%</span>
+                    <del>[[${#numbers.formatInteger(product.price, 0, 'COMMA')}]]</del>
+                    <span>[[${#numbers.formatInteger(product.discount, 0, 'COMMA')}]]%</span>
                 </div>
                 <div class="dis_price">
-                    <ins>[[${product.price} - ((${product.price} * ${product.discount})/100)]]</ins>
+                    <ins>[[${#numbers.formatInteger(product.price * (1 - product.discount / 100.0), 0, 'COMMA')}]]</ins>
                     <span th:if="${product.deliprice == 0}" class="free">무료배송</span>
                 </div>
             </a>
