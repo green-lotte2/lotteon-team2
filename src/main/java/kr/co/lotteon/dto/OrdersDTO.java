@@ -34,7 +34,7 @@ public class OrdersDTO {
     private int pcount;
     private String options;
     private int discount;
-    private int dfee;
+    private int deliveryPrice;
 
     // add
     private int cate;
@@ -52,4 +52,5 @@ public class OrdersDTO {
     private int totalDiscount;
     private int totalShipping;
     private int finalPrice;
+
 }

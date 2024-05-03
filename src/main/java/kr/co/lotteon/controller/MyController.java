@@ -1,11 +1,14 @@
 package kr.co.lotteon.controller;
 
 import kr.co.lotteon.dto.MyHomeDTO;
+import kr.co.lotteon.dto.OrdersDTO;
 import kr.co.lotteon.dto.QnaDTO;
+import kr.co.lotteon.entity.Orders;
 import kr.co.lotteon.entity.User;
 import kr.co.lotteon.security.MyUserDetails;
 import kr.co.lotteon.service.CsService;
 import kr.co.lotteon.service.MyService;
+import kr.co.lotteon.service.OrdersService;
 import kr.co.lotteon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +31,13 @@ public class MyController {
     private final UserService userService;
     private final CsService csService;
     private final MyService myService;
+    private final OrdersService ordersService;
 
     @GetMapping(value = {"/mypage/","/mypage/home"})
     public String myPage(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         MyHomeDTO myHomeDTO = myService.getMyHomeInfo(myUserDetails.getUser().getUid());
+
         model.addAttribute("myHomeDTO", myHomeDTO);
 
         return "/mypage/home";

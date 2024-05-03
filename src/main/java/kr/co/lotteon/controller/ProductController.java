@@ -126,6 +126,8 @@ public class ProductController {
             Product product = productRepository.findById(detail.getPno())
                     .orElseThrow(() -> new IllegalArgumentException("상품이 없습니다."));
             detail.setPrice(product.getPrice()); // 제품 가격 정보 추가
+            detail.setDiscount(product.getDiscount());
+            detail.setDeliveryPrice(product.getDeliprice());
             // 필요한 다른 정보도 추가 가능
         });
 
@@ -136,14 +138,16 @@ public class ProductController {
                 .sum();
 
         int totalDiscount = ordersDTO.stream()
-                .mapToInt(detail -> (detail.getPrice() * detail.getDiscount() * detail.getPcount()))
+                .mapToInt(detail -> (detail.getPrice() * detail.getDiscount() / 100) * detail.getPcount())
                 .sum();
+        log.info("totalDiscount1231 : " + totalDiscount);
+
 
         int deliveryFee = ordersDTO.stream()
-                .mapToInt(detail -> detail.getDfee())
+                .mapToInt(detail -> detail.getDeliveryPrice())
                 .sum();
 
-        int finalPrice = totalAmount + deliveryFee - totalDiscount;
+        int finalPrice = totalAmount - deliveryFee - totalDiscount;
 
         // 모델에 값 추가
         model.addAttribute("ordersDTO", ordersDTO);

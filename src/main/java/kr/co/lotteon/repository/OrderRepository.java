@@ -1,6 +1,7 @@
 package kr.co.lotteon.repository;
 
 import com.querydsl.core.Tuple;
+import kr.co.lotteon.dto.OrdersDTO;
 import kr.co.lotteon.dto.PageRequestDTO;
 import kr.co.lotteon.entity.Orders;
 import kr.co.lotteon.repository.custom.OrderRepositoryCustom;
@@ -20,4 +21,6 @@ public interface OrderRepository extends JpaRepository<Orders, Integer>, OrderRe
     List<Orders> findRecordsBetween(@Param("beginDate") LocalDate beginDate, @Param("endDate") LocalDate endDate);
 
     Page<Orders> findAllByUid(String uid, Pageable pageable);
+
+    List<Orders> findTop3ByUidOrderByOdateDesc(String uid);
 }
