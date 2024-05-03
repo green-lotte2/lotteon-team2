@@ -22,16 +22,24 @@ public class SecurityUserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<User> result = userRepository.findById(username);
+        User user = null;
+        if (result.isPresent()) {
+            user = result.get();
+        }
 
         UserDetails userDetails = null;
 
-        if(!result.isEmpty()){
+        if (!result.isEmpty()) {
             // 해당하는 사용자가 존재하면 인증 객체 생성
             userDetails = MyUserDetails.builder()
-                                        .user(result.get())
-                                        .build();
+                    .user(result.get())
+                    .build();
         }
-
+        if (user != null){
+            if (user.getLeaveDate() != null) {
+                throw new UsernameNotFoundException("탈퇴한 회원입니다.");
+            }
+        }
         // Security ContextHolder 저장
         return userDetails;
     }
