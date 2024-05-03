@@ -205,7 +205,6 @@ main #cont2 h2 {
     border-radius: 10px;
     object-fit: cover;
     padding-left: 30px;
-
 }
 
 .swiper-slide .title > p {
@@ -217,33 +216,65 @@ main #cont2 h2 {
     line-height: 1.3;
 }
 
+.swiper-slide .title {
+    padding-left: 30px;
+}
+.swiper-slide .text {
+    padding-left: 30px;
+}
 
-.swiper-button-prev {
+.pageBtn {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.pageBtn .swiper-button-prev {
     position: absolute;
     right: 0;
-    bottom: 110px;
     font-size: 20px;
+    bottom: 380px;
+    width: 21px;
+    height: 16px;
 }
 
-.swiper-button-next {
+.pageBtn .swiper-button-prev::after {
     position: absolute;
-    right: 20px;
-    font-size: 20px;
+    bottom: 380px;
+    left: -15px;
 }
 
-.swiper-button-next:after, .swiper-button-prev:after {
-    font-size: 20px;
+.pageBtn .swiper-button-next::after {
     position: absolute;
-    bottom: 80px;
+    bottom: 380px;
+    right: -60px;
+}
+
+
+.pageBtn .swiper-button-next {
+    width: 21px;
+    height: 16px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #818181;
+}
+
+.pageBtn .swiper-button-next {
+    background-color: #ffffff;
+}
+
+
+.pageBtn .swiper-button-next:after, .swiper-button-prev:after {
+    height: 16px;
+    font-size: 16px;
     color: #fff;
     background-color: #818181;
     padding: 8px;
     border-radius: 50%;
-    width: 20px;
     text-align: center;
 }
 
-.swiper-button-next, .swiper-button-prev {
+.pageBtn .swiper-button-next, .swiper-button-prev {
     color: #333333;
 }
 
@@ -254,6 +285,11 @@ main #cont2 h2 {
 
 span.swiper-pagination-bullet.swiper-pagination-bullet-active {
     background-color: #222222;
+}
+
+span.swiper-pagination-bullet {
+    width: 11px;
+    height: 11px;
 }
 
 main > #cont3 {
@@ -272,7 +308,7 @@ main > #cont3 .notice > div {
 
 main > #cont3 .notice > div > h4 {
     font-size: 15px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 main > #cont3 .notice > div .list {
@@ -399,6 +435,7 @@ main > #cont5 img {
 .culture #cont3 .cont3_content h4 {
     font-size: 30px;
     font-weight: bold;
+    padding-left: 10px;
 }
 .culture #cont3 .cont3_content .item {
     display: flex;
@@ -411,6 +448,14 @@ main > #cont5 img {
     object-fit: cover;
 }
 
+.culture #cont3 .cont3_content .bottom h4 {
+    position: relative;
+    bottom: 15px;
+}
+
+.culture #cont3 .cont3_content .bottom > div:nth-child(1) {
+    height: 80px;
+}
 .culture #cont3 .cont3_content .item div p {
     font-size: 20px;
 }
@@ -563,6 +608,87 @@ main > #cont5 img {
     font-size: 15px;
     cursor: pointer;
 }
+
+
+/* 🎈채용 */
+#jobPosting {
+    width: 100%;
+}
+
+#jobPosting .job {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+#jobPosting .job h2 {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+#jobPosting .job p {
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+#jobPosting .job .list table {
+    width: 800px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    border-collapse: collapse;
+}
+#jobPosting .job .list table tr {
+    border-bottom: 1px solid #c7c6c6;
+}
+
+#jobPosting .job .list table tr td {
+    padding: 12px;
+}
+
+#jobPosting .job .list table {}
+
+
+/* 🎈미디어 */
+#media {
+    width: 100%;
+}
+
+#media .media {
+    width: 1200px;
+    margin: 0 auto 100px;
+}
+
+#media .media .title > h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+#media .media .title > p {
+    font-size: 17px;
+    margin-bottom: 30px;
+    margin-top: 5px;
+}
+
+.item {
+    width: 1000px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item .text h4 {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.item .text p {
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+
+
 
 
 
