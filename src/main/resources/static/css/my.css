@@ -1213,6 +1213,7 @@ footer p > strong {
     background-color: #f7f7f7;
 }
 #my > .info > section > article > table input {
+    width: 210px;
     padding: 2px;
     box-sizing: border-box;
     border: 1px solid #999;
@@ -1239,6 +1240,40 @@ footer p > strong {
 
 #my button:hover {            
     background-color: #e9e9e9;
+    cursor: pointer;
+}
+
+#my #btnPassChange {
+    width: 100px;
+    background: #797979;
+    border: 1px solid #999;
+    padding: 3px;
+    color: #fff;
+    cursor: pointer;
+}
+
+#my #btnEmailCode {
+    background: #797979;
+    border: 1px solid #999;
+    padding: 3px;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 2px;
+}
+
+#my #btnEmailAuth {
+    background: #797979;
+    border: 1px solid #999;
+    padding: 3px;
+    color: #fff;
+    cursor: pointer;
+}
+
+#my #btnPassChange {
+    background: #797979;
+    border: 1px solid #999;
+    padding: 3px;
+    color: #fff;
     cursor: pointer;
 }
 

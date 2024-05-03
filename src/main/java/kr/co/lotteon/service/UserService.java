@@ -25,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -238,4 +239,21 @@ public class UserService {
         }
     }
 
+    public void deleteUser(String uid){
+        //삭제 전 조회
+        Optional<User> optUser = userRepository.findById(uid);
+
+        log.info("optUser.... : " + optUser);
+
+        if(optUser.isPresent()){
+            log.info("deleteUser.....1");
+
+            // 유저 id 와 leaveDate 만 남기고 나머지 null 처리
+            userMapper.deleteUser(uid);
+
+        }else {
+            log.info("deleteUser.....2");
+
+        }
+    }
 }
