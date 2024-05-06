@@ -29,18 +29,18 @@
         SELECT a.*, b.mainImg, (
             SELECT COUNT(*)
             FROM `product` AS a
-            LEFT JOIN `productimg` AS b ON a.pno = b.pno
-            LEFT JOIN `seller` AS c ON a.sid = c.uid
+            JOIN `productimg` AS b ON a.pno = b.pno
+            JOIN `seller` AS c ON a.sid = c.uid
             <where>
                 <if test="type == 'pname'">a.pname like CONCAT('%','${keyword}','%')</if>
                 <if test="type == 'company'">a.company like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'seller'">a.seller like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'seller'">a.sid like CONCAT('%','${keyword}','%')</if>
                 <if test="type == 'pno'">a.pno=${keyword}</if>
             </where>
-        ) as total
+        ) AS line
         FROM `product` AS a
-        LEFT JOIN `productimg` AS b ON a.pno = b.pno
-        LEFT JOIN `seller` AS c ON a.sid = c.uid
+        JOIN `productimg` AS b ON a.pno = b.pno
+        JOIN `seller` AS c ON a.sid = c.uid
         <where>
             <if test="type == 'pname'">a.pname like CONCAT('%','${keyword}','%')</if>
             <if test="type == 'company'">a.company like CONCAT('%','${keyword}','%')</if>
@@ -51,6 +51,33 @@
         LIMIT ${size} OFFSET ${(pg - 1) * size}
     </select>
 
+
+    <select id="selectOrders" resultType="kr.co.lotteon.dto.OrdersDTO">
+        SELECT o.*,
+            p.pno, p.cate, p.pname, p.company,
+            pi.mainimg,
+            od.pcount, od.options, od.price
+        FROM `orders` AS o
+        JOIN `orderdetail` AS od ON o.ono = od.ono
+        JOIN `product` AS p ON p.pno = od.pno
+        JOIN `productimg` AS pi ON p.pno = pi.pno
+    </select>
+
+    <select id="selectOrderGroup" resultType="kr.co.lotteon.dto.OrdersDTO">
+        SELECT
+            o.ono, o.odate, o.total,
+            COUNT(od.ono) AS `count`,
+            ANY_VALUE(p.cate) AS cate,
+            ANY_VALUE(ip.mainimg) AS mainimg,
+            ANY_VALUE(p.pname) AS pname
+        FROM `orders` AS o
+        JOIN `orderdetail` AS od ON o.ono = od.ono
+        JOIN `product` AS p ON od.pno = p.pno
+        JOIN `productimg` AS ip on p.pno = ip.pno
+        GROUP BY o.ono
+    </select>
+
+    <!-- 상품별 주문량, 총판매액 -->
     <select id="selectOrderByProduct" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.OrdersDTO">
         SELECT
             od.pno,
@@ -67,18 +94,36 @@
         ORDER BY od.pno
     </select>
 
+    <!-- 월간 주문량, 월판매액 -->
     <select id="selectOrderByMonth" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.OrdersDTO">
+        SELECT * FROM (
         SELECT
-            od.pno,
-            SUM(od.pcount) AS pcount,
-            SUM(od.price) AS price,
-            DATE_FORMAT(o.odate,'%y-%m') AS month
+        SUM(od.pcount) AS pcount,
+        SUM(o.total) AS price,
+        DATE_FORMAT(o.odate,'%y-%m') AS period
         FROM `orderdetail` AS od
-        INNER JOIN `product` AS p ON od.pno = p.pno
-        INNER JOIN `productimg` AS pi ON od.pno = pi.pno
-        INNER JOIN `orders` AS o ON od.ono = o.ono
-        GROUP BY od.pno, DATE_FORMAT(o.odate,'%y-%m')
-        ORDER BY od.pno
+        JOIN `orders` AS o ON od.ono = o.ono
+        GROUP BY DATE_FORMAT(o.odate,'%y-%m')
+        ORDER BY period DESC
+        LIMIT 12
+        )limit_row
+        ORDER BY period ASC
+    </select>
+
+    <!-- 주간 주문량, 월판매액 -->
+    <select id="selectOrderByWeek" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.OrdersDTO">
+        SELECT * FROM (
+        SELECT
+        SUM(od.pcount) AS pcount,
+        SUM(o.total) AS price,
+        CONCAT(MONTH(odate), '월 ', WEEKOFYEAR(odate) - WEEKOFYEAR(LAST_DAY(odate - INTERVAL 1 MONTH) + INTERVAL 1 DAY) + 1, '주차' ) AS period
+        FROM `orderdetail` AS od
+        JOIN `orders` AS o ON od.ono = o.ono
+        GROUP BY period
+        ORDER BY period DESC
+        LIMIT 12
+        )limit_row
+        ORDER BY period ASC
     </select>
 
     <!--🎈 admin_product_delete-->

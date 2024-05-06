@@ -43,7 +43,7 @@ public class ProductDTO {
     private String subimg;
     private String detailimg;
 
-    private int total;
+    private int line;
 
     public Product toEntity(){
         return Product.builder()

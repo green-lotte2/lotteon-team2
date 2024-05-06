@@ -13,8 +13,6 @@ public class TypePageResponseDTO {
     private int size;
     private int total;
     private int totalPage;
-    private int cate1;
-    private int cate2;
 
     private String type;
     private String keyword;

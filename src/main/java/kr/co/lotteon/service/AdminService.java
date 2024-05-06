@@ -45,19 +45,35 @@ public class AdminService {
         return adminMapper.adminSelectUsers();
     }
 
-    public TypePageResponseDTO selectProductsBySearch(PageRequestDTO pageRequestDTO) {
-        List<ProductDTO> productDTOS = adminMapper.selectProductsBySearch(pageRequestDTO);
-        return new TypePageResponseDTO(pageRequestDTO,productDTOS.get(0).getTotal(),productDTOS);
+    public TypePageResponseDTO selectOrderGroup(PageRequestDTO pageRequestDTO) {
+        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderGroup(pageRequestDTO);
+        return new TypePageResponseDTO(pageRequestDTO,ordersDTOS.get(0).getLine(),ordersDTOS);
     }
 
-    public TypePageResponseDTO selectOrderByMonth(PageRequestDTO pageRequestDTO) {
-        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderByMonth(pageRequestDTO);
-        return new TypePageResponseDTO(pageRequestDTO,ordersDTOS.get(0).getTotal(),ordersDTOS);
+    public TypePageResponseDTO selectOrders(PageRequestDTO pageRequestDTO) {
+        List<OrdersDTO> ordersDTOS = adminMapper.selectOrders(pageRequestDTO);
+        return new TypePageResponseDTO(pageRequestDTO,ordersDTOS.get(0).getLine(),ordersDTOS);
+    }
+
+    public TypePageResponseDTO selectProductsBySearch(PageRequestDTO pageRequestDTO) {
+        List<ProductDTO> productDTOS = adminMapper.selectProductsBySearch(pageRequestDTO);
+        return new TypePageResponseDTO(pageRequestDTO,productDTOS.get(0).getLine(),productDTOS);
+    }
+
+    // 기간별 주문량 조회
+    public List<OrdersDTO> selectOrderByMonth() {
+        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderByMonth();
+        return ordersDTOS;
+    }
+
+    public List<OrdersDTO> selectOrderByWeek() {
+        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderByWeek();
+        return ordersDTOS;
     }
 
     public TypePageResponseDTO selectOrderByProduct(PageRequestDTO pageRequestDTO) {
         List<OrdersDTO> ordersDTOS = adminMapper.selectOrderByProduct(pageRequestDTO);
-        return new TypePageResponseDTO(pageRequestDTO,ordersDTOS.get(0).getTotal(),ordersDTOS);
+        return new TypePageResponseDTO(pageRequestDTO,ordersDTOS.get(0).getLine(),ordersDTOS);
     }
 
     public List<ProductDTO> selectProducts(){

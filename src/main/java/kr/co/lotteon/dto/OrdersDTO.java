@@ -19,7 +19,7 @@ public class OrdersDTO {
     private String uid;
     private int pno;
     private LocalDate odate;
-    private String month;
+    private String period;
 
     private int usepoint;
     private int savepoint;
@@ -43,6 +43,7 @@ public class OrdersDTO {
     private String pname;
     private int price;
     private int count;
+    private int line;
 
     // 주문 상세 정보
     private List<OrderDetailDTO> orderDetails;

@@ -1,8 +1,6 @@
 package kr.co.lotteon.controller.admin;
 
-import kr.co.lotteon.dto.BannerDTO;
-import kr.co.lotteon.dto.NoticeDTO;
-import kr.co.lotteon.dto.QnaDTO;
+import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.Banner;
 import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.CsService;
@@ -80,7 +78,12 @@ public class AdminConfigController {
         List<QnaDTO> qnaDTOS = csService.adminSelectQnaList();
         model.addAttribute("qnaDTOS", qnaDTOS);
 
-
+        List<OrdersDTO> monthSales = adminService.selectOrderByMonth();
+        List<OrdersDTO> weekSales = adminService.selectOrderByWeek();
+        log.info(monthSales.toString());
+        log.info(weekSales.toString());
+        model.addAttribute("monthSales", monthSales);
+        model.addAttribute("weekSales", weekSales);
 
         log.info("index.. ");
         return "/admin/index";

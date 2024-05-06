@@ -117,24 +117,25 @@ public class AdminProductController {
     }
 
     @GetMapping("/admin/order/list")
-    public String adminOrderList(Model model){
+    public String adminOrderList(Model model, PageRequestDTO pageRequestDTO){
 
-        List<OrdersDTO> ordersDTOS = ordersService.selectAllOrders();
-        log.info(ordersDTOS.toString());
+        TypePageResponseDTO ordersDTOS = adminService.selectOrderGroup(pageRequestDTO);
+        TypePageResponseDTO orderProduct = adminService.selectOrders(pageRequestDTO);
         model.addAttribute("orders", ordersDTOS);
+        model.addAttribute("products", orderProduct);
         return "/admin/order/list";
     }
 
-    @GetMapping("/admin/order/sale")
+    @GetMapping("/admin/order/sales")
     public String adminOrderSaleList(Model model, PageRequestDTO pageRequestDTO){
 
         TypePageResponseDTO ordersList = adminService.selectOrderByProduct(pageRequestDTO);
-        TypePageResponseDTO orderProductList = adminService.selectOrderByMonth(pageRequestDTO);
+        //TypePageResponseDTO orderProductList = adminService.selectOrderByMonth(pageRequestDTO);
 
         model.addAttribute("ordersList", ordersList);
-        model.addAttribute("orderProductList",orderProductList);
+        //model.addAttribute("orderProductList",orderProductList);
 
-        return "/admin/product/sale";
+        return "/admin/order/sales";
     }
 
 

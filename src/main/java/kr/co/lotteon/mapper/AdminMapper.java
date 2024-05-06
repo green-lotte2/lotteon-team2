@@ -11,8 +11,14 @@ public interface AdminMapper{
     public List<UserDTO> adminSelectUsers();
 
     //🎈주문
-    public List<OrdersDTO> selectOrderByMonth(PageRequestDTO pageRequestDTO);
+    public List<OrdersDTO> selectOrderByMonth();
+
+    public List<OrdersDTO> selectOrderByWeek();
+
     public List<OrdersDTO> selectOrderByProduct(PageRequestDTO pageRequestDTO);
+    public List<OrdersDTO> selectOrderGroup(PageRequestDTO pageRequestDTO);
+
+    public List<OrdersDTO> selectOrders(PageRequestDTO pageRequestDTO);
 
     //🎈상품
     // admin 상품목록
