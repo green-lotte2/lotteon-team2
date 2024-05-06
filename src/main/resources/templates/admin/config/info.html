@@ -18,6 +18,13 @@
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
     <link th:href="@{/admin/css/admin2.min.css}" rel="stylesheet">
     <style>
+        #admin-config-info table textarea {
+            resize: none;
+            width: 700px;
+            height: 300px;
+            padding: 10px;
+        }
+
         main > section {
             font-size: 16px;
             color: #333333;
@@ -102,20 +109,21 @@
                                     <td><textarea name="art1"></textarea></td>
                                 </tr>
                                 <tr>
-                                    <td class="left">1조</td>
+                                    <td class="left">2조</td>
                                     <td><textarea name="art1"></textarea></td>
                                 </tr>
                                 <tr>
-                                    <td class="left">1조</td>
+                                    <td class="left">3조</td>
                                     <td><textarea name="art1"></textarea></td>
                                 </tr>
                                 <tr>
-                                    <td class="left">1조</td>
+                                    <td class="left">4조</td>
                                     <td><textarea name="art1"></textarea></td>
                                 </tr>
                             </table>
                         </section>
                     </form>
+                    <input style="margin-bottom: 10px;" type="submit" th:value="등록완료">
                 </article>
 
                 <p class="ico alert">

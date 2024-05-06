@@ -473,7 +473,8 @@ main > #cont5 img {
 }
 
 .culture #cont3 .cont3_content .item .bottom2 {
-    padding-left: 200px;
+    position: relative;
+    left: 195px;
 }
 
 .culture #cont3 .cont4 {
@@ -670,7 +671,7 @@ main > #cont5 img {
     margin-top: 5px;
 }
 
-.item {
+#media .media .item {
     width: 1000px;
     margin-bottom: 20px;
     display: flex;

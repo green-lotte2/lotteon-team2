@@ -31,7 +31,7 @@ public class QBanner extends EntityPathBase<Banner> {
 
     public final StringPath blocation = createString("blocation");
 
-    public final StringPath bmanage = createString("bmanage");
+    public final NumberPath<Integer> bmanage = createNumber("bmanage", Integer.class);
 
     public final StringPath bname = createString("bname");
 

@@ -21,14 +21,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -44,6 +51,12 @@ public class AdminService {
         log.info("selectUsers... ");
         return adminMapper.adminSelectUsers();
     }
+
+    // 🎈 회원 삭제
+    public void adminDeleteUser(String uid){
+        adminMapper.adminDeleteUser(uid);
+    }
+
 
     public TypePageResponseDTO selectProductsBySearch(PageRequestDTO pageRequestDTO) {
         List<ProductDTO> productDTOS = adminMapper.selectProductsBySearch(pageRequestDTO);
@@ -85,7 +98,6 @@ public class AdminService {
             String path = new File(imgUploadPath + "/" + cate + "/").getAbsolutePath();
 
 
-
             for(String img : delImgList){
                 File delFile = new File(path + File.separator + img);
                 log.info(delFile.toString());
@@ -106,12 +118,49 @@ public class AdminService {
     // 🎈배너 등록
     private final ModelMapper modelMapper;
 
-    public Banner insertBanner(BannerDTO bannerDTO) {
-        Banner banner = modelMapper.map(bannerDTO,Banner.class);
-        Banner savedBanner = bannerRepository.save(banner);
-        log.info("savedBanner : " + savedBanner);
+    @Value("uploads/")
+    private String fileUploadPath;
 
-        return savedBanner;
+    public Banner insertBanner(BannerDTO bannerDTO, MultipartFile file) {
+        if (!file.isEmpty()) {
+            try {
+                // 파일 확장자 추출
+                String oName = file.getOriginalFilename();
+                String ext = oName.substring(oName.lastIndexOf("."));
+                // 고유한 파일 이름 생성
+                String sName = UUID.randomUUID().toString() + ext;
+
+                log.info("oName :" + oName);
+                log.info("sName :" + sName);
+
+                // 파일을 저장할 경로 설정
+                String path = fileUploadPath + sName;
+                // 파일 저장
+                Files.copy(file.getInputStream(), Paths.get(path), StandardCopyOption.REPLACE_EXISTING);
+
+                // 파일 이름을 DTO에 설정
+                bannerDTO.setBfile(sName);
+                bannerDTO.setBmanage(0); // 예시로 1로 설정, 실제로는 어떤 값이어야 할 것입니다.
+
+                // 로그에 DTO 정보 출력
+                log.info("BannerDTO : " + bannerDTO);
+
+                // BannerDTO를 서비스로 전달하여 처리
+                Banner banner = modelMapper.map(bannerDTO, Banner.class);
+                Banner savedBanner = bannerRepository.save(banner);
+
+                log.info("savedBanner : " + savedBanner);
+
+                return savedBanner;
+            } catch (IOException e) {
+                e.printStackTrace();
+                // 파일 저장 실패 시 예외 처리
+                return null;
+            }
+        } else {
+            // 파일이 업로드되지 않았을 때 처리할 로직
+            return null;
+        }
     }
 
     // 🎈 배너 리스트

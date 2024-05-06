@@ -37,7 +37,7 @@ public class Banner {
     private LocalDate bendDate;
     private LocalTime bstartTime;
     private LocalTime bendTime;
-    private String bmanage;
+    private int bmanage;
 
 }
 

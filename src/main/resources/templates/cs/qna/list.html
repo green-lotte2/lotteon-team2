@@ -95,8 +95,8 @@
                   <td class="uid" th:text="${#strings.substring(qnaDTOS.uid, 0, 3) + '***'}"></td>
 
                   <th:block class="answercomplete">
-                    <td th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
-                    <td th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
+                    <td style="color: royalblue; font-size: 14px;" th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
+                    <td style="color: tomato; font-size: 14px" th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
                   </th:block>
                   <td th:text="${#temporals.format(qnaDTOS.rdate, 'yy-MM-dd')}"></td>
                 </tr>

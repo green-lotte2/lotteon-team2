@@ -22,7 +22,7 @@ public class BannerDTO {
     private int bno;
     private String bname;
     private String bfile;
-    private MultipartFile file;
+   // private MultipartFile file;
     private String bcolor;
     private String blink;
     private String blocation;
@@ -30,9 +30,14 @@ public class BannerDTO {
     private LocalDate bendDate;
     private LocalTime bstartTime;
     private LocalTime bendTime;
-    private String bmanage;
+    private int bmanage;
     
+    // 추가 필드
     public List<BannerDTO> bannerDTO;
+
+    private MultipartFile imageFile;
+    private String oName;
+    private String sName;
 
     public Banner toEntity(){
         return  Banner.builder()

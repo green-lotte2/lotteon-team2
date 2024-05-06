@@ -8,7 +8,11 @@ import java.util.List;
 @Mapper
 public interface AdminMapper{
 
+    //🎈회원
     public List<UserDTO> adminSelectUsers();
+    // 회원 삭제
+    public void adminDeleteUser(String uid);
+
 
     //🎈주문
     public List<OrdersDTO> selectOrderByMonth(PageRequestDTO pageRequestDTO);

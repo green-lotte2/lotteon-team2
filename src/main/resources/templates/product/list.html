@@ -82,49 +82,46 @@
 
 
     <!-- 상품목록 -->
-    <table border="0">
-        <tr th:each="product : ${products}">
-            <td>
+    <div class="prodList">
+        <div class="item" th:each="product : ${products}">
+            <div class="imgBox">
                 <a th:href="@{/product/view(pno=${product.pno})}" class="thumb">
                     <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
                 </a>
-            </td>
-            <td>
+            </div>
+            <div class="titleBox">
                 <h3 class="name" th:text="${product.pname}">상품명</h3>
                 <a th:href="@{/product/view(pno=${product.pno})}" class="desc" th:text="${product.info}">상품설명</a>
-            </td>
-            <td>
+            </div>
+            <div class="price">
                 <ul>
                     <li>
                         <!-- 할인된 가격을 계산하고 콤마 포맷을 적용합니다. -->
                         <ins class="dis-price"
-                             th:text="${#numbers.formatInteger((product.price * (1 - product.discount / 100.0)), 3, 'COMMA')}">
+                             th:text="${#numbers.formatInteger((product.price * (1 - product.discount / 100.0)), 3, 'COMMA') + '원'}">
                             할인된 가격
                         </ins>
                     </li>
                     <li>
                         <!-- 원래 가격에 콤마 포맷을 적용합니다. -->
-                        <del class="org-price" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}">
+                        <del class="org-price" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}">
                             30,000
                         </del>
                         <!-- 할인율 -->
                         <span class="discount" th:text="${product.discount + '%'}">10%</span>
                     </li>
-                    <li>
-                        <!-- 무료 배송 여부를 표시합니다. -->
-                        <span class="free-delivery">무료배송</span>
-                    </li>
                 </ul>
-            </td>
-            <td>
+            </div>
+            <div class="sellerInfo">
                 <!-- 회사 (판매자 정보) -->
-                <h4 class="seller" th:text="${product.company}"><i class="fas fa-home"></i>판매자</h4>
+                <!--<h4 class="seller" th:text="${product.company}"><i class="fas fa-home"></i>판매자</h4>-->
                 <!-- 판매자 등급 및 평점은 데모 데이터이며, 실제 필드가 없습니다. -->
                 <h5 class="badge power">판매자등급</h5>
                 <h6 class="rating star2">상품평</h6>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </div>
+
 
 
     <!-- 상품목록 페이지번호 -->

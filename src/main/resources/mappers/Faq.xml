@@ -9,7 +9,28 @@
         SELECT a.*, b.*
         FROM `faq` AS a
         JOIN `cate2` AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
-        WHERE a.cate1=#{cate1} ORDER BY `faqno` DESC LIMIT 50
+        WHERE a.cate1=#{cate1} ORDER BY `faqno` DESC LIMIT 10
+    </select>
+
+    <!--🎈faq 페이징🎈-->
+    <select id="selectFaqListAll" parameterType="map" resultType="map">
+        SELECT * FROM `faq` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 ORDER BY `faqno` DESC LIMIT #{start}, 10
+    </select>
+
+    <select id="selectFaqListCate" parameterType="map" resultType="map">
+        SELECT * FROM `faq` AS a
+        JOIN `cate2` AS b
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE a.cate1= #{cate1} ORDER BY `faqno` DESC LIMIT #{start}, 10
+    </select>
+
+    <select id="selectFaqTotalCate" resultType="int">
+        SELECT COUNT(*) FROM faq WHERE cate1 = #{cate1, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectFaqTotal">
+        SELECT COUNT(*) FROM `faq`
     </select>
 
     <!--🎈admin faq 목록-->
