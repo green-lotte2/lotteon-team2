@@ -357,7 +357,7 @@
                             <td><input type="checkbox"  class="checkbox1" name="checkbox" th:value="${banner.bno}"></td>
                             <td>[[${banner.bno}]]</td>
                             <td>
-                                <a><img th:src="@{/admin/img/topBanner2.png}" class="thumb" th:id="'bannerImage_' + ${banner.bno}"></a>
+                                <a><img th:src="@{|/uploads/banner/${banner.getBfile}|}" class="thumb" th:id="'bannerImage_' + ${banner.bno}"></a>
                             </td>
                             <td>
                                 <ul>
@@ -407,7 +407,7 @@
                         <tr  th:each="banner:${banners}" th:if="${banner.blocation} == 'MAIN2'">
                             <td><input type="checkbox" class="checkbox2" name="checkbox" th:value="${banner.bno}"/></td>
                             <td>[[${banner.bno}]]</td>
-                            <td><img th:src="@{|/uploads/${banner.getBfile}|}" class="thumb"></td>
+                            <td><img th:src="@{|/uploads/banner/${banner.getBfile}|}" class="thumb"></td>
                             <td>
                                 <ul>
                                     <li class="name">[[${banner.bname}]]</li>
@@ -455,7 +455,7 @@
                         <tr  th:each="banner:${banners}" th:if="${banner.blocation} == 'PRODUCT1'">
                             <td><input  type="checkbox"  class="checkbox3" name="checkbox" th:value="${banner.bno}"/></td>
                             <td>[[${banner.bno}]]</td>
-                            <td><img th:src="@{/admin/img/vip_plcc_banner.png}" class="thumb"></td>
+                            <td><img th:src="@{|/uploads/banner/${banner.getBfile}|}" class="thumb"></td>
                             <td>
                                 <ul>
                                     <li class="name">[[${banner.bname}]]</li>
@@ -503,7 +503,7 @@
                         <tr th:each="banner:${banners}" th:if="${banner.blocation} == 'MEMBER1'">
                             <td><input type="checkbox" class="checkbox4" name="checkbox" th:value="${banner.bno}"/></td>
                             <td>[[${banner.bno}]]</td>
-                            <td><img th:src="@{/images/member_login_banner.png}" src="피카츄" class="thumb"></td>
+                            <td><img th:src="@{|/uploads/banner/${banner.getBfile}|}" src="피카츄" class="thumb"></td>
                             <td>
                                 <ul>
                                     <li class="name">[[${banner.bname}]]</li>
@@ -551,7 +551,7 @@
                         <tr th:each="banner:${banners}" th:if="${banner.blocation} == 'MY1'">
                             <td><input type="checkbox"  class="checkbox5" name="checkbox" th:value="${banner.bno}"/></td>
                             <td>[[${banner.bno}]]</td>
-                            <td><img th:src="@{/images/my_banner1.jpg}" class="thumb"></td>
+                            <td><img th:src="@{|/uploads/banner/${banner.getBfile}|}" class="thumb"></td>
                             <td>
                                 <ul>
                                     <li class="name">[[${banner.bname}]]</li>

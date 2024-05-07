@@ -12,10 +12,145 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/admin/css/admin.css}" rel="stylesheet">
 
 </head>
 
 <main layout:fragment="content">
+    <div id="userModify">
+        <form th:action="@{/admin/cs/user/modify}" method="post">
+            <div>
+                <h4>회원수정</h4>
+                <section>
+                    <table>
+                        <tr>
+                            <th>아이디</th>
+                            <td>
+                                <input th:value="${user.uid}" readonly type="text" name="uid"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호</th>
+                            <td class="pass">
+                                <input type="password" name="pass" required/>
+                                <span class="msgPass">영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주세요.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>비밀번호확인</th>
+                            <td>
+                                <input type="password" name="pass2" id="pass2" placeholder="비밀번호를 확인" required/>
+                                <span class="msgPass2"></span>
+                            </td>
+                        </tr>
+
+                    </table>
+                </section>
+                <section>
+                    <table>
+                        <tr>
+                            <th>이름</th>
+                            <td>
+                                <input th:value="${user.name}" type="text" name="name" placeholder="이름을 입력" required/>
+                                <span class="msgName"></span>
+                            </td>
+
+                        </tr>
+                        <tr th:if="${user.gender != null}">
+                            <th>성별</th>
+                            <td>
+                                <label >
+                                    <input class="gender" type="text" name="gender" th:value="${user.gender}" readonly>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr th:if="${user.gender == null}">
+                            <th>성별</th>
+                            <td>
+                                <label >
+                                    <input class="gender" type="text" name="gender" th:value="${''}">
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>EMAIL</th>
+                            <td><input id="inputEmail" type="email" name="email" th:value="${user.email}"
+                                       required/>
+                                <button class="btnSubmit" type="button" id="btn_email" data-type="email"><span>이메일 인증</span></button>
+                                <span id="result_email"></span>
+
+                                <div id="divEmailCode">
+                                    <input  id="inputEmailCode" name="code" type="text" placeholder="이메일 인증코드 입력"/>
+                                    <button type="button" class="btnSubmit" id="btnCheckEmailCode"
+                                            data-type="email">
+                                        <span class="" role="status">인증코드 확인</span>
+                                    </button>
+                                    <div id="resultEmailCode" class="d-block"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>휴대폰</th>
+                            <td>
+                                <input th:value="${user.hp}" type="text" name="hp" id="hp" maxlength="13" placeholder="휴대폰번호 입력" required/>
+                                <span class="msgHp"> - 포함 13자리를 입력하세요.</span>
+                            </td>
+                        </tr>
+
+                        <tr class="addr">
+                            <th>주소</th>
+                            <td class="address">
+                                <div>
+                                    <input th:value="${user.zip}" type="text" name="zip" id="inputZip"  readonly/>
+                                    <button type="button" id="findZip">우편번호 찾기</button>
+                                </div>
+
+                                <div>
+                                    <input th:value="${user.addr1}" type="text" name="addr1" id="addr1" size="50" placeholder="주소를 검색하세요." readonly/>
+                                </div>
+                                <div>
+                                    <input th:value="${user.addr2}" type="text" name="addr2" id="addr2" size="50" placeholder="상세주소를 입력하세요."/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="role">
+                            <th>사용자 등급</th>
+                            <td>
+                                <select th:value="${user.role}" name="role" id="role">
+                                    <option value="user" th:selected="${user.role == 'user'}">user</option>
+                                    <option value="seller"  th:selected="${user.role == 'seller'}">seller</option>
+                                    <option value="admin"  th:selected="${user.role == 'admin'}">admin</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="regDate">
+                            <th>가입일</th>
+                            <td>
+                                <input th:value="${user.regDate}" type="text" name="regDate" id="regDate" readonly/>
+                            </td>
+                        </tr>
+                        <tr th:if="${user.leaveDate != null}">
+                            <th>탈퇴일</th>
+                            <td>
+                                <input th:value="${user.leaveDate}" type="text" name="leaveDate" class="leaveDate" readonly>
+                            </td>
+                        </tr>
+                        <tr th:if="${user.leaveDate == null}">
+                            <th>탈퇴일</th>
+                            <td>
+                                <input th:value="${''}" type="text" name="leaveDate" class="leaveDate" readonly>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+                <div id="modifyBtn">
+                    <input type="submit" class="modifyBtn" value="수정완료" th:href="@{/admin/cs/user/list}"/>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
 
     <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

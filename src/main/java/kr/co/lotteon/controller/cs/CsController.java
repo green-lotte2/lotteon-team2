@@ -217,16 +217,17 @@ public class CsController {
 
     @GetMapping("/cs/qna/view")
     public String selectQnaView(int qnano, Model model) {
+        log.info(qnano);
         QnaDTO qnaBoard = csService.selectQnaView(qnano);
         log.info("qnaBoard : " + qnaBoard);
-        model.addAttribute("qnaBoard", qnaBoard);
-        model.addAttribute("c2name", qnaBoard.getC2name());
+
 
         if (qnaBoard == null) {
             // qnaboard가 null인 경우에 대한 처리
-            return "/cs/qna/view";
+            return "/cs/qna/list";
         }
-
+        model.addAttribute("qnaBoard", qnaBoard);
+        model.addAttribute("c2name", qnaBoard.getC2name());
 
         QnaDTO qnaChildBoard = csService.selectQnaChildBoard(qnano);
         model.addAttribute("qnaChildBoard", qnaChildBoard);

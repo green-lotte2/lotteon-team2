@@ -58,10 +58,21 @@ public class AdminService {
         return new TypePageResponseDTO(pageRequestDTO, ordersDTOS.get(0).getLine(), ordersDTOS);
     }
 
+    // 🎈 회원 수정
+    public UserDTO adminUserSelect(String uid) {
+        return adminMapper.adminUserSelect(uid);
+    }
+
+
     // 🎈 회원 삭제
     public void adminDeleteUser(String uid){
         adminMapper.adminDeleteUser(uid);
     }
+    
+
+
+
+
 
     public TypePageResponseDTO selectOrders(PageRequestDTO pageRequestDTO) {
         List<OrdersDTO> ordersDTOS = adminMapper.selectOrders(pageRequestDTO);
@@ -134,7 +145,7 @@ public class AdminService {
     // 🎈배너 등록
     private final ModelMapper modelMapper;
 
-    @Value("uploads/")
+    @Value("uploads/banner/")
     private String fileUploadPath;
 
     public Banner insertBanner(BannerDTO bannerDTO, MultipartFile file) {

@@ -239,7 +239,7 @@ public class CsService {
         return noticeMapper.selectNoticeView(noticeno);
     }
     public QnaDTO selectQnaView(int qnano){
-        return qnaMapper.selectQnaBoard(qnano);
+        return qnaMapper.adminSelectQnaView(qnano);
     }
     public FaqDTO selectFaqView(int faqno){
         return faqMapper.selectFaqView(faqno);

@@ -15,6 +15,12 @@
         </where>-->
     </select>
 
+    <!--🎈 admin_user_select-->
+    <select id="adminUserSelect" resultType="kr.co.lotteon.dto.UserDTO">
+            SELECT * FROM `user` WHERE uid = #{uid}
+    </select>
+
+
     <!--🎈 admin_user_delete-->
     <delete id="adminDeleteUser">
         DELETE FROM `user` WHERE uid = #{uid}
