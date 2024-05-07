@@ -73,6 +73,7 @@ public class OrdersController {
         for (String select : checkbox) {
             OrdersDTO ordersDTO1 = new OrdersDTO();
             ordersDTO1.setOno(ono);
+            log.info("select!!! : " + select);
             String[] productInfo = select.split("%");
 
             ordersDTO1.setPno(Integer.parseInt(productInfo[0]));
@@ -81,7 +82,9 @@ public class OrdersController {
 
             ordersDTO1.setOptions(null);
             if (productInfo.length > 3) {
-                ordersDTO1.setOptions(productInfo[2]);
+                String[] optionsArray = Arrays.copyOfRange(productInfo, 3, productInfo.length);
+                String options = String.join(" ", optionsArray);
+                ordersDTO1.setOptions(options);
             }
             String uid = ordersDTO.getUid();
             userService.updateUserPoint(uid, ordersDTO.getUsepoint(), ordersDTO.getSavepoint());

@@ -2,6 +2,7 @@ package kr.co.lotteon.entity;
 
 
 import jakarta.persistence.*;
+import kr.co.lotteon.dto.ProductDTO;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -36,6 +37,5 @@ public class Product {
     private int hit;
     private String opname;
     private String opvalue;
-
 
 }

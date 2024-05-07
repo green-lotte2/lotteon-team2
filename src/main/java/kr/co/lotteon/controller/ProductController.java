@@ -206,10 +206,10 @@ public class ProductController {
         List<ProductDTO> products = productService.searchProducts(search, minPrice, maxPrice, cate);
         int totalResults = productService.countSearchProducts(search, minPrice, maxPrice, cate);
 
-            ProductPageRequestDTO productPageRequestDTO = ProductPageRequestDTO.builder()
-                    .pg(pg)
-                    .size(size)
-                    .build();
+        ProductPageRequestDTO productPageRequestDTO = ProductPageRequestDTO.builder()
+                .pg(pg)
+                .size(size)
+                .build();
 
         if (products.isEmpty()) {
             // 검색 결과가 없다면 빈 리스트를 모델에 추가합니다.
@@ -226,28 +226,14 @@ public class ProductController {
         }
 
 
-            // 검색 키워드와 가격 정보를 뷰에 유지
-            model.addAttribute("products", products);
-            model.addAttribute("searchKeyword", search);
-            model.addAttribute("minPrice", minPrice);
-            model.addAttribute("maxPrice", maxPrice);
-            model.addAttribute("category", cate);
+        // 검색 키워드와 가격 정보를 뷰에 유지
+        model.addAttribute("products", products);
+        model.addAttribute("searchKeyword", search);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
+        model.addAttribute("category", cate);
 
-            return "/product/search"; // 검색 결과를 보여줄 뷰 이름
-    }
-
-
-    @GetMapping("/product/view")
-    public String viewProduct(@RequestParam("pno") int pno, Model model) {
-        ProductDTO productDTO = productService.findProductDTOById(pno);
-        if (productDTO != null) {
-            productService.productHitUpdate(productDTO);
-            model.addAttribute("cate", productService.getCategoryList());
-            model.addAttribute("product", productDTO);
-            return "/product/view";
-        } else {
-            return "redirect:/product/list"; // 제품이 없을 경우 리다이렉트
-        }
+        return "/product/search"; // 검색 결과를 보여줄 뷰 이름
     }
 
 

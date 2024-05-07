@@ -47,5 +47,5 @@ public class PageRequestDTO {
     private String company;
     private String seller;
     private String pname;
-    private String cate;
+    private int cate;
 }
