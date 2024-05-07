@@ -306,7 +306,7 @@ public class AdminCsController {
 
         return "redirect:/admin/cs/faq/list";
     }
-    
+
 
     /////////////////////////
     // 🎈1:1 질문 /////////////
