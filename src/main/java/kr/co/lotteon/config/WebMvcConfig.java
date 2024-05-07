@@ -25,12 +25,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void  addResourceHandlers(ResourceHandlerRegistry registry) {
         String defaultPath = System.getProperty("user.dir");
-        String path = defaultPath + File.separator + "product" + File.separator;
+        String imgPath = defaultPath + File.separator + "product" + File.separator;
+        String filePath = defaultPath + File.separator + "uploads" + File.separator;
         registry
                 .addResourceHandler("product/**")
-                .addResourceLocations("file:///" + path);
-        log.info(registry.toString());
-        log.info("file:///" + path);
+                .addResourceLocations("file:///" + imgPath);
+        registry
+                .addResourceHandler("uploads/**")
+                .addResourceLocations("file:///" + filePath);
     }
-
 }

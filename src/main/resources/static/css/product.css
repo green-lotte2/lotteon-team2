@@ -843,24 +843,37 @@
 }
 
 #product > .review-write form > div {
+    width: 400px;
     margin: 10px 0;
+    text-align: right;
 }
 
-#product > .review-write form > div > label {
+#product > .review-write form > div > label.rating {
+    font-size: 16px;
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
+}
+
+#product > .review-write form > div > label.review {
+    position: relative;
+    top: -103px;
     font-size: 16px;
     margin-right: 10px;
 }
 
 #product > .review-write form select,
 #product > .review-write form textarea {
+    width: 298px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 #product > .review-write form textarea {
-    width: 80%; /* textarea 너비 조정 */
+    width: 70%; /* textarea 너비 조정 */
     height: 100px; /* textarea 높이 조정 */
+    resize: none;
 }
 
 #product > .review-write form button {

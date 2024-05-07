@@ -110,7 +110,7 @@
                                 <td>[[${user.role}]]</td>
                                 <td th:text="${#temporals.format(user.regDate, 'yyyy-MM-dd')}"></td>
                                 <td>
-                                    <a th:href="@{/admin/user/modify}">상세보기 및 수정</a>
+                                    <a th:href="@{/admin/user/modify(uid=${user.uid})}">상세보기 및 수정</a>
                                 </td>
                             </tr>
                             </tbody>

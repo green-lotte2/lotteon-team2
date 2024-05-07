@@ -33,9 +33,11 @@
 
 
     <select id="selectQnaView" resultType="kr.co.lotteon.dto.QnaDTO">
-        SELECT * FROM `qna` AS a
+        SELECT *
+        FROM `qna` AS a
         JOIN `cate2` AS b
-        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `qnano`= #{qnano}
+        ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
+        WHERE `qnano`= #{qnano}
     </select>
 
 

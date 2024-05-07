@@ -20,7 +20,7 @@
         <input type="hidden" th:value="${#authentication.principal.username}" name="uid"/>
 
         <div>
-            <label for="rating">평점:</label>
+            <label class="rating" for="rating">평점:</label>
             <select id="rating" name="rating">
                 <option value="1">매우 나쁨</option>
                 <option value="2">나쁨</option>
@@ -31,7 +31,7 @@
         </div>
 
         <div>
-            <label for="content">리뷰:</label>
+            <label class="review" for="content">리뷰:</label>
             <textarea id="content" name="content" rows="4" cols="50" placeholder="리뷰를 작성해 주세요."></textarea>
         </div>
 

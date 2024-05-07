@@ -26,20 +26,6 @@ public class AdminUserController {
         return "/admin/user/register";
     }
 
-    /*
-    @PostMapping("/admin/user/list")
-    public String adminUserList(Model model, String uid, String role, String keyword){
-
-        List<UserDTO> users = adminService.selectUsers(role, uid);
-        model.getAttribute(role);
-        model.getAttribute(uid);
-        model.getAttribute(keyword);
-        log.info("role : " + role);
-        log.info("uid : " + uid);
-        log.info("keyword : " + keyword);
-
-        return "/admin/user/list";
-    }*/
 
     @GetMapping("/admin/user/list")
     public String adminUserList(Model model){
@@ -49,8 +35,12 @@ public class AdminUserController {
         return "/admin/user/list";
     }
 
+    // 🎈 user 수정
     @GetMapping("/admin/user/modify")
-    public String adminUserModify(){
+    public String adminUserSelect(@RequestParam String uid, Model model){
+        UserDTO user = adminService.adminUserSelect(uid);
+        model.addAttribute("user", user);
+        log.info("user : " + user);
         return "/admin/user/modify";
     }
 

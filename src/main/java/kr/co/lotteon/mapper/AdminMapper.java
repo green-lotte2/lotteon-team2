@@ -10,6 +10,9 @@ public interface AdminMapper{
 
     //🎈회원
     public List<UserDTO> adminSelectUsers();
+    // 회원 수정
+    public UserDTO adminUserSelect(String uid);
+
     // 회원 삭제
     public void adminDeleteUser(String uid);
 
