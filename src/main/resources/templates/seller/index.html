@@ -1,0 +1,367 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/sellerLayout}">
+
+<head>
+    <link th:href="@{/admin/css/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <style>
+        .notice_qna {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .card h6 {
+            color: #ffffff;
+        }
+
+        .card-body.table {
+            padding: 0;
+        }
+
+        .table td, .table th {
+            padding: 7px;
+        }
+
+        .table tbody {
+            color: #333333;
+        }
+
+        .table-bordered {
+            border: none;
+        }
+
+        .table-bordered td, .table-bordered th {
+            border: none;
+        }
+
+        .table-bordered tr td:nth-child(2) {
+            text-align: left;
+        }
+
+        .card-header:first-child {
+            border-bottom: 2px solid #333;
+        }
+
+    </style>
+    <script th:inline="javascript">
+        window.onload = function (){
+            const monthSales = [[${monthSales}]];
+            const weekSales = [[${weekSales}]];
+            let lineChart;
+            const chartName = document.getElementById('chartName');
+            const count = document.getElementById('count');
+            const price = document.getElementById('price');
+            const dropdown_item = document.getElementsByClassName('dropdown-item');
+
+            for(let i = 0; i < dropdown_item.length; i++){
+                dropdown_item[i].onclick = function (e) {
+                    e.preventDefault();
+                    const value = e.target.getAttribute('data-value');
+                    if (value === 'month'){
+                        setChart(monthSales);
+                        chartName.innerText = "월간 주문금액"
+                        price.innerText = '￦' + monthSales[monthSales.length-1].price.toLocaleString();
+                        count.innerText = monthSales[monthSales.length - 1].pcount.toLocaleString() + '건';
+                    }else if(value === 'week'){
+                        setChart(weekSales);
+                        chartName.innerText = "주간 주문금액";
+                        price.innerText = '￦' + weekSales[weekSales.length-1].price.toLocaleString();
+                        count.innerText = weekSales[weekSales.length-1].pcount.toLocaleString() + '건';
+                    }
+                }
+            }
+            function setChart(salesList){
+                const ctx = document.getElementById("myAreaChart");
+                const data = [];
+                const labels = [];
+
+                salesList.forEach(function (sales) {
+                    data.push(sales.price);
+                    labels.push(sales.period);
+                });
+                lineChart = drawChart(ctx, data, labels, lineChart);
+            }
+
+            setChart(monthSales);
+        }
+    </script>
+
+</head>
+
+
+<main layout:fragment="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                    주문건수 (month)
+                                </div>
+                                <div id="count" class="h5 mb-0 font-weight-bold text-gray-800">[[${#numbers.formatInteger(monthSales[#lists.size(monthSales)-1].pcount, 0, 'COMMA')}]]건</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    주문금액 (month)
+                                </div>
+                                <div id="price" class="h5 mb-0 font-weight-bold text-gray-800">￦[[${#numbers.formatInteger(monthSales[#lists.size(monthSales)-1].price, 0, 'COMMA')}]]</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-won-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">회원가입(명)
+                                </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">100</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-info" role="progressbar"
+                                                 style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    쇼핑몰 방문(명)
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Row -->
+
+        <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 id="chartName" class="m-0 font-weight-bold">월간 주문금액</h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                 aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Dropdown Header:</div>
+                                <a class="dropdown-item" href="#" data-value="month">월간 주문금액</a>
+                                <a class="dropdown-item" href="#" data-value="week">주간 주문금액</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="myAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div
+                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold ">쇼핑몰 방문</h6>
+                        <div class="dropdown no-arrow">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                 aria-labelledby="dropdownMenuLink2">
+                                <div class="dropdown-header">Dropdown Header:</div>
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body ">
+                        <div class="chart-pie pt-4 pb-2">
+                            <canvas id="myPieChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small">
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-primary"></i> Direct
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-success"></i> Social
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-info"></i> Referral
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- /.container-fluid -->
+
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notice_qna">
+        <!-- 🎈공지사항 -->
+        <div id="noticeList" class="container-fluid">
+
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold">공지사항</h6>
+                </div>
+
+                <div class="card-body table">
+                    <div class="table-responsive">
+                        <form th:action="@{/admin/product/delete}" method="post">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                                <tbody>
+                                <tr th:each="noticeDTOS: ${noticeDTOS}">
+                                    <td th:text="'['+ ${noticeDTOS.c2name} + ']'"></td>
+                                    <td>
+                                        <a th:href="@{/admin/cs/notice/view(noticeno=${noticeDTOS.noticeno}, cate2=${noticeDTOS.cate2})}">[[${noticeDTOS.title}]]</a>
+                                    </td>
+                                    <td th:text="${#temporals.format(noticeDTOS.rdate, 'yyyy-MM-dd')}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!--notice end-->
+        <div id="qnaList" class="container-fluid">
+            <!--🎈Qna -->
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold">1:1문의</h6>
+                </div>
+
+                <div class="card-body table">
+                    <div class="table-responsive">
+                        <form th:action="@{/admin/product/delete}" method="post">
+                            <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                                <thead>
+                                <tbody>
+                                <tr th:each="qnaDTOS:${qnaDTOS}">
+                                    <td th:text="'[' + ${qnaDTOS.c2name} + ']'">유형</td>
+                                    <td>
+                                        <a th:href="@{/admin/cs/qna/view(qnano=${qnaDTOS.qnano}, cate2=${qnaDTOS.cate2})}">[[${qnaDTOS.title}]]</a>
+                                    </td>
+                                    <td th:text="${#temporals.format(qnaDTOS.rdate, 'yy-MM-dd')}"></td>
+                                    <th:block class="answercomplete">
+                                        <td style="color: royalblue;" th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
+                                        <td style="color: tomato;" th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
+                                    </th:block>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--notice & Qna end-->
+
+
+    <script th:src="@{/admin/css/vendor/chart.js/Chart.min.js}"></script>
+    <script th:src="@{/admin/js/demo/chart-area-demo.js}"></script>
+    <script th:src="@{/admin/js/demo/chart-pie-demo.js}"></script>
+    <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
+</main>
+
+</html>
