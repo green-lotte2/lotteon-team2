@@ -91,8 +91,10 @@ public class AdminConfigController {
 
         List<OrdersDTO> monthSales = adminService.selectOrderByMonth();
         List<OrdersDTO> weekSales = adminService.selectOrderByWeek();
+        List<OrdersDTO> cateName =  adminService.selectCountAndCateName();
         model.addAttribute("monthSales", monthSales);
         model.addAttribute("weekSales", weekSales);
+        model.addAttribute("cateName", cateName);
 
         log.info("index.. ");
         return "/admin/index";

@@ -68,11 +68,6 @@ public class AdminService {
     public void adminDeleteUser(String uid){
         adminMapper.adminDeleteUser(uid);
     }
-    
-
-
-
-
 
     public TypePageResponseDTO selectOrders(PageRequestDTO pageRequestDTO) {
         List<OrdersDTO> ordersDTOS = adminMapper.selectOrders(pageRequestDTO);
@@ -86,13 +81,15 @@ public class AdminService {
 
     // 기간별 주문량 조회
     public List<OrdersDTO> selectOrderByMonth() {
-        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderByMonth();
-        return ordersDTOS;
+        return adminMapper.selectOrderByMonth();
     }
 
     public List<OrdersDTO> selectOrderByWeek() {
-        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderByWeek();
-        return ordersDTOS;
+        return adminMapper.selectOrderByWeek();
+    }
+
+    public List<OrdersDTO> selectCountAndCateName(){
+        return adminMapper.selectCountAndCateName();
     }
 
     public TypePageResponseDTO selectOrderByProduct(PageRequestDTO pageRequestDTO) {

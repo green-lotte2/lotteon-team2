@@ -159,7 +159,18 @@ public class ProductController {
         return "/product/complete";
     }
 
-
+    @GetMapping("/product/view")
+    public String viewProduct(@RequestParam("pno") int pno, Model model) {
+        ProductDTO productDTO = productService.findProductDTOById(pno);
+        if (productDTO != null) {
+            productService.productHitUpdate(productDTO);
+            model.addAttribute("cate", productService.getCategoryList());
+            model.addAttribute("product", productDTO);
+            return "/product/view";
+        } else {
+            return "redirect:/product/list"; // 제품이 없을 경우 리다이렉트
+        }
+    }
 
     @GetMapping("/product/list")
     public String list(@RequestParam(required = false) String cate,

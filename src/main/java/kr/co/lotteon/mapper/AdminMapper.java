@@ -20,6 +20,8 @@ public interface AdminMapper{
     //🎈주문
     public List<OrdersDTO> selectOrderByMonth();
 
+    public List<OrdersDTO> selectCountAndCateName();
+
     public List<OrdersDTO> selectOrderByWeek();
 
     public List<OrdersDTO> selectOrderByProduct(PageRequestDTO pageRequestDTO);

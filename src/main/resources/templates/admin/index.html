@@ -50,6 +50,16 @@
     </style>
     <script th:inline="javascript">
         window.onload = function (){
+
+            const cateName = [[${cateName}]];
+            let data = [];
+            let label = [];
+            cateName.forEach(function(cate){
+                data.push(cate.pcount);
+                label.push(cate.pname);
+            });
+            drawPieChart(data, label);
+
             const monthSales = [[${monthSales}]];
             const weekSales = [[${weekSales}]];
             let lineChart;
@@ -228,7 +238,7 @@
                     <!-- Card Header - Dropdown -->
                     <div
                             class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold ">쇼핑몰 방문</h6>
+                        <h6 class="m-0 font-weight-bold ">카테고리별 판매량</h6>
                         <div class="dropdown no-arrow">
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                  aria-labelledby="dropdownMenuLink2">
@@ -247,13 +257,13 @@
                         </div>
                         <div class="mt-4 text-center small">
                             <span class="mr-2">
-                                <i class="fas fa-circle text-primary"></i> Direct
+                                <i class="fas fa-circle text-primary"></i> [[${cateName[0].pname}]]
                             </span>
                             <span class="mr-2">
-                                <i class="fas fa-circle text-success"></i> Social
+                                <i class="fas fa-circle text-success"></i> [[${cateName[1].pname}]]
                             </span>
                             <span class="mr-2">
-                                <i class="fas fa-circle text-info"></i> Referral
+                                <i class="fas fa-circle text-info"></i> [[${cateName[2].pname}]]
                             </span>
                         </div>
                     </div>
