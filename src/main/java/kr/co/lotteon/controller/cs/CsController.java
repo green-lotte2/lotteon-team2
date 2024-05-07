@@ -219,6 +219,7 @@ public class CsController {
     public String selectQnaView(int qnano, Model model) {
         QnaDTO qnaBoard = csService.selectQnaView(qnano);
         log.info("qnaBoard : " + qnaBoard);
+
         model.addAttribute("qnaBoard", qnaBoard);
         model.addAttribute("c2name", qnaBoard.getC2name());
 

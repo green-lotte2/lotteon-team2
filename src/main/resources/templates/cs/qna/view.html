@@ -4,90 +4,90 @@
       layout:decorate="~{/layout/csLayout.html}">
   <div layout:fragment="content">
 
-      <section id="cs">
-        <div class="qna">
-          <nav>
-            <div>
-              <p>홈<span>></span>문의하기</p>
+    <section id="cs">
+      <div class="qna">
+        <nav>
+          <div>
+            <p>홈<span>></span>문의하기</p>
+          </div>
+        </nav>
+        <section class="view">
+          <aside>
+            <h2>문의하기</h2>
+            <ul>
+              <li th:class="${cate1 == null or cate1 == '' ? 'on' : ''}">
+                <a th:href="@{/cs/qna/list}" >전체</a>
+              </li>
+              <li th:class="${cate1 == '20' ? 'on' : ''}">
+                <a th:href="@{/cs/qna/list(cate1=20)}">회원</a>
+              </li>
+              <li th:class="${cate1 == '21' ? 'on' : ''}">
+                <a th:href="@{/cs/qna/list(cate1=21)}">쿠폰/혜택/이벤트</a>
+              </li>
+              <li th:class="${cate1 == '22' ? 'on' : ''}">
+                <a th:href="@{/cs/qna/list(cate1=22)}">주문/결제</a>
+              </li>
+              <li th:class="${cate1 == '23' ? 'on' : ''}">
+                <a th:href="@{/cs/qna/list(cate1=23)}">배송</a>
+              </li>
+              <li th:class="${cate1 == '24' ? 'on' : ''}">
+                <a th:href="@{/cs/qna/list(cate1=24)}">취소/반품/교환</a>
+              </li>
+              <li th:class="${cate1 == '25' ? 'on' : ''}">
+                <a th:href="@{/cs/qna/list(cate1=25)}">여행/숙박/항공</a>
+              </li>
+              <li th:class="${cate1 == '26' ? 'on' : ''}">
+                <a th:href="@{/cs/qna/list(cate1=26)}">기타</a>
+              </li>
+            </ul>
+          </aside>
+          <article>
+            <nav>
+              <h2 class="title" th:text="'[' + ${qnaBoard.c2name} + ']' + ${qnaBoard.title}"></h2>
+              <p>
+                <span th:text="${#strings.substring(qnaBoard.uid, 0, 3) + '***'}"></span>
+                <span th:text="${#temporals.format(qnaBoard.rdate, 'yyyy-MM-dd')}"></span>
+              </p>
+
+              <th:block th:if="${qnaBoard.file1 != null}">
+                <a class="filedown" th:href="@{/cs/qna/download(qnano=${qnaBoard.qnano})}">첨부된 파일 : [[${qnaBoard.file2}]]</a>
+              </th:block>
+
+
+
+
+            </nav>
+
+            <div class="content">
+              <p>
+                [[${qnaBoard.content}]]
+              </p><br><br>
+              <p>
+                ※ 피싱 관련 피해신고<br /><br />
+                ▶ 경찰청 사이버수사국 (국번없이)182 :
+                http://cyberbureau.police.go.kr<br />
+                ▶ KISA 인터넷침해대응센터 (국번없이)118 :
+                http://www.krcert.or.kr<br />
+                감사합니다.<br />
+              </p>
             </div>
-          </nav>
-          <section class="view">
-            <aside>
-              <h2>문의하기</h2>
-              <ul>
-                <li th:class="${cate1 == null or cate1 == '' ? 'on' : ''}">
-                  <a th:href="@{/cs/qna/list}" >전체</a>
-                </li>
-                <li th:class="${cate1 == '20' ? 'on' : ''}">
-                  <a th:href="@{/cs/qna/list(cate1=20)}">회원</a>
-                </li>
-                <li th:class="${cate1 == '21' ? 'on' : ''}">
-                  <a th:href="@{/cs/qna/list(cate1=21)}">쿠폰/혜택/이벤트</a>
-                </li>
-                <li th:class="${cate1 == '22' ? 'on' : ''}">
-                  <a th:href="@{/cs/qna/list(cate1=22)}">주문/결제</a>
-                </li>
-                <li th:class="${cate1 == '23' ? 'on' : ''}">
-                  <a th:href="@{/cs/qna/list(cate1=23)}">배송</a>
-                </li>
-                <li th:class="${cate1 == '24' ? 'on' : ''}">
-                  <a th:href="@{/cs/qna/list(cate1=24)}">취소/반품/교환</a>
-                </li>
-                <li th:class="${cate1 == '25' ? 'on' : ''}">
-                  <a th:href="@{/cs/qna/list(cate1=25)}">여행/숙박/항공</a>
-                </li>
-                <li th:class="${cate1 == '26' ? 'on' : ''}">
-                  <a th:href="@{/cs/qna/list(cate1=26)}">기타</a>
-                </li>
-              </ul>
-            </aside>
-            <article>
+            <th:block th:if="${qnaBoard.answercomplete != 1}">
               <nav>
-                <h2 class="title" th:text="'[' + ${qnaBoard.c2name} + ']' + ${qnaBoard.title}"></h2>
-                <p>
-                  <span th:text="${#strings.substring(qnaBoard.uid, 0, 3) + '***'}"></span>
-                  <span th:text="${#temporals.format(qnaBoard.rdate, 'yyyy-MM-dd')}"></span>
-                </p>
-
-                <th:block th:if="${qnaBoard.file1 != null}">
-                  <a class="filedown" th:href="@{/cs/qna/download(qnano=${qnaBoard.qnano})}">첨부된 파일 : [[${qnaBoard.file2}]]</a>
-                </th:block>
-
-
-
-
+                <h2 class="title" th:text="'☞[답변]' + ${qnaChildBoard.title}"></h2>
               </nav>
-
               <div class="content">
                 <p>
-                  [[${qnaBoard.content}]]
-                </p><br><br>
-                <p>
-                  ※ 피싱 관련 피해신고<br /><br />
-                  ▶ 경찰청 사이버수사국 (국번없이)182 :
-                  http://cyberbureau.police.go.kr<br />
-                  ▶ KISA 인터넷침해대응센터 (국번없이)118 :
-                  http://www.krcert.or.kr<br />
-                  감사합니다.<br />
+                  [[${qnaChildBoard.rcontent}]]
                 </p>
               </div>
-              <th:block th:if="${qnaBoard.answercomplete != 1}">
-                <nav>
-                  <h2 class="title" th:text="'☞[답변]' + ${qnaChildBoard.title}"></h2>
-                </nav>
-                <div class="content">
-                  <p>
-                   [[${qnaChildBoard.rcontent}]]
-                  </p>
-                </div>
-              </th:block>
-              <a th:href="@{/cs/qna/list}" class="btnList">목록보기</a>
-              <a th:href="@{/cs/qna/modify(qnano=${qnaBoard.qnano})}" class="btnList">수정하기</a>
-              <a th:href="@{/cs/qna/delete(qnano=${qnaBoard.qnano})}" class="btnList">삭제하기</a>
-            </article>
-          </section>
-        </div>
-      </section>
+            </th:block>
+            <a th:href="@{/cs/qna/list}" class="btnList">목록보기</a>
+            <a th:href="@{/cs/qna/modify(qnano=${qnaBoard.qnano})}" class="btnList">수정하기</a>
+            <a th:href="@{/cs/qna/delete(qnano=${qnaBoard.qnano})}" class="btnList">삭제하기</a>
+          </article>
+        </section>
+      </div>
+    </section>
 
-    </div>
+  </div>
 </html>
