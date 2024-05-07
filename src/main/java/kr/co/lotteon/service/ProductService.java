@@ -122,6 +122,9 @@ public class ProductService {
         return product;
     }
 
+
+
+
     public Product insertProduct(ProductDTO productDTO) {
 
         Product product = modelMapper.map(productDTO, Product.class);

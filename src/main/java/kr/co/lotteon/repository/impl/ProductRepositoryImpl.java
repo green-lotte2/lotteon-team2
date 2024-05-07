@@ -62,7 +62,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         String type = pageRequestDTO.getType();
         String keyword = pageRequestDTO.getKeyword();
-        String cate = pageRequestDTO.getCate();
+        int cate = pageRequestDTO.getCate();
 
         // 검색 종류에 따른 where 표현식 생성
         /*

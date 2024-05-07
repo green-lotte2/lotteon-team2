@@ -130,7 +130,7 @@
             </tr>
             <tr th:each="product : ${cartProducts}" th:unless="${cartProducts == null or cartProducts.isEmpty()}">
                 <td>
-                    <input type="checkbox" name="checkbox" th:value="${product.pno} + '%' + ${product.pcount} + '%' + ${product.price} + '%' + ${product.options}" checked>
+                    <input type="checkbox" name="checkbox" th:value="${product.pno} + '%' + ${product.pcount} + '%' + ${product.price} + '%' + ${product.options.replace(',', '|')}" checked>
                 </td>
                 <td>
                     <article>

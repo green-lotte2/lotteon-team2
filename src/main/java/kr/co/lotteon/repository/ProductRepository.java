@@ -1,5 +1,6 @@
 package kr.co.lotteon.repository;
 
+import kr.co.lotteon.dto.PageRequestDTO;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.repository.custom.ProductRepositoryCustom;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, Prod
     Page<Product> findByCate(int cate, Pageable pageable);
 
     Page<Product> findAllByUid(String uid, Pageable pageable);
-
 
 
 }
