@@ -239,21 +239,21 @@ public class UserService {
         }
     }
 
-    public void deleteUser(String uid){
-        //삭제 전 조회
-        Optional<User> optUser = userRepository.findById(uid);
+    // 회원 탈퇴
+    public void updateWdate(String uid) {
+        User entity = userRepository.findById(uid).get();
+        entity.setLeaveDate(LocalDateTime.now());
+        userRepository.save(entity);
+    }
 
-        log.info("optUser.... : " + optUser);
-
-        if(optUser.isPresent()){
-            log.info("deleteUser.....1");
-
-            // 유저 id 와 leaveDate 만 남기고 나머지 null 처리
-            userMapper.deleteUser(uid);
-
-        }else {
-            log.info("deleteUser.....2");
-
-        }
+    // 회원정보 수정 (이메일, 전화번호, 주소)
+    public void updateUser(UserDTO userDTO) {
+        User entity = userRepository.findById(userDTO.getUid()).get();
+        entity.setEmail(userDTO.getEmail());
+        entity.setHp(userDTO.getHp());
+        entity.setZip(userDTO.getZip());
+        entity.setAddr1(userDTO.getAddr1());
+        entity.setAddr2(userDTO.getAddr2());
+        userRepository.save(entity);
     }
 }

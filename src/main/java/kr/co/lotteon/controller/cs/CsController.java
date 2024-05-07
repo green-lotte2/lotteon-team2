@@ -221,6 +221,8 @@ public class CsController {
         QnaDTO qnaBoard = csService.selectQnaView(qnano);
         log.info("qnaBoard : " + qnaBoard);
 
+        model.addAttribute("qnaBoard", qnaBoard);
+        model.addAttribute("c2name", qnaBoard.getC2name());
 
         if (qnaBoard == null) {
             // qnaboard가 null인 경우에 대한 처리

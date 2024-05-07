@@ -3,6 +3,7 @@ package kr.co.lotteon.controller;
 import kr.co.lotteon.dto.MyHomeDTO;
 import kr.co.lotteon.dto.OrdersDTO;
 import kr.co.lotteon.dto.QnaDTO;
+import kr.co.lotteon.dto.UserDTO;
 import kr.co.lotteon.entity.Orders;
 import kr.co.lotteon.entity.User;
 import kr.co.lotteon.security.MyUserDetails;
@@ -32,6 +33,7 @@ public class MyController {
     private final CsService csService;
     private final MyService myService;
     private final OrdersService ordersService;
+    private final AuthenticationManager authenticationManager;
 
     @GetMapping(value = {"/mypage/","/mypage/home"})
     public String myPage(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
@@ -109,20 +111,49 @@ public class MyController {
         return commentBoard;
     }
 
+    @GetMapping("/mypage/infoAccessCheck")
+    public String infoAccessCheck() {
+        return "/mypage/infoAccessCheck";
+    }
+
+    @ResponseBody
+    @PostMapping("/mypage/infoAccessCheck")
+    public String infoAccessCheck(@RequestParam String uid, String inputPass) {
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(uid, inputPass);
+        Authentication result = authenticationManager.authenticate(authentication);
+
+        if (result.isAuthenticated()) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
     @GetMapping("/mypage/info")
-    public String info(Principal principal, Model model){
-        log.info(principal.toString());
-        log.info(principal.getName());
-        User user = userService.selectUser(principal.getName());
-        model.addAttribute("user", user);
+    public String info() {
         return "/mypage/info";
     }
 
-    @DeleteMapping("/mypage/{uid}")
-    public void deleteUser(@PathVariable("uid") String uid){
+    @ResponseBody
+    @PostMapping("/mypage/withdraw")
+    public String withdraw(@RequestParam String uid, String inputPass) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(uid, inputPass);
+        Authentication result = authenticationManager.authenticate(authentication);
 
-        userService.deleteUser(uid);
-
+        if (result.isAuthenticated()) {
+            userService.updateWdate(uid);
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
+    @ResponseBody
+    @PostMapping("/mypage/withdrawFinal")
+    public String withdrawFinal(@RequestBody UserDTO userDTO) {
+        log.info("=========회원정보수정========== : "+userDTO);
+        userService.updateUser(userDTO);
+        return "success";
     }
 
 }
