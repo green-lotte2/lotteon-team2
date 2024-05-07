@@ -158,6 +158,16 @@
         ORDER BY period ASC
     </select>
 
+    <select id="selectCountAndCateName" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.OrdersDTO">
+        SELECT c.cname AS pname, SUM(od.pcount) AS pcount
+        FROM orderdetail AS od
+        JOIN product AS p ON p.pno = od.pno
+        JOIN category AS c ON p.cate = c.cate
+        GROUP BY p.cate
+        ORDER BY pcount DESC
+        LIMIT 3
+    </select>
+
     <!--🎈 admin_product_delete-->
     <delete id="adminDeleteProduct">
         DELETE FROM `product` WHERE pno = #{pno}
