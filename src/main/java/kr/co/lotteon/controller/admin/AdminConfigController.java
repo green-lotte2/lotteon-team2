@@ -91,8 +91,6 @@ public class AdminConfigController {
 
         List<OrdersDTO> monthSales = adminService.selectOrderByMonth();
         List<OrdersDTO> weekSales = adminService.selectOrderByWeek();
-        log.info(monthSales.toString());
-        log.info(weekSales.toString());
         model.addAttribute("monthSales", monthSales);
         model.addAttribute("weekSales", weekSales);
 

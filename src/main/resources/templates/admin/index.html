@@ -3,11 +3,11 @@
       layout:decorate="~{/layout/adminLayout}">
 
 <head>
-    <link th:href="@{css/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/admin/css/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-    <link th:href="@{css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
     <style>
         .notice_qna {
             display: flex;
@@ -54,7 +54,10 @@
             const weekSales = [[${weekSales}]];
             let lineChart;
             const chartName = document.getElementById('chartName');
+            const count = document.getElementById('count');
+            const price = document.getElementById('price');
             const dropdown_item = document.getElementsByClassName('dropdown-item');
+
             for(let i = 0; i < dropdown_item.length; i++){
                 dropdown_item[i].onclick = function (e) {
                     e.preventDefault();
@@ -62,9 +65,13 @@
                     if (value === 'month'){
                         setChart(monthSales);
                         chartName.innerText = "월간 주문금액"
+                        price.innerText = '￦' + monthSales[monthSales.length-1].price.toLocaleString();
+                        count.innerText = monthSales[monthSales.length - 1].pcount.toLocaleString() + '건';
                     }else if(value === 'week'){
-                        setChart(weekSales)
-                        chartName.innerText = "주간 주문금액"
+                        setChart(weekSales);
+                        chartName.innerText = "주간 주문금액";
+                        price.innerText = '￦' + weekSales[weekSales.length-1].price.toLocaleString();
+                        count.innerText = weekSales[weekSales.length-1].pcount.toLocaleString() + '건';
                     }
                 }
             }
@@ -103,7 +110,7 @@
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">
                                     주문건수 (month)
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">[[${#numbers.formatInteger(monthSales[#lists.size(monthSales)-1].pcount, 0, 'COMMA')}]]건</div>
+                                <div id="count" class="h5 mb-0 font-weight-bold text-gray-800">[[${#numbers.formatInteger(monthSales[#lists.size(monthSales)-1].pcount, 0, 'COMMA')}]]건</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -122,10 +129,10 @@
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     주문금액 (month)
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">￦[[${#numbers.formatInteger(monthSales[#lists.size(monthSales)-1].price, 0, 'COMMA')}]]</div>
+                                <div id="price" class="h5 mb-0 font-weight-bold text-gray-800">￦[[${#numbers.formatInteger(monthSales[#lists.size(monthSales)-1].price, 0, 'COMMA')}]]</div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-won-sign fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -348,13 +355,13 @@
     </div><!--notice & Qna end-->
 
 
-    <script th:src="@{css/vendor/chart.js/Chart.min.js}"></script>
-    <script th:inline="javascript" th:src="@{js/demo/chart-area-demo.js}"></script>
-    <script th:src="@{js/demo/chart-pie-demo.js}"></script>
-    <script th:src="@{css/vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{css/vendor/jquery-easing/jquery.easing.min.js}"></script>
-    <script th:src="@{js/sb-admin-2.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/chart.js/Chart.min.js}"></script>
+    <script th:src="@{/admin/js/demo/chart-area-demo.js}"></script>
+    <script th:src="@{/admin/js/demo/chart-pie-demo.js}"></script>
+    <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
 </main>
 
 </html>

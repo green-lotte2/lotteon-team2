@@ -503,7 +503,7 @@
                         <tr th:each="banner:${banners}" th:if="${banner.blocation} == 'MEMBER1'">
                             <td><input type="checkbox" class="checkbox4" name="checkbox" th:value="${banner.bno}"/></td>
                             <td>[[${banner.bno}]]</td>
-                            <td><img th:src="@{/images/member_login_banner.png}" src="피카츄" class="thumb"></td>
+                            <td><img th:src="@{/uploads/member_login_banner.png}" src="피카츄" class="thumb"></td>
                             <td>
                                 <ul>
                                     <li class="name">[[${banner.bname}]]</li>

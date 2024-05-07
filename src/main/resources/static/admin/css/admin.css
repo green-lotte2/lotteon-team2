@@ -388,6 +388,61 @@ input[type=file]::file-selector-button{
 }
 
 
+/*🎈chart info*/
+#chartInfo #searchBox #searchOption {
+    width: 120px;
+}
+
+#chartInfo #searchBox .searchInput {
+    width: 300px;
+    height: 34px;
+    position: relative;
+    top: -2px;
+    left: 4px;
+    border: 1px solid #777777;
+    outline: none;
+}
+
+#chartInfo #searchBox .searchBtn {
+    border: none;
+    background-color: inherit;
+    position: relative;
+    right: 40px;
+    top: -3px;
+}
+
+#chartInfo #searchBox .searchBtn img {
+    width: 24px;
+}
+
+#chartInfo table{
+    font-size: 14px;
+}
+
+#chartInfo table tr th{
+    padding: 8px;
+    text-align: center;
+    background-color: #676767;
+    color: #ffff;
+}
+
+#chartInfo table tr td:nth-child(4) {
+    width: 200px;
+}
+
+#chartInfo table tr .prodName {
+    width: 200px;
+}
+
+#chartInfo table tr td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#chartInfo table tr .prodImg {
+    width: 80px;
+}
+
 
 /*🎈product list*/
 #productList #searchBox #searchOption {

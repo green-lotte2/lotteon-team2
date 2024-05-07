@@ -70,16 +70,37 @@
 
     <select id="selectOrderGroup" resultType="kr.co.lotteon.dto.OrdersDTO">
         SELECT
-            o.ono, o.odate, o.total,
+            o.ono, o.odate, o.total, o.uid,
             COUNT(od.ono) AS `count`,
             ANY_VALUE(p.cate) AS cate,
             ANY_VALUE(ip.mainimg) AS mainimg,
-            ANY_VALUE(p.pname) AS pname
+            ANY_VALUE(p.pname) AS pname,
+            (
+            SELECT
+            COUNT(DISTINCT o.ono)
+            FROM `orders` AS o
+            JOIN `orderdetail` AS od ON o.ono = od.ono
+            JOIN `product` AS p ON od.pno = p.pno
+            JOIN `productimg` AS ip on p.pno = ip.pno
+            <where>
+                <if test="type == 'pname'">p.pname like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'company'">p.company like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'seller'">p.seller like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'uid'">o.uid='${keyword}'</if>
+            </where>
+            )AS line
         FROM `orders` AS o
         JOIN `orderdetail` AS od ON o.ono = od.ono
         JOIN `product` AS p ON od.pno = p.pno
         JOIN `productimg` AS ip on p.pno = ip.pno
+        <where>
+            <if test="type == 'pname'">p.pname like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'company'">p.company like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'seller'">p.seller like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'uid'">o.uid='${keyword}'</if>
+        </where>
         GROUP BY o.ono
+        LIMIT ${size} OFFSET ${(pg - 1) * size}
     </select>
 
     <!-- 상품별 주문량, 총판매액 -->

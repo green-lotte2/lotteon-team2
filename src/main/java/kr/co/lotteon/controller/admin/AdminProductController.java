@@ -129,11 +129,10 @@ public class AdminProductController {
     @GetMapping("/admin/order/sales")
     public String adminOrderSaleList(Model model, PageRequestDTO pageRequestDTO){
 
-        TypePageResponseDTO ordersList = adminService.selectOrderByProduct(pageRequestDTO);
-        //TypePageResponseDTO orderProductList = adminService.selectOrderByMonth(pageRequestDTO);
-
-        model.addAttribute("ordersList", ordersList);
-        //model.addAttribute("orderProductList",orderProductList);
+        List<OrdersDTO> monthSales = adminService.selectOrderByMonth();
+        List<OrdersDTO> weekSales = adminService.selectOrderByWeek();
+        model.addAttribute("monthSales", monthSales);
+        model.addAttribute("weekSales", weekSales);
 
         return "/admin/order/sales";
     }

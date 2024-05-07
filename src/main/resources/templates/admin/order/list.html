@@ -34,14 +34,15 @@
             <div class="card-body">
                 <div class="table-responsive">
 
-                    <form th:action="@{/admin/product/search}" method="get">
+                    <form th:action="@{/admin/order/list}" method="get">
                         <div id="searchBox">
-                            <select name="searchOption" id="searchOption">
+                            <select name="type" id="searchOption">
                                 <option value="pname">상품명</option>
                                 <option value="company">제조사</option>
                                 <option value="seller">판매사</option>
+                                <option value="uid">구매자</option>
                             </select>
-                            <input type="search" class="searchInput" name="search" placeholder="검색어를 입력하세요.">
+                            <input type="search" class="searchInput" name="keyword" placeholder="검색어를 입력하세요.">
                             <button class="searchBtn">
                                 <img th:src="@{/admin/img/search_40.png}" alt="검색">
                             </button>
@@ -56,11 +57,12 @@
                                         <img width="75px" height="75px" th:src="@{|/product/${order.cate}/${order.mainimg}|}" alt="상품이미지">
                                     </div>
                                     <div>
-                                        상품 번호 : [[${order.ono}]]</br>
+                                        상품 번호 : [[${order.ono}]]<br>
                                         상품 이름 : [[${order.pname}]] <strong th:if="${order.count - 1 > 0}">외 [[${order.count - 1}]]개</strong>
                                     </div>
                                     <div>
-                                        결제 금액 : [[${order.total}]]</br>
+                                        구매자 : [[${order.uid}]]<br>
+                                        결제 금액 : [[${order.total}]]<br>
                                         결제 날짜 : [[${order.odate}]]
                                     </div>
                                 </button>
@@ -89,18 +91,32 @@
             </div>
 
             <!--paging-->
+            <!--paging-->
             <nav aria-label="...">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+                        <a th:if="${orders.pg} > 1 and ${orders.keyword} == null"
+                           th:href="@{/admin/order/list(pg=${orders.pg - 1})}"
+                           th:class="page-link">이전</a>
+                        <a th:if="${orders.pg} > 1 and ${orders.keyword} != null"
+                           th:href="@{/admin/order/list(pg=${orders.pg - 1},type=${orders.type},keyword=${orders.keyword})}"
+                           th:class="page-link">이전</a>
+                    </li>
+                    <li th:class="${i == orders.pg ? 'page-item active' : 'page-item'}" th:each="i : ${#numbers.sequence(1, orders.totalPage)}">
+                        <a th:if="${orders.keyword} == null"
+                           th:href="@{/admin/order/list(pg=${i})}"
+                           class="page-link">[[${i}]]</a>
+                        <a th:if="${orders.keyword} != null"
+                           th:href="@{/admin/order/list(pg=${i},type=${orders.type},keyword=${orders.keyword})}"
+                           class="page-link">[[${i}]]</a>
+                    </li>
+                    <li class="page-item">
+                        <a th:if="${orders.pg} < ${orders.totalPage} and ${orders.keyword} == null"
+                           th:href="@{/admin/product/list(pg=${orders.pg + 1})}"
+                           th:class="page-link">다음</a>
+                        <a th:if="${orders.pg} < ${orders.totalPage} and ${orders.keyword} != null"
+                           th:href="@{/admin/product/list(pg=${orders.pg + 1},type=${orders.type},keyword=${orders.keyword})}"
+                           th:class="page-link">다음</a>
                     </li>
                 </ul>
             </nav>
