@@ -128,14 +128,14 @@
             const tr = document.createElement('tr');
             tr.innerHTML =
                 `
-                <td>
-                    <input type="text" placeholder="옵션 이름을 입력하세요">
+                <td class="optionInfo" >
+                    <input class="text" type="text" placeholder="옵션 이름을 입력하세요">
                 </td>
-                <td>
+                <td class="optionInfo" >
                     <div>
-                        <input type="text" placeholder="옵션 값을 입력하세요">
-                        <input type="button" onclick="addOptionValue(this)" value="옵션 추가">
-                        <input type="button" onclick="removeOption(this)" value="옵션 삭제">
+                        <input class="text" type="text" placeholder="옵션 값을 입력하세요">
+                        <input class="add" type="button" onclick="addOptionValue(this)" value="옵션 추가">
+                        <input class="del" type="button" onclick="removeOption(this)" value="옵션 삭제">
                     </div>
 
                 </td>
@@ -278,16 +278,16 @@
                             <td>
                                 <table id="options">
                                     <tr>
-                                        <td>
-                                            <input type="text" placeholder="옵션 이름을 입력하세요">
-                                            <input type="button" onclick="addOptionField(this)" value="옵션 추가">
-                                            <input type="button" onclick="removeField(this)" value="옵션 삭제">
+                                        <td class="optionInfo">
+                                            <input class="text" type="text" placeholder="옵션 이름을 입력하세요">
+                                            <input class="add" type="button" onclick="addOptionField(this)" value="옵션 추가">
+                                            <input class="del" type="button" onclick="removeField(this)" value="옵션 삭제">
                                         </td>
-                                        <td>
+                                        <td class="optionInfo">
                                             <div>
-                                                <input type="text" placeholder="옵션 값을 입력하세요">
-                                                <input type="button" onclick="addOptionValue(this)" value="옵션 추가">
-                                                <input type="button" onclick="removeOption(this)" value="옵션 삭제">
+                                                <input class="text" type="text" placeholder="옵션 값을 입력하세요">
+                                                <input class="add" type="button" onclick="addOptionValue(this)" value="옵션 추가">
+                                                <input class="del" type="button" onclick="removeOption(this)" value="옵션 삭제">
                                             </div>
 
                                         </td>
@@ -299,7 +299,7 @@
                             <td>상품 썸네일</td>
                             <td>
                                 <span>크기 456 x 456, 상품 상세에 출력될 이미지 입니다. </span>
-                                <input type="file" name="mainImg"/>
+                                <input  type="file" name="mainImg"/>
                             </td>
                         </tr>
                         <tr>
@@ -338,7 +338,7 @@
                     </table>
                 </section>
 
-                <input type="submit" name="regBtn" value="등록하기"/>
+                <input class="regBtn" type="submit" name="regBtn" value="등록하기"/>
             </form>
         </article>
 

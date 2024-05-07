@@ -13,10 +13,21 @@
             rel="stylesheet">
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
     <link th:href="@{/admin/css/admin.css}" rel="stylesheet">
+    <style>
+        .table-bordered td:nth-child(4){
+            text-align: left;
+        }
+
+        .py-3 h6 {
+            color: #ffffff;
+        }
+    </style>
 
 </head>
 
 <main layout:fragment="content">
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js}"></script>
     <script>
         window.onload = function () {
             const delBtn = document.getElementById('delBtn');
@@ -61,11 +72,85 @@
         }
 
 
+        //🎈카테고리 출력
+        $(function (){
+            const jsonData = {};
+
+            // cate1 데이터를 서버에서 불러옴
+            $.ajax({
+                url: '/lotteon/cs/cate1',
+                type: 'GET',
+                data: jsonData,
+                success: function (cate1Data){
+                    console.log(cate1Data);
+
+                    // 문의유형의 select 요소 찾기
+                    const typeSelect = $('select[name="type1"]');
+
+                    // cate1 데이터를 반복하여 1차 선택 옵션 추가
+                    cate1Data.forEach(function (cate1){
+                        typeSelect.append($('<option>', {
+                            value: cate1.cate1,
+                            text: cate1.c1name
+                        }));
+                    });
+                }
+            });
+
+            $('#category1').change(function (){
+                const selectedCategory1 = $(this).val();
+                console.log(selectedCategory1);
+
+                // 1차 카테고리 선택 값을 cate1 input 필드의 값으로 설정
+                $('#cate1').val(selectedCategory1);
+
+                // 1차 카테고리 선택 값(selectedCategory1)을 서버로 전송
+                const jsonData = {
+                    cate1: selectedCategory1
+                };
+
+                $.ajax({
+                    url: '/lotteon/cs/cate2',
+                    type: 'GET',
+                    data: jsonData,
+                    success: function (cate2List){
+                        console.log(cate2List);
+
+                        // 문의유형2 select 요소 찾기
+                        const typeSelect2 = $('select[name="category2"]');
+                        typeSelect2.empty();
+
+                        // cate2 데이터를 반복하여 2차 선택 옵션 추가
+                        cate2List.forEach(function (cate2){
+                            typeSelect2.append($('<option>',{
+                                value: cate2.cate2,
+                                text: cate2.c2name
+                            }));
+                        });
+                        // 2차 카테고리가 업데이트되면 첫번째 옵션 선택
+                        typeSelect2.find('option:first').prop('selected', true);
+                        const firstCate2Value = typeSelect2.val();
+                        $('#cate2').val(firstCate2Value);
+
+                        console.log(typeSelect2);
+                    }
+                });
+            });
+            $('#category2').change(function (){
+                const selectedCategory2 = $(this).val();
+                console.log(selectedCategory2);
+
+                // 2차 카테고리 선택값을 cate2 input 필드의 값으로 설정
+                $('#cate2').val(selectedCategory2);
+            });
+        }); // function 종료
+
+
     </script>
 
 
 
-    <div id="qnaList" class="container-fluid">
+    <div id="qnaList" class="container-fluid board">
 
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">CS 게시판관리</h1>
@@ -73,31 +158,26 @@
         <!-- DataTales Example -->
         <div class="card mb-4">
             <div class="card-header py-3" >
-                <h6 class="m-0 font-weight-bold text-primary">1:1문의</h6>
+                <h6 class="m-0 font-weight-bold">1:1문의</h6>
             </div>
 
 
             <div class="card-body">
                 <div class="table-responsive">
+                    <form th:action="@{/admin/cs/search}" method="get">
                         <div id="searchBox">
-                            <form th:action="@{/admin/cs/search}" method="get">
-                                <select name="searchOption" id="searchOption">
-                                    <option value="all">전체</option>
-                                    <option value="20">회원</option>
-                                    <option value="21">쿠폰/혜택/이벤트</option>
-                                    <option value="22">주문/결제</option>
-                                    <option value="23">배송</option>
-                                    <option value="24">취소/반품/교환</option>
-                                    <option value="25">여행/숙박/항공</option>
-                                    <option value="26">기타</option>
-                                </select>
-                                <input type="search" class="searchInput" name="search" placeholder="검색어를 입력하세요.">
-                                <button class="searchBtn">
-                                    <img th:src="@{/admin/img/search_30.png}" alt="검색">
-                                </button>
-                            </form>
+                            <input type="hidden" name="cate1" id="cate1" value="" />
+                            <input type="hidden" name="cate2" id="cate2" value="" />
+                            <select  style="height: 35px; padding: 5px;"  name="type1" id="category1">
+                                <option selected>1차 선택</option>
+                            </select>
+                            <select  style="height: 35px; padding: 5px;"  name="category2" id="category2">
+                                <option selected>2차 선택</option>
+                            </select>
+                        </div>
+                    </form>
 
-                        </div><!--검색박스 end-->
+
 
                         <form th:action="@{/admin/cs/qna/delete}" method="post">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -128,8 +208,8 @@
                                         <td>[[${qnaDTOS.uid}]]</td>
                                         <td th:text="${#temporals.format(qnaDTOS.rdate, 'yy-MM-dd')}"></td>
                                         <th:block class="answercomplete" name="answercomplete">
-                                            <td th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
-                                            <td th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
+                                            <td style="color:royalblue;" th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
+                                            <td style="color: tomato" th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
                                         </th:block>
                                         <td>
                                             <a th:href="@{/admin/cs/qna/delete(qnano=${qnaDTOS.qnano})}" id="delete">[삭제]</a>
@@ -143,7 +223,26 @@
                         </form>
                 </div>
             </div>
+
+            <div class="pagination page">
+                <th:block th:if="${pageGroupStart > 1}" th:class="page-item">
+                    <a th:href="@{/admin/cs/qna/list(pg=${pageGroupStart - 1})}" th:class="page-link">이전</a>
+                </th:block>
+
+                <th:block th:each="num:${#numbers.sequence(pageGroupStart, pageGroupEnd)}" th:class="page-item">
+                    <a th:href="@{/admin/cs/qna/list(pg=${num}, cate1=${cate1})}" th:classappend="${num == currentPage} ? 'current num' : 'num'" th:class="page-link">[[${num}]]</a>
+                </th:block>
+
+                <th:block th:if="${pageGroupEnd < lastPageNum}" th:class="page-item">
+                    <a th:href="@{/admin/cs/qna/list(pg=${pageGroupEnd + 1})}" th:class="page-link">다음</a>
+                </th:block>
+            </div>
+            <input type="hidden" th:value="${pageGroupStart}">
+            <input type="hidden" th:value="${pageGroupEnd}">
+            <input type="hidden" th:value="${pageStartNum}">
+
             <!--paging-->
+            <!--
             <nav aria-label="...">
                 <ul class="pagination">
                     <li class="page-item disabled">
@@ -158,8 +257,7 @@
                         <a class="page-link" href="#">Next</a>
                     </li>
                 </ul>
-            </nav>
-
+            </nav>-->
         </div>
 
     </div>

@@ -93,7 +93,7 @@
                     const jsonData = {
                         "replyno": e.target.dataset.no,
                         "qnano": qnano,
-                        "content": textarea.value
+                        "rcontent": textarea.value
                     }
 
                     console.log(jsonData);
@@ -133,7 +133,7 @@
                                                             <li class="qna breadcrumb-item">${comment.rdate.substring(0, 10)}</li>
                                                         </ol>
 
-                                                        <textarea class="qna form-control" rows="3" readonly>${comment.content}</textarea>
+                                                        <textarea class="qna form-control" rows="3" readonly>${comment.rcontent}</textarea>
                                                         <div class="text-start mt-1">
                                                             <button type="button" class="btn qna btn-sm btnModify" data-mode="modify" data-no="${comment.replyno}">수정</button>
                                                             <button type="button" class="btn qna btn-sm btnRemove" data-mode="remove" data-no="${comment.replyno}">삭제</button>
@@ -148,7 +148,7 @@
                                                             <li class="qna breadcrumb-item">${comment.rdate.substring(0, 10)}</li>
                                                         </ol>
 
-                                                        <textarea class="qna form-control" rows="3" readonly>${comment.content}</textarea>
+                                                        <textarea class="qna form-control" rows="3" readonly>${comment.rcontent}</textarea>
                                                         <div class="text-end mt-1"></div>
                                                     </div>`;
                     }
@@ -170,7 +170,7 @@
                 const jsonData = {
                     "qnano": commentForm.qnano.value,
                     "writer": commentForm.writer.value,
-                    "content": commentForm.content.value
+                    "rcontent": commentForm.rcontent.value
                 };
 
                 console.log(jsonData);
@@ -186,7 +186,7 @@
                                                 <li class="qna breadcrumb-item">${data.rdate.substring(0, 10)}</li>
                                             </ol>
 
-                                            <textarea class="qna form-control" rows="3" readonly>${data.content}</textarea>
+                                            <textarea class="qna form-control" rows="3" readonly>${data.rcontent}</textarea>
                                             <div class="text-start mt-1">
                                                 <button type="button" class="qna btn btnModify btn-sm" data-no="${data.qnano}">수정</button>
                                                 <button type="button" class="qna btn btnRemove btn-sm" data-no="${data.qnano}">삭제</button>
@@ -231,7 +231,7 @@
 
         <div class="bottomBtn">
             <a th:href="@{/admin/cs/qna/list}" class="listBtn">목록</a>
-            <a th:href="@{/admin/cs/qna/modify(qnano=${qnaBoard.qnano})}" class="modifyBtn">수정</a>
+            <a th:href="@{/admin/cs/qna/modify(qnano=${qnaBoard.qnano})}" id="modifyBtn">수정</a>
             <a th:href="@{/admin/cs/qna/delete(qnano=${qnaBoard.qnano})}" class="deleteBtn">삭제</a>
         </div>
 
@@ -239,7 +239,7 @@
 
     <!--🎈답변목록 시작-->
 
-    <div id="commentList">
+    <div id="commentList" >
         <label class="form-label fw-bold"></label>
 
         <!--
@@ -273,7 +273,7 @@
 
         <div class="qna input-group">
             <span class="qna input-group-text">답변입력</span>
-            <textarea class="qna text-area" name="content" rows="5" cols="100"></textarea>
+            <textarea class="qna text-area" name="rcontent" rows="5" cols="100"></textarea>
         </div>
 
         <div class="qna btnSet">

@@ -13,10 +13,20 @@
             rel="stylesheet">
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
     <link th:href="@{/admin/css/admin.css}" rel="stylesheet">
+    <style>
+        .table-bordered td:nth-child(4){
+            text-align: left;
+        }
+
+        .py-3 h6 {
+            color: #ffffff;
+        }
+    </style>
 
 </head>
 
 <main layout:fragment="content">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         window.onload = function () {
             const delBtn = document.getElementById('delBtn');
@@ -58,13 +68,28 @@
                     checkBoxes[i].checked = selectAllCheckbox.checked;
                 }
             });
+
+        }
+
+        //🎈카테고리별 조회
+        function selectCategory() {
+            const button = event.target; // select
+            const buttonValue = button.value; // select 값
+
+            console.log("buttonValue : " + buttonValue)
+            if(buttonValue === 'all') {
+                location.href = "/lotteon/admin/cs/notice/list";
+            } else {
+                location.href = "/lotteon/admin/cs/notice/list?cate1=" + buttonValue;
+            }
+
         }
 
 
     </script>
 
 
-    <div id="noticeList" class="container-fluid">
+    <div id="noticeList" class="container-fluid board">
 
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">CS 게시판관리</h1>
@@ -73,7 +98,7 @@
         <!-- DataTales Example -->
         <div class="card mb-4">
             <div class="card-header py-3" >
-                <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
+                <h6 class="m-0 font-weight-bold">공지사항</h6>
             </div>
 
             <div class="card-body">
@@ -81,17 +106,13 @@
 
                     <form th:action="@{/admin/cs/search}" method="get">
                         <div id="searchBox">
-                                <select name="searchOption" id="searchOption">
+                                <select name="searchOption" id="searchOption" onchange="selectCategory()">
                                     <option value="all">전체</option>
                                     <option value="10">고객서비스</option>
                                     <option value="11">안전거래</option>
                                     <option value="12">위해상품</option>
                                     <option value="13">이벤트당첨</option>
                                 </select>
-                                <input type="search" id="prod_search" class="searchInput" name="search" placeholder="검색어를 입력하세요.">
-                                <button class="searchBtn">
-                                    <img th:src="@{/admin/img/search_30.png}" alt="검색">
-                                </button>
                         </div><!--검색박스 end-->
                     </form>
 
@@ -135,22 +156,24 @@
                 </div>
             </div><!--card_body end-->
 
-            <div class="page">
-                <th:block th:if="${pageGroupStart > 1}">
-                    <a th:href="@{/admin/cs/notice/list(pg=${pageGroupStart - 1})}" class="prev">이전</a>
-                </th:block>
+                <div class="pagination page">
+                    <th:block th:if="${pageGroupStart > 1}" th:class="page-item">
+                        <a th:href="@{/admin/cs/notice/list(pg=${pageGroupStart - 1})}" th:class="page-link prev">이전</a>
+                    </th:block>
 
-                <th:block th:each="num:${#numbers.sequence(pageGroupStart, pageGroupEnd)}">
-                    <a th:href="@{/admin/cs/notice/list(pg=${num}, cate1=${cate1})}" th:classappend="${num == currentPage} ? 'current num' : 'num'">[[${num}]]</a>
-                </th:block>
+                    <th:block th:each="num:${#numbers.sequence(pageGroupStart, pageGroupEnd)}" th:class="page-item">
+                        <a th:href="@{/admin/cs/notice/list(pg=${num}, cate1=${cate1})}" th:classappend="${num == currentPage} ? 'current num' : 'num'" th:class="page-link">[[${num}]]</a>
+                    </th:block>
 
-                <th:block th:if="${pageGroupEnd < lastPageNum}">
-                    <a th:href="@{/admin/cs/notice/list(pg=${pageGroupEnd + 1})}" class="next">다음</a>
-                </th:block>
-            </div>
-            <input type="hidden" th:value="${pageGroupStart}">
-            <input type="hidden" th:value="${pageGroupEnd}">
-            <input type="hidden" th:value="${pageStartNum}">
+                    <th:block th:if="${pageGroupEnd < lastPageNum}" th:class="page-item">
+                        <a th:href="@{/admin/cs/notice/list(pg=${pageGroupEnd + 1})}" th:class="page-link next">다음</a>
+                    </th:block>
+                </div>
+                <input type="hidden" th:value="${pageGroupStart}">
+                <input type="hidden" th:value="${pageGroupEnd}">
+                <input type="hidden" th:value="${pageStartNum}">
+
+
 
             <!--paging-->
             <!--

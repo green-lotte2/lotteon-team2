@@ -86,7 +86,7 @@ header > .logo > div > form {
   margin-left: -185px;
   margin-top: -22px;
   display: inline-block;
-  width: 370px;
+  width: 480px;
   height: 45px;
 }
 header > .logo > div > form > input {
@@ -94,55 +94,80 @@ header > .logo > div > form > input {
   width: 100%;
   height: 100%;
   border: 1px solid #ef2a23;
-  border-radius: 5px;
-  font-size: 20px;
-  padding-left: 10px;
-  padding-right: 30px;
+  border-radius: 30px;
+  font-size: 16px;
+  padding: 15px;
   box-sizing: border-box;
 }
 
 header > .logo > div > form > button {
   position: absolute;
-  right: 6px;
+  right: 15px;
   top: 10px;
   background: #fff;
   border: none;
   font-size: 20px;
   color: #ef2a23;
   outline: none;
+  cursor: pointer;
 }
 
 header > .menu {
   height: 46px;
-  background: #f2f2f2;
+  background-color: #ffffff;
   border-bottom: 2px solid #ef2a23;
   box-sizing: border-box;
 }
+
+header > .menu .menuBtn a {
+  display: block;
+  background-color:  #fa2600;
+  height: 44px;
+  width: 40px;
+  position: relative;
+  top: -16px;
+  overflow: hidden;
+}
+
+header > .menu .menuBtn img {
+  width: 22px;
+  vertical-align: middle;
+  overflow: hidden;
+  position: relative;
+  top: 12px;
+  left: 9px;
+
+}
+
+
 header > .menu > div {
-  width: 1200px;
-  height: 100%;
-  margin: 0 auto;
+width: 1200px;
+height: 100%;
+margin: 0 auto;
 }
 
 header > .menu > div > ul {
-  display: inline-block;
-  margin-top: 16px;
+display: inline-block;
+margin-top: 16px;
 }
+
 header > .menu > div > ul:nth-child(1) {
-  float: left;
+float: left;
 }
+
+
 header > .menu > div > ul:nth-child(2) {
-  float: right;
+float: right;
 }
 header > .menu > div > ul > li {
-  float: left;
+float: left;
 }
 header > .menu > div > ul > li > a {
-  border-left: 1px solid #e9e9e9;
-  padding: 0 10px;
+border-left: 1px solid #e9e9e9;
+padding: 0 10px;
 }
 header > .menu > div > ul > li:last-child > a {
-  border-right: 1px solid #e9e9e9;
+border-right: 1px solid #e9e9e9;
 }
 
 /* 메인영역 */
@@ -258,6 +283,7 @@ main > aside > .category ol > li > a:hover {
 
 /* 베스트 배너 */
 main > aside > .best {
+  display: block;
   width: 215px;
   height: auto;
   margin-top: 6px;
@@ -406,90 +432,106 @@ main > section > section {
 }
 main > section > section > article {
   float: left;
-  width: 25%;
+  margin-right: 17px;
+  margin-bottom: 17px;
+  width: 23%;
+  justify-content: space-between;
   height: 345px;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  box-shadow: 0px 2px 10px -2px rgba(0, 0, 0, 0.1), 0px 0px 1px 0px rgba(0, 0, 0, 0.1);
 }
+
 main > section > section > h3 > span {
   display: inline-block;
-  margin: 10px;
-  border-bottom: 2px solid #111;
+  margin: 20px 0;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 24px;
 }
+
 main > section > section > article > a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  box-sizing: border-box;
+display: block;
+width: 100%;
+height: 100%;
+padding: 10px;
+box-sizing: border-box;
 }
 
 main > section > section > article .thumb {
-  width: 100%;
-  height: 230px;
-  margin: 0px auto;
-  overflow: hidden;
-  text-align: center;
+width: 100%;
+height: 230px;
+margin: 0px auto;
+overflow: hidden;
+text-align: center;
 }
 
 main > section > section > article .thumb > img {
-  width: 230px;
-  height: auto;
-  object-fit: cover;
+width: 230px;
+height: auto;
+object-fit: cover;
+transition-duration: 0.3s;
+}
+
+main > section > section > article .thumb > img:hover {
+transform: scale(1.1, 1.1);
+transition-duration: 0.5s;
 }
 
 main > section > section > article h2 {
-  font-size: 15px;
-  font-weight: bold;
-  margin-top: 4px;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+font-size: 15px;
+font-weight: bold;
+margin-top: 4px;
+text-align: center;
+text-overflow: ellipsis;
+white-space: nowrap;
+overflow: hidden;
 }
 
 main > section > section > article p {
-  color: #222;
-  font-size: 12px;
-  line-height: 16px;
-  margin: 4px 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+color: #222;
+font-size: 12px;
+line-height: 16px;
+margin: 4px 0;
+text-overflow: ellipsis;
+white-space: nowrap;
+overflow: hidden;
 }
-main > section > section > article > a:hover > p {
-  text-decoration: underline;
+main > section > section > article > a > p {
+font-size: 14px;
 }
 
 main > section > section > article del::after {
-  content: "원";
+content: "원";
 }
 main > section > section > article ins::after {
-  content: "원";
+content: "원";
 }
 main > section > section > article .org_price > del {
-  color: #aaa;
+font-size: 14px;
+color: #aaa;
 }
 main > section > section > article .org_price > span {
-  color: #eb000a;
+color: #eb000a;
+font-weight: bold;
 }
 main > section > section > article .org_price > span::after {
-  content: "↓";
+content: "↓";
 }
 main > section > section > article .dis_price {
-  margin-top: 4px;
+margin-top: 4px;
 }
 main > section > section > article .dis_price > ins {
-  font-size: 14px;
-  text-decoration: none;
+font-size: 14px;
+font-weight: bold;
+text-decoration: none;
 }
 main > section > section > article .dis_price > .free {
-  display: inline-block;
-  font-size: 0;
-  vertical-align: text-bottom;
-  width: 55px;
-  height: 13px;
-  background: url("../images/ico_freeshipping.gif") no-repeat;
+display: inline-block;
+font-size: 0;
+vertical-align: text-bottom;
+width: 55px;
+height: 13px;
+background: url("../images/ico_freeshipping.gif") no-repeat;
 }
 
 /* 슬라이더 영역 */

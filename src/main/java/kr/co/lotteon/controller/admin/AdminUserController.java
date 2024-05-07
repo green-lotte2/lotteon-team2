@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import kr.co.lotteon.dto.UserDTO;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -52,4 +53,18 @@ public class AdminUserController {
     public String adminUserModify(){
         return "/admin/user/modify";
     }
+
+    // 🎈 user 삭제
+    @PostMapping("/admin/user/delete")
+    public String adminDeleteUser(@RequestParam List<String> checkbox){
+        for(String uid : checkbox){
+            adminService.adminDeleteUser(uid);
+            log.info("deleteUid : " + uid);
+        }
+        log.info("deleteCheckBox : " + checkbox);
+
+        return "redirect:/admin/user/list";
+    }
+
+
 }

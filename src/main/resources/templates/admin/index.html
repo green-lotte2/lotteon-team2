@@ -16,7 +16,7 @@
         }
 
         .card h6 {
-            color: #333333;
+            color: #ffffff;
         }
 
         .card-body.table {
@@ -46,6 +46,7 @@
         .card-header:first-child {
             border-bottom: 2px solid #333;
         }
+
     </style>
     <script th:inline="javascript">
         window.onload = function (){
@@ -332,8 +333,8 @@
                                     </td>
                                     <td th:text="${#temporals.format(qnaDTOS.rdate, 'yy-MM-dd')}"></td>
                                     <th:block class="answercomplete">
-                                        <td th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
-                                        <td th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
+                                        <td style="color: royalblue;" th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
+                                        <td style="color: tomato;" th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
                                     </th:block>
                                 </tr>
                                 </tbody>

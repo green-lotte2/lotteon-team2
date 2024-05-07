@@ -19,10 +19,12 @@ a:hover {
     border: none;
     text-align: center;
 }
-
+/*
 .table-bordered td:nth-child(4) {
     text-align: left;
 }
+
+ */
 
 #wrapper #content-wrapper {
     background-color: #ffffff;
@@ -76,16 +78,11 @@ div#searchBox {
 }
 
 #searchOption {
-    padding: 0px 1px;
-    width: 90px;
+    padding: 7px;
+    width: 220px;
     height: 35px;
-    position: relative;
-    left: 4px;
-    top: 1px;
-    border-right: none;
-    border-radius: 5px 0 0 5px;
 }
-
+/*
 .searchInput{
     padding: 10px;
     width: 240px;
@@ -110,9 +107,9 @@ button.searchBtn {
     width: 23px;
     height: 23px;
 }
-
+*/
 .card-header.py-3 {
-    background-color: #e9e9e9;
+    background-color: #9c9c9c;
 
 }
 
@@ -225,7 +222,7 @@ input#writeBtn:hover {
 
 
 main > section {
-    width: 960px;
+    max-width: 1040px;
     min-height: 600px;
     padding: 20px;
     box-sizing: border-box;
@@ -307,7 +304,118 @@ main table span {
     font-size: 13px;
 }
 
+#admin-product-register #options  tr .optionInfo {
+    padding: 0;
+}
+
+#admin-product-register #options  tr .optionInfo div {
+    margin-bottom: 5px;
+}
+
+#admin-product-register #options  tr .optionInfo .text {
+    margin-right: 10px;
+}
+
+#admin-product-register #options  tr .optionInfo .add {
+    background-color: #5b81f4;
+    color: #ffffff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+#admin-product-register #options  tr .optionInfo .del {
+    background-color: #ff6333;
+    color: #ffffff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+
+
+#admin-product-register .regBtn, .modifyBtn {
+    background-color:#727272;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 6px;
+    position: relative;
+    left: 860px;
+}
+
+#admin-product-register .regBtn:hover, .modifyBtn:hover {
+    background-color: #4c4949;
+}
+
+input[type=file]::file-selector-button{
+    background-color: #888888;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 3px 4px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/*🎈user list*/
+#userList #searchBox #searchOption {
+    width: 120px;
+}
+
+#userList #searchBox .searchInput {
+    width: 300px;
+    height: 34px;
+    position: relative;
+    top: -2px;
+    left: 4px;
+    border: 1px solid #777777;
+    outline: none;
+}
+
+#userList #searchBox .searchBtn {
+    border: none;
+    background-color: inherit;
+    position: relative;
+    right: 40px;
+    top: -3px;
+}
+
+#userList #searchBox .searchBtn img {
+    width: 24px;
+}
+
+
+
 /*🎈product list*/
+#productList #searchBox #searchOption {
+    width: 120px;
+}
+
+#productList #searchBox .searchInput {
+    width: 300px;
+    height: 34px;
+    position: relative;
+    top: -2px;
+    left: 4px;
+    border: 1px solid #777777;
+    outline: none;
+}
+
+#productList #searchBox .searchBtn {
+    border: none;
+    background-color: inherit;
+    position: relative;
+    right: 40px;
+    top: -3px;
+}
+
+#productList #searchBox .searchBtn img {
+    width: 24px;
+}
+
 #productList table{
     font-size: 14px;
 }
@@ -342,16 +450,27 @@ main table span {
     object-fit: cover;
 }
 
+/*🎈게시판 리스트 공통*/
+.board .pagination {
+    margin-bottom: 15px;
+}
+
+.board .pagination .page-link:hover {
+    background-color: royalblue;
+    color: #ffffff;
+}
+
 
 /*🎈게시판 view 공통*/
 #adminBoard {
     background-color: #ffffff;
-    max-width: 1200px;
+    max-width: 1040px;
     margin: 0 auto;
 }
 
 #adminBoard .board{
     min-height: 500px;
+    max-width: 1040px;
     border-bottom: 1px solid #333;
 }
 
@@ -391,6 +510,7 @@ main table span {
     min-height: 400px;
 }
 .bottomBtn {
+    max-width: 1040px;
     margin-top: 20px;
     display: block;
     padding: 0px;
@@ -405,12 +525,12 @@ main table span {
     border-radius: 5px;
 }
 
-.bottomBtn .modifyBtn {
+#adminBoard .bottomBtn #modifyBtn {
     margin-left: 3px;
-    padding: 10px;
+    padding: 9px;
     text-decoration: none;
     color: #ffffff;
-    background-color: #888;
+    background-color: royalblue;
     border-radius: 5px;
     border: none;
 }
@@ -440,6 +560,12 @@ main table span {
     background-color: #555555;
     color: #ffffff;
 }
+/*🎈게시판 글쓰기 공통*/
+#adminBoard .write tr > td:nth-child(1) {
+    width: 200px;
+}
+
+
 /*🎈자주묻는질문 글쓰기*/
 .title {
 }
@@ -460,7 +586,7 @@ main table span {
 
 /*🎈1:1문의하기 댓글 */
 #commentList {
-    width: 960px;
+    width: 1040px;
     margin: 0 auto;
 }
 
@@ -504,7 +630,7 @@ ol.qna.breadcrumb {
     justify-content: left;
     flex-wrap: wrap;
     align-items: stretch;
-    width: 960px;
+    width: 1040px;
     margin: 0 auto;
 }
 
@@ -513,7 +639,7 @@ ol.qna.breadcrumb {
 }
 
 .qna.text-area {
-    min-width: 960px;
+    min-width: 1040px;
     overflow: auto;
     resize: none;
     border-radius: 0 5px 5px 5px;
@@ -521,8 +647,8 @@ ol.qna.breadcrumb {
 }
 
 .qna.btnSet {
-   width: 960px;
-    margin: 5px auto;
+   width: 1040px;
+   margin: 5px auto;
 }
 
 .qna.submitBtn {

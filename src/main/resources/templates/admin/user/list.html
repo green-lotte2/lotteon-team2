@@ -17,7 +17,45 @@
 </head>
 
 <main layout:fragment="content">
-    <div class="container-fluid">
+    <script>
+        window.onload = function () {
+            const delBtn = document.getElementById('delBtn');
+            const selectAllCheckbox = document.getElementsByName('all')[0];
+            const checkBoxes = document.getElementsByName('checkbox');
+
+
+            delBtn.onclick = function(){
+                let Checked = false; // 최소한 하나의 체크박스가 선택되었는지 여부를 나타내는 변수
+                for (let i = 0; i < checkBoxes.length; i++) {
+                    if (checkBoxes[i].checked) {
+                        Checked = true;
+                        break; // 하나라도 체크되어 있으면 반복문 종료
+                    }
+                }
+
+                if (!Checked) {
+                    alert('삭제할 상품을 선택해주세요.');
+                    console.log('check..');
+                    return false;
+                } else {
+                    let confirmed = confirm('정말 삭제하시겠습니까?');
+                    if (!confirmed) {
+                        return false;
+                    }
+                }
+            };
+
+            selectAllCheckbox.addEventListener('change', function () {
+                for (let i = 0; i < checkBoxes.length; i++) {
+                    checkBoxes[i].checked = selectAllCheckbox.checked;
+                }
+            });
+        }
+
+
+    </script>
+
+    <div class="container-fluid" id="userList">
 
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">회원관리</h1>
@@ -25,7 +63,7 @@
         <!-- DataTales Example -->
         <div class="card mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">회원목록</h6>
+                <h6 class="m-0 font-weight-bold" style="color: #ffffff;">회원목록</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -37,47 +75,51 @@
                                 <option value="seller">판매자</option>
                                 <option value="user">일반사용자</option>
                             </select>
-                            <input type="search" id="userSearch" class="searchInput" name="keyword" placeholder="아이디를 입력하세요.">
+                            <input type="search" class="searchInput" name="keyword" placeholder="아이디를 입력하세요.">
                             <button class="searchBtn">
-                                <img th:src="@{/admin/img/search_30.png}" alt="검색">
+                                <img th:src="@{/admin/img/search_40.png}" alt="검색">
                             </button>
                         </div>
                     </form>
 
-                    <form th:action="@{/admin/user/list}" name="userList" method="post">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                        <tr class="tableTitle">
-                            <th>
-                                <input type="checkbox" name="all">
-                            </th>
-                            <th>아이디</th>
-                            <th>이름</th>
-                            <th>이메일</th>
-                            <th>휴대폰</th>
-                            <th>등급</th>
-                            <th>가입일</th>
-                            <th>확인</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="user:${users}">
-                            <td>
-                                <input type="checkbox" name="checkUser">
-                            </td>
-                            <td>[[${user.uid}]]</td>
-                            <td>[[${user.name}]]</td>
-                            <td>[[${user.email}]]</td>
-                            <td>[[${user.hp}]]</td>
-                            <td>[[${user.role}]]</td>
-                            <td th:text="${#temporals.format(user.regDate, 'yyyy-MM-dd')}"></td>
-                            <td>
-                                <a th:href="@{/admin/user/modify}">상세보기 및 수정</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <form th:action="@{/admin/user/delete}" method="post">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr class="tableTitle">
+                                <th>
+                                    <input type="checkbox" name="all">
+                                </th>
+                                <th>아이디</th>
+                                <th>이름</th>
+                                <th>이메일</th>
+                                <th>휴대폰</th>
+                                <th>등급</th>
+                                <th>가입일</th>
+                                <th>확인</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user:${users}">
+                                <td>
+                                    <input name="checkbox" type="checkbox" th:value="${user.uid}">
+                                </td>
+                                <td>[[${user.uid}]]</td>
+                                <td>[[${user.name}]]</td>
+                                <td>[[${user.email}]]</td>
+                                <td>[[${user.hp}]]</td>
+                                <td>[[${user.role}]]</td>
+                                <td th:text="${#temporals.format(user.regDate, 'yyyy-MM-dd')}"></td>
+                                <td>
+                                    <a th:href="@{/admin/user/modify}">상세보기 및 수정</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <input type="submit" id="delBtn" value="선택삭제">
+                        </div>
                     </form>
+
                 </div>
             </div>
         </div>
