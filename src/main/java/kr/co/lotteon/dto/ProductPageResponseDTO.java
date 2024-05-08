@@ -23,31 +23,32 @@ public class ProductPageResponseDTO {
     private String search;
 
     private int start, end;
+    private int startNo;
     private boolean prev, next;
+    private String type;
+    private String keyword;
 
     @Builder
-    public ProductPageResponseDTO(List<NoticeDTO> noticeList, int total,
-                                  List<FaqDTO> faqList, List<QnaDTO> qnaList, List<ProductDTO> dtoList,
-                                  int pg, int size, int cate, String search) {
-        this.pg = pg;
-        this.size = size;
+    public ProductPageResponseDTO(ProductPageRequestDTO productPageRequestDTO, List<ProductDTO> dtoList, int total, int pg, int size) {
+        this.pg = productPageRequestDTO.getPg();
+        this.size = productPageRequestDTO.getSize();
         this.total = total;
-        this.cate = cate;
+        this.cate = productPageRequestDTO.getCate();
         this.totalPage = (int) Math.ceil((double) total / this.size);
-        this.search = search;
+        this.search = productPageRequestDTO.getSearch();
 
-        this.noticeList = noticeList;
-        this.faqList = faqList;
-        this.qnaList = qnaList;
+        this.type = productPageRequestDTO.getType();
+        this.keyword = productPageRequestDTO.getKeyword();
+
         this.dtoList = dtoList;
 
-        this.end = (int) (Math.ceil((double) this.pg / 10.0)) * 10;
-        this.end = Math.min(this.end, this.totalPage);
+        this.startNo = total - ((pg - 1) * size);
+        this.end = (int) (Math.ceil(this.pg/10.0))*10;
         this.start = this.end - 9;
-        this.start = Math.max(this.start, 1);
 
-        this.end = this.end == 0 ? 1 : this.end;
+        int last = (int) (Math.ceil(total / (double) size));
+        this.end = end > last ? last : end;
         this.prev = this.start > 1;
-        this.next = this.pg < this.totalPage;
+        this.next = total > this.end * this.size;
     }
     }

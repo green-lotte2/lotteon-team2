@@ -43,6 +43,7 @@ public class ProductController {
     private final UserService userService;
     private final OrdersService ordersService;
     private final ProductRepository productRepository;
+    private final ReviewService reviewService;
 
     @GetMapping("/product/cart")
     public String cart(Authentication authentication, Model model) {
@@ -160,36 +161,27 @@ public class ProductController {
     }
 
     @GetMapping("/product/view")
-    public String viewProduct(@RequestParam("pno") int pno, Model model) {
+    public String viewProduct(@RequestParam("pno") int pno, @RequestParam(required = false) Integer cate, Model model) {
         ProductDTO productDTO = productService.findProductDTOById(pno);
         if (productDTO != null) {
             productService.productHitUpdate(productDTO);
+            List<ReviewDTO> reviews = reviewService.findReviewsByProductId(pno);
+
             model.addAttribute("cate", productService.getCategoryList());
             model.addAttribute("product", productDTO);
+            model.addAttribute("reviews", reviews);
             return "/product/view";
         } else {
-            return "redirect:/product/list"; // 제품이 없을 경우 리다이렉트
+            return "redirect:/product/list";
         }
     }
 
     @GetMapping("/product/list")
-    public String list(@RequestParam(required = false) String cate,
-                       Model model,
-                       @RequestParam(defaultValue = "1") int pg,
-                       @RequestParam(defaultValue = "10") int size) {
+    public String list(Model model, ProductPageRequestDTO productPageRequestDTO, int cate) {
+
 
         // cate 문자열을 int로 변환, 유효하지 않은 경우 기본값 0을 사용
         int cateInt = 0;
-        if(cate != null){
-            cateInt = Integer.parseInt(cate);
-        }
-
-
-        // PageRequestDTO 객체 생성
-        ProductPageRequestDTO productPageRequestDTO = ProductPageRequestDTO.builder()
-                .pg(pg)
-                .size(size)
-                .build();
 
         // 서비스 메소드 호출
         ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, cate);
@@ -206,46 +198,40 @@ public class ProductController {
 
     // 상품 검색 컨트롤러
     @GetMapping("/product/search")
-    public String searchProducts(@RequestParam(required = false) String search,
-                                 @RequestParam(required = false) Integer minPrice,
-                                 @RequestParam(required = false) Integer maxPrice,
-                                 @RequestParam(required = false) String cate,
-                                 Model model, @RequestParam(defaultValue = "1") int pg,
-                                 @RequestParam(defaultValue = "10") int size) {
-
+    public String searchProducts(@ModelAttribute ProductPageRequestDTO productPageRequestDTO, Model model) {
+        log.info("productPageRequestDTO44444444444444 : " + productPageRequestDTO);
         // 서비스 메서드를 호출하여 검색 결과를 가져옵니다.
-        List<ProductDTO> products = productService.searchProducts(search, minPrice, maxPrice, cate);
-        int totalResults = productService.countSearchProducts(search, minPrice, maxPrice, cate);
+        List<ProductDTO> products = productService.searchProducts(
+                productPageRequestDTO.getSearch(),
+                productPageRequestDTO.getMinPrice(),
+                productPageRequestDTO.getMaxPrice(),
+                productPageRequestDTO.getCate()
+        );
+        int totalResults = productService.countSearchProducts(
+                productPageRequestDTO.getSearch(),
+                productPageRequestDTO.getMinPrice(),
+                productPageRequestDTO.getMaxPrice(),
+                productPageRequestDTO.getCate()
+        );
 
-        ProductPageRequestDTO productPageRequestDTO = ProductPageRequestDTO.builder()
-                .pg(pg)
-                .size(size)
-                .build();
-
-        if (products.isEmpty()) {
-            // 검색 결과가 없다면 빈 리스트를 모델에 추가합니다.
-            model.addAttribute("products", Collections.emptyList());
-        } else {
-            // 검색 결과가 있다면 모델에 검색 결과를 추가합니다.
-            ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, cate);
+            ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, productPageRequestDTO.getCate());
+            log.info("productPageRequestDTO5555555555555 : " + responseDTO);
             model.addAttribute("products", responseDTO.getDtoList());
             model.addAttribute("result", responseDTO);
             model.addAttribute("cate", productService.getCategoryList());
             model.addAttribute("totalResults", totalResults);
 
             log.info("responseDTO1 : " + responseDTO);
-        }
-
 
         // 검색 키워드와 가격 정보를 뷰에 유지
-        model.addAttribute("products", products);
-        model.addAttribute("searchKeyword", search);
-        model.addAttribute("minPrice", minPrice);
-        model.addAttribute("maxPrice", maxPrice);
-        model.addAttribute("category", cate);
+        model.addAttribute("searchKeyword", productPageRequestDTO.getSearch());
+        model.addAttribute("minPrice", productPageRequestDTO.getMinPrice());
+        model.addAttribute("maxPrice", productPageRequestDTO.getMaxPrice());
+        model.addAttribute("category", productPageRequestDTO.getCate());
 
         return "/product/search"; // 검색 결과를 보여줄 뷰 이름
     }
+
 
 
 

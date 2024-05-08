@@ -12,7 +12,6 @@ public class ProductPageRequestDTO {
 
     @Builder.Default
     private int pg=1;
-
     @Builder.Default
     private int size=10;
 
@@ -28,9 +27,14 @@ public class ProductPageRequestDTO {
     @Builder.Default
     private String search = "";
 
+    private Integer minPrice;
+    private Integer maxPrice;
     private int pno;
 
     private int ono;
+
+    private String type;
+    private String keyword;
 
     public Pageable getPageable(String sort){
         return PageRequest.of(
@@ -41,11 +45,10 @@ public class ProductPageRequestDTO {
     }
 
     //🎈 상품검색
-    private String type;
-    private String keyword;
 
     private String company;
     private String seller;
     private String pname;
-    private int cate;
+    @Builder.Default
+    private int cate = 0;
 }

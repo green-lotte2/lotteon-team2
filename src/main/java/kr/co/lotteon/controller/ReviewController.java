@@ -43,7 +43,9 @@ public class ReviewController {
      */
     @PostMapping("/product/review")
     public String saveReview(@ModelAttribute ReviewDTO reviewDTO) {
+        log.info("reviewDTO5252525252 : " + reviewDTO);
         reviewService.saveReview(reviewDTO);
+
         return "redirect:/product/view?pno=" + reviewDTO.getPno(); // 리뷰 저장 후 리다이렉트
     }
 
@@ -53,7 +55,9 @@ public class ReviewController {
     @GetMapping("/mypage/review")
     public String myReviews(Authentication authentication, Model model,
                             @RequestParam(defaultValue = "1") int pg,
-                            @RequestParam(defaultValue = "10") int size, String cate) {
+                            @RequestParam(defaultValue = "10") int size,
+                            @RequestParam(required = false) Integer cate) {
+
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/member/login"; // 인증되지 않은 경우 로그인 페이지로 리다이렉트
         }
@@ -63,7 +67,8 @@ public class ReviewController {
                 .size(size)
                 .build();
 
-        ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, cate);
+        int cateInt = cate != null ? cate : 0;
+        ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, cateInt);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String uid = userDetails.getUsername();
 

@@ -21,7 +21,11 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int rno;
-    private int pno;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pno", nullable = false, updatable = false)
+    private Product product;
+
     private String uid;
     private String content;
     private int rating;
