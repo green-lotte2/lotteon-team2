@@ -1,37 +1,28 @@
 package kr.co.lotteon.service;
 
 import kr.co.lotteon.dto.*;
-import kr.co.lotteon.entity.Banner;
-import kr.co.lotteon.entity.Product;
-import kr.co.lotteon.entity.Productimg;
+import kr.co.lotteon.entity.*;
 import kr.co.lotteon.mapper.AdminMapper;
 import kr.co.lotteon.mapper.ProductMapper;
 import kr.co.lotteon.repository.BannerRepository;
 import kr.co.lotteon.repository.ProductimgRepository;
+import kr.co.lotteon.repository.UserDetailRepository;
+import kr.co.lotteon.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +37,9 @@ public class AdminService {
     private final BannerRepository bannerRepository;
     private final ProductimgRepository productimgRepository;
     private final ProductMapper productMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final UserDetailRepository userDetailRepository;
 
     public List<UserDTO> selectUsers(){
         log.info("selectUsers... ");
@@ -61,6 +55,29 @@ public class AdminService {
     // 🎈 회원 수정
     public UserDTO adminUserSelect(String uid) {
         return adminMapper.adminUserSelect(uid);
+    }
+
+
+    @Transactional
+    public UserDTO adminUserUpdate(UserDTO userDTO) {
+
+        // 비밀번호 암호화
+        userDTO.setPass(passwordEncoder.encode(userDTO.getPass()));
+
+        // 기본권한
+        userDTO.setGrade(1);
+
+        User user = modelMapper.map(userDTO, User.class);
+        UserDetail userDetail = modelMapper.map(userDTO, UserDetail.class);
+
+        log.info(user.toString());
+        log.info(userDetail.toString());
+
+        userRepository.save(user);
+        userDetailRepository.save(userDetail);
+
+
+        return userDTO;
     }
 
 

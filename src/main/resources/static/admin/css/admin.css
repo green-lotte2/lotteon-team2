@@ -297,6 +297,10 @@ main table span {
 }
 
 /*🎈회원수정*/
+#userModify input {
+    outline: none;
+}
+
 #userModify form {
     width: 1000px;
     margin: 0 auto;
@@ -409,6 +413,7 @@ main table span {
 #userModify input#regDate, input.leaveDate {
     border: none;
     color: #444444;
+    outline: none;
 }
 
 
