@@ -1,8 +1,6 @@
 package kr.co.lotteon.controller;
 
-import kr.co.lotteon.dto.NoticeDTO;
-import kr.co.lotteon.dto.OrdersDTO;
-import kr.co.lotteon.dto.QnaDTO;
+import kr.co.lotteon.dto.*;
 import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.CsService;
 import kr.co.lotteon.service.SellerService;
@@ -12,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -28,7 +25,6 @@ public class SellerController {
     @GetMapping(value = {"/seller","/seller/index"})
     public String index(Model model, Authentication authentication){
 
-        log.info(authentication.getPrincipal().toString());
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
         }
@@ -40,14 +36,41 @@ public class SellerController {
         log.info(authentication.getName());
         String uid = authentication.getName();
         List<OrdersDTO> monthSales = sellerService.selectOrderByMonthAndSeller("seller1");
-        List<OrdersDTO> weekSales = adminService.selectOrderByWeek();
-        List<OrdersDTO> cateName =  adminService.selectCountAndCateName();
+        List<OrdersDTO> weekSales = sellerService.selectOrderByWeekAndSeller("seller1");
+        List<OrdersDTO> cateName =  sellerService.selectCountAndProductNameBySeller("seller1");
         log.info(monthSales.toString());
         model.addAttribute("monthSales", monthSales);
         model.addAttribute("weekSales", weekSales);
         model.addAttribute("cateName", cateName);
 
         return "/seller/index";
+    }
+
+    @GetMapping("/seller/product/register")
+    public String productRegister(Model model, PageRequestDTO pageRequestDTO, Authentication authentication){
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
+        }
+
+        TypePageResponseDTO productDtos = sellerService.selectProductsBySearchAndSeller(pageRequestDTO);
+        return "/seller/register";
+    }
+
+    @GetMapping("/seller/product/list")
+    public String productList(Model model, PageRequestDTO pageRequestDTO, Authentication authentication){
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
+        }
+
+        String uid = authentication.getName();
+        pageRequestDTO.setSeller("seller1");
+
+        TypePageResponseDTO productDtos = sellerService.selectProductsBySearchAndSeller(pageRequestDTO);
+
+        model.addAttribute("adminProducts", productDtos);
+        return "/seller/product/list";
     }
 
 }

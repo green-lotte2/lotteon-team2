@@ -10,4 +10,11 @@ import java.util.List;
 public interface SellerMapper {
 
     public List<OrdersDTO> selectOrderByMonthAndSeller(String sid);
+
+    public List<OrdersDTO> selectCountAndProductNameBySeller(String sid);
+
+    public List<OrdersDTO> selectOrderByWeekAndSeller(String sid);
+
+    public List<ProductDTO> selectProductsBySearchAndSeller(PageRequestDTO pageRequestDTO);
+
 }
