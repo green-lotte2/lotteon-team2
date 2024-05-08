@@ -347,6 +347,7 @@ main table span {
     border: none;
     margin-left: 10px;
     border-radius: 0;
+    font-size: 14px;
 }
 #userModify input#inputEmail {
     margin-bottom: 6px;
@@ -378,6 +379,7 @@ main table span {
     color: #fff;
     border-radius: 0;
     height: 30px;
+    font-size: 14px;
 }
 
 #userModify button#findZip:hover {
