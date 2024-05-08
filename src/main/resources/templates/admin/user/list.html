@@ -82,7 +82,7 @@
                         </div>
                     </form>
 
-                    <form th:action="@{/admin/user/delete}" method="post">
+                    <form id="table" th:action="@{/admin/user/delete}" method="post">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr class="tableTitle">
@@ -95,6 +95,7 @@
                                 <th>휴대폰</th>
                                 <th>등급</th>
                                 <th>가입일</th>
+                                <th>탈퇴일</th>
                                 <th>확인</th>
                             </tr>
                             </thead>
@@ -109,6 +110,7 @@
                                 <td>[[${user.hp}]]</td>
                                 <td>[[${user.role}]]</td>
                                 <td th:text="${#temporals.format(user.regDate, 'yyyy-MM-dd')}"></td>
+                                <td th:text="${#temporals.format(user.leaveDate, 'yyyy-MM-dd')}" style="color: red;"></td>
                                 <td>
                                     <a th:href="@{/admin/user/modify(uid=${user.uid})}">상세보기 및 수정</a>
                                 </td>

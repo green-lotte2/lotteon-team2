@@ -6,6 +6,7 @@ import kr.co.lotteon.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+
 public interface ProductRepositoryCustom {
 
     public Page<Tuple> selectProducts(PageRequestDTO pageRequestDTO, Pageable pageable);

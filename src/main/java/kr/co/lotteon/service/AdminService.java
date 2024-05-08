@@ -8,10 +8,12 @@ import kr.co.lotteon.repository.BannerRepository;
 import kr.co.lotteon.repository.ProductimgRepository;
 import kr.co.lotteon.repository.UserDetailRepository;
 import kr.co.lotteon.repository.UserRepository;
+import kr.co.lotteon.repository.custom.UserRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +24,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,9 +42,8 @@ public class AdminService {
     private final UserRepository userRepository;
     private final UserDetailRepository userDetailRepository;
 
-    public List<UserDTO> selectUsers(){
-        log.info("selectUsers... ");
-        return adminMapper.adminSelectUsers();
+    public void adminSelectUsers(String uid, PageRequestDTO pageRequestDTO){
+        userRepository.adminSelectUsers(uid, pageRequestDTO);
     }
 
 
@@ -85,6 +85,8 @@ public class AdminService {
     public void adminDeleteUser(String uid){
         adminMapper.adminDeleteUser(uid);
     }
+    
+    // 주문 페이징
 
     public TypePageResponseDTO selectOrders(PageRequestDTO pageRequestDTO) {
         List<OrdersDTO> ordersDTOS = adminMapper.selectOrders(pageRequestDTO);

@@ -431,12 +431,11 @@ public class CsService {
 
 
 
-
-
     //✨1:1 문의✨//
 
     // 🎈 Admin Qna 리스트
     public List<QnaDTO> adminSelectQnaList(){
+
         return  qnaMapper.adminSelectQnaList();
     }
 
@@ -598,22 +597,26 @@ public class CsService {
         log.info("replyno : " + qnano);
 
         // 삭제 전 조회
-
         Optional<Reply> optReply = replyRepository.findById(qnano);
 
         log.info("optReply : " + optReply);
 
         if(optReply.isPresent()){
             log.info("here1");
+            // 삭제된 답변의 Answercomplete 값을 다시 1로 설정
+            Optional<CsQna> optQna = qnaRepository.findById(optReply.get().getQnano());
+            optQna.ifPresent(qna -> {
+                qna.setAnswercomplete(1);
+                qnaRepository.save(qna);
+            });
 
             replyRepository.deleteById(qnano);
 
             return ResponseEntity
                     .ok()
                     .body(optReply.get());
-        }else{
+        } else {
             log.info("here2");
-
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
                     .body("not found");
