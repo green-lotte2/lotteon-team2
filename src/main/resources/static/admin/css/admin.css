@@ -82,32 +82,7 @@ div#searchBox {
     width: 220px;
     height: 35px;
 }
-/*
-.searchInput{
-    padding: 10px;
-    width: 240px;
-    height: 35px;
-    border: 1px solid #777777;
-    font-size: 13px;
-    outline: none;
-    border-radius: 0 5px 5px 0;
-}
 
-button.searchBtn {
-    width: 41px;
-    height: 34px;
-    background-color: #fc3636d9;
-    border-radius: 0 5px 5px 0;
-    border: none;
-    position: relative;
-    right: 45px;
-    top: 1px;
-}
-.searchBtn img {
-    width: 23px;
-    height: 23px;
-}
-*/
 .card-header.py-3 {
     background-color: #9c9c9c;
 
@@ -296,6 +271,17 @@ main table span {
     display: block;
 }
 
+/*🎈회원리스트*/
+#userList #table {
+    font-size: 14px;
+}
+#userList #table tr.tableTitle {
+    background-color: #585858;
+    color: #fff;
+    line-height: 0.5;
+}
+
+
 /*🎈회원수정*/
 #userModify input {
     outline: none;
@@ -328,6 +314,10 @@ main table span {
 
 #userModify form table .gender {
     border: none;
+}
+/*이름*/
+#userModify .uid {
+    border:none;
 }
 
 /*이메일*/
@@ -629,6 +619,13 @@ input[type=file]::file-selector-button{
 }
 
 /*🎈게시판 리스트 공통*/
+.board .table tr.tableTitle {
+    background-color: #585858;
+    color: #fff;
+    line-height: 0.5;
+}
+
+
 .board .pagination {
     margin-bottom: 15px;
 }

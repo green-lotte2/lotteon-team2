@@ -11,6 +11,9 @@ import org.springframework.data.domain.*;
 public class PageRequestDTO {
 
     @Builder.Default
+    private int no = 1;
+
+    @Builder.Default
     private int pg=1;
 
     @Builder.Default
@@ -48,4 +51,8 @@ public class PageRequestDTO {
     private String seller;
     private String pname;
     private int cate;
+
+    //🎈 user 검색
+    private String role;
+
 }

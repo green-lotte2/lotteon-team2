@@ -2,10 +2,13 @@ package kr.co.lotteon.controller.admin;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteon.dto.PageRequestDTO;
 import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,12 +33,13 @@ public class AdminUserController {
 
 
     @GetMapping("/admin/user/list")
-    public String adminUserList(Model model){
-        List<UserDTO> users = adminService.selectUsers();
-        log.info("adminUserList ..." + users);
-        model.addAttribute("users", users);
+    public String adminUserList(String uid, PageRequestDTO pageRequestDTO){
+
+        log.info("uid" +uid);
+        adminService.adminSelectUsers(uid, pageRequestDTO);
         return "/admin/user/list";
     }
+
 
     // 🎈 user 수정
     @GetMapping("/admin/user/modify")

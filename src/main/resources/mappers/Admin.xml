@@ -21,10 +21,10 @@
     </select>
 
 
-    <!--🎈 admin_user_delete-->
-    <delete id="adminDeleteUser">
-        DELETE FROM `user` WHERE uid = #{uid}
-    </delete>
+    <!--🎈 admin_user_delete 탈퇴일 지정-->
+    <update id="adminDeleteUser">
+        UPDATE `user` SET leaveDate = NOW()  WHERE uid = #{uid}
+    </update>
 
     <!--🎈admin_product_list-->
     <select id="adminSelectProducts" resultType="kr.co.lotteon.dto.ProductDTO">
