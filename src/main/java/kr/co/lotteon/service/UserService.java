@@ -239,6 +239,14 @@ public class UserService {
         }
     }
 
+    // 비밀번호 찾기를 통한 비밀번호 재설정
+    public void updatePass(String uid, String pass) {
+        pass = passwordEncoder.encode(pass);
+        User entity = userRepository.findById(uid).get();
+        entity.setPass(pass);
+        userRepository.save(entity);
+    }
+
     // 회원 탈퇴
     public void updateWdate(String uid) {
         User entity = userRepository.findById(uid).get();

@@ -134,10 +134,17 @@ public class MyController {
     public String info() {
         return "/mypage/info";
     }
+    @ResponseBody
+    @PostMapping("/mypage/formMyinfoPassChange")
+    public String formMyinfoPassChange(@RequestParam String uid, String inputPass) {
+        userService.updatePass(uid, inputPass);
+        return "success";
+    }
 
     @ResponseBody
     @PostMapping("/mypage/withdraw")
     public String withdraw(@RequestParam String uid, String inputPass) {
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(uid, inputPass);
         Authentication result = authenticationManager.authenticate(authentication);
 
