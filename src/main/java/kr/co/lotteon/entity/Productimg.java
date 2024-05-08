@@ -1,9 +1,7 @@
 package kr.co.lotteon.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,4 +22,7 @@ public class Productimg {
     private String subimg;
     private String detailimg;
 
+    @OneToOne
+    @JoinColumn(name = "pno", referencedColumnName = "pno")
+    private Product product;
 }

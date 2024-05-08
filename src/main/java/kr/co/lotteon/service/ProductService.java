@@ -239,57 +239,67 @@ public class ProductService {
         return productMapper.selectCartWithProductsByUid(uid);
     }
 
-    // ProductService.java
-    public ProductPageResponseDTO getList(ProductPageRequestDTO productpageRequestDTO, String cate) {
-        if (productpageRequestDTO == null) {
-            log.error("PageRequestDTO is null");
-            throw new IllegalArgumentException("PageRequestDTO must not be null");
-        }
 
+    // ProductService.java
+    public ProductPageResponseDTO getList(ProductPageRequestDTO productPageRequestDTO, int cate) {
         Pageable pageable = PageRequest.of(
-                Math.max(productpageRequestDTO.getPg() - 1, 0),
-                productpageRequestDTO.getSize(),
+                Math.max(productPageRequestDTO.getPg() - 1, 0),
+                productPageRequestDTO.getSize(),
                 Sort.by("pname").ascending()
         );
 
-        Page<Product> page;
-        try {
-            if (cate != null && !cate.trim().isEmpty()) {
-                int code = Integer.parseInt(cate);
-                int depth = (code % 10 != 0) ? 1 : (code % 1000 != 0) ? 100 : 10000;
-                page = productRepository.findByCateBetween(pageable, code, code + depth - 1);
-            } else {
-                page = productRepository.findAll(pageable);
-            }
-        } catch (NumberFormatException e) {
-            log.error("Invalid category format: " + cate, e);
-            return ProductPageResponseDTO.builder()
-                    .dtoList(Collections.emptyList())
-                    .total(0)
-                    .build();
+        Specification<Product> specification = Specification.where((root, query, criteriaBuilder) -> criteriaBuilder.conjunction());
+
+        // 카테고리 필터링
+        if (cate > 0) {
+            int depth = (cate % 10 != 0) ? 1 : (cate % 1000 != 0) ? 100 : 10000;
+            specification = specification.and((root, query, criteriaBuilder) -> criteriaBuilder.between(root.get("cate"), cate, cate + depth - 1));
         }
-        for(Product p : page){
-            log.info("asdjfklasjdk" + p);
+
+        // 검색 조건 필터링
+        if (productPageRequestDTO.getSearch() != null && !productPageRequestDTO.getSearch().isEmpty()) {
+            specification = specification.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(root.get("pname"), "%" + productPageRequestDTO.getSearch() + "%")
+            );
         }
+
+        if (productPageRequestDTO.getMinPrice() != null) {
+            specification = specification.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.greaterThanOrEqualTo(root.get("price"), productPageRequestDTO.getMinPrice())
+            );
+        }
+
+        if (productPageRequestDTO.getMaxPrice() != null) {
+            specification = specification.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.lessThanOrEqualTo(root.get("price"), productPageRequestDTO.getMaxPrice())
+            );
+        }
+
+        Page<Product> page = productRepository.findAll(specification, pageable);
+
         List<ProductDTO> productDTOs = page.getContent().stream()
                 .map(product -> {
-                    ProductDTO dto = entityToDTO(product);
-                    productimgRepository.findById(product.getPno()).ifPresent(img -> {
+                    ProductDTO dto = convertToProductDTO(product);
+                    // 이미지를 포함하도록 추가
+                    Productimg img = product.getProductimg();
+                    if (img != null) {
                         dto.setMainimg(img.getMainimg());
                         dto.setSubimg(img.getSubimg());
                         dto.setDetailimg(img.getDetailimg());
-                    });
+                    }
                     return dto;
                 })
                 .collect(Collectors.toList());
 
         return ProductPageResponseDTO.builder()
                 .dtoList(productDTOs)
-                .pg(productpageRequestDTO.getPg())
+                .productPageRequestDTO(productPageRequestDTO)
+                .pg(productPageRequestDTO.getPg())
                 .size(page.getSize())
                 .total((int) page.getTotalElements())
                 .build();
     }
+
 
     private ProductDTO entityToDTO(Product product) {
         return ProductDTO.builder()
@@ -365,12 +375,12 @@ public class ProductService {
     }
 
     // 상품 검색 서비스 메서드
-    public List<ProductDTO> searchProducts(String search, Integer minPrice, Integer maxPrice, String category) {
-        return productMapper.searchProducts(search, minPrice, maxPrice, category);
+    public List<ProductDTO> searchProducts(String search, Integer minPrice, Integer maxPrice, int cate) {
+        return productMapper.searchProducts(search, minPrice, maxPrice, cate);
     }
 
-    public int countSearchProducts(String search, Integer minPrice, Integer maxPrice, String category) {
-        return productMapper.countSearchProducts(search, minPrice, maxPrice, category);
+    public int countSearchProducts(String search, Integer minPrice, Integer maxPrice, int cate) {
+        return productMapper.countSearchProducts(search, minPrice, maxPrice, cate);
     }
 
 

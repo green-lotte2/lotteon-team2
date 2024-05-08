@@ -97,8 +97,8 @@
         <if test="maxPrice != null">
             AND p.price &lt;= #{maxPrice}
         </if>
-        <if test="category != null and category != ''">
-            AND p.cate = #{category}
+        <if test="cate > 0">
+            AND p.cate = #{cate}
         </if>
         ORDER BY p.rdate DESC
     </select>
@@ -118,8 +118,8 @@
         <if test="maxPrice != null">
             AND p.price &lt;= #{maxPrice}
         </if>
-        <if test="category != null and category != ''">
-            AND p.cate = #{category}
+        <if test="cate != null and cate != ''">
+            AND p.cate = #{cate}
         </if>
     </select>
 

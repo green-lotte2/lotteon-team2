@@ -33,7 +33,7 @@ public interface ProductMapper {
 
     ProductDTO selectProductWithImagesById(int pno);
 
-    List<ProductDTO> searchProducts(String search, Integer minPrice, Integer maxPrice, String category);
+    List<ProductDTO> searchProducts(String search, Integer minPrice, Integer maxPrice, int cate);
 
-    int countSearchProducts(String search, Integer minPrice, Integer maxPrice, String category);
+    int countSearchProducts(String search, Integer minPrice, Integer maxPrice, int cate);
 }

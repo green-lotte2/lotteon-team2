@@ -34,4 +34,19 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
+    public List<ReviewDTO> findReviewsByProductId(int pno) {
+        List<Review> reviews = reviewRepository.findByProduct_Pno(pno);
+        return reviews.stream()
+                .map(review -> modelMapper.map(review, ReviewDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    private ReviewDTO convertToReviewDTO(Review review) {
+        ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
+        reviewDTO.setPname(review.getProduct().getPname());
+        return reviewDTO;
+    }
+
+
+
 }

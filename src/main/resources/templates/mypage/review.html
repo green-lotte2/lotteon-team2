@@ -34,7 +34,7 @@
                 <tr th:each="review, iterStat : ${reviews}">
                     <td class="no" th:text="${iterStat.count}">5</td>
                     <td class="prodName">
-                        <a th:href="@{/product/view(pno=${review.pno})}" th:text="${review.pno}">상품명</a>
+                        <a th:href="@{/product/view(pno=${review.pno})}" th:text="${review.pname}">상품명</a>
                     </td>
                     <td class="content" th:text="${review.content}">배송이 빠릅니다. 잘 사용하겠습니다.</td>
                     <td class="score">

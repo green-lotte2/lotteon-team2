@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,6 +18,8 @@ public class QProductimg extends EntityPathBase<Productimg> {
 
     private static final long serialVersionUID = -310908457L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QProductimg productimg = new QProductimg("productimg");
 
     public final StringPath detailimg = createString("detailimg");
@@ -25,18 +28,29 @@ public class QProductimg extends EntityPathBase<Productimg> {
 
     public final NumberPath<Integer> pno = createNumber("pno", Integer.class);
 
+    public final QProduct product;
+
     public final StringPath subimg = createString("subimg");
 
     public QProductimg(String variable) {
-        super(Productimg.class, forVariable(variable));
+        this(Productimg.class, forVariable(variable), INITS);
     }
 
     public QProductimg(Path<? extends Productimg> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QProductimg(PathMetadata metadata) {
-        super(Productimg.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QProductimg(PathMetadata metadata, PathInits inits) {
+        this(Productimg.class, metadata, inits);
+    }
+
+    public QProductimg(Class<? extends Productimg> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.product = inits.isInitialized("product") ? new QProduct(forProperty("product"), inits.get("product")) : null;
     }
 
 }
