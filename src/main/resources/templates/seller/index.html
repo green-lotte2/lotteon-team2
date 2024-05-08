@@ -51,16 +51,32 @@
     <script th:inline="javascript">
         window.onload = function (){
 
+            // bar, pie chart
+            const ctx = document.getElementById("myBarChart");
             const cateName = [[${cateName}]];
-            let data = [];
-            let label = [];
+
+            let barData = [];
+            let barLabel = [];
+
+            let pieData = [];
+            let pieLabel = [];
             cateName.forEach(function(cate){
-                data.push(cate.pcount);
-                label.push(cate.pname);
+                if(pieData.length < 3){
+                    pieData.push(cate.pcount);
+                    pieLabel.push(cate.pname);
+                }
+                let length = 10; // 표시할 글자수 기준
+                if (cate.pname.length > length) {
+                    cate.pname = cate.pname.substr(0, length - 2) + '...';
+                }
+
+                barData.push(cate.pcount);
+                barLabel.push(cate.pname);
             });
-            drawPieChart(data, label);
+            drawPieChart(pieData, pieLabel);
+            drawBarChart(barData, barLabel, ctx);
 
-
+            // line chart
             const monthSales = [[${monthSales}]];
             const weekSales = [[${weekSales}]];
             let lineChart;
@@ -237,9 +253,8 @@
             <div class="col-xl-4 col-lg-5">
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
-                    <div
-                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold ">쇼핑몰 방문</h6>
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold ">상품별 판매량</h6>
                         <div class="dropdown no-arrow">
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                  aria-labelledby="dropdownMenuLink2">
@@ -257,16 +272,45 @@
                             <canvas id="myPieChart"></canvas>
                         </div>
                         <div class="mt-4 text-center small">
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-primary"></i> [[${cateName[0].pname}]]
+                            <span class="mr-2 text-truncate" style="display:inline-block; max-width: 80px;">
+                                <i class="fas fa-circle text-primary">[[${cateName[0].pname}]]</i>
                             </span>
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-success"></i> [[${cateName[1].pname}]]
+                            <span class="mr-2 text-truncate" style="display:inline-block; max-width: 80px;">
+                                <i class="fas fa-circle text-success">[[${cateName[1].pname}]]</i>
                             </span>
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-info"></i> [[${cateName[2].pname}]]
+                            <span class="mr-2 text-truncate" style="display:inline-block; max-width: 80px;">
+                                <i class="fas fa-circle text-info">[[${cateName[2].pname}]]</i>
                             </span>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl col-lg">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 id="barChartName" class="m-0 font-weight-bold">월간 주문금액</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenu"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item" href="#" data-value="month">월간 주문금액</a>
+                            <a class="dropdown-item" href="#" data-value="week">주간 주문금액</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="myBarChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -302,73 +346,11 @@
         </div>
     </div>
 
-    <div class="notice_qna">
-        <!-- 🎈공지사항 -->
-        <div id="noticeList" class="container-fluid">
-
-            <div class="card mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold">공지사항</h6>
-                </div>
-
-                <div class="card-body table">
-                    <div class="table-responsive">
-                        <form th:action="@{/admin/product/delete}" method="post">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-
-                                <tbody>
-                                <tr th:each="noticeDTOS: ${noticeDTOS}">
-                                    <td th:text="'['+ ${noticeDTOS.c2name} + ']'"></td>
-                                    <td>
-                                        <a th:href="@{/admin/cs/notice/view(noticeno=${noticeDTOS.noticeno}, cate2=${noticeDTOS.cate2})}">[[${noticeDTOS.title}]]</a>
-                                    </td>
-                                    <td th:text="${#temporals.format(noticeDTOS.rdate, 'yyyy-MM-dd')}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div><!--notice end-->
-        <div id="qnaList" class="container-fluid">
-            <!--🎈Qna -->
-            <div class="card mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold">1:1문의</h6>
-                </div>
-
-                <div class="card-body table">
-                    <div class="table-responsive">
-                        <form th:action="@{/admin/product/delete}" method="post">
-                            <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
-                                <thead>
-                                <tbody>
-                                <tr th:each="qnaDTOS:${qnaDTOS}">
-                                    <td th:text="'[' + ${qnaDTOS.c2name} + ']'">유형</td>
-                                    <td>
-                                        <a th:href="@{/admin/cs/qna/view(qnano=${qnaDTOS.qnano}, cate2=${qnaDTOS.cate2})}">[[${qnaDTOS.title}]]</a>
-                                    </td>
-                                    <td th:text="${#temporals.format(qnaDTOS.rdate, 'yy-MM-dd')}"></td>
-                                    <th:block class="answercomplete">
-                                        <td style="color: royalblue;" th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
-                                        <td style="color: tomato;" th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
-                                    </th:block>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!--notice & Qna end-->
-
 
     <script th:src="@{/admin/css/vendor/chart.js/Chart.min.js}"></script>
     <script th:src="@{/admin/js/demo/chart-area-demo.js}"></script>
     <script th:src="@{/admin/js/demo/chart-pie-demo.js}"></script>
+    <script th:src="@{/admin/js/demo/chart-bar-demo.js}"></script>
     <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/admin/css/vendor/jquery-easing/jquery.easing.min.js}"></script>

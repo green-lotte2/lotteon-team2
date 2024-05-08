@@ -1,0 +1,193 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/sellerLayout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>롯데온::관리자 상품목록</title>
+    <link th:href="@{/admin/css/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/admin/css/admin.css}" rel="stylesheet">
+    <style>
+
+    </style>
+    <script>
+        window.onload = function () {
+            const delBtn = document.getElementById('delBtn');
+            const selectAllCheckbox = document.getElementsByName('all')[0];
+            const checkBoxes = document.getElementsByName('checkbox');
+
+            const pdelete = document.getElementById('delete');
+            pdelete.onclick = function (){
+                if (confirm('삭제하시겠습니까?')){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
+            delBtn.onclick = function(){
+                let Checked = false; // 최소한 하나의 체크박스가 선택되었는지 여부를 나타내는 변수
+                for (let i = 0; i < checkBoxes.length; i++) {
+                    if (checkBoxes[i].checked) {
+                        Checked = true;
+                        break; // 하나라도 체크되어 있으면 반복문 종료
+                    }
+                }
+
+                if (!Checked) {
+                    alert('삭제할 상품을 선택해주세요.');
+                    console.log('check..');
+                    return false;
+                } else {
+                    let confirmed = confirm('정말 삭제하시겠습니까?');
+                    if (!confirmed) {
+                        return false;
+                    }
+                }
+            };
+
+            selectAllCheckbox.addEventListener('change', function () {
+                for (let i = 0; i < checkBoxes.length; i++) {
+                    checkBoxes[i].checked = selectAllCheckbox.checked;
+                }
+            });
+        }
+
+
+    </script>
+</head>
+
+    <main layout:fragment="content">
+        <div id="productList" class="container-fluid">
+
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">상품목록</h1>
+            <p class="mb-4"></p>
+
+            <!-- DataTales Example -->
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold" style="color: #ffffff;">상품목록</h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <form th:action="@{/admin/product/list}" method="get">
+                            <div id="searchBox">
+                                <select name="type" id="searchOption">
+                                    <option value="pname">상품명</option>
+                                    <option value="pno">상품번호</option>
+                                    <option value="seller">판매자</option>
+                                    <option value="company">제조사</option>
+                                </select>
+                                <input type="search" class="searchInput" name="keyword" placeholder="검색어를 입력하세요.">
+                                <button class="searchBtn">
+                                    <img th:src="@{/admin/img/search_40.png}" alt="검색">
+                                </button>
+                            </div><!--검색박스 end-->
+                        </form>
+
+                        <form th:action="@{/admin/product/delete}" method="post">
+
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr class="tableTitle">
+                                            <th>
+                                                <input type="checkbox" name="all">
+                                            </th>
+                                            <th>이미지</th>
+                                            <th>상품코드</th>
+                                            <th>상품명</th>
+                                            <th>판매가격</th>
+                                            <th>할인율</th>
+                                            <th>포인트</th>
+                                            <th>재고</th>
+                                            <th>판매자</th>
+                                            <th>조회</th>
+                                            <th>등록일</th>
+                                            <th>관리</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="product: ${adminProducts.anyList}">
+                                            <td>
+                                                <input type="checkbox" name="checkbox" th:value="${product.pno}">
+                                            </td>
+                                            <td class="prodImg">
+                                                <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
+                                            </td>
+                                            <td>[[${product.pno}]]</td>
+                                            <td>[[${product.pname}]]</td>
+                                            <td>[[${product.price}]]</td>
+                                            <td>[[${product.discount}]]</td>
+                                            <td>[[${product.point}]]</td>
+                                            <td>[[${product.stock}]]</td>
+                                            <td>[[${product.sid}]]</td>
+                                            <td>[[${product.hit}]]</td>
+                                            <td th:text="${#temporals.format(product.rdate, 'yyyy-MM-dd')}"></td>
+                                            <td>
+                                                <a th:href="@{/admin/product/delete(pno=${product.pno})}" id="delete">[삭제]</a>
+                                                <a th:href="@{/admin/product/modify(pno=${product.pno})}">[수정]</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div>
+                                        <input type="submit" id="delBtn" value="선택삭제">
+                                    </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!--paging-->
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li th:if="${adminProducts.pg} > 1?" class="page-item">
+                            <a th:if="${adminProducts.pg} > 1 and ${adminProducts.keyword} == null"
+                               th:href="@{/seller/product/list(pg=${adminProducts.pg - 1})}"
+                               th:class="page-link">이전</a>
+                            <a th:if="${adminProducts.pg} > 1 and ${adminProducts.keyword} != null"
+                               th:href="@{/seller/product/list(pg=${adminProducts.pg - 1},type=${adminProducts.type},keyword=${adminProducts.keyword})}"
+                               th:class="page-link">이전</a>
+                        </li>
+                        <li th:class="${i == adminProducts.pg ? 'page-item active' : 'page-item'}" th:each="i : ${#numbers.sequence(1, adminProducts.totalPage)}">
+                            <a th:if="${adminProducts.keyword} == null"
+                               th:href="@{/seller/product/list(pg=${i})}"
+                               class="page-link">[[${i}]]</a>
+                            <a th:if="${adminProducts.keyword} != null"
+                               th:href="@{/seller/product/list(pg=${i},type=${adminProducts.type},keyword=${adminProducts.keyword})}"
+                               class="page-link">[[${i}]]</a>
+                        </li>
+                        <li class="page-item">
+                            <a th:if="${adminProducts.pg} < ${adminProducts.totalPage} and ${adminProducts.keyword} == null"
+                               th:href="@{/seller/product/list(pg=${adminProducts.pg + 1})}"
+                               th:class="page-link">다음</a>
+                            <a th:if="${adminProducts.pg} < ${adminProducts.totalPage} and ${adminProducts.keyword} != null"
+                               th:href="@{/seller/product/list(pg=${adminProducts.pg + 1},type=${adminProducts.type},keyword=${adminProducts.keyword})}"
+                               th:class="page-link">다음</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+
+
+
+    <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
+
+    </main>
+
+</html>
