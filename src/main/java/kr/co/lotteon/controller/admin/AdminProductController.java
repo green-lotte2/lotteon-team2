@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,11 +43,16 @@ public class AdminProductController {
 
     @PostMapping("/admin/product/register")
     public String adminProductRegister(ProductDTO productDTO,
+                                       Authentication authentication,
                                        @RequestParam("mainImg") MultipartFile fileA,
                                        @RequestParam("detailImg") MultipartFile fileD){
         log.info("adminProductRegister2");
         log.info(productDTO.toString());
         log.info(fileA.isEmpty()+"");
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
+        }
+        productDTO.setSid(authentication.getName());
         if(productDTO.getPno()!=0){
             Product product = productService.findProductById(productDTO.getPno()).get();
             productDTO.setRdate(product.getRdate());
@@ -136,26 +142,5 @@ public class AdminProductController {
 
         return "/admin/order/sales";
     }
-
-
-
-
-    @GetMapping("/admin/product/search")
-    public String search(
-            Model model,
-            String search,
-            @PageableDefault(size = 10, sort = "pname", direction = Sort.Direction.ASC) Pageable pageable) {
-
-      /*  Page<Product> resultList = productService.findByPname(pageable, search);
-        for (Product result : resultList) {
-            log.info(result.toString());
-        }
-        model.addAttribute("products", resultList);
-        model.addAttribute("page", resultList);
-        log.info("검색....1"); */
-        return "sale";
-    }
-
-
 
 }
