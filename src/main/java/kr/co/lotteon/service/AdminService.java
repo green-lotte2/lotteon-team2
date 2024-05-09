@@ -1,5 +1,6 @@
 package kr.co.lotteon.service;
 
+import com.querydsl.core.Tuple;
 import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.*;
 import kr.co.lotteon.mapper.AdminMapper;
@@ -8,11 +9,11 @@ import kr.co.lotteon.repository.BannerRepository;
 import kr.co.lotteon.repository.ProductimgRepository;
 import kr.co.lotteon.repository.UserDetailRepository;
 import kr.co.lotteon.repository.UserRepository;
-import kr.co.lotteon.repository.custom.UserRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,14 +43,49 @@ public class AdminService {
     private final UserRepository userRepository;
     private final UserDetailRepository userDetailRepository;
 
-    public void adminSelectUsers(String uid, PageRequestDTO pageRequestDTO){
-        userRepository.adminSelectUsers(uid, pageRequestDTO);
+
+    //🎈회원 리스트 페이징
+    public PageResponseDTO adminSelectUsers(PageRequestDTO pageRequestDTO){
+
+        log.info("selectUsers...1");
+        Pageable pageable = pageRequestDTO.getPageable("no");
+
+        log.info("selectUsers...2");
+        Page<Tuple> pageArticle = userRepository.adminSelectUsers(pageRequestDTO, pageable);
+
+        log.info("selectUsers...3 : " + pageArticle);
+        List<UserDTO> userList = pageArticle.getContent().stream()
+                .map(tuple ->
+                        {
+                            log.info("tuple : " + tuple);
+                            User user = tuple.get(0, User.class);
+                            String uid = tuple.get(1, String.class);
+                            user.setUid(uid);
+
+                            log.info("uid : " + uid);
+
+                            return modelMapper.map(user, UserDTO.class);
+                        }
+                )
+                .toList();
+
+        log.info("selectUsers...4 : " + userList);
+
+        int total = (int) pageArticle.getTotalElements();
+
+        return PageResponseDTO.builder()
+                .pageRequestDTO(pageRequestDTO)
+                .userList(userList)
+                .total(total)
+                .build();
     }
 
 
-    public TypePageResponseDTO selectOrderGroup(PageRequestDTO pageRequestDTO) {
-        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderGroup(pageRequestDTO);
-        return new TypePageResponseDTO(pageRequestDTO, ordersDTOS.get(0).getLine(), ordersDTOS);
+
+
+    // 🎈회원 리스트
+    public void adminSelectUsers(PageRequestDTO uid, PageRequestDTO pageRequestDTO){
+        userRepository.adminSelectUsers(uid, (Pageable) pageRequestDTO);
     }
 
     // 🎈 회원 수정
@@ -85,8 +121,14 @@ public class AdminService {
     public void adminDeleteUser(String uid){
         adminMapper.adminDeleteUser(uid);
     }
-    
+
+
+
     // 주문 페이징
+    public TypePageResponseDTO selectOrderGroup(PageRequestDTO pageRequestDTO) {
+        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderGroup(pageRequestDTO);
+        return new TypePageResponseDTO(pageRequestDTO, ordersDTOS.get(0).getLine(), ordersDTOS);
+    }
 
     public TypePageResponseDTO selectOrders(PageRequestDTO pageRequestDTO) {
         List<OrdersDTO> ordersDTOS = adminMapper.selectOrders(pageRequestDTO);

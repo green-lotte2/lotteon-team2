@@ -1217,6 +1217,7 @@ footer p > strong {
     padding: 2px;
     box-sizing: border-box;
     border: 1px solid #999;
+    margin-bottom: 5px;
 }
 
 #my > .info > section > article > table .address > input {
@@ -1243,19 +1244,10 @@ footer p > strong {
     cursor: pointer;
 }
 
-#my #btnPassChange {
-    width: 100px;
-    background: #797979;
-    border: 1px solid #999;
-    padding: 3px;
-    color: #fff;
-    cursor: pointer;
-}
-
 #my #btnEmailCode {
     background: #797979;
     border: 1px solid #999;
-    padding: 3px;
+    padding: 6px;
     color: #fff;
     cursor: pointer;
     margin-bottom: 2px;
@@ -1264,7 +1256,7 @@ footer p > strong {
 #my #btnEmailAuth {
     background: #797979;
     border: 1px solid #999;
-    padding: 3px;
+    padding: 6px;
     color: #fff;
     cursor: pointer;
 }
@@ -1272,26 +1264,27 @@ footer p > strong {
 #my #btnPassChange {
     background: #797979;
     border: 1px solid #999;
-    padding: 3px;
+    padding: 6px;
     color: #fff;
     cursor: pointer;
 }
 
 #my #btnWithdraw {
     background: #e74929;
-    border: 1px solid #c84f3c;
     color: #fff;
     cursor: pointer;
+    padding: 7px;
+    border: none;
 }
 
 #my #btnWithdrawFinal {
     display: block;
     width: 160px;
     height: 30px;
+    padding: 6px;
+    background-color: royalblue;
+    color: #ffffff;
     margin: 10px auto;
-    background-image: url('../images/btn_my_change.png');
-    color: #fff;
-    font-family: '돋움';
     border: none;
 }
 
@@ -1681,4 +1674,10 @@ footer p > strong {
     outline: 0;
     border-radius: 2px;
     cursor: pointer;
+}
+
+button#findZip {
+    background-color: #777;
+    padding: 6px;
+    color: #fff;
 }
