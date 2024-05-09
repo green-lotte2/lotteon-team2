@@ -50,11 +50,10 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         log.info("selectArticles...1-2 : " + results);
 
 
-
         // 페이징 처리를 위해 page 객체 리턴
         return new PageImpl<>(results, pageable, total);
     }
-
+/*
     @Override
     public List<UserDTO> adminSearchUsers(PageRequestDTO pageRequestDTO, Pageable pageable, String role, String keyword) {
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserRepositoryCustom {
     public Page<Tuple> adminSelectUsers(PageRequestDTO pageRequestDTO, Pageable pageable);
-    public List<UserDTO> adminSearchUsers(PageRequestDTO pageRequestDTO, Pageable pageable, String role, String keyword);
+  //  public List<UserDTO> adminSearchUsers(PageRequestDTO pageRequestDTO, Pageable pageable, String role, String keyword);
 
 
 }
