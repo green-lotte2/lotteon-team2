@@ -48,7 +48,13 @@ public class MyController {
 
 
     @GetMapping("/mypage/point")
-    public String point() {
+    public String point(Model model, Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
+        }
+        List<OrdersDTO> point = ordersService.selectPoint(authentication.getName());
+        log.info("오늘은 이거다"+point);
+        model.addAttribute("point", point);
         return "/mypage/point";
     }
 
@@ -130,6 +136,25 @@ public class MyController {
         }
     }
 
+    @GetMapping("/mypage/infoAccessCheckSeller")
+    public String infoAccessCheckSeller() {
+        return "/mypage/infoAccessCheckSeller";
+    }
+
+    @ResponseBody
+    @PostMapping("/mypage/infoAccessCheckSeller")
+    public String infoAccessCheckSeller(@RequestParam String uid, String inputPass) {
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(uid, inputPass);
+        Authentication result = authenticationManager.authenticate(authentication);
+
+        if (result.isAuthenticated()) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
+
     @GetMapping("/mypage/info")
     public String info() {
         return "/mypage/info";
@@ -161,6 +186,16 @@ public class MyController {
         log.info("=========회원정보수정========== : "+userDTO);
         userService.updateUser(userDTO);
         return "success";
+    }
+
+    @GetMapping("/mypage/infoSeller")
+    public String infoSeller(Model model, Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
+        }
+        UserDTO sellerInfo = userService.selectSeller(authentication.getName());
+        model.addAttribute("sellerInfo", sellerInfo);
+        return "/mypage/infoSeller";
     }
 
 }

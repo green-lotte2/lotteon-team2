@@ -9,7 +9,7 @@ $(function() {
         // 컨트롤러에서 비밀번호 일치여부를 판단해서
         // true를 반환하면 페이지 이동, false를 반환하면 alert
         $.ajax({
-            url: contextPath + '/mypage/infoAccessCheck',
+            url: contextPath + '/mypage/infoAccessCheckSeller',
             type: 'POST',
             data: {
                 uid: uid,
@@ -17,7 +17,7 @@ $(function() {
             },
             success: function(data) {
                 if (data === "true") {
-                    window.location.href=contextPath + "/mypage/info";
+                    window.location.href=contextPath + "/mypage/infoSeller";
                 } else {
                     alert("비밀번호가 일치하지 않습니다.");
                 }
@@ -104,7 +104,13 @@ $(function() {
             const zip = $('#zip').val();
             const addr1 = $('#addr1').val();
             const addr2 = $('#addr2').val();
-            console.log("최종버튼 데이터 : "+email+", "+hp+", "+zip+", "+addr1+", "+addr2);
+            const company = $('input[name=company]').val();
+            const represent = $('input[name=represent]').val();
+            const regnum = $('input[name=regnum]').val();
+            const reportnum = $('input[name=reportnum]').val();
+            const cohp = $('input[name=cohp]').val();
+            const fax = $('input[name=fax]').val();
+            console.log("최종버튼 데이터 : "+email+", "+hp+", "+zip+", "+addr1+", "+addr2+", "+company+", "+represent+", "+regnum+", "+reportnum+", "+cohp+", "+fax);
 
             let data = {
                 uid: uid,
@@ -112,7 +118,13 @@ $(function() {
                 hp: hp,
                 zip: zip,
                 addr1: addr1,
-                addr2: addr2
+                addr2: addr2,
+                company: company,
+                represent: represent,
+                regnum: regnum,
+                reportnum: reportnum,
+                cohp: cohp,
+                fax: fax
             };
             let jsonData = JSON.stringify(data);
 

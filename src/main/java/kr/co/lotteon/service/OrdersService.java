@@ -110,5 +110,9 @@ public class OrdersService {
 
         return pageResponseDTO;
     }
+
+    public List<OrdersDTO> selectPoint(String uid){
+        return ordersMapper.selectPoint(uid);
+    }
 }
 

@@ -47,4 +47,10 @@
                     where uid = #{uid}
     </update>
 
+    <select id="selectSeller" resultType="kr.co.lotteon.dto.UserDTO">
+        select * from `user` as a
+        join `seller` as b on a.uid = b.uid
+        where a.uid = #{uid}
+    </select>
+
 </mapper>

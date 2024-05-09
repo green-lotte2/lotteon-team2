@@ -171,6 +171,11 @@ public class UserService {
         return userMapper.selectUser(uid);
     }
 
+    public UserDTO selectSeller(String uid){
+        log.info(userMapper.selectSeller(uid));
+        return userMapper.selectSeller(uid);
+    }
+
     public String getUid(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication != null && authentication.isAuthenticated()){
@@ -262,6 +267,16 @@ public class UserService {
         entity.setZip(userDTO.getZip());
         entity.setAddr1(userDTO.getAddr1());
         entity.setAddr2(userDTO.getAddr2());
+
+        Seller entitySeller = sellerRepository.findById(userDTO.getUid()).get();
+        entitySeller.setCompany(userDTO.getCompany());
+        entitySeller.setRepresent(userDTO.getRepresent());
+        entitySeller.setRegnum(userDTO.getRegnum());
+        entitySeller.setReportnum(userDTO.getReportnum());
+        entitySeller.setCohp(userDTO.getCohp());
+        entitySeller.setFax(userDTO.getFax());
+
         userRepository.save(entity);
+        sellerRepository.save(entitySeller);
     }
 }
