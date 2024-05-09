@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/myLayout}">
+
+<div class="info" layout:fragment="content">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/myInfoSeller.js}"></script>
+    <script th:src="@{/js/myInfoChangeSeller.js}"></script>
+
+    <script>
+        const contextPath = "[[${@environment.getProperty('server.servlet.context-path')}]]";
+        const uid = '[[${#authentication.principal.user.uid}]]';
+        const sameHp = "[[${#authentication.principal.user.hp}]]";
+        const sameEmail = "[[${#authentication.principal.user.email}]]";
+        console.log(contextPath);
+        console.log(uid);
+        console.log(sameHp);
+        console.log(sameEmail);
+    </script>
+    <ul>
+        <span class="menu_else"></span>
+        <li><a th:href="@{/mypage/order}">전체주문내역</a></li>
+        <!--<li><a href="./favorite.html">관심상품</a></li>-->
+        <li><a th:href="@{/mypage/point}">포인트내역</a></li>
+        <li><a th:href="@{/mypage/coupon}">쿠폰</a></li>
+        <li><a th:href="@{/mypage/review}">나의리뷰</a></li>
+        <li><a th:href="@{/mypage/qna}">문의하기</a></li>
+        <li><a th:href="@{/mypage/info}">나의설정</a></li>
+    </ul>
+    <section>
+        <a href="#"><img th:src="@{/images/my_banner2.png}" alt="패션, 타운 하나로 끝" class="banner"></a>
+        <article>
+            <h3>회원정보 설정</h3>
+
+            <table border="0">
+                <input type="hidden" name="type" th:value="normal"/>
+                <input type="hidden" name="uid" th:value="${#authentication.principal.user.uid}"/>
+                <input type="hidden" name="name" th:value="${#authentication.principal.user.name}"/>
+                <tr>
+                    <td>사용자 ID</td>
+                    <td>[[${#authentication.principal.user.uid}]]</td>
+                </tr>
+                <tr>
+                    <td>비밀번호</td>
+                    <td>
+                        <button id="btnPassChange">비밀번호 변경</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>이름</td>
+                    <td>[[${#authentication.principal.user.name}]]</td>
+                </tr>
+                <tr>
+                    <td>E-mail</td>
+                    <td>
+                        <div>
+                            <input type="email" id="inputEmail" name="email" th:value="${#authentication.principal.user.email}" />
+                            <button type="button" id="btnEmailCode" class="btnAuth" data-type="findIdEmail">인증번호 받기</button>
+                            <span id="resultEmail"></span>
+                        </div>
+                        <div id="auth" class="auth">
+                            <input type="text" name="auth" id="inputEmailCode" placeholder="인증번호 입력" />
+                            <button type="button" id="btnEmailAuth" class="btnConfirm">확인</button>
+                            <span id="resultEmailCode"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>휴대폰</td>
+                    <td>
+                        <p class="hp">
+                            <input type="text" name="hp" th:value="${#authentication.principal.user.hp}" required/>
+                            <span class="msgHp"></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>주소</td>
+                    <td>
+                        <input type="text" name="zip" id="zip" th:value="${#authentication.principal.user.zip}" placeholder="주소검색 클릭" readonly/>
+                        <button type="button" id="findZip">주소검색</button><br>
+                        <input type="text" name="addr1" id="addr1" th:value="${#authentication.principal.user.addr1}" placeholder="주소를 검색하세요." readonly/><br>
+                        <input type="text" name="addr2" id="addr2" th:value="${#authentication.principal.user.addr2}" placeholder="상세주소를 입력하세요."/><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>회원탈퇴</td>
+                    <td>
+                        <button id="btnWithdraw">탈퇴하기</button>
+                    </td>
+                </tr>
+            </table>
+
+            <h3>판매자정보 설정</h3>
+            <table border="0">
+                <tr>
+                    <td>회사명</td>
+                    <td>
+                        <input type="text" name="company" id="company" th:value="${sellerInfo.company}" required/>
+                        <span class="msgCompany"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>대표자</td>
+                    <td>
+                        <input type="text" name="represent" id="represent" th:value="${sellerInfo.represent}" required/>
+                        <span class="msgRepresent"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>사업자등록번호</td>
+                    <td>
+                        <input type="text" name="regnum" id="regnum" th:value="${sellerInfo.regnum}" required/>
+                        <span class="msgCorp">&nbsp;&nbsp;-표시 포함 12자리 입력, 예) 123-45-67890</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>통신판매업신고 번호</td>
+                    <td>
+                        <input type="text" name="reportnum" id="reportnum" th:value="${sellerInfo.reportnum}" required/>
+                        <span class="msgOnline">&nbsp;&nbsp;-표시 포함, 예) 강남-12345, 제 1-01-23-4567호, 2017-경기성남-0011</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>전화번호</td>
+                    <td>
+                        <input type="text" name="cohp" id="cohp" th:value="${sellerInfo.cohp}" required/>
+                        <span class="msgTel">&nbsp;&nbsp;- 표시 포함,지역번호 포함, 예) 02-234-1234</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>팩스번호</td>
+                    <td>
+                        <input type="text" name="fax" id="fax" th:value="${sellerInfo.fax}" required/>
+                        <span class="msgFax">&nbsp;&nbsp;- 표시 포함,지역번호 포함, 예) 02-234-1234</span>
+                    </td>
+                </tr>
+            </table>
+
+            <button id="btnWithdrawFinal">수정 완료</button>
+        </article>
+    </section>
+
+</div>
+</html>

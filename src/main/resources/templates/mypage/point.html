@@ -43,43 +43,17 @@
             <table border="0">
                 <tr>
                     <th>날짜</th>
-                    <th>구분</th>
                     <th>주문번호</th>
                     <th>적립금액</th>
                     <th>비고</th>
                     <th>유효기간</th>
                 </tr>
-                <tr>
-                    <td class="date">2022-12-13</td>
-                    <td class="type">적립</td>
-                    <td class="ordNo">2022121001</td>
-                    <td class="point">340</td>
+                <tr th:each="po:${point}">
+                    <td class="date">[[${po.odate}]]</td>
+                    <td class="ordNo">[[${po.ono}]]</td>
+                    <td class="point">[[${po.savepoint}]]</td>
                     <td class="desc">상품 구매확정</td>
-                    <td class="expire">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="date">2022-12-13</td>
-                    <td class="type">적립</td>
-                    <td class="ordNo">2022121001</td>
-                    <td class="point">100</td>
-                    <td class="desc">상품 리뷰 작성 추가 포인트</td>
-                    <td class="expire">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="date">2022-12-13</td>
-                    <td class="type">적립</td>
-                    <td class="ordNo">2022121001</td>
-                    <td class="point">340</td>
-                    <td class="desc">상품 구매확정</td>
-                    <td class="expire">2024-12-12</td>
-                </tr>
-                <tr>
-                    <td class="date">2022-12-13</td>
-                    <td class="type">적립</td>
-                    <td class="ordNo">2022121001</td>
-                    <td class="point">340</td>
-                    <td class="desc">상품 구매확정</td>
-                    <td class="expire">2024-12-12</td>
+                    <td class="expire" th:text="${po.getOdate().plusYears(1)}"></td>
                 </tr>
 
             </table>

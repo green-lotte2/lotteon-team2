@@ -1,11 +1,12 @@
-window.onload = function (){
-    let isPassOk  = false;
-    let isEmailOk = false;
-    let isHpOk = false;
+let isPassOk  = false;
+let isEmailOk = false;
+let isHpOk = false;
 
-    const rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
-    const reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    const reHp = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
+const rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
+const reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+const reHp = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
+
+window.onload = function (){
 
     // 비밀번호 유효성 검사
     const inputPass = document.getElementsByName('pass1')[0];

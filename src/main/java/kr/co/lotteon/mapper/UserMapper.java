@@ -11,5 +11,6 @@ import java.util.List;
 public interface UserMapper {
 
     public UserDTO selectUser(String uid);
+    public UserDTO selectSeller(String uid);
 
 }
