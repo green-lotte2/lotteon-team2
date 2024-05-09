@@ -43,6 +43,8 @@ public class AdminUserController {
         if(pageRequestDTO.getKeyword() == null) {
             // 일반 글 목록 조회
             pageResponseDTO = adminService.adminSelectUsers(pageRequestDTO);
+        }else{
+            pageResponseDTO = adminService.adminSearchUsers(pageRequestDTO);
         }
 
         log.info("pageResponseDTO : " + pageResponseDTO);

@@ -80,7 +80,40 @@ public class AdminService {
                 .build();
     }
 
+    public PageResponseDTO adminSearchUsers(PageRequestDTO pageRequestDTO){
 
+        log.info("selectUsers...1");
+        Pageable pageable = pageRequestDTO.getPageable("no");
+
+        log.info("selectUsers...2");
+        Page<Tuple> pageArticle = userRepository.adminSearchUsers(pageRequestDTO, pageable);
+
+        log.info("selectUsers...3 : " + pageArticle);
+        List<UserDTO> userList = pageArticle.getContent().stream()
+                .map(tuple ->
+                        {
+                            log.info("tuple : " + tuple);
+                            User user = tuple.get(0, User.class);
+                            String uid = tuple.get(1, String.class);
+                            user.setUid(uid);
+
+                            log.info("uid : " + uid);
+
+                            return modelMapper.map(user, UserDTO.class);
+                        }
+                )
+                .toList();
+
+        log.info("selectUsers...4 : " + userList);
+
+        int total = (int) pageArticle.getTotalElements();
+
+        return PageResponseDTO.builder()
+                .pageRequestDTO(pageRequestDTO)
+                .userList(userList)
+                .total(total)
+                .build();
+    }
 
 
     // 🎈회원 리스트
@@ -151,11 +184,6 @@ public class AdminService {
 
     public List<OrdersDTO> selectCountAndCateName(){
         return adminMapper.selectCountAndCateName();
-    }
-
-    public TypePageResponseDTO selectOrderByProduct(PageRequestDTO pageRequestDTO) {
-        List<OrdersDTO> ordersDTOS = adminMapper.selectOrderByProduct(pageRequestDTO);
-        return new TypePageResponseDTO(pageRequestDTO,ordersDTOS.get(0).getLine(),ordersDTOS);
     }
 
     public List<ProductDTO> selectProducts(){

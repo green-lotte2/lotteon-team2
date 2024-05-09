@@ -129,4 +129,34 @@ public class SellerController {
         return "/seller/product/modify";
     }
 
+    @GetMapping("/seller/order/list")
+    public String OrderList(Model model, PageRequestDTO pageRequestDTO, Authentication authentication){
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
+        }
+        pageRequestDTO.setSeller(authentication.getName());
+        TypePageResponseDTO ordersDTOS = sellerService.selectOrderBySellerGroup(pageRequestDTO);
+        TypePageResponseDTO orderProduct = sellerService.selectOrdersBySeller(pageRequestDTO);
+        model.addAttribute("orders", ordersDTOS);
+        model.addAttribute("products", orderProduct);
+        return "/seller/order/list";
+    }
+
+    @GetMapping("/seller/order/sales")
+    public String OrderSales(Model model, PageRequestDTO pageRequestDTO, Authentication authentication){
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
+        }
+        String sid = authentication.getName();
+        pageRequestDTO.setSeller(sid);
+        TypePageResponseDTO products = sellerService.selectOrderByProduct(pageRequestDTO);
+        List<OrdersDTO> orders = sellerService.selectOrderByMonthAndSellerAndProduct(sid);
+        log.info("이거다 이거"+orders);
+        model.addAttribute("ordersList",products);
+        model.addAttribute("orders",orders);
+
+        return "/seller/order/sales";
+    }
+
 }

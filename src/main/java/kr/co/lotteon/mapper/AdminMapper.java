@@ -24,7 +24,7 @@ public interface AdminMapper{
 
     public List<OrdersDTO> selectOrderByWeek();
 
-    public List<OrdersDTO> selectOrderByProduct(PageRequestDTO pageRequestDTO);
+
     public List<OrdersDTO> selectOrderGroup(PageRequestDTO pageRequestDTO);
 
     public List<OrdersDTO> selectOrders(PageRequestDTO pageRequestDTO);

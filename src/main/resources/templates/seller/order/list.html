@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/adminLayout}"
+      layout:decorate="~{/layout/sellerLayout}"
 >
 
 <head>
@@ -14,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+
 </head>
 
 <main layout:fragment="content">
@@ -37,8 +38,6 @@
                         <div id="searchBox">
                             <select name="type" id="searchOption">
                                 <option value="pname">상품명</option>
-                                <option value="company">제조사</option>
-                                <option value="seller">판매사</option>
                                 <option value="uid">구매자</option>
                             </select>
                             <input type="search" class="searchInput" name="keyword" placeholder="검색어를 입력하세요.">
@@ -56,8 +55,8 @@
                                         <img width="75px" height="75px" th:src="@{|/product/${order.cate}/${order.mainimg}|}" alt="상품이미지">
                                     </div>
                                     <div>
-                                        주문 번호 : [[${order.ono}]]<br>
-                                        주문 내용 : [[${order.pname}]] <strong th:if="${order.count - 1 > 0}">외 [[${order.count - 1}]]개</strong>
+                                        주문번호 : [[${order.ono}]]<br>
+                                        내 용  : [[${order.pname}]] <strong th:if="${order.count - 1 > 0}">외 [[${order.count - 1}]]개</strong>
                                     </div>
                                     <div>
                                         구매자 : [[${order.uid}]]<br>
@@ -82,11 +81,6 @@
                                         구매 가격 : [[${product.price}]]
 
                                     </p>
-                                    <select>
-                                        <option>배송중</option>
-                                        <option>상품준비중</option>
-                                        <option>배송완료</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -100,26 +94,26 @@
                 <ul class="pagination">
                     <li class="page-item">
                         <a th:if="${orders.pg} > 1 and ${orders.keyword} == null"
-                           th:href="@{/admin/order/list(pg=${orders.pg - 1})}"
+                           th:href="@{/seller/order/list(pg=${orders.pg - 1})}"
                            th:class="page-link">이전</a>
                         <a th:if="${orders.pg} > 1 and ${orders.keyword} != null"
-                           th:href="@{/admin/order/list(pg=${orders.pg - 1},type=${orders.type},keyword=${orders.keyword})}"
+                           th:href="@{/seller/order/list(pg=${orders.pg - 1},type=${orders.type},keyword=${orders.keyword})}"
                            th:class="page-link">이전</a>
                     </li>
                     <li th:class="${i == orders.pg ? 'page-item active' : 'page-item'}" th:each="i : ${#numbers.sequence(1, orders.totalPage)}">
                         <a th:if="${orders.keyword} == null"
-                           th:href="@{/admin/order/list(pg=${i})}"
+                           th:href="@{/seller/order/list(pg=${i})}"
                            class="page-link">[[${i}]]</a>
                         <a th:if="${orders.keyword} != null"
-                           th:href="@{/admin/order/list(pg=${i},type=${orders.type},keyword=${orders.keyword})}"
+                           th:href="@{/seller/order/list(pg=${i},type=${orders.type},keyword=${orders.keyword})}"
                            class="page-link">[[${i}]]</a>
                     </li>
                     <li class="page-item">
                         <a th:if="${orders.pg} < ${orders.totalPage} and ${orders.keyword} == null"
-                           th:href="@{/admin/product/list(pg=${orders.pg + 1})}"
+                           th:href="@{/seller/product/list(pg=${orders.pg + 1})}"
                            th:class="page-link">다음</a>
                         <a th:if="${orders.pg} < ${orders.totalPage} and ${orders.keyword} != null"
-                           th:href="@{/admin/product/list(pg=${orders.pg + 1},type=${orders.type},keyword=${orders.keyword})}"
+                           th:href="@{/seller/product/list(pg=${orders.pg + 1},type=${orders.type},keyword=${orders.keyword})}"
                            th:class="page-link">다음</a>
                     </li>
                 </ul>

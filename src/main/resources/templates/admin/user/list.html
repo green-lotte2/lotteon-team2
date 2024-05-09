@@ -81,10 +81,9 @@
                     <form th:action="@{/admin/user/list}"  method="get">
                         <div id="searchBox">
                             <select name="role" id="searchOption">
-                                <option value="" selected disabled> 전체 </option>
+                                <option value="user">일반사용자</option>
                                 <option value="admin">관리자</option>
                                 <option value="seller">판매자</option>
-                                <option value="user">일반사용자</option>
                             </select>
                             <input type="search" class="searchInput" name="keyword" placeholder="아이디를 입력하세요.">
                             <button class="searchBtn">
@@ -116,7 +115,7 @@
                                 <td>
                                     <input name="checkbox" type="checkbox" th:value="${user.uid}">
                                 </td>
-                                <td>[[${pageResponseDTO.startNo - index.index}]]</td>
+                                <td>[[${index.index+1}]]</td>
                                 <td>[[${user.uid}]]</td>
                                 <td>[[${user.name}]]</td>
                                 <td>[[${user.email}]]</td>

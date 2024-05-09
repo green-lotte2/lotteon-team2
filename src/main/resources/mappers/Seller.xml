@@ -5,15 +5,6 @@
 
 <mapper namespace="kr.co.lotteon.mapper.SellerMapper">
 
-    <!--🎈admin_product_list-->
-    <select id="adminSelectProducts" resultType="kr.co.lotteon.dto.ProductDTO">
-        SELECT a.*, b.mainImg
-        FROM `product` AS a
-        LEFT JOIN `productimg` AS b ON a.pno = b.pno
-        LEFT JOIN `seller` AS c ON a.sid = c.uid
-        WHERE b.mainImg IS NOT NULL
-        ORDER BY a.rdate DESC, a.pno ASC
-    </select>
     <!-- 상품 검색 및 리스트 출력 -->
     <select id="selectProductsBySearchAndSeller" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.ProductDTO">
         SELECT a.*, b.mainImg, (
@@ -41,7 +32,7 @@
         LIMIT ${size} OFFSET ${(pg - 1) * size}
     </select>
 
-    <select id="selectOrders" resultType="kr.co.lotteon.dto.OrdersDTO">
+    <select id="selectOrdersBySeller" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.OrdersDTO">
         SELECT o.*,
             p.pno, p.cate, p.pname, p.company,
             pi.mainimg,
@@ -50,9 +41,10 @@
         JOIN `orderdetail` AS od ON o.ono = od.ono
         JOIN `product` AS p ON p.pno = od.pno
         JOIN `productimg` AS pi ON p.pno = pi.pno
+        WHERE p.sid = '${seller}'
     </select>
 
-    <select id="selectOrderGroup" resultType="kr.co.lotteon.dto.OrdersDTO">
+    <select id="selectOrderBySellerGroup" parameterType="kr.co.lotteon.dto.PageRequestDTO" resultType="kr.co.lotteon.dto.OrdersDTO">
         SELECT
             o.ono, o.odate, o.total, o.uid,
             COUNT(od.ono) AS `count`,
@@ -67,10 +59,11 @@
             JOIN `product` AS p ON od.pno = p.pno
             JOIN `productimg` AS ip on p.pno = ip.pno
             <where>
-                <if test="type == 'pname'">p.pname like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'company'">p.company like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'seller'">p.seller like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'uid'">o.uid='${keyword}'</if>
+                p.sid = '${seller}'
+                <if test="type == 'pname'">AND p.pname like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'company'">AND p.company like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'seller'">AND p.seller like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'uid'">AND o.uid='${keyword}'</if>
             </where>
             )AS line
         FROM `orders` AS o
@@ -78,10 +71,11 @@
         JOIN `product` AS p ON od.pno = p.pno
         JOIN `productimg` AS ip on p.pno = ip.pno
         <where>
-            <if test="type == 'pname'">p.pname like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'company'">p.company like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'seller'">p.seller like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'uid'">o.uid='${keyword}'</if>
+            p.sid = '${seller}'
+            <if test="type == 'pname'">AND p.pname like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'company'">AND p.company like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'seller'">AND p.seller like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'uid'">AND o.uid='${keyword}'</if>
         </where>
         GROUP BY o.ono
         LIMIT ${size} OFFSET ${(pg - 1) * size}
@@ -97,9 +91,10 @@
             SUM(od.pcount) AS pcount,
             SUM(od.price) AS price
         FROM `orderdetail` AS od
-        INNER JOIN `product` AS p ON od.pno = p.pno
-        INNER JOIN `productimg` AS pi ON od.pno = pi.pno
-        INNER JOIN `orders` AS o ON od.ono = o.ono
+        JOIN `product` AS p ON od.pno = p.pno
+        JOIN `productimg` AS pi ON od.pno = pi.pno
+        JOIN `orders` AS o ON od.ono = o.ono
+        WHERE p.sid = '${seller}'
         GROUP BY od.pno
         ORDER BY od.pno
     </select>
@@ -118,6 +113,23 @@
         GROUP BY DATE_FORMAT(o.odate,'%y-%m')
         ORDER BY period DESC
         LIMIT 12
+        )limit_row
+        ORDER BY period ASC
+    </select>
+    <!-- 상품별 월간 주문량, 월판매액 -->
+    <select id="selectOrderByMonthAndSellerAndProduct" resultType="kr.co.lotteon.dto.OrdersDTO">
+        SELECT * FROM (
+        SELECT
+        od.pno,
+        SUM(od.pcount) AS pcount,
+        SUM(o.total) AS price,
+        DATE_FORMAT(o.odate,'%y-%m') AS period
+        FROM `orderdetail` AS od
+        JOIN `orders` AS o ON od.ono = o.ono
+        JOIN `product` AS p ON p.pno = od.pno
+        WHERE p.sid = #{sid}
+        GROUP BY p.pno, DATE_FORMAT(o.odate,'%y-%m')
+        ORDER BY period DESC
         )limit_row
         ORDER BY period ASC
     </select>
@@ -148,22 +160,5 @@
         GROUP BY p.pname
         ORDER BY pcount DESC
     </select>
-
-    <!--🎈 admin_product_delete-->
-    <delete id="adminDeleteProduct">
-        DELETE FROM `product` WHERE pno = #{pno}
-
-    </delete>
-
-    <!--🎈 banner_list-->
-    <select id="selectBanner" resultType="kr.co.lotteon.dto.BannerDTO">
-        SELECT * FROM `banner`
-   </select>
-
-    <delete id="deleteBanner">
-        DELETE FROM banner WHERE `bno` = #{bno}
-    </delete>
-
-
 
 </mapper>

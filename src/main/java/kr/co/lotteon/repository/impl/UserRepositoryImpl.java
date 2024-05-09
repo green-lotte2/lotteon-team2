@@ -50,6 +50,32 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return new PageImpl<>(results, pageable, total);
     }
 
+    @Override
+    public Page<Tuple> adminSearchUsers(PageRequestDTO pageRequestDTO, Pageable pageable) {
+        // 전체 결과 수 가져오기
+        long total = jpaQueryFactory
+                .selectFrom(qUser)
+                .where(qUser.uid.contains(pageRequestDTO.getKeyword()).and(qUser.role.eq(pageRequestDTO.getRole())))
+                .fetchCount();
+        log.info("total :" + total);
+
+        // 페이징 처리를 위해 offset과 limit 설정
+        List<Tuple> results = jpaQueryFactory
+                .select(qUser, qUser.uid)
+                .from(qUser)
+                .where(qUser.uid.contains(pageRequestDTO.getKeyword()).and(qUser.role.eq(pageRequestDTO.getRole())))
+                .orderBy(qUser.regDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        log.info("selectArticles...1-2 : " + results);
+
+
+
+        // 페이징 처리를 위해 page 객체 리턴
+        return new PageImpl<>(results, pageable, total);
+    }
 
 
  //   @Override
