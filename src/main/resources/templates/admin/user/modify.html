@@ -383,11 +383,12 @@
                         </tr>
                     </table>
                 </section>
+                <div id="modifyBtn">
+                    <input type="submit" class="modifyBtn" value="수정완료" th:href="@{/admin/user/list}"/>
+                </div>
+                <a th:href="@{/admin/user/list}" class="cancelBtn">취소</a>
             </div>
-            <div id="modifyBtn">
-                <input type="submit" class="modifyBtn" value="수정완료" th:href="@{/admin/cs/user/list}"/>
-                <input type="submit" class="cancelBtn" value="취소" style="background-color: #777777; color: #ffffff; padding: 6px; border: none;" th:href="@{/admin/cs/user/list}"/>
-            </div>
+
         </form>
 
     </div>

@@ -44,7 +44,7 @@ public class AdminService {
     private final UserDetailRepository userDetailRepository;
 
 
-    //🎈회원 리스트 페이징
+    //🎈회원 리스트 페이징 전체 목록 조회
     public PageResponseDTO adminSelectUsers(PageRequestDTO pageRequestDTO){
 
         log.info("selectUsers...1");
@@ -81,12 +81,37 @@ public class AdminService {
     }
 
 
+    //🎈 회원 검색 목록 조회
+    /*
+    public PageResponseDTO adminSearchUsers(PageRequestDTO pageRequestDTO, String keyword, String role){
 
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        List<UserDTO> pageArticle = userRepository.adminSearchUsers(pageRequestDTO, pageable, keyword, role);
 
-    // 🎈회원 리스트
-    public void adminSelectUsers(PageRequestDTO uid, PageRequestDTO pageRequestDTO){
-        userRepository.adminSelectUsers(uid, (Pageable) pageRequestDTO);
+        List<UserDTO> userList = pageArticle.getContent().stream()
+                .map(tuple ->
+                        {
+                            log.info("tuple : " + tuple);
+                            User user = tuple.get(0, User.class);
+                            String uid = tuple.get(1, String.class);
+                            user.setUid(uid);
+                            log.info("user : " + user);
+
+                            return modelMapper.map(user, UserDTO.class);
+                        }
+                )
+                .toList();
+
+        int total = (int) pageArticle.getTotalElements();
+
+        return PageResponseDTO.builder()
+                .pageRequestDTO(pageRequestDTO)
+                .userList(userList)
+                .total(total)
+                .build();
     }
+
+*/
 
     // 🎈 회원 수정
     public UserDTO adminUserSelect(String uid) {
