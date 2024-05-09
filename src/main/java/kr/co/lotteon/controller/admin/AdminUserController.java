@@ -3,10 +3,12 @@ package kr.co.lotteon.controller.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.PageRequestDTO;
+import kr.co.lotteon.dto.PageResponseDTO;
 import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.javassist.compiler.ast.Keyword;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -26,19 +28,33 @@ public class AdminUserController {
 
     private final AdminService adminService;
 
+    // 🎈user 등록
     @GetMapping("/admin/user/register")
     public String adminUserRegister(){
         return "/admin/user/register";
     }
 
 
+    // 🎈uesr 리스트
     @GetMapping("/admin/user/list")
-    public String adminUserList(String uid, PageRequestDTO pageRequestDTO){
+    public String adminUserList(Model model, PageRequestDTO pageRequestDTO){
 
-        log.info("uid" +uid);
-        adminService.adminSelectUsers(uid, pageRequestDTO);
+        PageResponseDTO pageResponseDTO = null;
+
+        if(pageRequestDTO.getKeyword() == null) {
+            // 일반 글 목록 조회
+            pageResponseDTO = adminService.adminSelectUsers(pageRequestDTO);
+        }else{
+            pageResponseDTO = adminService.adminSearchUsers(pageRequestDTO);
+        }
+
+        log.info("pageResponseDTO : " + pageResponseDTO);
+
+        model.addAttribute(pageResponseDTO);
+
         return "/admin/user/list";
     }
+
 
 
     // 🎈 user 수정

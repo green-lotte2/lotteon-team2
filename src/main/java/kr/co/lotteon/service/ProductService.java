@@ -1,21 +1,14 @@
 package kr.co.lotteon.service;
 
 import com.querydsl.core.Tuple;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.*;
 
-import kr.co.lotteon.mapper.AdminMapper;
-
 import kr.co.lotteon.mapper.ProductMapper;
 import kr.co.lotteon.repository.*;
-import kr.co.lotteon.repository.custom.ProductRepositoryCustom;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.internal.util.Objects;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.*;
 
 import lombok.RequiredArgsConstructor;
@@ -43,16 +35,12 @@ public class ProductService {
 
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
-    private final OrderDetailRepository orderDetailRepository;
-    private final CartRepository cartRepository;
-    private final OrderRepository orderRepository;
 
     @Value("${img.upload.path}")
     private String imgUploadPath;
 
     private final ModelMapper modelMapper;
     private final ProductMapper productMapper;
-    private final AdminMapper adminMapper;
 
 
     private final ProductimgRepository productimgRepository;
@@ -227,6 +215,7 @@ public class ProductService {
         return productRepository.findByCate(category.getCate(), pageable);
     }
 
+    @Cacheable("cateCache")
     @Transactional(rollbackFor = Exception.class)
     public List<CategoryDTO> getCategoryList() {
         List<CategoryDTO> results = categoryRepository.findAll().stream().map(CategoryDTO::of).collect(Collectors.toList());

@@ -47,10 +47,6 @@
             border-bottom: 2px solid #333;
         }
 
-        nav#topNav {
-            background-color: #d1a100;
-        }
-
     </style>
     <script th:inline="javascript">
         window.onload = function (){
@@ -58,53 +54,58 @@
             // bar, pie chart
             const ctx = document.getElementById("myBarChart");
             const cateName = [[${cateName}]];
+            console.log(cateName);
+            if(cateName !== null){
+                let barData = [];
+                let barLabel = [];
 
-            let barData = [];
-            let barLabel = [];
+                let pieData = [];
+                let pieLabel = [];
+                cateName.forEach(function(cate){
+                    if(pieData.length < 3){
+                        pieData.push(cate.pcount);
+                        pieLabel.push(cate.pname);
+                    }
+                    let length = 10; // 표시할 글자수 기준
+                    if (cate.pname.length > length) {
+                        cate.pname = cate.pname.substr(0, length - 2) + '...';
+                    }
 
-            let pieData = [];
-            let pieLabel = [];
-            cateName.forEach(function(cate){
-                if(pieData.length < 3){
-                    pieData.push(cate.pcount);
-                    pieLabel.push(cate.pname);
-                }
-                let length = 10; // 표시할 글자수 기준
-                if (cate.pname.length > length) {
-                    cate.pname = cate.pname.substr(0, length - 2) + '...';
-                }
-
-                barData.push(cate.pcount);
-                barLabel.push(cate.pname);
-            });
-            drawPieChart(pieData, pieLabel);
-            drawBarChart(barData, barLabel, ctx);
+                    barData.push(cate.pcount);
+                    barLabel.push(cate.pname);
+                });
+                drawPieChart(pieData, pieLabel);
+                drawBarChart(barData, barLabel, ctx);
+            }
 
             // line chart
+            let lineChart;
             const monthSales = [[${monthSales}]];
             const weekSales = [[${weekSales}]];
-            let lineChart;
-            const chartName = document.getElementById('chartName');
-            const count = document.getElementById('count');
-            const price = document.getElementById('price');
-            const dropdown_item = document.getElementsByClassName('dropdown-item');
+            if(monthSales != null && weekSales != null){
+                const chartName = document.getElementById('chartName');
+                const count = document.getElementById('count');
+                const price = document.getElementById('price');
+                const dropdown_item = document.getElementsByClassName('dropdown-item');
 
-            for(let i = 0; i < dropdown_item.length; i++){
-                dropdown_item[i].onclick = function (e) {
-                    e.preventDefault();
-                    const value = e.target.getAttribute('data-value');
-                    if (value === 'month'){
-                        setChart(monthSales);
-                        chartName.innerText = "월간 주문금액"
-                        price.innerText = '￦' + monthSales[monthSales.length-1].price.toLocaleString();
-                        count.innerText = monthSales[monthSales.length - 1].pcount.toLocaleString() + '건';
-                    }else if(value === 'week'){
-                        setChart(weekSales);
-                        chartName.innerText = "주간 주문금액";
-                        price.innerText = '￦' + weekSales[weekSales.length-1].price.toLocaleString();
-                        count.innerText = weekSales[weekSales.length-1].pcount.toLocaleString() + '건';
+                for(let i = 0; i < dropdown_item.length; i++){
+                    dropdown_item[i].onclick = function (e) {
+                        e.preventDefault();
+                        const value = e.target.getAttribute('data-value');
+                        if (value === 'month'){
+                            setChart(monthSales);
+                            chartName.innerText = "월간 주문금액"
+                            price.innerText = '￦' + monthSales[monthSales.length-1].price.toLocaleString();
+                            count.innerText = monthSales[monthSales.length - 1].pcount.toLocaleString() + '건';
+                        }else if(value === 'week'){
+                            setChart(weekSales);
+                            chartName.innerText = "주간 주문금액";
+                            price.innerText = '￦' + weekSales[weekSales.length-1].price.toLocaleString();
+                            count.innerText = weekSales[weekSales.length-1].pcount.toLocaleString() + '건';
+                        }
                     }
                 }
+                setChart(monthSales);
             }
             function setChart(salesList){
                 const ctx = document.getElementById("myAreaChart");
@@ -118,7 +119,7 @@
                 lineChart = drawChart(ctx, data, labels, lineChart);
             }
 
-            setChart(monthSales);
+
         }
     </script>
 
@@ -141,7 +142,7 @@
                                 <div class="text-xs font-weight-bold text-uppercase mb-1">
                                     주문건수 (month)
                                 </div>
-                                <div id="count" class="h5 mb-0 font-weight-bold text-gray-800">[[${#numbers.formatInteger(monthSales[#lists.size(monthSales)-1].pcount, 0, 'COMMA')}]]건</div>
+                                <div id="count" th:if="${monthSales} != null" class="h5 mb-0 font-weight-bold text-gray-800">[[${#numbers.formatInteger(monthSales[#lists.size(monthSales)-1].pcount, 0, 'COMMA')}]]건</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -160,7 +161,7 @@
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     주문금액 (month)
                                 </div>
-                                <div id="price" class="h5 mb-0 font-weight-bold text-gray-800">￦[[${#numbers.formatInteger(monthSales[#lists.size(monthSales)-1].price, 0, 'COMMA')}]]</div>
+                                <div id="price" th:if="${monthSales} != null" class="h5 mb-0 font-weight-bold text-gray-800">￦[[${#numbers.formatInteger(monthSales[#lists.size(monthSales)-1].price, 0, 'COMMA')}]]</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-won-sign fa-2x text-gray-300"></i>
@@ -295,7 +296,7 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 id="barChartName" class="m-0 font-weight-bold">월간 주문금액</h6>
+                    <h6 id="barChartName" class="m-0 font-weight-bold">월간 판매량</h6>
                     <div class="dropdown no-arrow">
                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenu"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -17,6 +17,10 @@
         .search_box {
             border: 1px solid #888888;
         }
+
+        nav#topNav {
+            background-color: #ffb900;
+        }
     </style>
 </head>
 
@@ -33,7 +37,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/admin/index}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/seller/index}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -84,8 +88,8 @@
                 </a>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:href="@{/admin/order/list}">주문현황</a>
-                        <a class="collapse-item" th:href="@{/admin/order/sales}">매출현황</a>
+                        <a class="collapse-item" th:href="@{/seller/order/list}">주문현황</a>
+                        <a class="collapse-item" th:href="@{/seller/order/sales}">매출현황</a>
                         <a class="collapse-item" href="#">결제관리</a>
                         <a class="collapse-item" href="#">배송관리</a>
                     </div>

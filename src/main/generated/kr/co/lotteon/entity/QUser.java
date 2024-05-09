@@ -25,7 +25,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath email = createString("email");
 
-    public final ComparablePath<Character> gender = createComparable("gender", Character.class);
+    public final StringPath gender = createString("gender");
 
     public final StringPath hp = createString("hp");
 

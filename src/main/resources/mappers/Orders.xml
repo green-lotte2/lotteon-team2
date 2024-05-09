@@ -50,4 +50,8 @@
         WHERE o.ono = #{ono}
     </select>
 
+    <select id="selectPoint" resultType="kr.co.lotteon.dto.OrdersDTO">
+        select * from `orders` where uid = #{uid}
+    </select>
+
 </mapper>

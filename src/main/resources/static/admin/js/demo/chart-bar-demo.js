@@ -29,6 +29,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 
 // Bar Chart Example
 function drawBarChart(data, label, ctx){
+  console.log(Math.max.apply(null,data));
   var myBarChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -68,7 +69,7 @@ function drawBarChart(data, label, ctx){
         yAxes: [{
           ticks: {
             min: 0,
-            max: 20,
+            max: Math.max.apply(null,data),
             maxTicksLimit: 5,
             padding: 10,
             // Include a dollar sign in the ticks

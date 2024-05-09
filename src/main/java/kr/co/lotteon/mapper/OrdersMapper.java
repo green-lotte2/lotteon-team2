@@ -19,4 +19,6 @@ public interface OrdersMapper {
     List<OrdersDTO> selectOrderDetails(int ono);
 
     List<OrdersDTO> selectOrdersGroupByDate(String uid, LocalDate searchDate, LocalDate nowDate);
+
+    public List<OrdersDTO> selectPoint(String uid);
 }

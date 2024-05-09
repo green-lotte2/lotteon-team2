@@ -13,10 +13,21 @@
             rel="stylesheet">
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
     <link th:href="@{/admin/css/admin.css}" rel="stylesheet">
+    <style>
+        .page-link {
+            background-color: #fff;
+        }
+
+        .page-link:hover {
+            background-color:#5581ff;
+            color: #ffffff;
+        }
+    </style>
 
 </head>
 
 <main layout:fragment="content">
+
     <script>
         window.onload = function () {
             const delBtn = document.getElementById('delBtn');
@@ -70,10 +81,9 @@
                     <form th:action="@{/admin/user/list}"  method="get">
                         <div id="searchBox">
                             <select name="role" id="searchOption">
-                                <option value="" selected disabled> 전체 </option>
+                                <option value="user">일반사용자</option>
                                 <option value="admin">관리자</option>
                                 <option value="seller">판매자</option>
-                                <option value="user">일반사용자</option>
                             </select>
                             <input type="search" class="searchInput" name="keyword" placeholder="아이디를 입력하세요.">
                             <button class="searchBtn">
@@ -89,6 +99,7 @@
                                 <th>
                                     <input type="checkbox" name="all">
                                 </th>
+                                <th>번호</th>
                                 <th>아이디</th>
                                 <th>이름</th>
                                 <th>이메일</th>
@@ -100,10 +111,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="user:${users}">
+                            <tr th:each="user, index:${pageResponseDTO.userList}">
                                 <td>
                                     <input name="checkbox" type="checkbox" th:value="${user.uid}">
                                 </td>
+                                <td>[[${index.index+1}]]</td>
                                 <td>[[${user.uid}]]</td>
                                 <td>[[${user.name}]]</td>
                                 <td>[[${user.email}]]</td>
@@ -121,6 +133,28 @@
                             <input type="submit" id="delBtn" value="선택삭제">
                         </div>
                     </form>
+
+                    <!--🎈paging-->
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-center">
+
+                            <li th:if="${pageResponseDTO.prev}" class="page-item">
+                                <a th:if="${pageResponseDTO.keyword == null}" th:class="page-link" th:href="@{/admin/user/list(pg=${pageResponseDTO.start - 1})}">이전</a>
+                                <a th:if="${pageResponseDTO.keyword != null}" th:class="page-link" th:href="@{/admin/user/list(pg=${pageResponseDTO.start - 1}, type=${pageResponseDTO.type}, keyword=${pageResponseDTO.keyword})}">이전</a>
+                            </li>
+
+                            <li th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}" class="page-item">
+                                <a th:if="${pageResponseDTO.keyword == null}" th:class="page-link " th:href="@{/admin/user/list(pg=${num})}">[[${num}]]</a>
+                                <a th:if="${pageResponseDTO.keyword != null}" th:class="page-link" th:href="@{/admin/user/list(pg=${num}, type=${pageResponseDTO.type}, keyword=${pageResponseDTO.keyword})}">[[${num}]]</a>
+                            </li>
+
+                            <li th:if="${pageResponseDTO.next}" class="page-item">
+                                <a th:if="${pageResponseDTO.keyword == null}" th:class="page-link" th:href="@{/admin/user/list(pg=${pageResponseDTO.end + 1})}">다음</a>
+                                <a th:if="${pageResponseDTO.keyword != null}" th:class="page-link" th:href="@{/admin/user/list(pg=${pageResponseDTO.end + 1}, type=${pageResponseDTO.type}, keyword=${pageResponseDTO.keyword})}">다음</a>
+                            </li>
+
+                        </ul>
+                    </nav>
 
                 </div>
             </div>
