@@ -348,19 +348,21 @@ main > aside > .best > ol > li > a > .thumb > i {
   top: 0;
   display: inline-block;
   width: 16px;
-  height: 20px;
-  font-size: 14px;
+  height: 16px;
+  font-size: 11px;
   padding: 0;
-  color: #ef3e42;
-  border-bottom: 1px solid #ef3e42;
+  color: #fff;
   font-weight: bold;
-  font-style: italic;
   text-align: center;
   line-height: 18px;
+  background-color: tomato;
+  border-radius: 50%;
 }
 main > aside > .best > ol > li:first-child > a > .thumb > i {
-  width: 35px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 13px;
 }
 
 main > aside > .best > ol > li > a > .thumb > img {
@@ -409,11 +411,14 @@ main > aside > .best > ol > li > a .dis_price > ins::after {
   content: "원";
 }
 main > aside > .best > ol > li > a .dis_price > span {
+  background-color: royalblue;
+  padding: 1px;
   display: inline-block;
-  font-size: 0;
-  vertical-align: text-bottom;
   width: 55px;
-  height: 13px;
+  font-size: 12px;
+  color: #fff;
+  border-radius: 2px;
+  text-align: center;
 }
 
 /* 메인 첫번째 섹션 */

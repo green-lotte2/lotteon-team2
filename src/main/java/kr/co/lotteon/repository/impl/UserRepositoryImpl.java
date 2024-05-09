@@ -53,7 +53,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         // 페이징 처리를 위해 page 객체 리턴
         return new PageImpl<>(results, pageable, total);
     }
-
+/*
     @Override
     public Page<Tuple> adminSearchUsers(PageRequestDTO pageRequestDTO, Pageable pageable) {
         // 전체 결과 수 가져오기
