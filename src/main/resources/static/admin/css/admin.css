@@ -396,6 +396,15 @@ main table span {
     background-color: #f64022;
 }
 
+#userModify .cancelBtn {
+    position: relative;
+    bottom: 30px;
+    background-color: #777777;
+    color: #ffffff;
+    padding: 6px;
+    border: none;
+}
+
 #userModify select#role {
     width: 120px;
     height: 30px;

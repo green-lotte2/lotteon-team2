@@ -44,7 +44,7 @@ public class AdminService {
     private final UserDetailRepository userDetailRepository;
 
 
-    //🎈회원 리스트 페이징
+    //🎈회원 리스트 페이징 전체 목록 조회
     public PageResponseDTO adminSelectUsers(PageRequestDTO pageRequestDTO){
 
         log.info("selectUsers...1");
@@ -115,11 +115,6 @@ public class AdminService {
                 .build();
     }
 
-
-    // 🎈회원 리스트
-    public void adminSelectUsers(PageRequestDTO uid, PageRequestDTO pageRequestDTO){
-        userRepository.adminSelectUsers(uid, (Pageable) pageRequestDTO);
-    }
 
     // 🎈 회원 수정
     public UserDTO adminUserSelect(String uid) {
