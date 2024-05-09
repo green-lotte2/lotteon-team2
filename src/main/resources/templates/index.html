@@ -24,41 +24,7 @@
     <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script th:src="@{/js/index.js}"></script>
-    <style>
-        #bannerTop {
-            display: none;
-            width: 100%;
-            height: 80px;
-            border-bottom: 1px solid #e9e9e9;
-            box-sizing: border-box;
-        }
 
-        #bannerTop.on {
-            display: block;
-        }
-
-        #bannerTop > article {
-            position: relative;
-            width: 1200px;
-            height: 100%;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-
-        #bannerTop > article > .btnClose {
-            position: absolute;
-            right: 0px;
-            top: 0px;
-            width: 40px;
-            height: 40px;
-            background-image: url('../static/images/ico_sprite.png');
-            background-position: -122px -142px;
-            background-color: transparent;
-            font-size: 0;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body>
@@ -67,14 +33,16 @@
 -->
 <div id="bannerTop" class="on" style="background: #e4dfdf;">
     <article>
-        <a href="#"><img src="./images/topBanner1.png"/></a>
+        <a href="#"><img th:src="@{/images/topBanner1.png}"/></a>
         <button class="btnClose">close</button>
     </article>
 </div>
 
+
 <!-- 카테고리/베스트 상품 영역 -->
 
 <section layout:fragment="content">
+
     <!-- 슬라이더 영역 -->
 
     <section class="slider">

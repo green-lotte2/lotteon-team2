@@ -14,6 +14,55 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <style>
+       .text {
+           width: 80%;
+           display: flex;
+           justify-content: space-between;
+       }
+
+       .text .text1 {
+           margin-left: 25px;
+       }
+
+       .text p {
+           margin-bottom: 5px;
+       }
+       .text .text1, .text2 p {
+           margin-bottom: 5px;
+       }
+
+       button.accordion-button.collapsed {
+           border: 1px solid #b0b0b0b5;
+           border-bottom: none;
+       }
+
+
+
+       .accordion-flush>.accordion-item:last-child {
+           border-bottom: 1px solid #b0b0b0b5;
+       }
+
+       .accordion {
+
+           --bs-accordion-btn-focus-box-shadow: inherit;
+           --bs-accordion-active-bg: inherit;
+       }
+
+       .innerText {
+           display: flex;
+           padding: 16px;
+           background-color: #fff0db
+       }
+
+       .innerText .itemImg {
+           margin-right: 20px;
+       }
+
+       .accordion-button:not(.collapsed) {
+           border: 4px solid #fddfba;
+       }
+    </style>
 </head>
 
 <main layout:fragment="content">
@@ -51,43 +100,44 @@
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                         <div class="accordion-item" th:each="order:${orders.anyList}">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" data-bs-toggle="collapse" th:data-bs-target="'#'+${order.ono}" aria-expanded="false" th:aria-controls="'#'+${order.ono}">
+                                <button class="accordion-button collapsed orderItems" data-bs-toggle="collapse" th:data-bs-target="'#'+${order.ono}" aria-expanded="false" th:aria-controls="'#'+${order.ono}">
                                     <div>
                                         <img width="75px" height="75px" th:src="@{|/product/${order.cate}/${order.mainimg}|}" alt="상품이미지">
                                     </div>
-                                    <div>
-                                        주문 번호 : [[${order.ono}]]<br>
-                                        주문 내용 : [[${order.pname}]] <strong th:if="${order.count - 1 > 0}">외 [[${order.count - 1}]]개</strong>
+                                    <div class="text">
+                                        <div class="text1">
+                                            <p>주문 번호 : [[${order.ono}]]</p>
+                                            <p>주문 내용 : [[${order.pname}]] <strong th:if="${order.count - 1 > 0}">외 [[${order.count - 1}]]개</strong></p>
+                                        </div>
+                                        <div class="text2">
+                                            <p>구매자 : [[${order.uid}]]</p>
+                                            <p>결제 금액 : [[${order.total}]]</p>
+                                            <p>결제 날짜 : [[${order.odate}]]</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        구매자 : [[${order.uid}]]<br>
-                                        결제 금액 : [[${order.total}]]<br>
-                                        결제 날짜 : [[${order.odate}]]
-                                    </div>
+
                                 </button>
                             </h2>
                             <div th:id="${order.ono}" th:each="product:${products.anyList}" th:if="${product.ono} == ${order.ono}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                <div style="display: block">
-                                    <img width="75px" height="75px" th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
-                                </div>
-                                <div>
-                                    <p style="display: block">
-                                        상품 번호 : [[${product.pno}]]
-                                        상품 이름 : [[${product.pname}]]
-                                        판매 회사 : [[${product.company}]]
-                                    </p>
-                                    <p style="display: block">
-                                        선택 옵션 : [[${product.options}]]
-                                        구매 수량 : [[${product.pcount}]]
-                                        구매 가격 : [[${product.price}]]
+                                <div class="innerText">
+                                    <div class="itemImg" style="display: block">
+                                        <img width="75px" height="75px" th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
+                                    </div>
+                                    <div>
+                                        <p style="display: block">
+                                            상품 번호 : [[${product.pno}]]
+                                            상품 이름 : [[${product.pname}]]
+                                            판매 회사 : [[${product.company}]]
+                                        </p>
+                                        <p style="display: block">
+                                            선택 옵션 : [[${product.options}]]
+                                            구매 수량 : [[${product.pcount}]]
+                                            구매 가격 : [[${product.price}]]
 
-                                    </p>
-                                    <select>
-                                        <option>배송중</option>
-                                        <option>상품준비중</option>
-                                        <option>배송완료</option>
-                                    </select>
+                                        </p>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

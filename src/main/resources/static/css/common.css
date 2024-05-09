@@ -450,7 +450,7 @@ main > section > section > h3 > span {
   display: inline-block;
   margin: 20px 0;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 main > section > section > article > a {
@@ -485,7 +485,6 @@ main > section > section > article h2 {
 font-size: 15px;
 font-weight: bold;
 margin-top: 4px;
-text-align: center;
 text-overflow: ellipsis;
 white-space: nowrap;
 overflow: hidden;
@@ -531,13 +530,13 @@ font-weight: bold;
 text-decoration: none;
 }
 main > section > section > article .dis_price > .free {
-  background-color: royalblue;
-  padding: 1px;
+  background-color: #3669fd;
+  padding: 3px 2px;
   display: inline-block;
   width: 55px;
   font-size: 12px;
   color: #fff;
-  border-radius: 2px;
+  border-radius: 4px;
   text-align: center;
 
 }
