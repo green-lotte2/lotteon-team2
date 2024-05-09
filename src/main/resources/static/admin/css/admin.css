@@ -82,10 +82,11 @@ div#searchBox {
     width: 220px;
     height: 35px;
 }
-
+.card-header:first-child {
+    border: none;
+}
 .card-header.py-3 {
     background-color: #9c9c9c;
-
 }
 
 .text-primary {
@@ -273,7 +274,7 @@ main table span {
 
 /*🎈회원리스트*/
 #userList #table {
-    font-size: 14px;
+    font-size: 13px;
 }
 #userList #table tr.tableTitle {
     background-color: #585858;

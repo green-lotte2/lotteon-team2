@@ -366,13 +366,13 @@
                         <tr class="regDate">
                             <th>가입일</th>
                             <td>
-                                <input th:value="${#temporals.format(user.regDate, 'yyyy-MM-dd')}" type="text" name="regDate" id="regDate" readonly/>
+                                <input th:value="${user.regDate}" type="text" name="regDate" id="regDate" readonly/>
                             </td>
                         </tr>
                         <tr th:if="${user.leaveDate != null}">
                             <th>탈퇴일</th>
                             <td>
-                                <input  th:value="${#temporals.format(user.leaveDate, 'yyyy-MM-dd')}" type="text" name="leaveDate" class="leaveDate" style="color: red;" readonly>
+                                <input  th:value="${user.leaveDate}" type="text" name="leaveDate" class="leaveDate" style="color: red;" readonly>
                             </td>
                         </tr>
                         <tr th:if="${user.leaveDate == null}">

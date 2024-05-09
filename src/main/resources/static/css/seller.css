@@ -1,0 +1,10 @@
+
+
+button.accordion-button.collapsed {
+    border: 1px solid #b0b0b0b5;
+    border-bottom: none;
+}
+
+.accordion-flush>.accordion-item:last-child {
+    border: 1px solid #b0b0b0b5;
+}
