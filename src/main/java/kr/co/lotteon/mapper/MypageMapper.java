@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface MypageMapper {
 
-    public List<QnaDTO> selectCsQnaComment(int qnano);
+    public List<QnaDTO> selectCsQnaCommentView(int qnano);
 
     public List<QnaDTO> selectMyQnaBoard(String uid, int start);
 

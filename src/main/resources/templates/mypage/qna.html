@@ -57,7 +57,7 @@
                                 console.log(data);
                                 var response = data[0];
                                 if (response) {
-                                    var content = response.content; // JSON 데이터에서 answer 가져오기
+                                    var content = response.rcontent; // JSON 데이터에서 answer 가져오기
                                     var title = response.title;
                                     var rdate = response.rdate;
                                     var formattedDate = rdate.replace("T", " ");

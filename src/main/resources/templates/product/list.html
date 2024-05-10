@@ -42,6 +42,28 @@
                     cateMap.appendChild(span);
                 }
             }
+
+            let Top = document.getElementById('top');
+
+            if (Top) {
+                Top.style.display = 'none'
+                window.addEventListener('scroll', function () {
+                    if (window.scrollY > 300) {
+                        Top.style.display = 'block';
+                        console.log(Top);
+                    } else {
+                        Top.style.display = 'none';
+                    }
+                });
+
+                Top.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                    console.log(Top);
+                });
+            } else {
+                console.log("#top 요소를 찾을 수 없습니다.");
+            }
         }
     </script>
     <!-- 제목, 페이지 네비게이션 -->

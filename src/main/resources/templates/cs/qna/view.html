@@ -80,18 +80,7 @@
                   [[${qnaChildBoard.rcontent}]]
                 </p>
               </div>
-<<<<<<< HEAD
-              <th:block th:if="${qnaBoard.answercomplete != 1}">
-                <nav>
-                  <h2 class="title" th:text="'☞[답변]' + ${qnaChildBoard.title}"></h2>
-                </nav>
-                <div class="content">
-                  <p>
-                   [[${qnaChildBoard.rcontent}]]
-                  </p>
-                  <p>
-                  </p>
-                </div>
+
               </th:block>
               <a th:href="@{/cs/qna/list}" id="btnList" class="btnList">목록보기</a>
               <a th:href="@{/cs/qna/modify(qnano=${qnaBoard.qnano})}" id="btnModify" class="btnList">수정하기</a>
@@ -100,16 +89,7 @@
           </section>
         </div>
       </section>
-=======
-            </th:block>
-            <a th:href="@{/cs/qna/list}" class="btnList">목록보기</a>
-            <a th:href="@{/cs/qna/modify(qnano=${qnaBoard.qnano})}" class="btnList">수정하기</a>
-            <a th:href="@{/cs/qna/delete(qnano=${qnaBoard.qnano})}" class="btnList">삭제하기</a>
-          </article>
-        </section>
-      </div>
-    </section>
->>>>>>> origin/feature/everybod24
+
 
   </div>
 </html>

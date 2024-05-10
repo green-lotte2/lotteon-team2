@@ -18,6 +18,12 @@
         <link th:rel="stylesheet" th:href="@{/css/common.css}" />
         <link th:rel="stylesheet" th:href="@{/css/style.css}" />
     </head>
+    <script>
+        function showAlertLogin() {
+            alert('로그인이 필요한 기능입니다.');
+            window.location.href = '/lotteon/member/login';
+        }
+    </script>
     <body>
         <div id="wrapper">
             <header>
@@ -30,7 +36,11 @@
 
                         <a sec:authorize="isAuthenticated()" th:href="@{/mypage/}">[[${#authentication.principal.user.name}]]</a>
                         <a sec:authorize="isAuthenticated()" th:href="@{/product/cart}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>장바구니</a>
-                        <a sec:authorize="isAuthenticated()" th:href="@{/admin/index}">관리자</a>
+                        <th:block th:if="${#authentication.principal != 'anonymousUser'}">
+                            <th:block th:if="${#authentication.principal.user.role == 'ADMIN'}">
+                                <a th:href="@{/admin/index}">관리자</a>
+                            </th:block>
+                        </th:block>
                         <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
                     </div>
                 </div>
@@ -47,18 +57,11 @@
                 <div class="menu">
                     <div>
                         <ul>
-                            <li><a th:href="@{#}">히트상품</a></li>
-                            <li><a th:href="@{#}">추천상품</a></li>
-                            <li><a th:href="@{#}">최신상품</a></li>
-                            <li><a th:href="@{#}">인기상품</a></li>
-                            <li><a th:href="@{#}">할인상품</a></li>
-                        </ul>
-                        <ul>
-                            <li><a th:href="@{/mypage/coupon}">쿠폰존</a></li>
-                            <li><a th:href="@{#}">사용후기</a></li>
-                            <li><a th:href="@{#}">개인결제</a></li>
+                            <li><a th:href="@{/cs/notice/list}">공지사항</a></li>
+                            <li><a th:href="@{/cs/faq/list(cate1=20)}">자주묻는질문</a></li>
+                            <li><a th:href="@{/cs/qna/list}" th:if="${#authorization.expression('isAuthenticated()')}">문의하기</a></li>
+                            <li><a th:unless="${#authorization.expression('isAuthenticated()')}" onclick="showAlertLogin();" style="cursor: pointer;">문의하기</a></li>
                             <li><a th:href="@{/cs}">고객센터</a></li>
-                            <li><a th:href="@{/cs/faq/list(cate1=20)}">FAQ</a></li>
                         </ul>
                     </div>
                 </div>
