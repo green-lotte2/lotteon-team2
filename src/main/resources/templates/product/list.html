@@ -147,26 +147,30 @@
 
 
     <!-- 상품목록 페이지번호 -->
-    <div class="paging">
+    <div class="paging" th:if="${!result1.dtoList.isEmpty()}">
         <!-- 이전 페이지 링크 -->
-        <span class="prev">
-        <a th:if="${result.pg > 1}"
-           th:href="@{/product/list(cate=${result.cate}, pg=${result.pg - 1})}">&lt;&nbsp;이전</a>
+        <span class="prev" th:if="${result1.prev}">
+      <a th:if="${result1.keyword == null}" th:href="@{/product/list(cate=${result1.cate}, pg=${result1.start - 1})}">&lt; 이전</a>
+      <a th:if="${result1.keyword != null}" th:href="@{/product/list(cate=${result1.cate}, pg=${result1.start - 1},
+                                                                type=${result1.type}, ketword=${result1.keyword})}">&lt; 이전</a>
     </span>
 
         <!-- 숫자 페이지 링크 -->
-        <span class="num">
-        <a th:each="pageNum : ${#numbers.sequence(result.start, result.end)}"
-           th:href="@{/product/list(cate=${result.cate}, pg=${pageNum})}"
-           th:text="${pageNum}"
-           th:class="${pageNum == result.pg ? 'on' : ''}"></a>
-    </span>
+        <span class="num" th:each="n : ${#numbers.sequence(result1.start, result1.end)}">
+      <a th:if="${result1.keyword == null}" th:href="@{/product/list(cate=${result1.cate}, pg=${n})}"
+         th:classappend="${result1.pg == n} ? 'pageOn' : 'page-link'" th:text="${n}"></a>
+      <a th:if="${result1.keyword != null}" th:href="@{/product/list(cate=${result1.cate}, pg=${n}, type=${result1.type}, keyword=${result1.keyword})}"
+         th:classappend="${result1.pg == n} ? 'pageOn' : 'page-link'" th:text="${n}"></a>
+  </span>
 
         <!-- 다음 페이지 링크 -->
-        <span class="next">
-        <a th:if="${result.pg < result.totalPage}" th:href="@{/product/list(cate=${result.cate}, pg=${result.pg + 1})}">다음&nbsp;&gt;</a>
+        <span class="next" th:if="${result1.next}">
+    <a th:if="${result1.keyword == null}" th:href="@{/product/list(cate=${result1.cate}, pg=${result1.end + 1})}">&lt; 다음</a>
+      <a th:if="${result1.keyword != null}" th:href="@{/product/list(cate=${result1.cate}, pg=${result1.end + 1},
+                                                                type=${result1.type}, ketword=${result1.keyword})}">&lt; 다음</a>
     </span>
     </div>
+
 
 
 </section>

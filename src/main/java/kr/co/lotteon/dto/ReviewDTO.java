@@ -21,6 +21,7 @@ public class ReviewDTO {
     private String uid;
     private String content;
     private int rating;
+    private String options;
     private LocalDateTime redate;
 
 

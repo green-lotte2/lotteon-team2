@@ -421,7 +421,7 @@
                     <span>[[${review.uid}]]</span>
                     <span th:text="${#temporals.format(review.redate, 'yyyy-MM-dd')}"></span>
                 </div>
-                <h3>상품명1/BLUE/L</h3>
+                <h3 th:text="${review.options}">상품명1/BLUE/L</h3>
                 <p th:text="${review.content}"></p>
             </li>
         </ul>
