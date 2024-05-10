@@ -49,6 +49,5 @@ public class ProductPageRequestDTO {
     private String company;
     private String seller;
     private String pname;
-    @Builder.Default
-    private int cate = 0;
+    private int cate;
 }

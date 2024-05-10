@@ -165,7 +165,7 @@ public class ProductController {
         ProductDTO productDTO = productService.findProductDTOById(pno);
         if (productDTO != null) {
             productService.productHitUpdate(productDTO);
-            List<ReviewDTO> reviews = reviewService.findReviewsByProductId(pno);
+            List<ReviewDTO> reviews = ordersService.selectReview(pno);
 
             model.addAttribute("cate", productService.getCategoryList());
             model.addAttribute("product", productDTO);
@@ -177,18 +177,14 @@ public class ProductController {
     }
 
     @GetMapping("/product/list")
-    public String list(Model model, ProductPageRequestDTO productPageRequestDTO, int cate) {
-
-
-        // cate 문자열을 int로 변환, 유효하지 않은 경우 기본값 0을 사용
-        int cateInt = 0;
+    public String list(Model model, @ModelAttribute ProductPageRequestDTO productPageRequestDTO, int cate) {
 
         // 서비스 메소드 호출
         ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, cate);
-        responseDTO.setCate(cateInt); // cate 값을 responseDTO에 설정
+        responseDTO.setCate(cate); // cate 값을 responseDTO에 설정
 
         model.addAttribute("products", responseDTO.getDtoList());
-        model.addAttribute("result", responseDTO);
+        model.addAttribute("result1", responseDTO);
         model.addAttribute("cate", productService.getCategoryList()); // 카테고리 리스트 추가
 
         log.info("response : " + responseDTO);
@@ -199,7 +195,7 @@ public class ProductController {
     // 상품 검색 컨트롤러
     @GetMapping("/product/search")
     public String searchProducts(@ModelAttribute ProductPageRequestDTO productPageRequestDTO, Model model) {
-        log.info("productPageRequestDTO44444444444444 : " + productPageRequestDTO);
+
         // 서비스 메서드를 호출하여 검색 결과를 가져옵니다.
         List<ProductDTO> products = productService.searchProducts(
                 productPageRequestDTO.getSearch(),
@@ -207,6 +203,7 @@ public class ProductController {
                 productPageRequestDTO.getMaxPrice(),
                 productPageRequestDTO.getCate()
         );
+
         int totalResults = productService.countSearchProducts(
                 productPageRequestDTO.getSearch(),
                 productPageRequestDTO.getMinPrice(),
@@ -215,7 +212,6 @@ public class ProductController {
         );
 
             ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, productPageRequestDTO.getCate());
-            log.info("productPageRequestDTO5555555555555 : " + responseDTO);
             model.addAttribute("products", responseDTO.getDtoList());
             model.addAttribute("result", responseDTO);
             model.addAttribute("cate", productService.getCategoryList());

@@ -1,6 +1,7 @@
 package kr.co.lotteon.mapper;
 
 import kr.co.lotteon.dto.OrdersDTO;
+import kr.co.lotteon.dto.ReviewDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.time.LocalDate;
@@ -21,4 +22,6 @@ public interface OrdersMapper {
     List<OrdersDTO> selectOrdersGroupByDate(String uid, LocalDate searchDate, LocalDate nowDate);
 
     public List<OrdersDTO> selectPoint(String uid);
+
+    public  List<ReviewDTO> selectReview(int pno);
 }

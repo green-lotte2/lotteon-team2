@@ -114,5 +114,11 @@ public class OrdersService {
     public List<OrdersDTO> selectPoint(String uid){
         return ordersMapper.selectPoint(uid);
     }
+
+
+    public List<ReviewDTO> selectReview(int pno) {
+    return ordersMapper.selectReview(pno);
+    }
+
 }
 
