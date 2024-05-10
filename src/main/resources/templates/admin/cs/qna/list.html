@@ -196,23 +196,24 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="qnaDTOs, aaaaaa:${qnaDTOS}">
+                                    <tr th:each="qna, index: ${qnaDTOS}">
                                         <td>
-                                            <input type="checkbox" name="checkbox" th:value="${qnaDTOS.qnano}">
+                                            <input type="checkbox" name="checkbox" th:value="${qna.qnano}">
                                         </td>
-                                        <td>[[${qnaDTOS.qnano}]]</td>
-                                        <td th:text="'[' + ${qnaDTOS.c2name} + ']'">유형</td>
+                                        <td th:text="${index.index+1} + ${(pageGroupStart -1) * 10 }" ></td>
+                                        <!--<td>[[${qna.qnano}]]</td>-->
+                                        <td th:text="'[' + ${qna.c2name} + ']'">유형</td>
                                         <td>
-                                            <a th:href="@{/admin/cs/qna/view(qnano=${qnaDTOS.qnano}, cate2=${qnaDTOS.cate2})}">[[${qnaDTOS.title}]]</a>
+                                            <a th:href="@{/admin/cs/qna/view(qnano=${qna.qnano}, cate2=${qna.cate2})}">[[${qna.title}]]</a>
                                             </td>
-                                        <td>[[${qnaDTOS.uid}]]</td>
-                                        <td th:text="${#temporals.format(qnaDTOS.rdate, 'yy-MM-dd')}"></td>
+                                        <td>[[${qna.uid}]]</td>
+                                        <td th:text="${#temporals.format(qna.rdate, 'yy-MM-dd')}"></td>
                                         <th:block class="answercomplete" name="answercomplete">
-                                            <td style="color:royalblue;" th:class="blue-text" th:if="${qnaDTOS.answercomplete == 2}">답변완료</td>
-                                            <td style="color: tomato" th:class="gray-text" th:if="${qnaDTOS.answercomplete == 1}">검토중</td>
+                                            <td style="color:royalblue;" th:class="blue-text" th:if="${qna.answercomplete == 2}">답변완료</td>
+                                            <td style="color: tomato" th:class="gray-text" th:if="${qna.answercomplete == 1}">검토중</td>
                                         </th:block>
                                         <td>
-                                            <a th:href="@{/admin/cs/qna/delete(qnano=${qnaDTOS.qnano})}" id="delete">[삭제]</a>
+                                            <a th:href="@{/admin/cs/qna/delete(qnano=${qna.qnano})}" id="delete">[삭제]</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -241,23 +242,6 @@
             <input type="hidden" th:value="${pageGroupEnd}">
             <input type="hidden" th:value="${pageStartNum}">
 
-            <!--paging-->
-            <!--
-            <nav aria-label="...">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>-->
         </div>
 
     </div>

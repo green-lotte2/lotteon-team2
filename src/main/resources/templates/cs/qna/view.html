@@ -43,6 +43,7 @@
                 </aside>
                 <article>
                     <nav>
+
                         <h2 class="title" th:text="'[' + ${qnaBoard.c2name} + ']' + ${qnaBoard.title}"></h2>
                         <p>
                             <span th:text="${#strings.substring(qnaBoard.uid, 0, 3) + '***'}"></span>
@@ -80,13 +81,17 @@
                             </p>
                         </div>
                     </th:block>
-                    <a th:href="@{/cs/qna/list}" id="btnList" class="btnList">목록보기</a>
-                    <a th:href="@{/cs/qna/modify(qnano=${qnaBoard.qnano})}" id="btnModify" class="btnList">수정하기</a>
-                    <a th:href="@{/cs/qna/delete(qnano=${qnaBoard.qnano})}" id="btnDel" class="btnList">삭제하기</a>
+                    <div class="csBtn" style="text-align: end">
+                        <a th:href="@{/cs/qna/list}" id="btnList" class="btnList">목록보기</a>
+                        <a th:href="@{/cs/qna/modify(qnano=${qnaBoard.qnano})}" id="btnModify" class="btnList">수정하기</a>
+                        <a th:href="@{/cs/qna/delete(qnano=${qnaBoard.qnano})}" id="btnDel" class="btnList">삭제하기</a>
+                    </div>
+
                 </article>
             </section>
         </div>
     </section>
+
 
 </div>
 </html>

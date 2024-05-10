@@ -115,7 +115,7 @@
                                 <td>
                                     <input name="checkbox" type="checkbox" th:value="${user.uid}">
                                 </td>
-                                <td>[[${index.index+1}]]</td>
+                                <td>[[${(pageResponseDTO.pg - 1) * 10 + (index.index+1) }]]</td>
                                 <td>[[${user.uid}]]</td>
                                 <td>[[${user.name}]]</td>
                                 <td>[[${user.email}]]</td>
