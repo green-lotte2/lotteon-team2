@@ -31,6 +31,10 @@
                         alert("보유하신 포인트를 초과하였습니다.");
                         return false;
                     }
+                    if(point > parseInt(document.getElementById('finalPrice').innerText)){
+                        alert("결제 금액 이상으로 포인트 사용은 불가능합니다.");
+                        return false;
+                    }
                     document.getElementById('discountPoint').innerText = '-' + point;
                     document.getElementsByName('usepoint')[0].value = point;
                     setting();
@@ -219,25 +223,25 @@
                 </tr>
                 <tr>
                     <td>받는분</td>
-                    <td><input type="text" name="receiver"/></td>
+                    <td><input type="text" name="receiver" required/></td>
                 </tr>
                 <tr>
                     <td>우편번호</td>
                     <td>
-                        <input type="text" id="inputZip" name="zip"/>
+                        <input type="text" id="inputZip" name="zip" required/>
                         <input type="button" id="btnZip" value="검색"/>
                     </td>
                 </tr>
                 <tr>
                     <td>기본주소</td>
                     <td>
-                        <input type="text" id="addr1" name="addr1"/>
+                        <input type="text" id="addr1" name="addr1" required/>
                     </td>
                 </tr>
                 <tr>
                     <td>상세주소</td>
                     <td>
-                        <input type="text" id="addr2" name="addr2"/>
+                        <input type="text" id="addr2" name="addr2" required/>
                     </td>
                 </tr>
             </table>
@@ -263,7 +267,7 @@
             <div>
                 <span>신용카드</span>
                 <p>
-                    <label><input type="radio" name="payment" value="신용카드"/>신용카드 결제</label>
+                    <label><input type="radio" name="payment" value="신용카드" required/>신용카드 결제</label>
                     <label><input type="radio" name="payment" value="체크카드"/>체크카드 결제</label>
                 </p>
             </div>

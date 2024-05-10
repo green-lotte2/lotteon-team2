@@ -62,7 +62,6 @@
                 p.sid = '${seller}'
                 <if test="type == 'pname'">AND p.pname like CONCAT('%','${keyword}','%')</if>
                 <if test="type == 'company'">AND p.company like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'seller'">AND p.seller like CONCAT('%','${keyword}','%')</if>
                 <if test="type == 'uid'">AND o.uid='${keyword}'</if>
             </where>
             )AS line
@@ -74,7 +73,6 @@
             p.sid = '${seller}'
             <if test="type == 'pname'">AND p.pname like CONCAT('%','${keyword}','%')</if>
             <if test="type == 'company'">AND p.company like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'seller'">AND p.seller like CONCAT('%','${keyword}','%')</if>
             <if test="type == 'uid'">AND o.uid='${keyword}'</if>
         </where>
         GROUP BY o.ono

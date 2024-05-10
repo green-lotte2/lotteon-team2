@@ -48,8 +48,8 @@ public class SecurityConfig {
          */
         httpSecurity.authorizeHttpRequests(authorize -> authorize
                                                         .requestMatchers("/article/**").permitAll()
-                                                        .requestMatchers("/admin/**").permitAll()
-                //.hasAuthority("ADMIN")
+                                                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                                                        .requestMatchers("/seller/**").hasAuthority("SELLER")
                                                         .requestMatchers("/manager/**").hasAnyAuthority("ADMIN", "MANAGER")
                                                         .anyRequest().permitAll());
 

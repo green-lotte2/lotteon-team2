@@ -65,7 +65,7 @@
 <div class="wrapper">
     <header>
         <!--🎈탑배너-->
-        <div id="bannerTop" class="on" style="background: #e4dfdf;">
+        <div id="bannerTop" class="on" style="background: #e4dfdf;" th:if="${bestProduct != null}">
             <article>
                 <a href="#"><img th:src="@{/images/topBanner1.png}"/></a>
                 <button class="btnClose">X</button>
@@ -81,7 +81,8 @@
 
                 <a sec:authorize="isAuthenticated()" th:href="@{/mypage/}">[[${#authentication.principal.user.name}]]</a>
                 <a sec:authorize="isAuthenticated()" th:href="@{/product/cart}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>장바구니</a>
-                <a sec:authorize="isAuthenticated()" th:href="@{/admin/index}">관리자</a>
+                <a sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.role} == 'ADMIN'" th:href="@{/admin/index}">관리자</a>
+                <a sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.role} == 'SELLER'" th:href="@{/seller}">판매자</a>
                 <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
             </div>
         </div>
