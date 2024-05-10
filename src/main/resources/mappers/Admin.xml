@@ -55,7 +55,7 @@
         <where>
             <if test="type == 'pname'">a.pname like CONCAT('%','${keyword}','%')</if>
             <if test="type == 'company'">a.company like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'seller'">a.seller like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'seller'">a.sid like CONCAT('%','${keyword}','%')</if>
             <if test="type == 'pno'">a.pno=${keyword}</if>
         </where>
         ORDER BY a.rdate DESC, a.pno ASC

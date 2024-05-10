@@ -16,36 +16,15 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
     <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/admin/css/admin.css}" rel="stylesheet">
+    <link th:href="@{/css/seller.css}" rel="stylesheet">
     <style>
-        .prodImg {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
+        .search_box {
+            border: 1px solid #888888;
         }
 
-        #searchOption {
-            width: 90px;
-            height: 30px;
-        }
-
-        #prod_search {
-            width: 200px;
-            height: 30px;
-            border: 1px solid #777777;
-            font-size: 13px;
-            outline: none;
-            border-radius: 5px;
-        }
-
-        .searchBtn {
-            border: none;
-        }
-
-        .searchBtn img {
-            width: 23px;
-            height: 23px;
-            position: relative;
-            right: 40px;
+        nav#topNav {
+            background-color: #3488ff;
         }
 
     </style>
@@ -95,7 +74,7 @@
                                 <option value="company">제조사</option>
                                 <option value="seller">판매사</option>
                             </select>
-                            <input type="search" id="prod_search" name="keyword" placeholder="검색어를 입력하세요.">
+                            <input type="search" class="searchInput"  name="keyword" placeholder="검색어를 입력하세요.">
                             <button class="searchBtn">
                                 <img th:src="@{/admin/img/search_40.png}" alt="검색">
                             </button>

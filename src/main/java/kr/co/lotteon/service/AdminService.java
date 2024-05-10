@@ -69,9 +69,12 @@ public class AdminService {
                 )
                 .toList();
 
+
         log.info("selectUsers...4 : " + userList);
 
         int total = (int) pageArticle.getTotalElements();
+
+
 
         return PageResponseDTO.builder()
                 .pageRequestDTO(pageRequestDTO)

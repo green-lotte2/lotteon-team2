@@ -189,19 +189,19 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="faqDTOs: ${faqDTOS}">
+                                <tr th:each="faq, index:${faqDTOS}">
                                     <td>
-                                        <input type="checkbox" name="checkbox" th:value="${faqDTOs.faqno}">
+                                        <input type="checkbox" name="checkbox" th:value="${faq.faqno}">
                                     </td>
-                                    <td>[[${faqDTOs.faqno}]]</td>
-                                    <td th:text="'[' + ${faqDTOs.c2name} + ']'"></td>
+                                    <td th:text="${(pageGroupStart -1) * 10 + index.index + 1}" ></td>
+                                    <td th:text="'[' + ${faq.c2name} + ']'"></td>
                                     <td>
-                                        <a th:href="@{/admin/cs/faq/view(faqno=${faqDTOs.faqno}, cate2=${faqDTOs.cate2})}">[[${faqDTOs.title}]]</a>
+                                        <a th:href="@{/admin/cs/faq/view(faqno=${faq.faqno}, cate2=${faq.cate2})}">[[${faq.title}]]</a>
                                     </td>
-                                    <td th:text="${#temporals.format(faqDTOs.rdate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#temporals.format(faq.rdate, 'yyyy-MM-dd')}"></td>
                                     <td>
-                                        <a th:href="@{/admin/cs/faq/delete(faqno=${faqDTOs.faqno})}" id="delete">[삭제]</a>
-                                        <a th:href="@{/admin/cs/faq/modify(faqno=${faqDTOs.faqno})}">[수정]</a>
+                                        <a th:href="@{/admin/cs/faq/delete(faqno=${faq.faqno})}" id="delete">[삭제]</a>
+                                        <a th:href="@{/admin/cs/faq/modify(faqno=${faq.faqno})}">[수정]</a>
                                     </td>
                                 </tr>
                                 </tbody>

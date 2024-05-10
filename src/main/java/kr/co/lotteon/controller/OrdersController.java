@@ -69,6 +69,7 @@ public class OrdersController {
     public String productOrder(OrdersDTO ordersDTO, @RequestParam List<String> checkbox) {
 
         Orders orders = ordersService.insertOrder(ordersDTO);
+        String uid = ordersDTO.getUid();
         int ono = orders.getOno();
         for (String select : checkbox) {
             OrdersDTO ordersDTO1 = new OrdersDTO();
@@ -86,11 +87,10 @@ public class OrdersController {
                 String options = String.join(" ", optionsArray);
                 ordersDTO1.setOptions(options);
             }
-            String uid = ordersDTO.getUid();
-            userService.updateUserPoint(uid, ordersDTO.getUsepoint(), ordersDTO.getSavepoint());
             ordersService.insertOrderDetail(ordersDTO1);
             cartService.orderCartItems(uid, ordersDTO1.getPno());
         }
+        userService.updateUserPoint(uid, ordersDTO.getUsepoint(), ordersDTO.getSavepoint());
         return "redirect:/product/complete/" + ono;
     }
 

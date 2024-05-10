@@ -58,9 +58,9 @@
     height: 19px;
     background-repeat: no-repeat;
 }
-
-#product .badge.power {background-image: url('../images/ico_power_dealer.gif');}
-#product .badge.great {background-image: url('../images/ico_great_seller.gif');}
+/*
+#product .badge.power {background-image: url('../images/ico_power_dealer.gif');}*/
+/*#product .badge.great {background-image: url('../images/ico_great_seller.gif');}*/
 #product .badge.power.great {
     background: url('../images/ico_power_dealer.gif') no-repeat, url('../images/ico_great_seller.gif') no-repeat 63px;
     width: 160px;
@@ -107,6 +107,9 @@
 #product > .list > .prodList > .item > .imgBox > a.thumb {
     display: block;
     overflow: hidden;
+    width: 200px;
+    border: 1px solid #e3e3e3bd;
+    box-shadow: 0.1px 0.5px #999;
 }
 
 #product > .list > .prodList > .item > .imgBox > a >  img {
@@ -160,6 +163,7 @@
 #product > .list > .prodList > .item > .price .discount {
     color: red;
     font-weight: bold;
+    font-size: 14px;
 }
 
 #product > .list > .prodList > .item > .sellerInfo {
@@ -1094,7 +1098,7 @@
 #product > .order > form > .final {
   float: right;
   width: 360px;
-  height: 412px;
+  height: 440px;
   padding: 20px;
   margin-top: 12px;
   background: #fff;

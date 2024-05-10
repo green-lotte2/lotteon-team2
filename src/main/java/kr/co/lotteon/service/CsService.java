@@ -174,6 +174,7 @@ public class CsService {
         int pageGroupStart = (currentPageGroup - 1) * 10 + 1;
         int pageGroupEnd = currentPageGroup * 10;
 
+
         if(pageGroupEnd > lastPageNum){
             pageGroupEnd = lastPageNum;
         }
@@ -524,8 +525,8 @@ public class CsService {
 
 
     // myqna 답변
-    public List<QnaDTO> selectCsQnaComment(int qnano){
-        return mypageMapper.selectCsQnaComment(qnano);
+    public List<QnaDTO> selectCsQnaCommentView(int qnano){
+        return mypageMapper.selectCsQnaCommentView(qnano);
     }
 
     // 🎈Qna 답변 등록

@@ -4,28 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <title>롯데ON::2조</title>
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}" />
-    <link rel="stylesheet" th:href="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}"/>
+    <link rel="stylesheet"
+          th:href="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css}">
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}"/>
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css}">
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link rel="stylesheet" th:href="@{/css/member.css}"/>
     <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
-    <link rel="stylesheet" th:href="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css}">
+    <link rel="stylesheet"
+          th:href="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css}">
     <script th:src="@{https://kit.fontawesome.com/20962f3e4b.js}" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css}">
     <script th:src="@{/js/util.js}"></script>
     <script th:inline="javascript">
 
-        window.onload = function (){
+        window.onload = function () {
 
             const success = [[${success}]];
 
-            if(success == 100){
+            if (success == 100) {
                 alertModal('로그인에 실패했습니다.\n다시 한번 아이디, 비밀번호를 확인 하시기 바랍니다. 😢');
-            }else if(success == 200) {
+            } else if (success == 200) {
                 alertModal('회원 가입 되었습니다. 😊');
-            }else if(success == 300){
+            } else if (success == 300) {
                 alertModal('로그아웃 되었습니다. 안녕히 가세요. 😃');
             }
 
@@ -43,7 +45,7 @@
                 rememberCheckbox.checked = true;
             }
 
-            rememberCheckbox.addEventListener('change', function() {
+            rememberCheckbox.addEventListener('change', function () {
                 if (this.checked) {
                     rememberUid();
                 } else {
@@ -68,43 +70,43 @@
 </head>
 
 <body>
-    <main class="content" id="member">
+<main class="content" id="member">
 
-        <div class="login">
+    <div class="login">
 
-            <form method="post">
-                <a th:href="@{/}">
-                    <img class="loginLogo" th:src="@{/images/logo_lotte_on_login.png}" alt="로그인로고">
-                </a>
-
-                <table border="0">
-                    <tr>
-                        <td><input type="text" id="inputUid" name="uid" placeholder="아이디 입력"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="password" name="pass" placeholder="8~15자리 영문+숫자+특수문자 조합"></td>
-                    </tr>
-                    <tr>
-                        <td><input type="submit" class="loginBtn" value="로그인" /></td>
-                    </tr>
-
-                </table>
-
-                <span>
-                            <label><input type="checkbox" id="inputRememberId" value="" onchange="if(this.checked) {rememberUid();} else {clearSavedUid();}" />아이디 기억하기</label>
-                            <a th:href="@{/member/findId}">아이디찾기</a>
-                            <a th:href="@{/member/findPassword}">비밀번호찾기</a>
-                            <a th:href="@{/member/join}">회원가입</a>
-                        </span>
-
-
-
-            </form>
-            <a th:href="@{/}" class="banner">
-                <img th:src="@{/images/member_login_banner.png}" alt="로그인배너">
+        <form method="post">
+            <a th:href="@{/}">
+                <img class="loginLogo" th:src="@{/images/logo_lotte_on_login.png}" alt="로그인로고">
             </a>
-        </div>
-    </main>
+
+            <table border="0">
+                <tr>
+                    <td><input type="text" id="inputUid" name="uid" placeholder="아이디 입력"></td>
+                </tr>
+                <tr>
+                    <td><input type="password" name="pass" placeholder="8~15자리 영문+숫자+특수문자 조합"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" class="loginBtn" value="로그인"/></td>
+                </tr>
+
+            </table>
+
+            <span>
+                <label><input type="checkbox" id="inputRememberId" onchange="if(this.checked) {rememberUid();} else {clearSavedUid();}"/>아이디 기억하기</label>
+                <a th:href="@{/member/findId}">아이디찾기</a>
+                <a th:href="@{/member/findPassword}">비밀번호찾기</a>
+                <a th:href="@{/member/join}">회원가입</a>
+            </span>
+        </form>
+        <a th:href="@{/oauth2/authorization/google}" class="oauth2">
+            <img th:src="@{/images/web_light_sq_ctn.svg}" alt="로그인">
+        </a>
+        <a th:href="@{/}" class="banner">
+            <img th:src="@{/images/member_login_banner.png}" alt="로그인배너">
+        </a>
+    </div>
+</main>
 </body>
 
 </html>

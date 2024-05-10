@@ -28,7 +28,11 @@
 
                         <a sec:authorize="isAuthenticated()" th:href="@{/mypage/}">[[${#authentication.principal.user.name}]]</a>
                         <a sec:authorize="isAuthenticated()" th:href="@{/product/cart}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>장바구니</a>
-                        <a sec:authorize="isAuthenticated()" th:href="@{/admin/index}">관리자</a>
+                        <th:block th:if="${#authentication.principal != 'anonymousUser'}">
+                            <th:block th:if="${#authentication.principal.user.role == 'ADMIN'}">
+                                <a th:href="@{/admin/index}">관리자</a>
+                            </th:block>
+                        </th:block>
                         <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
                     </div>
                 </div>
@@ -50,8 +54,8 @@
                         <ol>
                             <li><a href="#">주문·배송<span class="delivery">1</span></a></li>
                             <li><a href="#">할인쿠폰<span class="coupon">1</span></a></li>
-                            <li><a href="#">포인트<span class="point">1,000</span></a></li>
-                            <li><a href="#">문의내역<span class="qna">1</span></a></li>
+                            <li><a th:href="@{/mypage/point}">포인트<span class="point">1,000</span></a></li>
+                            <li><a th:href="@{/mypage/qna}">문의내역<span class="qna">1</span></a></li>
                         </ol>
 
                     </div>

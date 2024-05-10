@@ -19,4 +19,12 @@
         SELECT * FROM `qna` AS a JOIN `cate2` AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `parent`=#{qnaNo}
     </select>
 
+    <select id="selectCsQnaCommentView" resultType="kr.co.lotteon.dto.QnaDTO">
+        SELECT * FROM `qna` AS a
+        JOIN `cate1` as b
+        JOIN `cate2` as c
+        ON a.cate1 = c.cate1 AND a.cate2 = c.cate2 AND a.cate1 = b.cate1
+        WHERE `qnano` = #{qnano}
+    </select>
+
 </mapper>

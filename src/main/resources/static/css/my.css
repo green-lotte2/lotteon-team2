@@ -90,6 +90,7 @@ header > .logo > div > form {
     height: 45px;
 }
 header > .logo > div > form > input {
+    display: none;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -102,6 +103,7 @@ header > .logo > div > form > input {
 }
 
 header > .logo > div > form > button {
+    display: none;
     position: absolute;
     right: 6px;
     top: 10px;

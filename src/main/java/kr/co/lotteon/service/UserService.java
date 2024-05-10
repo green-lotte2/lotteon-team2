@@ -89,6 +89,10 @@ public class UserService {
         if(optUserDetail.isPresent()){
             UserDetail userDetail = optUserDetail.get();
             int result = userDetail.getPoint() - point + savepoint;
+            log.info(userDetail.getPoint() + "원래포인트");
+            log.info(point + "사용포인트");
+            log.info(savepoint + "적립포인트");
+            log.info(result + "최종포인트");
             userDetail.setPoint(result);
 
             userDetailRepository.save(userDetail);
