@@ -525,8 +525,8 @@ public class CsService {
 
 
     // myqna 답변
-    public List<QnaDTO> selectCsQnaComment(int qnano){
-        return mypageMapper.selectCsQnaComment(qnano);
+    public List<QnaDTO> selectCsQnaCommentView(int qnano){
+        return mypageMapper.selectCsQnaCommentView(qnano);
     }
 
     // 🎈Qna 답변 등록

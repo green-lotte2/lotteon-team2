@@ -14,5 +14,6 @@ import java.util.List;
 public class MyHomeDTO {
 
     private List<QnaDTO> qnaList;
+    private OrdersDTO point;
 
 }

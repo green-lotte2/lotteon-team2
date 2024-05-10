@@ -36,12 +36,12 @@ public class MyController {
     private final AuthenticationManager authenticationManager;
 
     @GetMapping(value = {"/mypage/","/mypage/home"})
-    public String myPage(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+    public String myPage(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails, Authentication authentication){
 
         MyHomeDTO myHomeDTO = myService.getMyHomeInfo(myUserDetails.getUser().getUid());
-
+        List<OrdersDTO> point = ordersService.selectPoint(authentication.getName());
         model.addAttribute("myHomeDTO", myHomeDTO);
-
+        model.addAttribute("point", point);
         return "/mypage/home";
     }
 
@@ -53,7 +53,6 @@ public class MyController {
             return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
         }
         List<OrdersDTO> point = ordersService.selectPoint(authentication.getName());
-        log.info("오늘은 이거다"+point);
         model.addAttribute("point", point);
         return "/mypage/point";
     }
@@ -112,7 +111,7 @@ public class MyController {
     @GetMapping("/qna/comment")
     public List<QnaDTO> commentBoard(@RequestParam("qnano") int qnano){
         log.info("commentBoard qnano : " + qnano);
-        List<QnaDTO> commentBoard = csService.selectCsQnaComment(qnano);
+        List<QnaDTO> commentBoard = csService.selectCsQnaCommentView(qnano);
         log.info("commentBoard : " + commentBoard.toString());
         return commentBoard;
     }
