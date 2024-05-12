@@ -307,6 +307,7 @@ main table span {
 #userModify form table td {
     border-bottom: 1px solid #dbdbdb;
     border-collapse: collapse;
+    border-top: none;
 }
 
 #userModify form table .pass span {

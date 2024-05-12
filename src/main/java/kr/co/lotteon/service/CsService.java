@@ -355,12 +355,6 @@ public class CsService {
 
 
     // 🎈Admin 자주묻는질문 리스트
-    /*
-    public List<FaqDTO> selectFaqList(){
-
-        return faqMapper.selectFaqList();
-    }
-    */
 
     public List<FaqDTO> selectFaqList(){
 
