@@ -167,14 +167,7 @@ public class ProductController {
     // 상품 검색 컨트롤러
     @GetMapping("/product/search")
     public String searchProducts(@ModelAttribute ProductPageRequestDTO productPageRequestDTO, Model model) {
-
-        // 서비스 메서드를 호출하여 검색 결과를 가져옵니다.
-        List<ProductDTO> products = productService.searchProducts(
-                productPageRequestDTO.getSearch(),
-                productPageRequestDTO.getMinPrice(),
-                productPageRequestDTO.getMaxPrice(),
-                productPageRequestDTO.getCate()
-        );
+        log.info(productPageRequestDTO.toString());
 
         int totalResults = productService.countSearchProducts(
                 productPageRequestDTO.getSearch(),
@@ -183,13 +176,13 @@ public class ProductController {
                 productPageRequestDTO.getCate()
         );
 
-            ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, productPageRequestDTO.getCate());
-            model.addAttribute("products", responseDTO.getDtoList());
-            model.addAttribute("result", responseDTO);
-            model.addAttribute("cate", productService.getCategoryList());
-            model.addAttribute("totalResults", totalResults);
+        ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, productPageRequestDTO.getCate());
+        model.addAttribute("products", responseDTO.getDtoList());
+        model.addAttribute("result", responseDTO);
+        model.addAttribute("cate", productService.getCategoryList());
+        model.addAttribute("totalResults", totalResults);
 
-            log.info("responseDTO1 : " + responseDTO);
+        log.info("responseDTO1 : " + responseDTO);
 
         // 검색 키워드와 가격 정보를 뷰에 유지
         model.addAttribute("searchKeyword", productPageRequestDTO.getSearch());

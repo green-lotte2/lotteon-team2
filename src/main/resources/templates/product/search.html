@@ -17,11 +17,11 @@
       <input type="text" name="search" th:value="${searchKeyword}" placeholder="검색어를 입력하세요"/>
       <input type="submit" value="검색"/>
       <span>
-                <label><input type="checkbox" name="chk" value="상품명" checked>상품명</label>
-                <label><input type="checkbox" name="chk" value="상품설명">상품설명</label>
-                <label><input type="checkbox" name="chk" value="상품가격">상품가격</label>
-                <input type="text" name="min" th:value="${minPrice}" placeholder="최소 가격"/>원&nbsp;~&nbsp;
-                <input type="text" name="max" th:value="${maxPrice}" placeholder="최대 가격"/>원
+                <label><input type="checkbox" name="chk" value="pname" checked>상품명</label>
+                <label><input type="checkbox" name="chk" value="info">상품설명</label>
+                <label><input type="checkbox" name="chk" value="price">상품가격</label>
+                <input type="text" name="minPrice" th:value="${minPrice}" placeholder="최소 가격"/>원&nbsp;~&nbsp;
+                <input type="text" name="maxPrice" th:value="${maxPrice}" placeholder="최대 가격"/>원
             </span>
     </form>
     <p class="info">
@@ -87,24 +87,22 @@
   <div class="paging" th:if="${!result.dtoList.isEmpty()}">
     <!-- 이전 페이지 링크 -->
     <span class="prev" th:if="${result.prev}">
-      <a th:if="${result.keyword == null}" th:href="@{/product/search(cate=${result.cate}, pg=${result.start - 1})}">&lt; 이전</a>
-      <a th:if="${result.keyword != null}" th:href="@{/product/search(cate=${result.cate}, pg=${result.start - 1},
-                                                                type=${result.type}, ketword=${result.keyword})}">&lt; 이전</a>
+      <a th:if="${result.search == null}" th:href="@{/product/search(search=${result.search}, pg=${result.start - 1})}">&lt; 이전</a>
+      <a th:if="${result.search != null}" th:href="@{/product/search(search=${result.search}, pg=${result.start - 1})}">&lt; 이전</a>
     </span>
 
     <!-- 숫자 페이지 링크 -->
     <span class="num" th:each="n : ${#numbers.sequence(result.start, result.end)}">
-      <a th:if="${result.keyword == null}" th:href="@{/product/search(cate=${result.cate}, pg=${n})}"
+      <a th:if="${result.search == null}" th:href="@{/product/search(search=${result.search}, pg=${n})}"
          th:classappend="${result.pg == n} ? 'pageOn' : 'page-link'" th:text="${n}"></a>
-      <a th:if="${result.keyword != null}" th:href="@{/product/search(cate=${result.cate}, pg=${n}, type=${result.type}, keyword=${result.keyword})}"
+      <a th:if="${result.search != null}" th:href="@{/product/search(search=${result.search}, pg=${n})}"
          th:classappend="${result.pg == n} ? 'pageOn' : 'page-link'" th:text="${n}"></a>
   </span>
 
     <!-- 다음 페이지 링크 -->
     <span class="next" th:if="${result.next}">
-    <a th:if="${result.keyword == null}" th:href="@{/product/search(cate=${result.cate}, pg=${result.end + 1})}">&lt; 다음</a>
-      <a th:if="${result.keyword != null}" th:href="@{/product/search(cate=${result.cate}, pg=${result.end + 1},
-                                                                type=${result.type}, ketword=${result.keyword})}">&lt; 다음</a>
+    <a th:if="${result.search == null}" th:href="@{/product/search(search=${result.search}, pg=${result.end + 1})}">&lt; 다음</a>
+      <a th:if="${result.search != null}" th:href="@{/product/search(search=${result.search}, pg=${result.end + 1})}">&lt; 다음</a>
     </span>
   </div>
 
