@@ -139,9 +139,17 @@ public class ProductController {
             productService.productHitUpdate(productDTO);
             List<ReviewDTO> reviews = ordersService.selectReview(pno);
 
+            Double Average = ordersService.reviewAverage(pno);
+            if (Average == null) {
+                Average = 0.0; // 평균 별점이 없는 경우 기본값 설정
+            }
+
+            model.addAttribute("Average", Average);
             model.addAttribute("cate", productService.getCategoryList());
             model.addAttribute("product", productDTO);
             model.addAttribute("reviews", reviews);
+
+            log.info("Average1111 : " + Average);
             return "/product/view";
         } else {
             return "redirect:/product/list";
