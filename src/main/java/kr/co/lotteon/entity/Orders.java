@@ -34,8 +34,6 @@ public class Orders {
     private String request;
     private int total;
 
-    // 추가필드
-    private int state;
 
 
 

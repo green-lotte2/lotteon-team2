@@ -3,6 +3,7 @@ package kr.co.lotteon.controller.admin;
 import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.OrderDetail;
 import kr.co.lotteon.entity.Product;
+import kr.co.lotteon.repository.OrderDetailRepository;
 import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.OrdersService;
 import kr.co.lotteon.service.ProductService;
@@ -147,11 +148,10 @@ public class AdminProductController {
     }
 
 
-
     //🎈 배송리스트
     @GetMapping("/admin/order/delivery")
-    public String findDeliveryList(Model model,  @RequestParam(defaultValue = "1") int pageNumber,
-                                         @RequestParam(defaultValue = "10") int pageSize) {
+    public String findDeliveryList(Model model, @RequestParam(defaultValue = "1") int pageNumber,
+                                   @RequestParam(defaultValue = "10") int pageSize) {
 
         Page<OrderDetailDTO> deliveryPage = adminService.findDeliveryList(pageNumber, pageSize);
         log.info("deliveryPage : " + deliveryPage);
@@ -178,27 +178,27 @@ public class AdminProductController {
 
     //🎈배송 상태 업데이트
     @PostMapping("/admin/delivery/updateStatus")
-    public ResponseEntity<String> updateDeliveryState(@RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<String> updateOrderDetailState(@RequestBody OrderDetailDTO request) {
+        int ono = request.getOno();
+        int pno = request.getPno();
+        String state = request.getState();
 
-        String state = requestBody.get("state");
-       // log.info("state : " + state);
+        log.info("ono:" + ono);
+        log.info("pno:" + pno);
+        log.info("state:" + state);
+
         try {
-            log.info("try : " );
-            adminService.updateDeliveryState(state);
-            //log.info("state : " + state);
-            return ResponseEntity.ok("Order state updated successfully.");
+            adminService.updateOrderDetailState(ono, pno, state); // 서비스 계층 호출
+            return ResponseEntity.ok().body("{\"message\": \"상태 변경 완료\"}");
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            log.info("catch : ");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to update order state: " + e.getMessage());
+            return new ResponseEntity<>("서버 오류 발생", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
+
 }
-
-
-
 
 
 

@@ -49,6 +49,7 @@ public class OrdersService {
 
     public void insertOrderDetail(OrdersDTO ordersDTO) {
         OrderDetail orderDetail = modelMapper.map(ordersDTO, OrderDetail.class);
+        orderDetail.setState("배송중");
         Optional<Product> optProduct = productRepository.findById(ordersDTO.getPno());
         if(optProduct.isPresent()){
             Product product = optProduct.get();
