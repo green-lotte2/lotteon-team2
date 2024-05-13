@@ -19,4 +19,12 @@
         SELECT * FROM `qna` AS a JOIN `cate2` AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2 WHERE `parent`=#{qnaNo}
     </select>
 
+    <select id="selectReviews" resultType="kr.co.lotteon.dto.ReviewDTO">
+        Select a.*, c.pname
+        FROM `review` AS a
+        JOIN `product` AS c ON a.pno = c.pno
+        ORDER BY redate DESC
+        LIMIT 3
+    </select>
+
 </mapper>

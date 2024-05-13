@@ -44,6 +44,7 @@ public class OrdersDTO {
     private int price;
     private int count;
     private int line;
+    private int info;
 
     // 주문 상세 정보
     private List<OrderDetailDTO> orderDetails;

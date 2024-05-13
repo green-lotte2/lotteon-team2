@@ -57,8 +57,10 @@ public class ProductController {
 
         List<ProductDTO> cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
 
+        log.info("cartProduct555555555555 : " + cartProducts);
         model.addAttribute("cartProducts", cartProducts);  // 모델에 장바구니 상품 목록 추가
         model.addAttribute("cate", productService.getCategoryList()); // 카테고리 리스트 추가
+        log.info("1111111 : " + cartProducts);
         return "/product/cart"; // 장바구니 뷰 페이지 반환
     }
 
@@ -164,6 +166,7 @@ public class ProductController {
     public String viewProduct(@RequestParam("pno") int pno, @RequestParam(required = false) Integer cate, Model model) {
         ProductDTO productDTO = productService.findProductDTOById(pno);
         if (productDTO != null) {
+
             productService.productHitUpdate(productDTO);
             List<ReviewDTO> reviews = reviewService.findReviewsByProductId(pno);
 
