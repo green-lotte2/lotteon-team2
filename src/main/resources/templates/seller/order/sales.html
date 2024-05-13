@@ -66,20 +66,6 @@
 
             <div class="card-body">
                 <div class="table-responsive">
-
-                    <form th:action="@{/seller/product/search}" method="get">
-                        <div id="searchBox">
-                            <select name="searchOption" id="searchOption">
-                                <option value="pname">상품명</option>
-                                <option value="company">제조사</option>
-                                <option value="seller">판매사</option>
-                            </select>
-                            <input type="search" class="searchInput"  name="keyword" placeholder="검색어를 입력하세요.">
-                            <button class="searchBtn">
-                                <img th:src="@{/seller/img/search_40.png}" alt="검색">
-                            </button>
-                        </div><!--검색박스 end-->
-                    </form>
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                         <div class="accordion-item" th:each="order:${ordersList.anyList}">
                             <h2 class="accordion-header">
@@ -141,24 +127,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <!--paging-->
-            <nav aria-label="...">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
 
         </div>
     </div>
