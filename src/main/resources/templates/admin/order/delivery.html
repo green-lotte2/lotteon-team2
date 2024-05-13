@@ -99,7 +99,7 @@
             const saveBtns = document.getElementsByClassName('saveBtn');
             for (const saveBtn of saveBtns) {
                 saveBtn.addEventListener('click', function() {
-                    let selectedStatus = document.querySelector('input[name="stname"]:checked').value;
+                    let selectedStatus = document.querySelector('input[name="state"]:checked').value;
                     console.log('클릭 이벤트 발생');
                     updateStatus(selectedStatus);
                     console.log(selectedStatus);
@@ -107,12 +107,12 @@
             }
 
             function updateStatus(selectedStatus) {
-                fetchPost('/admin/delivery/updateStatus', {
+                fetch('/lotteon/admin/delivery/updateStatus', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ stname: selectedStatus })
+                    body: JSON.stringify({ "state" : selectedStatus })
                 })
                     .then(response => {
                         if (!response.ok) {
@@ -160,18 +160,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="items" th:each="deliveryDTOS: ${deliveryDTOS}">
-                                <td th:text="${deliveryDTOS.ono}"></td>
-                                <td th:text="${deliveryDTOS.pno}"></td>
-                                <td th:text="${deliveryDTOS.pname}" class="pname"></td>
-                                <td th:text="${deliveryDTOS.pcount}"></td>
-                                <td th:text="${deliveryDTOS.odate}"></td>
-                                <td th:text="${deliveryDTOS.uid}"></td>
-                                <td id="deliveryText" th:text="${deliveryDTOS.stname}"
-                                    th:class="${deliveryDTOS.stname eq '배송준비' ? 'orange-text' :
-                                   (deliveryDTOS.stname eq '배송중' ? 'blue-text' :
-                                     (deliveryDTOS.stname eq '배송완료' ? 'green-text' :
-                                       (deliveryDTOS.stname eq '반품' ? 'red-text' :
+                            <tr class="items" th:each="deliveryList: ${deliveryPage}">
+                                <td th:text="${deliveryList.ono}"></td>
+                                <td th:text="${deliveryList.pno}"></td>
+                                <td th:text="${deliveryList.pname}" class="pname"></td>
+                                <td th:text="${deliveryList.pcount}"></td>
+                                <td th:text="${deliveryList.odate}"></td>
+                                <td th:text="${deliveryList.uid}"></td>
+                                <td id="deliveryText" th:text="${deliveryList.state}"
+                                    th:class="${deliveryList.state eq '배송준비' ? 'orange-text' :
+                                   (deliveryList.state eq '배송중' ? 'blue-text' :
+                                     (deliveryList.state eq '배송완료' ? 'green-text' :
+                                       (deliveryList.state eq '반품' ? 'red-text' :
                                          'purple-text')))}">
 
                                 </td>
@@ -190,19 +190,19 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body" style="display: flex; flex: 0;">
-                                                    <input type="radio" id="statusReady" name="stname" value="배송준비">
+                                                    <input type="radio" id="statusReady" name="state" value="배송준비">
                                                     <label for="statusReady">배송준비</label>
 
-                                                    <input type="radio" id="statusShipping" name="stname" value="배송중">
+                                                    <input type="radio" id="statusShipping" name="state" value="배송중">
                                                     <label for="statusShipping">배송중</label>
 
-                                                    <input type="radio" id="statusDelivered" name="stname" value="배송완료">
+                                                    <input type="radio" id="statusDelivered" name="state" value="배송완료">
                                                     <label for="statusDelivered">배송완료</label>
 
-                                                    <input type="radio" id="statusReturn" name="stname" value="반품">
+                                                    <input type="radio" id="statusReturn" name="state" value="반품">
                                                     <label for="statusReturn">반품</label>
 
-                                                    <input type="radio" id="statusRefund" name="stname" value="환불">
+                                                    <input type="radio" id="statusRefund" name="state" value="환불">
                                                     <label for="statusRefund">환불</label>
                                                 </div>
                                                 <div class="modal-footer">

@@ -1,6 +1,7 @@
 package kr.co.lotteon.controller.admin;
 
 import kr.co.lotteon.dto.*;
+import kr.co.lotteon.entity.OrderDetail;
 import kr.co.lotteon.entity.Product;
 import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.OrdersService;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -150,7 +153,7 @@ public class AdminProductController {
     public String findDeliveryList(Model model,  @RequestParam(defaultValue = "1") int pageNumber,
                                          @RequestParam(defaultValue = "10") int pageSize) {
 
-        Page<DeliveryDTO> deliveryPage = adminService.findDeliveryList(pageNumber, pageSize);
+        Page<OrderDetailDTO> deliveryPage = adminService.findDeliveryList(pageNumber, pageSize);
         log.info("deliveryPage : " + deliveryPage);
 
         // 유효성 검사
@@ -159,61 +162,35 @@ public class AdminProductController {
             return "/admin/error/404";
         }
 
-        // 각 배송 정보의 상태에 따라 stname 설정
-        List<DeliveryDTO> deliveryDTOS = deliveryPage.getContent();
-        for (DeliveryDTO delivery : deliveryDTOS) {
-          delivery.setStname();
-        }
-
-        model.addAttribute("deliveryDTOS", deliveryDTOS);
+        model.addAttribute("deliveryPage", deliveryPage);
         model.addAttribute("pageNumber", pageNumber);
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("totalPages", deliveryPage.getTotalPages());
         model.addAttribute("totalItems", deliveryPage.getTotalElements());
-        log.info("deliveryDTOS : " + deliveryDTOS);
         log.info("pageNumber : " + pageNumber);
         log.info("pageSize : " + pageSize);
         log.info("totalPages : " + deliveryPage.getTotalPages());
         log.info("totalItems : " + deliveryPage.getTotalElements());
 
 
-
         return "/admin/order/delivery";
     }
 
-
+    //🎈배송 상태 업데이트
     @PostMapping("/admin/delivery/updateStatus")
-    public String updateStatus(@RequestBody Map<String, String> requestBody) {
-        String stname = requestBody.get("stname");
+    public ResponseEntity<String> updateDeliveryState(@RequestBody Map<String, String> requestBody) {
 
-
-        int state = 0;
-        switch (stname) {
-            case "배송준비":
-                state = 1;
-                break;
-            case "배송중":
-                state = 2;
-                break;
-            case "배송완료":
-                state = 3;
-                break;
-            case "반품":
-                state = 4;
-                break;
-            case "환불":
-                state = 5;
-                break;
-            default:
-                state = 1;
-                break;
+        String state = requestBody.get("state");
+        try {
+            adminService.updateDeliveryState(state);
+            log.info("state : " + state);
+            return ResponseEntity.ok("Order state updated successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update order state: " + e.getMessage());
         }
 
-
-        // 적절한 응답 반환
-        return "redirect:/admin/order/delivery";
     }
-
 
 }
 

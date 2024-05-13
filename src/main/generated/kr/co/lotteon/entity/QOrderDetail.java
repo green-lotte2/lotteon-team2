@@ -31,6 +31,8 @@ public class QOrderDetail extends EntityPathBase<OrderDetail> {
 
     public final NumberPath<Integer> price = createNumber("price", Integer.class);
 
+    public final StringPath state = createString("state");
+
     public QOrderDetail(String variable) {
         super(OrderDetail.class, forVariable(variable));
     }

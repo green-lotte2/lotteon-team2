@@ -23,7 +23,7 @@ public class PageResponseDTO {
     private String keyword;
 
     //🎈배송관리 리스트
-    private List<DeliveryDTO> deliveryList;
+    private List<OrderDetailDTO> deliveryList;
 
 
 
@@ -43,7 +43,7 @@ public class PageResponseDTO {
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO,
                            List<NoticeDTO> noticeList, int total,
-                           List<FaqDTO> faqList, List<QnaDTO> qnaList, List<ProductDTO> dtoList, List<OrdersDTO> orderList, List<UserDTO> userList, List<DeliveryDTO> deliveryList) {
+                           List<FaqDTO> faqList, List<QnaDTO> qnaList, List<ProductDTO> dtoList, List<OrdersDTO> orderList, List<UserDTO> userList, List<OrderDetailDTO> deliveryList) {
 
         this.cate1 = pageRequestDTO.getCate1();
         this.cate2 = pageRequestDTO.getCate2();

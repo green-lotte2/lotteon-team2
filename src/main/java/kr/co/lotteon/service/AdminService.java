@@ -227,15 +227,28 @@ public class AdminService {
 
 
     //🎈 배송 리스트
-    private final DeliveryRepository deliveryRepository;
-    public Page<DeliveryDTO> findDeliveryList(int pageNumber, int pageSize){
+    private final OrderDetailRepository orderDetailRepository;
+    public Page<OrderDetailDTO> findDeliveryList(int pageNumber, int pageSize){
         log.info("delivery...");
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         log.info("pageable : " + pageable);
-        return deliveryRepository.findDeliveryList(pageable);
+        return orderDetailRepository.findDeliveryList(pageable);
 
     }
+
+    // 🎈 배송상태 업데이트
+    public void updateDeliveryState(String state) {
+        List<OrderDetail> orderDetails = orderDetailRepository.findByState(state);
+        log.info("orderDetails : " + orderDetails);
+
+        for(OrderDetail orderDetail : orderDetails) {
+            orderDetail.setState(state);
+            log.info("orderDetail : " + orderDetail);
+            orderDetailRepository.save(orderDetail);
+        }
+    }
+
 
 
     // 🎈배너 등록

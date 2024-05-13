@@ -39,7 +39,7 @@ public interface AdminMapper{
 
     //🎈배송
     // 배송목록
-    public List<DeliveryDTO> selectDeliveryList();
+   //public List<OrderDetailDTO> selectDeliveryList();
 
 
 
