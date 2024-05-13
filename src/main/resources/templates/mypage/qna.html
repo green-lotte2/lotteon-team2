@@ -61,23 +61,23 @@
                     if (!isAnswerRowVisible) {
                         answerRow.show(); // 보이기
 
-                        fetch("/lotteon/mypage/qna/comment?qnano=" + qnano)
+                        fetch(`/lotteon/mypage/qna/comment/${qnano}`)
                             .then(response => response.json())
                             .then(data => {
                                 console.log(data);
                                 var response = data[0];
                                 if (response) {
-                                    var content = response.rcontent; // JSON 데이터에서 answer 가져오기
+                                    var rcontent = response.rcontent; // JSON 데이터에서 answer 가져오기
                                     var title = response.title;
                                     var rdate = response.rdate;
                                     var formattedDate = rdate.replace("T", " ");
-                                    console.log(content);
+                                    console.log(rcontent);
                                     console.log(title);
                                     console.log(formattedDate);
                                     // HTML 요소에 데이터 추가
                                     var contentElement = answerRow.find('.answer .content');
                                     var titleElement = answerRow.find('.answer .tit');
-                                    contentElement.text(content);
+                                    contentElement.text(rcontent);
                                     titleElement.text(title);
                                     var dateSpan = $('<span class="date"></span>').text(formattedDate);
                                     titleElement.append(dateSpan);
@@ -85,7 +85,7 @@
                                     var contentElement = answerRow.find('.answer .content');
                                     var titleElement = answerRow.find('.answer .tit');
                                     contentElement.text("빠른 시일 내에 답변드리겠습니다.");
-                                    titleElement.text("답변 검토중입니다!.");
+                                    titleElement.text("답변 검토중입니다!");
                                     console.error("데이터를 찾을 수 없습니다.");
                                 }
                             })

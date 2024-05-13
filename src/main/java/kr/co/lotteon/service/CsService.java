@@ -517,11 +517,12 @@ public class CsService {
         return qnaMapper.selectQnaChildBoard(qnano);
     }
 
-
+/*
     // myqna 답변
     public List<QnaDTO> selectCsQnaCommentView(int qnano){
         return mypageMapper.selectCsQnaCommentView(qnano);
     }
+ */
 
     // 🎈Qna 답변 등록
     private final ReplyRepository replyRepository;

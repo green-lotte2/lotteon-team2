@@ -28,11 +28,8 @@
 
                         <a sec:authorize="isAuthenticated()" th:href="@{/mypage/}">[[${#authentication.principal.user.name}]]</a>
                         <a sec:authorize="isAuthenticated()" th:href="@{/product/cart}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>장바구니</a>
-                        <th:block th:if="${#authentication.principal != 'anonymousUser'}">
-                            <th:block th:if="${#authentication.principal.user.role == 'ADMIN'}">
-                                <a th:href="@{/admin/index}">관리자</a>
-                            </th:block>
-                        </th:block>
+                        <a sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.role} == 'ADMIN'" th:href="@{/admin/index}">관리자</a>
+                        <a sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.role} == 'SELLER'" th:href="@{/seller}">판매자</a>
                         <a sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
                     </div>
                 </div>
