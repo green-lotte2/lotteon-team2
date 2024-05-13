@@ -5,15 +5,13 @@ import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.*;
 import kr.co.lotteon.mapper.AdminMapper;
 import kr.co.lotteon.mapper.ProductMapper;
-import kr.co.lotteon.repository.BannerRepository;
-import kr.co.lotteon.repository.ProductimgRepository;
-import kr.co.lotteon.repository.UserDetailRepository;
-import kr.co.lotteon.repository.UserRepository;
+import kr.co.lotteon.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -225,6 +223,33 @@ public class AdminService {
         }
         productimgRepository.deleteById(pno);
     }
+
+
+
+    //🎈 배송 리스트
+    private final OrderDetailRepository orderDetailRepository;
+    public Page<OrderDetailDTO> findDeliveryList(int pageNumber, int pageSize){
+        log.info("delivery...");
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        log.info("pageable : " + pageable);
+        return orderDetailRepository.findDeliveryList(pageable);
+
+    }
+
+    // 🎈 배송상태 업데이트
+    public void updateDeliveryState(String state) {
+        List<OrderDetail> orderDetails = orderDetailRepository.findByState(state);
+        log.info("orderDetails : " + orderDetails);
+
+        for(OrderDetail orderDetail : orderDetails) {
+            orderDetail.setState(state);
+            log.info("orderDetail : " + orderDetail);
+            orderDetailRepository.save(orderDetail);
+        }
+    }
+
+
 
     // 🎈배너 등록
     private final ModelMapper modelMapper;

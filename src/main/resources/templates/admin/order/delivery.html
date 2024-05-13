@@ -1,0 +1,258 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/adminLayout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>롯데온::관리자 주문목록</title>
+    <link th:href="@{/admin/css/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
+    <style>
+        #table #dataTable .tableTitle th{
+            background-color: #585858;
+            color:#ffffff;
+        }
+
+        #table #dataTable .items #deliveryText {
+            font-weight: bold;
+        }
+        #table #dataTable .items .orange-text {
+            color: #ff9900;
+        }
+
+        #table #dataTable .items .red-text {
+            color: red;
+        }
+
+        #table #dataTable .items .blue-text {
+            color: blue;
+        }
+
+        #table #dataTable .items .purple-text {
+            color: #b500de;
+        }
+
+        #table #dataTable .items .green-text {
+            color: #00bd00;
+        }
+
+        #table #dataTable .pname {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-width: 200px;
+            -webkit-box-orient: vertical;
+        }
+
+        button#myModal {
+            font-size: 12px;
+        }
+
+        .disabled {
+            display: none;
+        }
+
+        .page-link:hover {
+            background-color: royalblue;
+            color: #ffffff;
+        }
+
+        button#myModal {
+            font-size: 12px;
+            padding: 3px 8px;
+        }
+
+        .modal-body {
+            justify-content: space-around;
+        }
+
+        .modal-body label {
+            position: relative;
+            right: 15px;
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .modal-body .btn {
+            margin-right: 15px;
+        }
+
+</style>
+</head>
+
+<main layout:fragment="content">
+    <script>
+        window.onload = function (){
+            const myModal = document.getElementById('myModal')
+            const myInput = document.getElementById('myInput')
+
+            myModal.addEventListener('shown.bs.modal', () => {
+                myInput.focus()
+            })
+
+            const saveBtns = document.getElementsByClassName('saveBtn');
+            for (const saveBtn of saveBtns) {
+                saveBtn.addEventListener('click', function() {
+                    let selectedStatus = document.querySelector('input[name="state"]:checked').value;
+                    console.log('클릭 이벤트 발생');
+                    updateStatus(selectedStatus);
+                    console.log(selectedStatus);
+                });
+            }
+
+            function updateStatus(selectedStatus) {
+                fetch('/lotteon/admin/delivery/updateStatus', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ "state" : selectedStatus })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('서버 응답이 실패했습니다.');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('서버 응답:', data);
+
+                        location.reload();
+                    })
+                    .catch(error => {
+                        console.error('에러 발생:', error);
+                    });
+            }
+        }
+
+    </script>
+    <div id="deliveryList" class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">배송현황</h1>
+        <p class="mb-4"></p>
+
+        <!-- DataTales Example -->
+        <div class="card mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0" style="color: #ffffff">배송 목록</h6>
+            </div>
+
+            <div class="card-body" style="font-size: 13px;">
+                <div class="table-responsive">
+                    <form id="table">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr class="tableTitle">
+                                <th>주문번호</th>
+                                <th>상품번호</th>
+                                <th>상품이름</th>
+                                <th>수량</th>
+                                <th>주문날짜</th>
+                                <th>구매자</th>
+                                <th>상태</th>
+                                <th>관리</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="items" th:each="deliveryList: ${deliveryPage}">
+                                <td th:text="${deliveryList.ono}"></td>
+                                <td th:text="${deliveryList.pno}"></td>
+                                <td th:text="${deliveryList.pname}" class="pname"></td>
+                                <td th:text="${deliveryList.pcount}"></td>
+                                <td th:text="${deliveryList.odate}"></td>
+                                <td th:text="${deliveryList.uid}"></td>
+                                <td id="deliveryText" th:text="${deliveryList.state}"
+                                    th:class="${deliveryList.state eq '배송준비' ? 'orange-text' :
+                                   (deliveryList.state eq '배송중' ? 'blue-text' :
+                                     (deliveryList.state eq '배송완료' ? 'green-text' :
+                                       (deliveryList.state eq '반품' ? 'red-text' :
+                                         'purple-text')))}">
+
+                                </td>
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" id="myModal" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        수정
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title" style="font-size: 17px;" id="exampleModalLabel">배송상태 변경</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body" style="display: flex; flex: 0;">
+                                                    <input type="radio" id="statusReady" name="state" value="배송준비">
+                                                    <label for="statusReady">배송준비</label>
+
+                                                    <input type="radio" id="statusShipping" name="state" value="배송중">
+                                                    <label for="statusShipping">배송중</label>
+
+                                                    <input type="radio" id="statusDelivered" name="state" value="배송완료">
+                                                    <label for="statusDelivered">배송완료</label>
+
+                                                    <input type="radio" id="statusReturn" name="state" value="반품">
+                                                    <label for="statusReturn">반품</label>
+
+                                                    <input type="radio" id="statusRefund" name="state" value="환불">
+                                                    <label for="statusRefund">환불</label>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                                    <button type="button" id="myInput" class="saveBtn btn btn-primary">저장</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!--Modal end-->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+
+                    <!-- 페이지네이션 -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item" th:class="${pageNumber == 0 ? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{/admin/order/delivery(pageNumber=${pageNumber - 1}, pageSize=${pageSize})}">이전</a>
+                            </li>
+
+
+                            <li class="page-item" th:each="pageNo : ${#numbers.sequence(0, totalPages - 1)}">
+                                <a class="page-link" th:href="@{/admin/order/delivery(pageNumber=${pageNo}, pageSize=${pageSize})}" th:text="${pageNo + 1}"></a>
+                            </li>
+                            <li class="page-item" th:class="${pageNumber == totalPages - 1 ? 'disabled' : ''}">
+                                <a class="page-link" th:href="@{/admin/order/delivery(pageNumber=${pageNumber + 1}, pageSize=${pageSize})}">다음</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+
+                </div><!--테이블 end-->
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <script th:src="@{/admin/css/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/admin/css/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <script th:src="@{/admin/js/sb-admin-2.min.js}"></script>
+</main>
+
+
+
+
+
+</html>

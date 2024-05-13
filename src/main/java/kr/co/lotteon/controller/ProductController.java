@@ -55,8 +55,8 @@ public class ProductController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String uid = userDetails.getUsername();  // 인증된 사용자 ID 추출
 
-        List<ProductDTO> cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
-
+        List<ProductDTO> cartProducts = null;
+        cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
         model.addAttribute("cartProducts", cartProducts);  // 모델에 장바구니 상품 목록 추가
         model.addAttribute("cate", productService.getCategoryList()); // 카테고리 리스트 추가
         return "/product/cart"; // 장바구니 뷰 페이지 반환
@@ -139,9 +139,17 @@ public class ProductController {
             productService.productHitUpdate(productDTO);
             List<ReviewDTO> reviews = ordersService.selectReview(pno);
 
+            Double Average = ordersService.reviewAverage(pno);
+            if (Average == null) {
+                Average = 0.0; // 평균 별점이 없는 경우 기본값 설정
+            }
+
+            model.addAttribute("Average", Average);
             model.addAttribute("cate", productService.getCategoryList());
             model.addAttribute("product", productDTO);
             model.addAttribute("reviews", reviews);
+
+            log.info("Average1111 : " + Average);
             return "/product/view";
         } else {
             return "redirect:/product/list";
@@ -167,41 +175,18 @@ public class ProductController {
     // 상품 검색 컨트롤러
     @GetMapping("/product/search")
     public String searchProducts(@ModelAttribute ProductPageRequestDTO productPageRequestDTO, Model model) {
+        log.info(productPageRequestDTO.toString());
 
-        // 서비스 메서드를 호출하여 검색 결과를 가져옵니다.
-        List<ProductDTO> products = productService.searchProducts(
-                productPageRequestDTO.getSearch(),
-                productPageRequestDTO.getMinPrice(),
-                productPageRequestDTO.getMaxPrice(),
-                productPageRequestDTO.getCate()
-        );
-
-        int totalResults = productService.countSearchProducts(
-                productPageRequestDTO.getSearch(),
-                productPageRequestDTO.getMinPrice(),
-                productPageRequestDTO.getMaxPrice(),
-                productPageRequestDTO.getCate()
-        );
-
-            ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, productPageRequestDTO.getCate());
-            model.addAttribute("products", responseDTO.getDtoList());
-            model.addAttribute("result", responseDTO);
-            model.addAttribute("cate", productService.getCategoryList());
-            model.addAttribute("totalResults", totalResults);
-
-            log.info("responseDTO1 : " + responseDTO);
+        ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, productPageRequestDTO.getCate());
 
         // 검색 키워드와 가격 정보를 뷰에 유지
-        model.addAttribute("searchKeyword", productPageRequestDTO.getSearch());
-        model.addAttribute("minPrice", productPageRequestDTO.getMinPrice());
-        model.addAttribute("maxPrice", productPageRequestDTO.getMaxPrice());
-        model.addAttribute("category", productPageRequestDTO.getCate());
+        model.addAttribute("request", productPageRequestDTO);
+        model.addAttribute("products", responseDTO.getDtoList());
+        model.addAttribute("result", responseDTO);
+        model.addAttribute("cate", productService.getCategoryList());
 
         return "/product/search"; // 검색 결과를 보여줄 뷰 이름
     }
-
-
-
 
     @PostMapping("/product/updateCartQuantity")
     @ResponseBody

@@ -25,4 +25,6 @@ public class OrderDetail {
     private String options;
     private int price;
 
+    private String state;
+
 }

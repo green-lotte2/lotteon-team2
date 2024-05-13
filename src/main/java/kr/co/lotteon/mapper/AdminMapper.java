@@ -37,22 +37,10 @@ public interface AdminMapper{
 
     public List<ProductDTO> selectProductsBySearch(PageRequestDTO pageRequestDTO);
 
-    
-    //🎈공지사항//
-    //  목록
-    public List<NoticeDTO> adminNoticeList(int start);
-    //  view
-    public NoticeDTO adminNoticeView(int noticeno);
-    //  수정
-    public void adminNoticeUpdate(NoticeDTO dto);
+    //🎈배송
+    // 배송목록
+   //public List<OrderDetailDTO> selectDeliveryList();
 
-
-
-    //🎈자주묻는질문//
-    // 목록
-    public List<FaqDTO> adminFaqList(int cate1);
-    // view
-    public FaqDTO adminFaqView(int faqno);
 
 
     //🎈배너

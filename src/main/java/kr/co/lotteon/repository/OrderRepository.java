@@ -23,4 +23,6 @@ public interface OrderRepository extends JpaRepository<Orders, Integer>, OrderRe
     Page<Orders> findAllByUid(String uid, Pageable pageable);
 
     List<Orders> findTop3ByUidOrderByOdateDesc(String uid);
+
+
 }

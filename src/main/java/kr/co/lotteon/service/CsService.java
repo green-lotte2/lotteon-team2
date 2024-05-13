@@ -355,12 +355,6 @@ public class CsService {
 
 
     // 🎈Admin 자주묻는질문 리스트
-    /*
-    public List<FaqDTO> selectFaqList(){
-
-        return faqMapper.selectFaqList();
-    }
-    */
 
     public List<FaqDTO> selectFaqList(){
 
@@ -523,11 +517,12 @@ public class CsService {
         return qnaMapper.selectQnaChildBoard(qnano);
     }
 
-
+/*
     // myqna 답변
     public List<QnaDTO> selectCsQnaCommentView(int qnano){
         return mypageMapper.selectCsQnaCommentView(qnano);
     }
+ */
 
     // 🎈Qna 답변 등록
     private final ReplyRepository replyRepository;

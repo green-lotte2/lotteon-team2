@@ -155,6 +155,7 @@ header {
   margin-top: 5px;
   position: absolute;
   bottom: 145px;
+  cursor: pointer;
 }
 #member > .login > form > span a {
   display: inline-block;
@@ -169,10 +170,26 @@ header {
 #member > .login > form > span a:last-child {
 }
 
+#member > .login > form > .oauth2 {
+  position: absolute;
+  bottom: 75px;
+  left: 215px;
+  cursor: pointer;
+}
+
+#member > .login > form > .oauth2 > .google {
+  width: 30px;
+  border: 1px solid #6e6e6e;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+
 #member > .login > form > .banner {
   position: absolute;
   right: 0;
   top: 16px;
+  cursor: pointer;
 }
 
 #member > .login > form > span > label {

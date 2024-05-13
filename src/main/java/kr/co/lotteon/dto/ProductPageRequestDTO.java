@@ -2,6 +2,8 @@ package kr.co.lotteon.dto;
 import lombok.*;
 import org.springframework.data.domain.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,6 +31,8 @@ public class ProductPageRequestDTO {
 
     private Integer minPrice;
     private Integer maxPrice;
+
+    private List<String> chk;
     private int pno;
 
     private int ono;

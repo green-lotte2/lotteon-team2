@@ -622,15 +622,14 @@ footer p > strong {
 
 /* 오른쪽 하단 상단 이동버튼 */
 #top {
+  background-color: #ff2c2c;
+  color: #fff;
+  border-radius: 50%;
   position: fixed;
-  left: 50%;
-  bottom: 10px;
-  margin-left: 600px;
-  /* display: none; */
+  right: 2%;
+  bottom: 20px;
   width: 42px;
   height: 42px;
-  background-image: url("../images/top.png");
-  border: none;
-  font-size: 0;
   cursor: pointer;
+  border: none;
 }

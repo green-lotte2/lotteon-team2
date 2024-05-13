@@ -22,6 +22,9 @@ public class PageResponseDTO {
     private String type;
     private String keyword;
 
+    //🎈배송관리 리스트
+    private List<OrderDetailDTO> deliveryList;
+
 
 
 
@@ -40,7 +43,7 @@ public class PageResponseDTO {
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO,
                            List<NoticeDTO> noticeList, int total,
-                           List<FaqDTO> faqList, List<QnaDTO> qnaList, List<ProductDTO> dtoList, List<OrdersDTO> orderList, List<UserDTO> userList) {
+                           List<FaqDTO> faqList, List<QnaDTO> qnaList, List<ProductDTO> dtoList, List<OrdersDTO> orderList, List<UserDTO> userList, List<OrderDetailDTO> deliveryList) {
 
         this.cate1 = pageRequestDTO.getCate1();
         this.cate2 = pageRequestDTO.getCate2();
@@ -57,6 +60,9 @@ public class PageResponseDTO {
         this.orderList = orderList;
         //🎈 user 리스트
         this.userList = userList;
+
+        //🎈 delivery 리스트
+        this.deliveryList = deliveryList;
 
 
         this.startNo = total - ((pg - 1) * size);
