@@ -232,8 +232,7 @@ public class ProductService {
     // ProductService.java
     public ProductPageResponseDTO getList(ProductPageRequestDTO productPageRequestDTO, int cate) {
         Pageable pageable = PageRequest.of(
-                Math.max(productPageRequestDTO.getPg() - 1, 0),
-                productPageRequestDTO.getSize(),
+                Math.max(productPageRequestDTO.getPg() - 1, 0), 12,
                 Sort.by("pname").ascending()
         );
 

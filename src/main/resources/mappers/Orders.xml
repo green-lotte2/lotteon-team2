@@ -55,10 +55,14 @@
     </select>
 
     <select id="selectReview" resultType="kr.co.lotteon.dto.ReviewDTO">
-        SELECT od.`options`, r.`uid`, r.content, r.rating, r.redate FROM `orders` AS o
+        SELECT DISTINCT od.`options`, r.`uid`, r.content, r.rating, r.redate FROM `orders` AS o
         JOIN `orderdetail` AS od ON o.ono = od.ono
         JOIN `review` AS r ON r.pno = od.pno
         WHERE r.pno = #{pno}
+    </select>
+
+    <select id="reviewAverage" resultType="java.lang.Double">
+        SELECT AVG(rating) as averageRating FROM review WHERE pno = #{pno};
     </select>
 
 </mapper>

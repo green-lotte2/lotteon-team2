@@ -120,5 +120,9 @@ public class OrdersService {
     return ordersMapper.selectReview(pno);
     }
 
+    public Double reviewAverage(int pno) {
+        return ordersMapper.reviewAverage(pno);
+    }
+
 }
 
