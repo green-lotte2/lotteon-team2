@@ -5,6 +5,7 @@ plugins {
 }
 
 group = 'kr.co.lotteon'
+
 version = '0.1.9-SNAPSHOT'
 
 java {
