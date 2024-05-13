@@ -1,9 +1,6 @@
 package kr.co.lotteon.controller;
 
-import kr.co.lotteon.dto.MyHomeDTO;
-import kr.co.lotteon.dto.OrdersDTO;
-import kr.co.lotteon.dto.QnaDTO;
-import kr.co.lotteon.dto.UserDTO;
+import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.Orders;
 import kr.co.lotteon.entity.User;
 import kr.co.lotteon.security.MyUserDetails;
@@ -13,6 +10,7 @@ import kr.co.lotteon.service.OrdersService;
 import kr.co.lotteon.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -108,13 +106,22 @@ public class MyController {
     }
 
     @ResponseBody
-    @GetMapping("/qna/comment")
+    @GetMapping("/mypage/qna/comment/{qnano}")
+    public ResponseEntity<List<ReplyDTO>> reply(@PathVariable("qnano") int qnano){
+
+        log.info("replyQnano : " + qnano);
+        return csService.selectReplies(qnano);
+    }
+/*
+    @ResponseBody
+    @GetMapping("/mypage/qna/comment")
     public List<QnaDTO> commentBoard(@RequestParam("qnano") int qnano){
         log.info("commentBoard qnano : " + qnano);
         List<QnaDTO> commentBoard = csService.selectCsQnaCommentView(qnano);
         log.info("commentBoard : " + commentBoard.toString());
         return commentBoard;
     }
+ */
 
     @GetMapping("/mypage/infoAccessCheck")
     public String infoAccessCheck() {
