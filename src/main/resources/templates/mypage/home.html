@@ -39,23 +39,23 @@
                     <th>상태</th>
                     <th>확인/신청</th>
                 </tr>
-                <tr>
-                    <td class="date">2022-12-13</td>
-                    <td class="info">
-                        <a href="#" class="thumb"><img src="https://via.placeholder.com/80x80" alt=""></a>
+                <tr th:each="order:${orders}">
+                    <td th:text="${order.odate}">2022-12-13</td>
+                    <td>
+                        <a href="#" class="thumb"><img th:src="@{|/product/${order.cate}/${order.mainimg}|}" width="70px" height="70px" alt="상품이미지"></a>
                         <ul>
-                            <li class="company"><a href="#">상호명</a></li>
-                            <li class="prodName"><a href="#">상품명</a></li>
-                            <li class="orderNo">수량 : <span class="prodCount">1</span>개 / 주문번호 : <a
-                                    href="#">1012211341</a>
+                            <li th:text="${order.company}">상호명</li>
+                            <li th:text="${order.pname}"><a href="#">상품명</a></li>
+                            <li>수량 : <span th:text="${order.pcount}">1</span>개 / 주문번호 : <span th:text="${order.ono}">1012211341</span>
                             </li>
-                            <li class="prodPrice">34,000</li>
+                            <li th:text="${#numbers.formatInteger(order.price, 3, 'COMMA') + '원'}">34,000</li>
                         </ul>
                     </td>
+
                     <td class="status">배송완료</td>
                     <td class="confirm">
                         <a href="#" class="receive">수취확인</a>
-                        <a href="#" class="review">상품평</a>
+                        <a th:href="@{/mypage/writeReview(pno=${order.pno})}" class="review">상품평</a>
                         <a href="#" class="refund">반품신청</a>
                         <a href="#" class="exchange">교환신청</a>
                     </td>
@@ -94,41 +94,14 @@
                     <th>평점</th>
                     <th>작성일</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>상품명</td>
-                    <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td><span class="rating star1">상품평</span></td>
-                    <td>2022-12-10</td>
+                <tr th:each="Reviews, stat : ${Reviews}">
+                    <td th:text="${stat.index + 1}">1</td>
+                    <td th:text="${Reviews.pname}">상품명</td>
+                    <td th:text="${Reviews.content}">배송이 빠릅니다. 잘 사용하겠습니다.</td>
+                    <td><span class="rating star1" th:classappend="'rating star' + ${Reviews.rating}" th:text="${Reviews.rating}">상품평</span></td>
+                    <td th:text="${#temporals.format(Reviews.redate, 'yyyy-MM-dd')}">2022-12-10</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>상품명</td>
-                    <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td><span class="rating star2">상품평</span></td>
-                    <td>2022-12-10</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>상품명</td>
-                    <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td><span class="rating star3">상품평</span></td>
-                    <td>2022-12-10</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>상품명</td>
-                    <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td><span class="rating star4">상품평</span></td>
-                    <td>2022-12-10</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>상품명</td>
-                    <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                    <td><span class="rating star5">상품평</span></td>
-                    <td>2022-12-10</td>
-                </tr>
+
             </table>
         </article>
 

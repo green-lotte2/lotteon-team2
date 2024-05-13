@@ -27,4 +27,12 @@
         WHERE `qnano` = #{qnano}
     </select>
 
+    <select id="selectReviews" resultType="kr.co.lotteon.dto.ReviewDTO">
+        Select a.*, c.pname
+        FROM `review` AS a
+        JOIN `product` AS c ON a.pno = c.pno
+        ORDER BY redate DESC
+        LIMIT 3
+    </select>
+
 </mapper>

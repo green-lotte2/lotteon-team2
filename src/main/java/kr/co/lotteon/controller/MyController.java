@@ -4,10 +4,7 @@ import kr.co.lotteon.dto.*;
 import kr.co.lotteon.entity.Orders;
 import kr.co.lotteon.entity.User;
 import kr.co.lotteon.security.MyUserDetails;
-import kr.co.lotteon.service.CsService;
-import kr.co.lotteon.service.MyService;
-import kr.co.lotteon.service.OrdersService;
-import kr.co.lotteon.service.UserService;
+import kr.co.lotteon.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,14 +30,31 @@ public class MyController {
     private final MyService myService;
     private final OrdersService ordersService;
     private final AuthenticationManager authenticationManager;
+    private final ReviewService reviewService;
+    private final ProductService productService;
 
     @GetMapping(value = {"/mypage/","/mypage/home"})
-    public String myPage(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails, Authentication authentication){
+    public String myPage(Authentication authentication ,Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
         MyHomeDTO myHomeDTO = myService.getMyHomeInfo(myUserDetails.getUser().getUid());
-        List<OrdersDTO> point = ordersService.selectPoint(authentication.getName());
+
+        String uid = myUserDetails.getUser().getUid();
+        PageRequestDTO pageRequestDTO = new PageRequestDTO();
+        pageRequestDTO.setPg(1);
+        pageRequestDTO.setSize(3);
+
+        List<ReviewDTO> Reviews = myService.getRecentReviews(uid);
+
+
+        List<OrdersDTO> orders = ordersService.selectOrders(uid, pageRequestDTO);
+        PageResponseDTO pageResponseDTO = ordersService.findOrderListByUid(uid, pageRequestDTO);
+
+
+        model.addAttribute("orders", orders);
+        model.addAttribute("pageResponseDTO", pageResponseDTO);
         model.addAttribute("myHomeDTO", myHomeDTO);
-        model.addAttribute("point", point);
+        model.addAttribute("Reviews", Reviews);
+
         return "/mypage/home";
     }
 
