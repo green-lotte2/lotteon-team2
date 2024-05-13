@@ -55,8 +55,8 @@ public class ProductController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String uid = userDetails.getUsername();  // 인증된 사용자 ID 추출
 
-        List<ProductDTO> cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
-
+        List<ProductDTO> cartProducts = null;
+        cartProducts = productService.getCartProductsByUid(uid);  // 사용자 ID를 기반으로 장바구니 상품 조회
         model.addAttribute("cartProducts", cartProducts);  // 모델에 장바구니 상품 목록 추가
         model.addAttribute("cate", productService.getCategoryList()); // 카테고리 리스트 추가
         return "/product/cart"; // 장바구니 뷰 페이지 반환
@@ -169,32 +169,16 @@ public class ProductController {
     public String searchProducts(@ModelAttribute ProductPageRequestDTO productPageRequestDTO, Model model) {
         log.info(productPageRequestDTO.toString());
 
-        int totalResults = productService.countSearchProducts(
-                productPageRequestDTO.getSearch(),
-                productPageRequestDTO.getMinPrice(),
-                productPageRequestDTO.getMaxPrice(),
-                productPageRequestDTO.getCate()
-        );
-
         ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, productPageRequestDTO.getCate());
+
+        // 검색 키워드와 가격 정보를 뷰에 유지
+        model.addAttribute("request", productPageRequestDTO);
         model.addAttribute("products", responseDTO.getDtoList());
         model.addAttribute("result", responseDTO);
         model.addAttribute("cate", productService.getCategoryList());
-        model.addAttribute("totalResults", totalResults);
-
-        log.info("responseDTO1 : " + responseDTO);
-
-        // 검색 키워드와 가격 정보를 뷰에 유지
-        model.addAttribute("searchKeyword", productPageRequestDTO.getSearch());
-        model.addAttribute("minPrice", productPageRequestDTO.getMinPrice());
-        model.addAttribute("maxPrice", productPageRequestDTO.getMaxPrice());
-        model.addAttribute("category", productPageRequestDTO.getCate());
 
         return "/product/search"; // 검색 결과를 보여줄 뷰 이름
     }
-
-
-
 
     @PostMapping("/product/updateCartQuantity")
     @ResponseBody

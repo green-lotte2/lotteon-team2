@@ -1,0 +1,861 @@
+
+/*🎀전체 초기화*/
+body {
+    color: #333;
+    box-sizing: border-box;
+}
+
+a {
+    color: #333333;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #333333;
+    text-decoration: none;
+}
+
+.table-bordered td, .table-bordered th {
+    border: none;
+    text-align: center;
+}
+/*
+.table-bordered td:nth-child(4) {
+    text-align: left;
+}
+
+ */
+
+#wrapper #content-wrapper {
+    background-color: #ffffff;
+}
+
+/* 🎀top nav바*/
+.home {
+    position: relative;
+    top: 24px;
+    color: #ffffff;
+}
+
+.home > a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.home > a:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+.bg-white {
+    background-color: inherit;
+}
+
+nav#topNav {
+    background-color: tomato;
+}
+
+#topSearchBtn {
+    background-color: tomato;
+    border: none;
+}
+
+#topSearchBtn:hover {
+    border: none;
+    background-color: tomato;
+}
+
+#loginUser {
+    color: #ffffff;
+}
+
+/*🎀공통 테이블*/
+
+div#searchBox {
+    align-items: end;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#searchOption {
+    padding: 7px;
+    width: 220px;
+    height: 35px;
+}
+.card-header:first-child {
+    border: none;
+}
+.card-header.py-3 {
+    background-color: #9c9c9c;
+}
+
+.text-primary {
+    color: #333 !important;
+}
+
+table a {
+    color: #333;
+    text-decoration: none;
+}
+
+table a:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+.tableTitle:hover{
+    background-color: inherit;
+}
+
+tr:hover {
+    background-color: #f3f3f3;
+}
+
+/*✨선택삭제 버튼*/
+input#delBtn {
+    width: 100px;
+    background-color: #ff661a;
+    border-radius: 5px;
+    color: #fff;
+    padding: 8px;
+    border: none;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+input#delBtn:hover {
+    background-color: #f83939;
+    transition: 0.5s;
+}
+
+input#writeBtn {
+    position: relative;
+    width: 100px;
+    background: #6e6b6b;
+    border-radius: 5px;
+    color: #fff;
+    padding: 8px;
+    border: none;
+    font-size: 15px;
+}
+
+input#writeBtn:hover {
+    background-color: #4d4a4a;
+    transition: 0.5s;
+}
+
+
+/* 🎈product_register*/
+#admin-product-register {
+    margin: 0 auto;
+    max-width: 980px;
+    width: 100%;
+    height: auto;
+}
+#gnb {
+    width: 100%;
+    height: auto;
+}
+#gnb > li {
+    width: 100%;
+    min-height: 66px;
+    border-top: 1px solid #c0c0c0;
+    box-sizing: border-box;
+}
+#gnb > li:last-child {border-bottom: 1px solid #c0c0c0;}
+
+#gnb > li > a {
+    display: block;
+    width: 100%;
+    height: 66px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #222;
+    line-height: 66px;
+    text-indent: 10px;
+}
+#gnb > li > a > i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+#gnb ol {
+    display: none;
+    width: 100%;
+    height: auto;
+}
+#gnb ol > li {
+    width: 100%;
+    height: 32px;
+}
+#gnb ol > li > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-indent: 52px;
+}
+
+
+
+main > section {
+    max-width: 1040px;
+    min-height: 600px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+main > section > nav {
+    position: relative;
+    width: 100%;
+    height: 46px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #c0c0c0;
+    box-sizing: border-box;
+}
+
+main > section > nav > h3 {
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+main > section > nav > p {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+}
+main > section > nav > p > strong {
+    font-weight: bold;
+}
+
+main > section > article {
+    overflow: hidden;
+}
+
+main > section > article section {
+    margin-bottom: 16px;
+}
+main > section > article section > p {
+    background: #eaeaea;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+main h4 {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+main table {
+    width: 100%;
+    border-collapse: collapse;
+}
+main table tr {}
+main table tr > td {
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 10px;
+    text-align: left;
+}
+#admin-product-register > main table tr > td:nth-child(1) {
+    width: 160px;
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
+    background: #f6f6f6;
+    padding: 10px;
+    text-align: left;
+}
+
+main table span {
+    display: block;
+}
+
+/*🎈회원리스트*/
+#userList #table {
+    font-size: 13px;
+}
+#userList #table tr.tableTitle {
+    background-color: #585858;
+    color: #fff;
+    line-height: 0.5;
+}
+
+
+/*🎈회원수정*/
+#userModify input {
+    outline: none;
+}
+
+#userModify form {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+#userModify form h4 {
+    font-size: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ee5034;
+}
+#userModify form table th {
+    border-bottom: 1px solid #dbdbdb;
+    border-collapse: collapse;
+    width: 15%;
+}
+
+#userModify form table td {
+    border-bottom: 1px solid #dbdbdb;
+    border-collapse: collapse;
+    border-top: none;
+}
+
+#userModify form table .pass span {
+    display: inline-block;
+}
+
+#userModify form table .gender {
+    border: none;
+}
+/*이름*/
+#userModify .uid {
+    border:none;
+}
+
+/*이메일*/
+#userModify > #inputEmail, #inputEmailCode {
+    width: 210px;
+    margin-bottom: 10px;
+}
+
+#userModify .btnSubmit {
+    float: initial;
+    width: 120px;
+    height: 30px;
+    vertical-align: middle;
+    align-items: center;
+    text-align: center;
+    margin-top: 0;
+    border: none;
+    margin-left: 10px;
+    border-radius: 0;
+    font-size: 14px;
+}
+#userModify input#inputEmail {
+    margin-bottom: 6px;
+    width: 210px;
+}
+
+#userModify input#inputEmailCode {
+    margin-right: 5px;
+}
+
+#userModify div#divEmailCode {
+    display: flex;
+}
+
+#userModify .btnSubmit span {
+    line-height: 15px;
+}
+/*휴대폰*/
+#userModify .msgHp {
+    display: inline-block;
+}
+/*주소*/
+#userModify .address div{
+    margin-bottom: 5px;
+}
+#userModify button#findZip {
+    border: none ;
+    background-color: #727272;
+    color: #fff;
+    border-radius: 0;
+    height: 30px;
+    font-size: 14px;
+}
+
+#userModify button#findZip:hover {
+    background-color: #555555;
+    color: #ffffff;
+}
+
+
+#userModify #modifyBtn {
+    width: 1000px;
+    text-align: right;
+}
+
+#userModify .modifyBtn {
+    border-radius: 0;
+    margin-top: 10px;
+    text-align: right;
+    position: inherit;
+    left: 0;
+    background-color: tomato;
+}
+
+#userModify .modifyBtn:hover {
+    background-color: #f64022;
+}
+
+#userModify .cancelBtn {
+    position: relative;
+    bottom: 30px;
+    background-color: #777777;
+    color: #ffffff;
+    padding: 6px;
+    border: none;
+}
+
+#userModify select#role {
+    width: 120px;
+    height: 30px;
+    outline: none;
+}
+
+#userModify input#regDate, input.leaveDate {
+    border: none;
+    color: #444444;
+    outline: none;
+}
+
+
+#admin-product-register .alert {
+    background-color: #fff6a6;
+    border: 1px solid #f9c13ae8;
+    color: #333;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+#admin-product-register #options  tr .optionInfo {
+    padding: 0;
+}
+
+#admin-product-register #options  tr .optionInfo div {
+    margin-bottom: 5px;
+}
+
+#admin-product-register #options  tr .optionInfo .text {
+    margin-right: 10px;
+}
+
+#admin-product-register #options  tr .optionInfo .add {
+    background-color: #5b81f4;
+    color: #ffffff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+#admin-product-register #options  tr .optionInfo .del {
+    background-color: #ff6333;
+    color: #ffffff;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+
+
+#admin-product-register .regBtn, .modifyBtn {
+    background-color:#727272;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 6px;
+    position: relative;
+    left: 860px;
+}
+
+#admin-product-register .regBtn:hover, .modifyBtn:hover {
+    background-color: #4c4949;
+}
+
+input[type=file]::file-selector-button{
+    background-color: #888888;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 3px 4px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/*🎈user list*/
+#userList #searchBox #searchOption {
+    width: 120px;
+}
+
+#userList #searchBox .searchInput {
+    width: 300px;
+    height: 34px;
+    position: relative;
+    top: -2px;
+    left: 4px;
+    border: 1px solid #777777;
+    outline: none;
+}
+
+#userList #searchBox .searchBtn {
+    border: none;
+    background-color: inherit;
+    position: relative;
+    right: 40px;
+    top: -3px;
+}
+
+#userList #searchBox .searchBtn img {
+    width: 24px;
+}
+
+
+/*🎈chart info*/
+#chartInfo #searchBox #searchOption {
+    width: 120px;
+}
+
+#chartInfo #searchBox .searchInput {
+    width: 300px;
+    height: 34px;
+    position: relative;
+    top: -2px;
+    left: 4px;
+    border: 1px solid #777777;
+    outline: none;
+}
+
+#chartInfo #searchBox .searchBtn {
+    border: none;
+    background-color: inherit;
+    position: relative;
+    right: 40px;
+    top: -3px;
+}
+
+#chartInfo #searchBox .searchBtn img {
+    width: 24px;
+}
+
+#chartInfo table{
+    font-size: 14px;
+}
+
+#chartInfo table tr th{
+    padding: 8px;
+    text-align: center;
+    background-color: #676767;
+    color: #ffff;
+}
+
+#chartInfo table tr td:nth-child(4) {
+    width: 200px;
+}
+
+#chartInfo table tr .prodName {
+    width: 200px;
+}
+
+#chartInfo table tr td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#chartInfo table tr .prodImg {
+    width: 80px;
+}
+
+
+/*🎈product list*/
+#productList #searchBox #searchOption {
+    width: 120px;
+}
+
+#productList #searchBox .searchInput {
+    width: 300px;
+    height: 34px;
+    position: relative;
+    top: -2px;
+    left: 4px;
+    border: 1px solid #777777;
+    outline: none;
+}
+
+#productList #searchBox .searchBtn {
+    border: none;
+    background-color: inherit;
+    position: relative;
+    right: 40px;
+    top: -3px;
+}
+
+#productList #searchBox .searchBtn img {
+    width: 24px;
+}
+
+#productList table{
+    font-size: 14px;
+}
+
+#productList table tr th{
+    padding: 8px;
+    text-align: center;
+    background-color: #676767;
+    color: #ffff;
+}
+
+#productList table tr td:nth-child(4) {
+    width: 200px;
+}
+
+#productList table tr .prodName {
+    width: 200px;
+}
+
+#productList table tr td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#productList table tr .prodImg {
+    width: 80px;
+}
+
+.prodImg > img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+/*🎈게시판 리스트 공통*/
+.board .table tr.tableTitle {
+    background-color: #585858;
+    color: #fff;
+    line-height: 0.5;
+}
+
+
+.board .pagination {
+    margin-bottom: 15px;
+}
+
+.board .pagination .page-link:hover {
+    background-color: royalblue;
+    color: #ffffff;
+}
+
+
+/*🎈게시판 view 공통*/
+#adminBoard {
+    background-color: #ffffff;
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+#adminBoard .board{
+    min-height: 500px;
+    max-width: 1040px;
+    border-bottom: 1px solid #333;
+}
+
+#adminBoard .board > .view h2 {
+    font-size: 18px;
+    color: #7f7f7f;
+}
+
+
+#adminBoard .board > .view > article > nav {
+    padding: 20px 0;
+    border-top: 2px solid #333;
+    border-bottom: solid 1px #c9c9c9;
+    display: flex;
+    justify-content: space-between;
+}
+
+#adminBoard .board > .view > article .title {
+    font-size: 24px;
+    color: #222;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+#adminBoard .board > .view > article .content {
+    padding: 30px 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+#adminBoard .board > .view > article .content >textarea {
+    border: none;
+    overflow: auto;
+    resize: none;
+    outline: none;
+    width: 100%;
+    min-height: 400px;
+}
+.bottomBtn {
+    max-width: 1040px;
+    margin-top: 20px;
+    display: block;
+    padding: 0px;
+    text-align: right;
+}
+.bottomBtn > a {
+    margin-left: 3px;
+    padding: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #888;
+    border-radius: 5px;
+}
+
+#adminBoard .bottomBtn #modifyBtn {
+    margin-left: 3px;
+    padding: 9px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: royalblue;
+    border-radius: 5px;
+    border: none;
+}
+
+.bottomBtn > a:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.bottomBtn > .deleteBtn {
+    background-color: tomato;
+}
+
+.btnSubmit {
+    width: 100px;
+    float: right;
+    text-align: center;
+    margin-top: 10px;
+    background-color: #777777;
+    color: #ffffff;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.btnSubmit:hover {
+    background-color: #555555;
+    color: #ffffff;
+}
+/*🎈게시판 글쓰기 공통*/
+#adminBoard .write tr > td:nth-child(1) {
+    width: 200px;
+}
+
+
+/*🎈자주묻는질문 글쓰기*/
+.title {
+}
+.contentText {
+    padding: 5px;
+    overflow: auto;
+    resize: none;
+    min-width: 800px;
+    height: 400px;
+}
+
+
+/*🎈1:1문의하기 view */
+.warningText {
+    font-size: 14px;
+    color: #777777;
+}
+
+/*🎈1:1문의하기 댓글 */
+#commentList {
+    width: 1040px;
+    margin: 0 auto;
+}
+
+.qna.form-control {
+    resize: none;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+ol.qna.breadcrumb {
+    padding: 0;
+    font-size: 16px;
+    background-color: #f8f9fc;
+}
+
+.qna.btnModify {
+    background-color: #eab43e;
+    color: #ffffff;
+    border: none;
+}
+
+.qna.btnModify:hover {
+    background-color: #e7970d;
+    color: #ffffff;
+    border: none;
+}
+
+.qna.btnRemove {
+    background-color: #e74a3b;
+    border: none;
+    color: #ffffff;
+}
+.qna.btnRemove:hover {
+    background-color: #e02d1b;
+    color: #ffffff;
+}
+
+.qna.input-group {
+    position: relative;
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 1040px;
+    margin: 0 auto;
+}
+
+.qna.input-group-text {
+    border-radius: 5px 5px 0 0;
+}
+
+.qna.text-area {
+    min-width: 1040px;
+    overflow: auto;
+    resize: none;
+    border-radius: 0 5px 5px 5px;
+    padding: 5px;
+}
+
+.qna.btnSet {
+   width: 1040px;
+   margin: 5px auto;
+}
+
+.qna.submitBtn {
+    width: 50px;
+    padding: 4px;
+    border-radius: 5px;
+    border: none;
+    background-color: #888;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.qna.btn-danger {
+    width: 50px;
+    padding: 4px;
+    color: #fff;
+    background-color: #e74a3b;
+    border-color: #e74a3b;
+}
+
+/*🎈footer*/
+footer.sticky-footer {
+    background-color: #ddd9;
+}

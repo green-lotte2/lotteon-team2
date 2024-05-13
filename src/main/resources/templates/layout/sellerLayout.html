@@ -10,9 +10,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <script th:src="@{/js/util.js}"></script>
-    <title>admin index</title>
-    <link th:href="@{/admin/css/sb-admin-2.min.css}" rel="stylesheet">
-    <link th:href="@{/admin/css/admin.css}" rel="stylesheet">
+    <link th:href="@{/seller/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/seller/css/admin.css}" rel="stylesheet">
     <style>
         .search_box {
             border: 1px solid #888888;
@@ -106,9 +105,9 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" th:href="@{/admin/cs/notice/list}">공지사항</a>
-                        <a class="collapse-item" th:href="@{/admin/cs/faq/list(cate1=${cate1})}">자주묻는질문</a>
-                        <a class="collapse-item" th:href="@{/admin/cs/qna/list}">문의하기</a>
+                        <a class="collapse-item" th:href="@{/seller/cs/notice/list}">공지사항</a>
+                        <a class="collapse-item" th:href="@{/seller/cs/faq/list(cate1=${cate1})}">자주묻는질문</a>
+                        <a class="collapse-item" th:href="@{/seller/cs/qna/list}">문의하기</a>
                     </div>
                 </div>
             </li>
