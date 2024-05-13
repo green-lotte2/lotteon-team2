@@ -1,8 +1,17 @@
+/* 폰트 */
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /*🎀전체 초기화*/
+
 body {
     color: #333;
     box-sizing: border-box;
+    font:  normal 12px 'NanumSquareRound';
 }
 
 a {
@@ -286,11 +295,13 @@ main table span {
 /*🎈회원수정*/
 #userModify input {
     outline: none;
+    padding: 5px;
 }
 
 #userModify form {
     width: 1000px;
     margin: 0 auto;
+    font-size: 13px;
 }
 
 #userModify form h4 {
@@ -493,7 +504,7 @@ input[type=file]::file-selector-button{
     width: 300px;
     height: 34px;
     position: relative;
-    top: -2px;
+    top: 0;
     left: 4px;
     border: 1px solid #777777;
     outline: none;
@@ -577,7 +588,7 @@ input[type=file]::file-selector-button{
     width: 300px;
     height: 34px;
     position: relative;
-    top: -2px;
+    top: 0;
     left: 4px;
     border: 1px solid #777777;
     outline: none;
@@ -588,7 +599,7 @@ input[type=file]::file-selector-button{
     background-color: inherit;
     position: relative;
     right: 40px;
-    top: -3px;
+    top: 0;
 }
 
 #productList #searchBox .searchBtn img {

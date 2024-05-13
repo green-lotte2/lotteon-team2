@@ -54,8 +54,7 @@ public class OrdersDTO {
     private int totalShipping;
     private int finalPrice;
 
-    //🎈
-    private int state;
+
 
 
 }

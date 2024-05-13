@@ -238,15 +238,10 @@ public class AdminService {
     }
 
     // 🎈 배송상태 업데이트
-    public void updateDeliveryState(String state) {
-        List<OrderDetail> orderDetails = orderDetailRepository.findByState(state);
+    public void updateOrderDetailState(int ono, int pno, String state) {
+        OrderDetail orderDetails =  orderDetailRepository.updateStateByOnoAndPno(ono, pno, state);
         log.info("orderDetails : " + orderDetails);
 
-        for(OrderDetail orderDetail : orderDetails) {
-            orderDetail.setState(state);
-            log.info("orderDetail : " + orderDetail);
-            orderDetailRepository.save(orderDetail);
-        }
     }
 
 

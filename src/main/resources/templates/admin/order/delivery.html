@@ -89,36 +89,44 @@
 <main layout:fragment="content">
     <script>
         window.onload = function (){
-            const myModal = document.getElementsByClassName('myModal')[0]
-            console.log(myModal)
-            const myInput = document.getElementById('myInput')
 
-            myModal.addEventListener('shown.bs.modal', (e) => {
-                console.log(e.target.value);
-                myInput.focus();
+            // 수정 버튼 클릭했을 때 ono, pno 값 가져오기
+            document.querySelectorAll('.myModal').forEach(button => {
+                button.addEventListener('click', function() {
+                    let ono = this.value;
+                    let pno = this.getAttribute('data');
 
-            })
+                    console.log('ono:', ono);
+                    console.log('pno:', pno);
 
-            const saveBtns = document.getElementsByClassName('saveBtn');
-            for (const saveBtn of saveBtns) {
-                saveBtn.addEventListener('click', function() {
-                    let selectedStatus = document.querySelector('input[name="state"]:checked').value;
-                    console.log('클릭 이벤트 발생');
-                    updateStatus(selectedStatus);
-                    console.log(selectedStatus);
+                    // 저장 버튼 눌렸을 때, 선택된 값 가져오기
+                    const saveBtns = document.getElementsByClassName('saveBtn');
+                    for (const saveBtn of saveBtns) {
+                        saveBtn.addEventListener('click', function() {
+                            let selectedStatus = document.querySelector('input[name="state"]:checked').value;
+                            console.log('클릭 이벤트 발생');
+                            updateStatus(selectedStatus, ono, pno);
+                            console.log(selectedStatus);
+                            location.reload();
+                        });
+
+                    }
+
                 });
-            }
+            });
 
-            function updateStatus(selectedStatus) {
+            async function updateStatus(selectedStatus, ono, pno) {
                 const url = '/lotteon/admin/delivery/updateStatus';
                 jsonData = {
-                    "ono":selectedStatus,
-                    "pno":selectedStatus,
-                    "state":selectedStatus
+                    "ono": ono,
+                    "pno": pno,
+                    "state": selectedStatus
                 };
-                const data = fetchPost(url, jsonData);
+                const data = await fetchPost(url, jsonData);
+                console.log("data : " + data);
 
             }
+
         }
 
     </script>
