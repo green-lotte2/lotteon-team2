@@ -89,11 +89,14 @@
 <main layout:fragment="content">
     <script>
         window.onload = function (){
-            const myModal = document.getElementById('myModal')
+            const myModal = document.getElementsByClassName('myModal')[0]
+            console.log(myModal)
             const myInput = document.getElementById('myInput')
 
-            myModal.addEventListener('shown.bs.modal', () => {
-                myInput.focus()
+            myModal.addEventListener('shown.bs.modal', (e) => {
+                console.log(e.target.value);
+                myInput.focus();
+
             })
 
             const saveBtns = document.getElementsByClassName('saveBtn');
@@ -107,27 +110,14 @@
             }
 
             function updateStatus(selectedStatus) {
-                fetch('/lotteon/admin/delivery/updateStatus', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ "state" : selectedStatus })
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('서버 응답이 실패했습니다.');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('서버 응답:', data);
+                const url = '/lotteon/admin/delivery/updateStatus';
+                jsonData = {
+                    "ono":selectedStatus,
+                    "pno":selectedStatus,
+                    "state":selectedStatus
+                };
+                const data = fetchPost(url, jsonData);
 
-                        location.reload();
-                    })
-                    .catch(error => {
-                        console.error('에러 발생:', error);
-                    });
             }
         }
 
@@ -161,8 +151,8 @@
                             </thead>
                             <tbody>
                             <tr class="items" th:each="deliveryList: ${deliveryPage}">
-                                <td th:text="${deliveryList.ono}"></td>
-                                <td th:text="${deliveryList.pno}"></td>
+                                <td th:text="${deliveryList.ono}" class="ono"></td>
+                                <td th:text="${deliveryList.pno}" class="pno"></td>
                                 <td th:text="${deliveryList.pname}" class="pname"></td>
                                 <td th:text="${deliveryList.pcount}"></td>
                                 <td th:text="${deliveryList.odate}"></td>
@@ -177,7 +167,7 @@
                                 </td>
                                 <td>
                                     <!-- Button trigger modal -->
-                                    <button type="button" id="myModal" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <button type="button" th:value="${deliveryList.ono}"  th:data="${deliveryList.pno}"  class="btn btn-dark myModal" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         수정
                                     </button>
 

@@ -181,11 +181,14 @@ public class AdminProductController {
     public ResponseEntity<String> updateDeliveryState(@RequestBody Map<String, String> requestBody) {
 
         String state = requestBody.get("state");
+       // log.info("state : " + state);
         try {
+            log.info("try : " );
             adminService.updateDeliveryState(state);
-            log.info("state : " + state);
+            //log.info("state : " + state);
             return ResponseEntity.ok("Order state updated successfully.");
         } catch (Exception e) {
+            log.info("catch : ");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to update order state: " + e.getMessage());
         }
