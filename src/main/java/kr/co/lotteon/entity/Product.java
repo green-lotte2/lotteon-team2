@@ -28,6 +28,8 @@ public class Product {
     private String pname;
     @CreationTimestamp
     private LocalDateTime rdate;
+    private LocalDateTime deldate;
+
     private int price;
     private int stock;
     private int deliprice;

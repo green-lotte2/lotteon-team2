@@ -3,8 +3,10 @@ package kr.co.lotteon.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import kr.co.lotteon.dto.BannerDTO;
 import kr.co.lotteon.dto.TermsDTO;
 import kr.co.lotteon.dto.UserDTO;
+import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.TermsService;
 import kr.co.lotteon.service.UserService;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -25,6 +28,7 @@ public class UserController {
 
     private final TermsService termsService;
     private final UserService userService;
+    private final AdminService adminService;
 
     //약관페이지
     @GetMapping("/terms")
@@ -63,7 +67,9 @@ public class UserController {
 
     //로그인 페이지
     @GetMapping("/login")
-    public String loginForm(){
+    public String loginForm(Model model){
+        List<BannerDTO> banners = adminService.selectBanner();
+        model.addAttribute("banners", banners);
         return "/member/login";
     }
 

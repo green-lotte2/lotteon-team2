@@ -94,10 +94,7 @@ public class AdminProductController {
     @GetMapping("/admin/product/delete")
     public String adminDeleteProduct(int pno) {
         Product product = productService.findProduct(pno);
-        int cate = product.getCate();
-
-        adminService.adminDeleteProductImg(pno, cate);
-        adminService.adminDeleteProduct(pno);
+        adminService.adminDeleteProduct(product);
         return "redirect:/admin/product/list";
     }
 
@@ -105,7 +102,8 @@ public class AdminProductController {
     public String adminDeleteProduct(@RequestParam List<String> checkbox) {
         for (String pno : checkbox) {
             int productId = Integer.parseInt(pno);
-            adminService.adminDeleteProduct(productId);
+            Product product = productService.findProduct(productId);
+            adminService.adminDeleteProduct(product);
             log.info("deletePno : " + productId);
         }
         log.info(checkbox.toString());

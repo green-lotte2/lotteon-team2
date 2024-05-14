@@ -28,6 +28,8 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final StringPath company = createString("company");
 
+    public final DateTimePath<java.time.LocalDateTime> deldate = createDateTime("deldate", java.time.LocalDateTime.class);
+
     public final NumberPath<Integer> deliprice = createNumber("deliprice", Integer.class);
 
     public final NumberPath<Integer> discount = createNumber("discount", Integer.class);

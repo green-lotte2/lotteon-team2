@@ -42,6 +42,7 @@ public class OrdersController {
     private final OrdersService ordersService;
     private final CartService cartService;
     private final UserService userService;
+    private final AdminService adminService;
     private final OrdersMapper ordersMapper;
 
     @GetMapping("/product/order")
@@ -107,7 +108,8 @@ public class OrdersController {
 
         List<OrdersDTO> orders = ordersService.selectOrders(uid, pageRequestDTO);
         PageResponseDTO pageResponseDTO = ordersService.findOrderListByUid(uid, pageRequestDTO);
-
+        List<BannerDTO> banners = adminService.selectBanner();
+        model.addAttribute("banners", banners);
         model.addAttribute("orders", orders);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
 

@@ -44,6 +44,7 @@ public class ProductController {
     private final OrdersService ordersService;
     private final ProductRepository productRepository;
     private final ReviewService reviewService;
+    private final AdminService adminService;
 
     @GetMapping("/product/cart")
     public String cart(Authentication authentication, Model model) {
@@ -62,6 +63,7 @@ public class ProductController {
         model.addAttribute("cartProducts", cartProducts);  // 모델에 장바구니 상품 목록 추가
         model.addAttribute("cate", productService.getCategoryList()); // 카테고리 리스트 추가
         log.info("1111111 : " + cartProducts);
+
         return "/product/cart"; // 장바구니 뷰 페이지 반환
     }
 
@@ -147,6 +149,8 @@ public class ProductController {
             if (Average == null) {
                 Average = 0.0; // 평균 별점이 없는 경우 기본값 설정
             }
+            List<BannerDTO> banners = adminService.selectBanner();
+            model.addAttribute("banners", banners);
 
             model.addAttribute("Average", Average);
             model.addAttribute("cate", productService.getCategoryList());

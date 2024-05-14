@@ -1,9 +1,7 @@
 package kr.co.lotteon.controller;
 
-import kr.co.lotteon.dto.ProductDTO;
-import kr.co.lotteon.dto.ProductPageRequestDTO;
-import kr.co.lotteon.dto.ProductPageResponseDTO;
-import kr.co.lotteon.dto.ReviewDTO;
+import kr.co.lotteon.dto.*;
+import kr.co.lotteon.service.AdminService;
 import kr.co.lotteon.service.ProductService;
 import kr.co.lotteon.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +21,7 @@ public class ReviewController {
 
     private final ProductService productService;
     private final ReviewService reviewService;
+    private final AdminService adminService;
 
     /**
      * 특정 상품에 대한 리뷰 작성 폼을 표시합니다.
@@ -71,6 +70,9 @@ public class ReviewController {
         ProductPageResponseDTO responseDTO = productService.getList(productPageRequestDTO, cateInt);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String uid = userDetails.getUsername();
+
+        List<BannerDTO> banners = adminService.selectBanner();
+        model.addAttribute("banners", banners);
 
         List<ReviewDTO> reviews = reviewService.findReviewsByUserId(uid);
         model.addAttribute("result", responseDTO);

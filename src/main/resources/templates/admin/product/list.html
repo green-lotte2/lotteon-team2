@@ -23,7 +23,8 @@
 
             const pdelete = document.getElementById('delete');
             pdelete.onclick = function (){
-                if (confirm('삭제하시겠습니까?')){
+                let confirmed = confirm('삭제하시겠습니까?');
+                if (confirmed){
                     return true;
                 }else{
                     return false;
@@ -115,7 +116,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="product: ${adminProducts.anyList}">
+                                        <tr th:each="product: ${adminProducts.anyList}" th:style="${product.deldate != null ? 'color:red':''}">
                                             <td>
                                                 <input type="checkbox" name="checkbox" th:value="${product.pno}">
                                             </td>
@@ -132,8 +133,8 @@
                                             <td>[[${product.hit}]]</td>
                                             <td th:text="${#temporals.format(product.rdate, 'yyyy-MM-dd')}"></td>
                                             <td>
-                                                <a th:href="@{/admin/product/delete(pno=${product.pno})}" id="delete">[삭제]</a>
-                                                <a th:href="@{/admin/product/modify(pno=${product.pno})}">[수정]</a>
+                                                <a th:if="${product.deldate} == null" th:href="@{/admin/product/delete(pno=${product.pno})}" id="delete">[삭제]</a>
+                                                <a th:if="${product.deldate} == null" th:href="@{/admin/product/modify(pno=${product.pno})}">[수정]</a>
                                             </td>
                                         </tr>
                                         </tbody>

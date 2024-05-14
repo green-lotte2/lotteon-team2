@@ -26,7 +26,9 @@
     </ul>
 
     <section>
-        <a href="#"><img th:src="@{/images/my_banner2.png}" alt="패션, 타운 하나로 끝" class="banner"></a>
+        <a th:href="@{/}" class="banner" th:each="banner:${banners}" th:if="${banner.blocation.equals('MY1')} and ${banner.bmanage == 1}">
+            <img th:src="@{|/uploads/banner/${banner.bfile}|}">
+        </a>
         <article>
             <h3>나의리뷰</h3>
 

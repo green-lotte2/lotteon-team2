@@ -22,6 +22,7 @@ public class ProductDTO {
     private int cate;
     private String pname;
     private LocalDateTime rdate;
+    private LocalDateTime deldate;
     private int price;
     private int stock;
     private int deliprice;

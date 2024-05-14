@@ -92,10 +92,11 @@
 
             // 수정 버튼 클릭했을 때 ono, pno 값 가져오기
             document.querySelectorAll('.myModal').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function(e) {
                     let ono = this.value;
                     let pno = this.getAttribute('data');
-
+                    console.log(e.target.closest('tr'));
+                    const target = e.target.closest('tr').children[6];
                     console.log('ono:', ono);
                     console.log('pno:', pno);
 
@@ -105,9 +106,22 @@
                         saveBtn.addEventListener('click', function() {
                             let selectedStatus = document.querySelector('input[name="state"]:checked').value;
                             console.log('클릭 이벤트 발생');
+                            target.innerText = selectedStatus;
+                            if (selectedStatus === '배송준비'){
+                                target.className = 'orange-text';
+                            }else if(selectedStatus === '배송중') {
+                                target.className = 'blue-text';
+                            }else if(selectedStatus === '배송완료') {
+                                target.className = 'green-text';
+                            }else if(selectedStatus === '반품') {
+                                target.className = 'red-text';
+                            }else {
+                                target.className = 'purple-text';
+                            }
+
                             updateStatus(selectedStatus, ono, pno);
+                            document.getElementById('cancel').click();
                             console.log(selectedStatus);
-                            location.reload();
                         });
 
                     }
@@ -124,7 +138,6 @@
                 };
                 const data = await fetchPost(url, jsonData);
                 console.log("data : " + data);
-
             }
 
         }
@@ -165,7 +178,7 @@
                                 <td th:text="${deliveryList.pcount}"></td>
                                 <td th:text="${deliveryList.odate}"></td>
                                 <td th:text="${deliveryList.uid}"></td>
-                                <td id="deliveryText" th:text="${deliveryList.state}"
+                                <td name="deliveryText" th:text="${deliveryList.state}"
                                     th:class="${deliveryList.state eq '배송준비' ? 'orange-text' :
                                    (deliveryList.state eq '배송중' ? 'blue-text' :
                                      (deliveryList.state eq '배송완료' ? 'green-text' :
@@ -204,7 +217,7 @@
                                                     <label for="statusRefund">환불</label>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                                    <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                                                     <button type="button" id="myInput" class="saveBtn btn btn-primary">저장</button>
                                                 </div>
                                             </div>

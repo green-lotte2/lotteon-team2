@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +38,7 @@ public class AdminService {
 
     private final AdminMapper adminMapper;
     private final BannerRepository bannerRepository;
+    private final ProductRepository productRepository;
     private final ProductimgRepository productimgRepository;
     private final ProductMapper productMapper;
     private final PasswordEncoder passwordEncoder;
@@ -187,8 +191,10 @@ public class AdminService {
         return  adminMapper.adminSelectProducts();
     }
 
-    public void adminDeleteProduct(int pno){
-        adminMapper.adminDeleteProduct(pno);
+    public void adminDeleteProduct(Product product){
+        LocalDateTime now = LocalDateTime.now();
+        product.setDeldate(now);
+        productRepository.save(product);
     }
 
 
@@ -296,6 +302,12 @@ public class AdminService {
 
     // 🎈 배너 리스트
     public List<BannerDTO> selectBanner() {
+        /*
+        List<BannerDTO> banners = adminMapper.selectBanner();
+        for (BannerDTO banner:banners){
+            settingBanner(banner);
+        }
+         */
         return adminMapper.selectBanner();
     }
 
@@ -304,18 +316,55 @@ public class AdminService {
         adminMapper.deleteBanner(bno);
     }
 
+    public void settingBanner(BannerDTO bannerDTO){
+        LocalDate nowDate = LocalDate.now();
+        LocalTime nowTime = LocalTime.now();
+        if(bannerDTO.getBmanage()!= 0){
+            if(bannerDTO.getBendDate().isAfter(nowDate)){
+                setDeActivate(bannerDTO);
+                if(bannerDTO.getBendDate().isEqual(nowDate) && bannerDTO.getBendTime().isAfter(nowTime)){
+                    setDeActivate(bannerDTO);
+                }
+            }
+        }else {
+            if(bannerDTO.getBstartDate().isAfter(nowDate)){
+                setActivate(bannerDTO);
+                if(bannerDTO.getBstartDate().isEqual(nowDate) && bannerDTO.getBstartTime().isAfter(nowTime)){
+                    setActivate(bannerDTO);
+                }
+            }
+        }
+    }
+
+    public void setActivate(BannerDTO bannerDTO){
+        bannerDTO.setBmanage(1);
+        Banner banner = modelMapper.map(bannerDTO, Banner.class);
+        bannerRepository.save(banner);
+    }
+
+    public void setDeActivate(BannerDTO bannerDTO){
+        bannerDTO.setBmanage(0);
+        Banner banner = modelMapper.map(bannerDTO, Banner.class);
+        bannerRepository.save(banner);
+    }
+
     // 🎈 배너 활성화
- /*   public void activateBanner(int bno) {
+    public void activateBanner(int bno) {
         Optional<Banner> optionalBanner = bannerRepository.findById(bno);
         if(optionalBanner.isPresent()) {
             Banner banner = optionalBanner.get();
-            if(isBannerValid(banner)){
-            //    banner.setBmanage(1);
-                bannerRepository.save(banner);
-            }
+            banner.setBmanage(1);
+            bannerRepository.save(banner);
         }
-
-    }*/
+    }
+    public void deActivateBanner(int bno) {
+        Optional<Banner> optionalBanner = bannerRepository.findById(bno);
+        if(optionalBanner.isPresent()) {
+            Banner banner = optionalBanner.get();
+            banner.setBmanage(0);
+            bannerRepository.save(banner);
+        }
+    }
 
     /*
     private boolean isBannerValid(Banner banner) {

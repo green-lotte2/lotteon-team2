@@ -72,9 +72,9 @@
 <div class="wrapper">
     <header>
         <!--🎈탑배너-->
-        <div id="bannerTop" class="on" style="background: #e4dfdf;" th:if="${bestProduct != null}">
+        <div id="bannerTop" class="on" style="background: #e4dfdf;" th:each="banner:${banners}" th:if="${banner.blocation.equals('MAIN1')} and ${banner.bmanage == 1}">
             <article>
-                <a href="#"><img th:src="@{/images/topBanner1.png}"/></a>
+                <a href="#"><img th:src="@{|/uploads/banner/${banner.bfile}|}"></a>
                 <button class="btnClose">X</button>
             </article>
         </div>

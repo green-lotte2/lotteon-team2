@@ -373,8 +373,8 @@
                             <td>[[${banner.bstartTime}]]</td>
                             <td>[[${banner.bendTime}]]</td>
                             <td>
-                                <a th:href="@{/admin/config/bannerList/active(bno=${banner.bno})}" class="activate-link" >[활성]</a>
-                                <a th:href="@{/admin/config/bannerList/deActivate(bno=${banner.bno})}" class="deactivate-link">[비활성]</a>
+                                <a th:href="@{/admin/config/bannerList/active(bno=${banner.bno})}" class="activate-link" th:style="${banner.bmanage == 1 ? 'color:green':''}">[활성]</a>
+                                <a th:href="@{/admin/config/bannerList/deActivate(bno=${banner.bno})}" class="deactivate-link" th:style="${banner.bmanage == 0 ? 'color:green':''}">[비활성]</a>
                             </td>
                         </tr>
                     </table>
@@ -422,8 +422,8 @@
                             <td>[[${banner.bstartTime}]]</td>
                             <td>[[${banner.bendTime}]]</td>
                             <td>
-                                <a href="#">[활성]</a>
-                                <a href="#">[비활성]</a>
+                                <a th:href="@{/admin/config/bannerList/active(bno=${banner.bno})}" class="activate-link" th:style="${banner.bmanage == 1 ? 'color:green':''}">[활성]</a>
+                                <a th:href="@{/admin/config/bannerList/deActivate(bno=${banner.bno})}" class="deactivate-link" th:style="${banner.bmanage == 0 ? 'color:green':''}">[비활성]</a>
                             </td>
                         </tr>
                     </table>
@@ -470,8 +470,8 @@
                             <td>[[${banner.bstartTime}]]</td>
                             <td>[[${banner.bendTime}]]</td>
                             <td>
-                                <a href="#">[활성]</a>
-                                <a href="#">[비활성]</a>
+                                <a th:href="@{/admin/config/bannerList/active(bno=${banner.bno})}" class="activate-link" th:style="${banner.bmanage == 1 ? 'color:green':''}">[활성]</a>
+                                <a th:href="@{/admin/config/bannerList/deActivate(bno=${banner.bno})}" class="deactivate-link" th:style="${banner.bmanage == 0 ? 'color:green':''}">[비활성]</a>
                             </td>
                         </tr>
                     </table>
@@ -518,8 +518,8 @@
                             <td>[[${banner.bstartTime}]]</td>
                             <td>[[${banner.bendTime}]]</td>
                             <td>
-                                <a href="#">[활성]</a>
-                                <a href="#">[비활성]</a>
+                                <a th:href="@{/admin/config/bannerList/active(bno=${banner.bno})}" class="activate-link" th:style="${banner.bmanage == 1 ? 'color:green':''}">[활성]</a>
+                                <a th:href="@{/admin/config/bannerList/deActivate(bno=${banner.bno})}" class="deactivate-link" th:style="${banner.bmanage == 0 ? 'color:green':''}">[비활성]</a>
                             </td>
                         </tr>
                     </table>
@@ -566,8 +566,8 @@
                             <td>[[${banner.bstartTime}]]</td>
                             <td>[[${banner.bendTime}]]</td>
                             <td>
-                                <a href="#">[활성]</a>
-                                <a href="#">[비활성]</a>
+                                <a th:href="@{/admin/config/bannerList/active(bno=${banner.bno})}" class="activate-link" th:style="${banner.bmanage == 1 ? 'color:green':''}">[활성]</a>
+                                <a th:href="@{/admin/config/bannerList/deActivate(bno=${banner.bno})}" class="deactivate-link" th:style="${banner.bmanage == 0 ? 'color:green':''}">[비활성]</a>
                             </td>
                         </tr>
                     </table>

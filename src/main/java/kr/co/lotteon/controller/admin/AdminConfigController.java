@@ -142,16 +142,14 @@ public class AdminConfigController {
     // 🎈 banner 활성
     @GetMapping("/admin/config/bannerList/active")
     public String activeBanner(Model model, int bno){
-        model.addAttribute("bno", bno);
-        log.info("activeBno: " + bno);
+        adminService.activateBanner(bno);
         return "redirect:/admin/config/bannerList";
     }
 
     // 🎈 banner 비활성
     @GetMapping("/admin/config/bannerList/deActivate")
     public String deActiveBanner(Model model, int bno){
-        model.addAttribute("bno", bno);
-        log.info("deActivateBno :" + bno);
+        adminService.deActivateBanner(bno);
         return "redirect:/admin/config/bannerList";
     }
 

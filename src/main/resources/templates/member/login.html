@@ -103,8 +103,8 @@
             </a>
         </form>
 
-        <a th:href="@{/}" class="banner">
-            <img th:src="@{/images/member_login_banner.png}" alt="로그인배너">
+        <a th:href="@{/}" class="banner" th:each="banner:${banners}" th:if="${banner.blocation.equals('MEMBER1')} and ${banner.bmanage == 1}">
+            <img th:src="@{|/uploads/banner/${banner.bfile}|}">
         </a>
     </div>
 </main>

@@ -30,6 +30,7 @@ public class MyController {
     private final MyService myService;
     private final OrdersService ordersService;
     private final AuthenticationManager authenticationManager;
+    private final AdminService adminService;
     private final ReviewService reviewService;
     private final ProductService productService;
 
@@ -48,7 +49,8 @@ public class MyController {
 
         List<OrdersDTO> orders = ordersService.selectOrders(uid, pageRequestDTO);
         PageResponseDTO pageResponseDTO = ordersService.findOrderListByUid(uid, pageRequestDTO);
-
+        List<BannerDTO> banners = adminService.selectBanner();
+        model.addAttribute("banners", banners);
 
         model.addAttribute("orders", orders);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
@@ -65,6 +67,8 @@ public class MyController {
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
         }
+        List<BannerDTO> banners = adminService.selectBanner();
+        model.addAttribute("banners", banners);
         List<OrdersDTO> point = ordersService.selectPoint(authentication.getName());
         model.addAttribute("point", point);
         return "/mypage/point";
@@ -109,6 +113,9 @@ public class MyController {
 
         //페이지 시작번호
         int pageStartNum = csService.getPageStartNum(total, currentPage);
+
+        List<BannerDTO> banners = adminService.selectBanner();
+        model.addAttribute("banners", banners);
 
         model.addAttribute("qnaDTO", qnaDTOList);
         model.addAttribute("currentPage", currentPage);
@@ -177,7 +184,9 @@ public class MyController {
     }
 
     @GetMapping("/mypage/info")
-    public String info() {
+    public String info(Model model) {
+        List<BannerDTO> banners = adminService.selectBanner();
+        model.addAttribute("banners", banners);
         return "/mypage/info";
     }
     @ResponseBody
@@ -214,6 +223,9 @@ public class MyController {
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
         }
+        List<BannerDTO> banners = adminService.selectBanner();
+        model.addAttribute("banners", banners);
+
         UserDTO sellerInfo = userService.selectSeller(authentication.getName());
         model.addAttribute("sellerInfo", sellerInfo);
         return "/mypage/infoSeller";

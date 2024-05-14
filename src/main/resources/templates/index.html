@@ -58,17 +58,6 @@
     </head>
 
     <body>
-        <!--
-          배너 상단 이미지 추가 고려
-        -->
-        <div id="bannerTop" class="on" style="background: #e4dfdf;">
-            <article>
-                <a href="#"><img th:src="@{/images/topBanner1.png}"/></a>
-                <button class="btnClose">close</button>
-            </article>
-        </div>
-
-
         <!-- 카테고리/베스트 상품 영역 -->
 
         <section layout:fragment="content">
@@ -77,29 +66,9 @@
 
             <section class="slider">
                 <ul>
-                    <li>
+                    <li th:each="banner:${banners}" th:if="${banner.blocation.equals('MAIN2')} and ${banner.bmanage == 1}">
                         <a href="#">
-                            <img th:src="@{/images/slider_item1.jpg}" alt="item1"/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img th:src="@{/images/slider_item2.jpg}" alt="item2"/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img th:src="@{/images/slider_item3.jpg}" alt="item3"/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img th:src="@{/images/slider_item4.jpg}" alt="item4"/>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img th:src="@{/images/slider_item5.jpg}" alt="item5" />
+                            <img th:src="@{|/uploads/banner/${banner.bfile}|}">
                         </a>
                     </li>
                 </ul>
