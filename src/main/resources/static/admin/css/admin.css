@@ -1,17 +1,12 @@
 /* 폰트 */
-@font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 /*🎀전체 초기화*/
 
 body {
     color: #333;
     box-sizing: border-box;
-    font:  normal 12px 'NanumSquareRound';
+    font: normal 12px "Noto Sans CJK KR";
 }
 
 a {

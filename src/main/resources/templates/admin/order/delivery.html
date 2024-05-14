@@ -107,7 +107,8 @@
                             console.log('클릭 이벤트 발생');
                             updateStatus(selectedStatus, ono, pno);
                             console.log(selectedStatus);
-                            location.reload();
+                            let modalBackDrop = document.getElementsByClassName('modal-backdrop.fade.show');
+                            modalBackDrop.style.display="none";
                         });
 
                     }
@@ -180,7 +181,7 @@
                                     </button>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">

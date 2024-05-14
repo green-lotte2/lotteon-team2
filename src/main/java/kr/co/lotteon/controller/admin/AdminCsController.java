@@ -34,7 +34,7 @@ public class AdminCsController {
     /////////////////////////
     // 🎈공지사항 //////////////
     ////////////////////////
-    @GetMapping(value = {"/admin/cs/notice/list", "/admin/cs/notice/"})
+    @GetMapping("/admin/cs/notice/list")
     public String adminNoticeList(@RequestParam(name="pg", defaultValue = "1") String pg,
                                   @RequestParam(name="cate1", required = false) String cate1,
                                   Model model){
@@ -172,7 +172,7 @@ public class AdminCsController {
     ////////////////////////
     // 🎈자주 묻는 질문 ////////
     ///////////////////////
-    @GetMapping(value={"/admin/cs/faq/list", "/admin/cs/faq/"})
+    @GetMapping("/admin/cs/faq/list")
     public String adminFaqList(@RequestParam(name="pg", defaultValue = "1") String pg,
                                @RequestParam(name="cate1", required = false) String cate1,
                                Model model){
@@ -311,7 +311,7 @@ public class AdminCsController {
     /////////////////////////
     // 🎈1:1 질문 /////////////
     ////////////////////////
-    @GetMapping(value = {"/admin/cs/qna/list", "/admin/cs/qna"})
+    @GetMapping("/admin/cs/qna/list")
     public String adminQnaList(@RequestParam(name="pg", defaultValue = "1") String pg,
                                @RequestParam(name="cate1", required = false) String cate1,
                                Model model){
