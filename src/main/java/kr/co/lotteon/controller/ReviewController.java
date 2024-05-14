@@ -27,26 +27,33 @@ public class ReviewController {
      * 특정 상품에 대한 리뷰 작성 폼을 표시합니다.
      */
     @GetMapping("/mypage/writeReview")
-    public String writeReviewForm(@RequestParam("pno") int pno, Model model) {
+    public String writeReviewForm(Authentication authentication, @RequestParam("pno") int pno, Model model) {
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "redirect:/member/login"; // 인증되지 않은 경우 로그인 페이지로 리다이렉트
+        }
         ProductDTO product = productService.findProductDTOById(pno);
-        log.info("product4533123" + product);
         if (product == null) {
             return "redirect:/product/list";
         }
+
         model.addAttribute("product", product);
+        model.addAttribute("pageId", "writeReview");
         return "/mypage/writeReview";
     }
 
     /**
      * 리뷰를 저장하고 상품 상세 페이지로 리다이렉트합니다.
      */
-    @PostMapping("/product/review")
+    @PostMapping("/mypage/review")
     public String saveReview(@ModelAttribute ReviewDTO reviewDTO) {
-        log.info("reviewDTO5252525252 : " + reviewDTO);
+        log.info("ReviewDTO: " + reviewDTO); // 디버깅 로그 추가
         reviewService.saveReview(reviewDTO);
 
-        return "redirect:/product/view?pno=" + reviewDTO.getPno(); // 리뷰 저장 후 리다이렉트
+        // 리뷰 저장 후 /mypage/order로 리다이렉트
+        return "redirect:/mypage/order";
     }
+
 
     /**
      * 로그인된 사용자가 작성한 모든 리뷰를 표시하는 페이지를 보여줍니다.

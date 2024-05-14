@@ -35,24 +35,30 @@ public class MyController {
     private final ProductService productService;
 
     @GetMapping(value = {"/mypage/","/mypage/home"})
-    public String myPage(Authentication authentication ,Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
+    public String myPage(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails){
 
-        MyHomeDTO myHomeDTO = myService.getMyHomeInfo(myUserDetails.getUser().getUid());
+        if (myUserDetails == null || !myUserDetails.isEnabled()) {
+            return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
+        }
 
         String uid = myUserDetails.getUser().getUid();
+        MyHomeDTO myHomeDTO = myService.getMyHomeInfo(uid);
+
         PageRequestDTO pageRequestDTO = new PageRequestDTO();
         pageRequestDTO.setPg(1);
         pageRequestDTO.setSize(3);
 
+
         List<ReviewDTO> Reviews = myService.getRecentReviews(uid);
-
-
         List<OrdersDTO> orders = ordersService.selectOrders(uid, pageRequestDTO);
         PageResponseDTO pageResponseDTO = ordersService.findOrderListByUid(uid, pageRequestDTO);
+
         List<BannerDTO> banners = adminService.selectBanner();
         model.addAttribute("banners", banners);
 
+
         model.addAttribute("orders", orders);
+        log.info("orders" + orders);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
         model.addAttribute("myHomeDTO", myHomeDTO);
         model.addAttribute("Reviews", Reviews);

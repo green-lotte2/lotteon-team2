@@ -4,39 +4,94 @@
 
 <!-- 장바구니 페이지 시작 -->
 <section class="cart" layout:fragment="content">
+
     <script th:inline="javascript">
-        window.onunload = function () {
-            const pnos = document.getElementsByName('productSelect');
-            const pcounts = document.getElementsByName('pcount');
-
-
-            const products = [[${cartProducts}]];
-            products.forEach(function (product, i){
-                const pnoValue = pnos[i].value;
-                const pcountValue = pcounts[i].value;
-
-                if (parseInt(product.pno) === parseInt(pnoValue) && parseInt(product.pcount) !== parseInt(pcountValue)){
-                    const jsonData = {
-                        "pno": pnoValue,
-                        "pcount": pcountValue
-                    };
-
-                    const url = '/lotteon/product/cart/update';
-                    const data = fetchPost(url, jsonData);
-                    console.log(data);
-                    pcounts[i].value = data.pcount;
-                }
-            })
-        }
         document.addEventListener('DOMContentLoaded', function () {
             updateTotalSum(); // 페이지 로드 시 전체 금액 업데이트
 
             const count = document.getElementsByName('pcount');
             count.forEach(function (tag) {
                 tag.onchange = function () {
+                    if (tag.value < 1) {
+                        alert("수량은 1 이상이어야 합니다.");
+                        tag.value = 1;
+                    }
                     updateTotalSum();
+                    updateCartItem(tag);
                 }
             });
+
+            const cartForm = document.getElementById('cartForm');
+
+            cartForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // 기본 폼 제출 동작 방지
+                updateHiddenFields(); // 숨겨진 필드 업데이트
+                cartForm.submit(); // 실제 폼 제출
+            });
+
+            function updateCartItem(tag) {
+                const pno = tag.closest('tr').querySelector('input[name="productSelect"]').value;
+
+                const jsonData = {
+                    "pno": pno,
+                    "pcount": tag.value
+                };
+
+                fetch('/lotteon/product/cart/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(jsonData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Cart item updated:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+
+            function updateHiddenFields() {
+                const pcounts = document.getElementsByName('pcount');
+                const pnos = document.getElementsByName('productSelect');
+
+                // 기존 숨겨진 input 제거
+                document.querySelectorAll('input[name^="products["]').forEach(input => {
+                    input.remove();
+                });
+
+                // 새로운 숨겨진 input 추가
+                pnos.forEach((pno, i) => {
+                    const jsonData = {
+                        "pno": pno.value,
+                        "pcount": pcounts[i].value
+                    };
+
+                    fetch('/lotteon/product/cart/update', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(jsonData)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (i === pnos.length - 1) {
+                                // 모든 업데이트가 완료된 후 폼을 제출
+                                cartForm.submit();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            }
+
+            // 초기화 시 숨겨진 필드 업데이트
+            updateHiddenFields();
+
 
             // 전체 선택 체크박스 이벤트 핸들러 추가
             const selectAllCheckbox = document.getElementById('selectAll');
@@ -141,6 +196,7 @@
     </script>
 
 
+
     <!-- 제목, 페이지 네비게이션 -->
     <nav>
         <h1>장바구니</h1>
@@ -222,7 +278,7 @@
                     <td id="totalAmount">0원</td>
                 </tr>
             </table>
-            <input type="submit" name="" class="order-button" value="주문하기">
+            <input type="submit" name="order" class="order-button" value="주문하기">
         </div>
 
 

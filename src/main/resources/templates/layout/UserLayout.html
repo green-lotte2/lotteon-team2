@@ -116,7 +116,7 @@
         </div>
     </header>
     <main class="content" id="product" >
-        <aside>
+        <aside th:if="${not #strings.equals(pageId, 'writeReview')}">
             <!-- 카테고리 -->
             <ul class="category">
                 <li><i class="fa fa-bars" aria-hidden="true"></i>카테고리</li>

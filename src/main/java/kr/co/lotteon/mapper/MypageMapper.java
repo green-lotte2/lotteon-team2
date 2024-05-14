@@ -17,4 +17,6 @@ public interface MypageMapper {
     public String selectMyQnaTotal(String uid);
 
     List<ReviewDTO> selectReviews(@Param("uid") String uid, @Param("limit") int limit);
+
+    void insertReview(ReviewDTO reviewDTO);
 }

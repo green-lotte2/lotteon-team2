@@ -8,9 +8,7 @@ import java.util.List;
 @Mapper
 public interface ReviewMapper {
 
-    void insertReview(ReviewDTO reviewDTO);
+
 
     List<ReviewDTO> selectReviewsByProductId(Integer pno);
-
-    // Add more methods as needed
 }

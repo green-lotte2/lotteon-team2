@@ -19,7 +19,6 @@
                     const orderID = btnDetail[i].id;
                     console.log(btnDetail[i].closest("tr"));
                     const insertTarget = btnDetail[i].closest("table");
-                    const orders = [[${orders}]];
 
                     const table = document.createElement('table');
                     table.id = 'orderDetail';
@@ -207,7 +206,7 @@
                 <tr th:each="order:${orders}">
                     <td th:text="${order.odate}">2022-12-13</td>
                     <td>
-                        <a href="#" class="thumb"><img th:src="@{|/product/${order.cate}/${order.mainimg}|}" width="70px" height="70px" alt="상품이미지"></a>
+                        <a th:href="@{/product/view(pno=${order.pno})}" class="thumb"><img th:src="@{|/product/${order.cate}/${order.mainimg}|}" width="auto" height="auto" alt="상품이미지"></a>
                         <ul>
                             <li th:text="${order.company}">상호명</li>
                             <li th:text="${order.pname}"><a href="#">상품명</a></li>
