@@ -122,6 +122,8 @@
                             updateStatus(selectedStatus, ono, pno);
                             document.getElementById('cancel').click();
                             console.log(selectedStatus);
+                            let modalBackDrop = document.getElementsByClassName('modal-backdrop.fade.show');
+                            modalBackDrop.style.display="none";
                         });
 
                     }
@@ -193,7 +195,7 @@
                                     </button>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">

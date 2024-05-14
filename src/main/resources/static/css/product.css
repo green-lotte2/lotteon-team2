@@ -901,8 +901,8 @@
 #product > .cart > form > input[name=del] {
   border-color: #bdbdbd;
   border-bottom-color: #828282;
-  background: #fafafa;
-  color: #4d4d4d;
+  background-color: #9f9d99;
+  color: #ffffff;
   padding: 6px 11px;
   border-width: 1px;
   margin-top: 6px;
@@ -926,7 +926,16 @@
 #product > .cart > form > table tbody {}
 #product > .cart > form > table tr {
   border-bottom: 1px solid #d3d3d3;
+    font-size: 15px;
 }
+#product > .cart > form > table .pcount input {
+    width: 40px;
+    height: 24px;
+    padding: 0;
+    text-align: center;
+    border: 1px solid #666666;
+}
+
 /*
 #product > .cart > form > table .empty {
   display: none;
