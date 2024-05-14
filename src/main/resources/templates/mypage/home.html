@@ -42,7 +42,7 @@
                 <tr th:each="order:${orders}">
                     <td th:text="${order.odate}">2022-12-13</td>
                     <td>
-                        <a href="#" class="thumb"><img th:src="@{|/product/${order.cate}/${order.mainimg}|}" width="70px" height="70px" alt="상품이미지"></a>
+                        <a th:href="@{/product/view(pno=${order.pno})}" class="thumb"><img th:src="@{|/product/${order.cate}/${order.mainimg}|}" width="100px" height="100px" alt="상품이미지"></a>
                         <ul>
                             <li th:text="${order.company}">상호명</li>
                             <li th:text="${order.pname}"><a href="#">상품명</a></li>
@@ -96,7 +96,7 @@
                 </tr>
                 <tr th:each="Reviews, stat : ${Reviews}">
                     <td th:text="${stat.index + 1}">1</td>
-                    <td th:text="${Reviews.pname}">상품명</td>
+                    <td th:text="${Reviews.pname}" >상품명</td>
                     <td th:text="${Reviews.content}">배송이 빠릅니다. 잘 사용하겠습니다.</td>
                     <td><span class="rating star1" th:classappend="'rating star' + ${Reviews.rating}" th:text="${Reviews.rating}">상품평</span></td>
                     <td th:text="${#temporals.format(Reviews.redate, 'yyyy-MM-dd')}">2022-12-10</td>

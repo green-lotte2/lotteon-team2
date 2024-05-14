@@ -5,6 +5,11 @@
 
 <mapper namespace="kr.co.lotteon.mapper.MypageMapper">
 
+    <insert id="insertReview" parameterType="kr.co.lotteon.dto.ReviewDTO">
+        INSERT INTO review (pno, uid, content, rating, redate)
+        VALUES (#{pno}, #{uid}, #{content}, #{rating}, NOW())
+    </insert>
+
     <select id="selectMyQnaBoard" parameterType="map" resultType="map">
         SELECT * FROM `qna` AS a JOIN `cate2`
         AS b ON a.cate1 = b.cate1 AND a.cate2 = b.cate2
@@ -31,6 +36,7 @@
         Select a.*, c.pname
         FROM `review` AS a
         JOIN `product` AS c ON a.pno = c.pno
+        WHERE a.uid = #{uid}
         ORDER BY redate DESC
         LIMIT 3
     </select>

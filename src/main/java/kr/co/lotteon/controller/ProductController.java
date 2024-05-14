@@ -83,12 +83,8 @@ public class ProductController {
     @PostMapping("/product/cart/update")
     public ResponseEntity<CartDTO> cartUpdate(Principal principal, @RequestBody CartDTO cartDTO) {
         String uid = principal.getName();
-        log.info("uid : " + uid);
         cartDTO.setUid(uid);
-        log.info("insertCart : " + cartDTO);
-
         cartService.updateCate(cartDTO);
-
         return ResponseEntity.ok(cartDTO);
     }
 

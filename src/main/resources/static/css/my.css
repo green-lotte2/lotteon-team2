@@ -227,7 +227,10 @@ footer p > strong {
     overflow: hidden;
 }
 
-#my > nav img {margin-top: 22px;}
+#my > nav img {
+    margin-top: 22px;
+
+}
 #my > nav > div > ol {
     float: right;
     width: 300px;

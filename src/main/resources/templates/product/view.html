@@ -260,7 +260,8 @@
                 <h3 class="name" th:text="${product.pname}">상품명</h3>
                 <p th:text="${product.info}">상품설명 출력</p>
                 <p id="pno" th:text="${product.pno}" hidden></p>
-                <h5 class="rating star4"><a th:href="@{#}">상품평보기</a></h5>
+                <h5 class="rating star" th:style="'background-position: 0 ' + ${#numbers.formatInteger(Average/0.5,1)} * -20 + 'px'"></h5><a th:href="@{#}">상품평보기</a>
+                <div th:text="'평균별점 : ' + ${#numbers.formatDecimal(Average, 1, 'POINT', 1, 'POINT')}" style="font-size: 20px"></div>
             </nav>
             <nav>
                 <!-- 원래 가격을 출력합니다. -->
@@ -438,8 +439,9 @@
             <h1>상품리뷰</h1>
         </nav>
         <!-- 별점 표시 영역 -->
-        <h5 th:class="'rating star' + ${#numbers.formatInteger(Average,1)}"></h5>
-        <div th:text="'평균별점 : '  + ${#numbers.formatInteger(Average,1)}" style="font-size: 20px"></div>
+        <h5 class="rating star" th:style="'background-position: 0 ' + ${#numbers.formatInteger(Average/0.5,1)} * -20 + 'px'"></h5>
+        <div th:text="'평균별점 : ' + ${#numbers.formatDecimal(Average, 1, 'POINT', 1, 'POINT')}" style="font-size: 20px"></div>
+
 
         <ul>
             <li th:each="review : ${reviews}">
