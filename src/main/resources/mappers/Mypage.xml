@@ -41,4 +41,10 @@
         LIMIT 3
     </select>
 
+    <select id="selectC2Name" resultType="String">
+        select c2name
+        from cate2
+        where cate2 = #{cate2}
+    </select>
+
 </mapper>
