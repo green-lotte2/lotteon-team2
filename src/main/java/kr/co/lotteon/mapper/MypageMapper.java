@@ -18,5 +18,6 @@ public interface MypageMapper {
 
     List<ReviewDTO> selectReviews(@Param("uid") String uid, @Param("limit") int limit);
 
+    public String selectC2Name(int cate2);
     void insertReview(ReviewDTO reviewDTO);
 }

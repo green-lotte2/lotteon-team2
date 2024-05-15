@@ -44,6 +44,8 @@ public class MyController {
         String uid = myUserDetails.getUser().getUid();
         MyHomeDTO myHomeDTO = myService.getMyHomeInfo(uid);
 
+
+
         PageRequestDTO pageRequestDTO = new PageRequestDTO();
         pageRequestDTO.setPg(1);
         pageRequestDTO.setSize(3);
@@ -52,13 +54,13 @@ public class MyController {
         List<ReviewDTO> Reviews = myService.getRecentReviews(uid);
         List<OrdersDTO> orders = ordersService.selectOrders(uid, pageRequestDTO);
         PageResponseDTO pageResponseDTO = ordersService.findOrderListByUid(uid, pageRequestDTO);
+        List<OrdersDTO> point = ordersService.selectPoint(uid);
 
         List<BannerDTO> banners = adminService.selectBanner();
         model.addAttribute("banners", banners);
 
-
+        model.addAttribute("point", point);
         model.addAttribute("orders", orders);
-        log.info("orders" + orders);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
         model.addAttribute("myHomeDTO", myHomeDTO);
         model.addAttribute("Reviews", Reviews);
