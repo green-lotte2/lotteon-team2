@@ -1,5 +1,15 @@
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /* product 공통 */
-#product {}
+#product {
+    font: normal 12px 'S-CoreDream-3Light';
+}
 #product > section {
   padding: 16px;
   box-sizing: border-box;
@@ -110,17 +120,46 @@
     width: 200px;
     border: 1px solid #e3e3e3bd;
     box-shadow: 0.1px 0.5px #999;
+    position: relative;
+    cursor: pointer;
 }
 
 #product > .list > .prodList > .item > .imgBox > a >  img {
-    width: 200px;
+    width: 100%;
 }
 
+#product > .list > .prodList > .item > .imgBox > a .hover_text {
+    top: -100%;
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    left: 0;
+    transition: 0.7s;
+    background-color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+#product > .list > .prodList > .item > .imgBox > a .hover_text > p {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+}
+
+#product > .list > .prodList > .item > .imgBox > a:hover .hover_text{
+    top: 0;
+    cursor: pointer;
+}
+
+/*
 #product > .list > .prodList > .item > .imgBox > a >  img:hover {
     transform: scale(1.1, 1.1);
     transition-duration: 0.5s;
 }
-
+*/
 #product > .list > .prodList > .item > .titleBox > .name {
     width: 200px;
     margin-top: 10px;
@@ -815,13 +854,13 @@
 }
 
 #product > .review-write > .product-details {
-    text-align: center;
     margin-bottom: 20px;
 }
 
 #product > .review-write > .product-details > h1 {
-    font-size: 24px;
+    font-size: 20px;
     color: #333;
+    margin-bottom: 5px;
 }
 
 #product > .review-write > .product-details > .info > h2 {
@@ -843,26 +882,25 @@
 #product > .review-write form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    border-top: 1px solid #b6b5b5;
 }
 
 #product > .review-write form > div {
-    width: 400px;
+    width: 900px;
     margin: 10px 0;
-    text-align: right;
 }
 
 #product > .review-write form > div > label.rating {
-    font-size: 16px;
-    margin-right: 10px;
+    font-size: 14px;
+    margin-right: 45px;
     position: relative;
-    top: 1px;
+    top: -5px;
 }
 
 #product > .review-write form > div > label.review {
     position: relative;
-    top: -103px;
-    font-size: 16px;
+    top: -160px;
+    font-size: 14px;
     margin-right: 10px;
 }
 
@@ -875,8 +913,8 @@
 }
 
 #product > .review-write form textarea {
-    width: 70%; /* textarea 너비 조정 */
-    height: 100px; /* textarea 높이 조정 */
+    width: 88%; /* textarea 너비 조정 */
+    height: 160px; /* textarea 높이 조정 */
     resize: none;
 }
 

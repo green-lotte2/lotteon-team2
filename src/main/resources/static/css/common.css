@@ -1,7 +1,7 @@
 /* 폰트 */
 @font-face {
-  font-family: 'NanumSquareRound';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-family: 'S-CoreDream-3Light';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -10,7 +10,7 @@
 * {
   margin: 0;
   padding: 0;
-  font: normal 12px 'NanumSquareRound';
+  font: normal 12px 'S-CoreDream-3Light';
 
 }
 
@@ -96,8 +96,8 @@ header > .logo > div > form {
   margin-left: -185px;
   margin-top: -22px;
   display: inline-block;
-  width: 480px;
-  height: 45px;
+  width: 400px;
+  height: 40px;
 }
 header > .logo > div > form > input {
   position: absolute;

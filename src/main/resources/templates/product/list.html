@@ -97,6 +97,9 @@
             <div class="imgBox">
                 <a th:href="@{/product/view(pno=${product.pno})}" class="thumb">
                     <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
+                    <div class="hover_text">
+                        <p>자세히보기 +</p>
+                    </div>
                 </a>
             </div>
             <div class="titleBox">

@@ -119,8 +119,8 @@
                                                onclick="sendQnaNo(event)">[[${qnaDTO.title}]]</a></td>
                             <td th:text="${#temporals.format(qnaDTO.rdate, 'yyyy-MM-dd')}"></td>
                             <th:block>
-                                <td th:class="blue-text" th:if="${qnaDTO.answercomplete == 2}">답변완료</td>
-                                <td th:class="gray-text" th:if="${qnaDTO.answercomplete == 1}">검토중</td>
+                                <td th:class="blue-text" th:if="${qnaDTO.answercomplete == 2}" style="color: #01a900;">답변완료</td>
+                                <td th:class="gray-text" th:if="${qnaDTO.answercomplete == 1}" style="color: red;">검토중</td>
                             </th:block>
                         </tr>
                         <tr class="answerRow">

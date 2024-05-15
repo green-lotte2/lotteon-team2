@@ -1,12 +1,13 @@
-/* 폰트 */
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
 /*🎀전체 초기화*/
+
 
 body {
     color: #333;
     box-sizing: border-box;
-    font: normal 12px "Noto Sans CJK KR";
+    font: normal 12px  "Noto Sans KR";
 }
 
 a {
@@ -155,6 +156,7 @@ input#writeBtn:hover {
     max-width: 980px;
     width: 100%;
     height: auto;
+    font-size: 15px;
 }
 #gnb {
     width: 100%;
@@ -397,6 +399,7 @@ main table span {
     text-align: right;
     position: inherit;
     left: 0;
+    padding: 5px 12px;
     background-color: tomato;
 }
 
@@ -409,8 +412,11 @@ main table span {
     bottom: 30px;
     background-color: #777777;
     color: #ffffff;
-    padding: 6px;
+    padding: 5px;
     border: none;
+    display: block;
+    width: 45px;
+    text-align: center;
 }
 
 #userModify select#role {
@@ -583,7 +589,7 @@ input[type=file]::file-selector-button{
     width: 300px;
     height: 34px;
     position: relative;
-    top: 0;
+    top: -2px;
     left: 4px;
     border: 1px solid #777777;
     outline: none;
@@ -594,7 +600,7 @@ input[type=file]::file-selector-button{
     background-color: inherit;
     position: relative;
     right: 40px;
-    top: 0;
+    top: -2px;
 }
 
 #productList #searchBox .searchBtn img {
@@ -636,6 +642,10 @@ input[type=file]::file-selector-button{
 }
 
 /*🎈게시판 리스트 공통*/
+.board table#dataTable {
+    font-size: 15px;
+}
+
 .board .table tr.tableTitle {
     background-color: #585858;
     color: #fff;
