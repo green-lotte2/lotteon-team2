@@ -78,7 +78,11 @@ public class AdminProductController {
             productService.insertImg(imgDTO);
         }
 
-        return "redirect:/admin/product/list";
+        if(authentication.getAuthorities().toString().equals("[ADMIN]")){
+            return "redirect:/admin/product/list";
+        }else{
+            return "redirect:/seller/product/list";
+        }
     }
 
 

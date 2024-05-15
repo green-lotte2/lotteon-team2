@@ -75,6 +75,7 @@ public class MyController {
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
         }
+
         List<BannerDTO> banners = adminService.selectBanner();
         model.addAttribute("banners", banners);
         List<OrdersDTO> point = ordersService.selectPoint(authentication.getName());
