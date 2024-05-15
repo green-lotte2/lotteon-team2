@@ -14,6 +14,55 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link th:href="@{/seller/css/sb-admin-2.min.css}" rel="stylesheet">
+    <style>
+        .text {
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .text .text1 {
+            margin-left: 25px;
+        }
+
+        .text p {
+            margin-bottom: 5px;
+        }
+        .text .text1, .text2 p {
+            margin-bottom: 5px;
+        }
+
+        button.accordion-button.collapsed {
+            border: 1px solid #b0b0b0b5;
+            border-bottom: none;
+        }
+
+
+
+        .accordion-flush>.accordion-item:last-child {
+            border-bottom: 1px solid #b0b0b0b5;
+        }
+
+        .accordion {
+
+            --bs-accordion-btn-focus-box-shadow: inherit;
+            --bs-accordion-active-bg: inherit;
+        }
+
+        .innerText {
+            display: flex;
+            padding: 16px;
+            background-color: #cfe2ff;
+        }
+
+        .innerText .itemImg {
+            margin-right: 20px;
+        }
+
+        .accordion-button:not(.collapsed) {
+            border: 4px solid #cfe2ff;
+        }
+    </style>
 
 </head>
 
@@ -54,34 +103,40 @@
                                     <div>
                                         <img width="75px" height="75px" th:src="@{|/product/${order.cate}/${order.mainimg}|}" alt="상품이미지">
                                     </div>
-                                    <div>
-                                        주문번호 : [[${order.ono}]]<br>
-                                        내 용  : [[${order.pname}]] <strong th:if="${order.count - 1 > 0}">외 [[${order.count - 1}]]개</strong>
+                                    <div class="text">
+                                        <div class="text1">
+                                            주문번호 : [[${order.ono}]]<br>
+                                            내 용  : [[${order.pname}]] <strong th:if="${order.count - 1 > 0}">외 [[${order.count - 1}]]개</strong>
+                                        </div>
+                                        <div class="text2">
+                                            구매자 : [[${order.uid}]]<br>
+                                            결제 금액 : [[${order.total}]]<br>
+                                            결제 날짜 : [[${order.odate}]]
+                                        </div>
                                     </div>
-                                    <div>
-                                        구매자 : [[${order.uid}]]<br>
-                                        결제 금액 : [[${order.total}]]<br>
-                                        결제 날짜 : [[${order.odate}]]
-                                    </div>
+
                                 </button>
                             </h2>
                             <div th:id="${order.ono}" th:each="product:${products.anyList}" th:if="${product.ono} == ${order.ono}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                <div style="display: block">
-                                    <img width="75px" height="75px" th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
-                                </div>
-                                <div>
-                                    <p style="display: block">
-                                        상품 번호 : [[${product.pno}]]
-                                        상품 이름 : [[${product.pname}]]
-                                        판매 회사 : [[${product.company}]]
-                                    </p>
-                                    <p style="display: block">
-                                        선택 옵션 : [[${product.options}]]
-                                        구매 수량 : [[${product.pcount}]]
-                                        구매 가격 : [[${product.price}]]
+                                <div class="innerText">
+                                    <div class="itemImg" style="display: block">
+                                        <img width="75px" height="75px" th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
+                                    </div>
+                                    <div>
+                                        <p style="display: block">
+                                            상품 번호 : [[${product.pno}]]
+                                            상품 이름 : [[${product.pname}]]
+                                            판매 회사 : [[${product.company}]]
+                                        </p>
+                                        <p style="display: block">
+                                            선택 옵션 : [[${product.options}]]
+                                            구매 수량 : [[${product.pcount}]]
+                                            구매 가격 : [[${product.price}]]
 
-                                    </p>
+                                        </p>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

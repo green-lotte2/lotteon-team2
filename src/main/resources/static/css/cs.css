@@ -1,6 +1,7 @@
+/* 폰트 */
 @font-face {
-  font-family: 'NanumSquareRound';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-family: 'S-CoreDream-3Light';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -10,7 +11,7 @@
 * {
   margin: 0;
   padding: 0;
-  font: normal 12px 'NanumSquareRound';
+  font: normal 12px 'S-CoreDream-3Light';
 }
 
 ul,
@@ -782,7 +783,6 @@ footer p > strong {
 }
 
 #cs > .faq > .list > article > div > ul span {
-  font-family: sans-serif;
   font-size: 18px;
   font-weight: bold;
   color: #006cff;
@@ -819,7 +819,6 @@ footer p > strong {
 }
 
 #cs > .faq > .view > article > nav > .title > span {
-  font-family: sans-serif;
   font-size: 32px;
   font-weight: bold;
   color: #006cff;

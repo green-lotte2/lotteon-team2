@@ -2,6 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/UserLayout}">
+<head>
+    <style>
+        header > .logo > div > form > button {
+            position: absolute;
+            right: 15px;
+            top: 5px;
+            background: #fff;
+            border: none;
+            font-size: 20px;
+            color: #ef2a23;
+            outline: none;
+        }
+    </style>
+</head>
 <section class="search" layout:fragment="content">
     <script>
         window.onload = function (){
