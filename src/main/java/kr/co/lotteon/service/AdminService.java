@@ -251,7 +251,6 @@ public class AdminService {
     }
 
 
-
     // 🎈배너 등록
     private final ModelMapper modelMapper;
 
@@ -366,19 +365,6 @@ public class AdminService {
         }
     }
 
-    /*
-    private boolean isBannerValid(Banner banner) {
-        LocalDate now = LocalDate.now();
-        LocalDate startDate = banner.getBstartDate();
-        LocalDate endDate = banner.getBendDate();
-        LocalTime startTime = banner.getBstartTime();
-        LocalTime endTime = banner.getBendTime();
-
-    return now.isAfter(startDate) && now.isBefore(endDate)&&
-            now.isAfter(startTime) && now.isBefore(endTime);
-    }
-
-     */
 
 }
 
