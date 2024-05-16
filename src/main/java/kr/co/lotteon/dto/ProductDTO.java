@@ -49,7 +49,7 @@ public class ProductDTO {
     public Product toEntity(){
         return Product.builder()
                 .pno(pno)
-                .uid(sid)
+                .sid(sid)
                 .cate(cate)
                 .pname(pname)
 

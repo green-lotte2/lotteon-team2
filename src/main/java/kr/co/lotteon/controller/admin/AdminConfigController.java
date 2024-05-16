@@ -75,6 +75,8 @@ public class AdminConfigController {
         // 페이지 시작 번호
         int pageStartNum = csService.getPageStartNum(total, currentPage);
 
+        model.addAttribute("user", adminService.selectRegUser());
+
         model.addAttribute("noticeDTOS", noticeDTOS);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("lastPageNum", lastPageNum);

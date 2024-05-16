@@ -120,6 +120,10 @@ public class AdminService {
                 .build();
     }
 
+    public int selectRegUser(){
+        log.info(adminMapper.selectRegUser()+"dd");
+        return adminMapper.selectRegUser();
+    }
 
     // 🎈 회원 수정
     public UserDTO adminUserSelect(String uid) {

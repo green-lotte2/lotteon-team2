@@ -168,6 +168,11 @@
         LIMIT 3
     </select>
 
+    <select id="selectRegUser" resultType="int">
+        SELECT COUNT(*) FROM user
+        WHERE regdate > LAST_DAY(NOW() - INTERVAL 1 MONTH) AND regdate <![CDATA[<=]]> NOW()
+    </select>
+
     <!--🎈 admin_product_delete-->
     <delete id="adminDeleteProduct">
         DELETE FROM `product` WHERE pno = #{pno}

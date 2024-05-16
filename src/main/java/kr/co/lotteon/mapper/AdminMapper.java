@@ -50,5 +50,7 @@ public interface AdminMapper{
     // 삭제
     public void deleteBanner(int bno);
 
+    public int selectRegUser();
+
 
 }

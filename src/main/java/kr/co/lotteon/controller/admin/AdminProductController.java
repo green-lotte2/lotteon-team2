@@ -51,12 +51,14 @@ public class AdminProductController {
                                        @RequestParam("mainImg") MultipartFile fileA,
                                        @RequestParam("detailImg") MultipartFile fileD) {
         log.info("adminProductRegister2");
-        log.info(productDTO.toString());
+
         log.info(fileA.isEmpty() + "");
         if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/member/login"; // 사용자가 로그인하지 않았다면 로그인 페이지로 리다이렉트
         }
+        log.info(authentication.getName()+"이거이거이거");
         productDTO.setSid(authentication.getName());
+        log.info(productDTO.toString());
         if (productDTO.getPno() != 0) {
             Product product = productService.findProductById(productDTO.getPno()).get();
             productDTO.setRdate(product.getRdate());

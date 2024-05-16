@@ -23,7 +23,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pno;
 
-    private String uid;
+    private String sid;
     private int cate;
     private String pname;
     @CreationTimestamp

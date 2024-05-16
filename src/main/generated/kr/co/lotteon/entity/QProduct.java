@@ -56,11 +56,11 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final ListPath<Review, QReview> reviews = this.<Review, QReview>createList("reviews", Review.class, QReview.class, PathInits.DIRECT2);
 
+    public final StringPath sid = createString("sid");
+
     public final StringPath size = createString("size");
 
     public final NumberPath<Integer> stock = createNumber("stock", Integer.class);
-
-    public final StringPath uid = createString("uid");
 
     public QProduct(String variable) {
         this(Product.class, forVariable(variable), INITS);

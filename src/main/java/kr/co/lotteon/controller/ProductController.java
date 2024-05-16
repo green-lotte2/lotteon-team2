@@ -124,6 +124,7 @@ public class ProductController {
         int finalPrice = totalAmount - deliveryFee - totalDiscount;
 
         // 모델에 값 추가
+        model.addAttribute("cate", productService.getCategoryList());
         model.addAttribute("ordersDTO", ordersDTO);
         model.addAttribute("totalAmount", totalAmount);
         model.addAttribute("totalDiscount", totalDiscount);

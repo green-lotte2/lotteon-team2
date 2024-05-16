@@ -27,6 +27,7 @@ public class SellerController {
     private final CsService csService;
     private final ProductService productService;
     private final SellerService sellerService;
+    private final AdminService adminService;
 
     @GetMapping(value = {"/seller","/seller/index"})
     public String index(Model model, Authentication authentication){
@@ -47,6 +48,8 @@ public class SellerController {
         log.info(monthSales.toString());
         log.info(weekSales.toString());
         log.info(cateName.toString());
+
+        model.addAttribute("user", adminService.selectRegUser());
         model.addAttribute("monthSales", monthSales);
         model.addAttribute("weekSales", weekSales);
         model.addAttribute("cateName", cateName);

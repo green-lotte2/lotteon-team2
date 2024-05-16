@@ -23,8 +23,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, Prod
 
     Page<Product> findByCate(int cate, Pageable pageable);
 
-    Page<Product> findAllByUid(String uid, Pageable pageable);
-
     Page<Product> findAll(Specification<Product> specification, Pageable pageable);
 
     @EntityGraph(attributePaths = "productimg")
