@@ -2,6 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       xmlns:layout="http://www.thymeleaf.org"
       layout:decorate="~{/layout/csLayout.html}">
+<style>
+  #cs > .notice > .view > article > .content > textarea {
+    resize: none;
+    border: none;
+  }
+</style>
   <div layout:fragment="content">
 
       <section id="cs">
@@ -39,9 +45,7 @@
               </nav>
 
               <div class="content">
-                <p>
-                  [[${noticeBoard.content}]]
-                </p><br><br>
+                <textarea>[[${noticeBoard.content}]]</textarea>
               </div>
               <a th:href="@{/cs/notice/list}" id="btnList" class="btnList">목록보기</a>
             </article>

@@ -1,8 +1,17 @@
 
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /*🎀전체 초기화*/
 body {
     color: #333;
     box-sizing: border-box;
+    font: normal 12px  'S-CoreDream-3Light';
 }
 
 a {
@@ -78,6 +87,7 @@ div#searchBox {
 }
 
 #searchOption {
+    font-size: 15px;
     padding: 7px;
     width: 220px;
     height: 35px;

@@ -28,12 +28,6 @@ public class AdminUserController {
 
     private final AdminService adminService;
 
-    // 🎈user 등록
-    @GetMapping("/admin/user/register")
-    public String adminUserRegister(){
-        return "/admin/user/register";
-    }
-
 
     // 🎈uesr 리스트
     @GetMapping("/admin/user/list")
