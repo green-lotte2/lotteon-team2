@@ -113,7 +113,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="product: ${adminProducts.anyList}">
+                                        <tr th:each="product: ${adminProducts.anyList}" th:style="${product.deldate != null ? 'color:red':''}">
                                             <td>
                                                 <input type="checkbox" name="checkbox" th:value="${product.pno}">
                                             </td>

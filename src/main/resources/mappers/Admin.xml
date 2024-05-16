@@ -32,7 +32,7 @@
         FROM `product` AS a
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
         LEFT JOIN `seller` AS c ON a.sid = c.uid
-        WHERE b.mainImg IS NOT NULL
+        WHERE b.mainImg IS NOT NULL AND b.deldate IS NULL
         ORDER BY a.rdate DESC, a.pno ASC
     </select>
     <!-- 상품 검색 및 리스트 출력 -->
@@ -43,20 +43,22 @@
             JOIN `productimg` AS b ON a.pno = b.pno
             JOIN `seller` AS c ON a.sid = c.uid
             <where>
-                <if test="type == 'pname'">a.pname like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'company'">a.company like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'seller'">a.sid like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'pno'">a.pno=${keyword}</if>
+                a.deldate IS NULL
+                <if test="type == 'pname'">AND a.pname like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'company'">AND a.company like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'seller'">AND a.sid like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'pno'">AND a.pno=${keyword}</if>
             </where>
         ) AS line
         FROM `product` AS a
         JOIN `productimg` AS b ON a.pno = b.pno
         JOIN `seller` AS c ON a.sid = c.uid
         <where>
-            <if test="type == 'pname'">a.pname like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'company'">a.company like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'seller'">a.sid like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'pno'">a.pno=${keyword}</if>
+            a.deldate IS NULL
+            <if test="type == 'pname'">AND a.pname like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'company'">AND a.company like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'seller'">AND a.sid like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'pno'">AND a.pno=${keyword}</if>
         </where>
         ORDER BY a.rdate DESC, a.pno ASC
         LIMIT ${size} OFFSET ${(pg - 1) * size}
@@ -72,6 +74,7 @@
         JOIN `orderdetail` AS od ON o.ono = od.ono
         JOIN `product` AS p ON p.pno = od.pno
         JOIN `productimg` AS pi ON p.pno = pi.pno
+        WHERE p.deldate IS NULL
     </select>
 
     <select id="selectOrderGroup" resultType="kr.co.lotteon.dto.OrdersDTO">
@@ -89,10 +92,11 @@
             JOIN `product` AS p ON od.pno = p.pno
             JOIN `productimg` AS ip on p.pno = ip.pno
             <where>
-                <if test="type == 'pname'">p.pname like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'company'">p.company like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'seller'">p.seller like CONCAT('%','${keyword}','%')</if>
-                <if test="type == 'uid'">o.uid='${keyword}'</if>
+                p.deldate IS NULL
+                <if test="type == 'pname'">AND p.pname like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'company'">AND p.company like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'seller'">AND p.seller like CONCAT('%','${keyword}','%')</if>
+                <if test="type == 'uid'">AND o.uid='${keyword}'</if>
             </where>
             )AS line
         FROM `orders` AS o
@@ -100,10 +104,11 @@
         JOIN `product` AS p ON od.pno = p.pno
         JOIN `productimg` AS ip on p.pno = ip.pno
         <where>
-            <if test="type == 'pname'">p.pname like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'company'">p.company like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'seller'">p.seller like CONCAT('%','${keyword}','%')</if>
-            <if test="type == 'uid'">o.uid='${keyword}'</if>
+            p.deldate IS NULL
+            <if test="type == 'pname'">AND p.pname like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'company'">AND p.company like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'seller'">AND p.seller like CONCAT('%','${keyword}','%')</if>
+            <if test="type == 'uid'">AND o.uid='${keyword}'</if>
         </where>
         GROUP BY o.ono
         LIMIT ${size} OFFSET ${(pg - 1) * size}
@@ -122,6 +127,7 @@
         INNER JOIN `product` AS p ON od.pno = p.pno
         INNER JOIN `productimg` AS pi ON od.pno = pi.pno
         INNER JOIN `orders` AS o ON od.ono = o.ono
+        WHERE p.deldate IS NULL
         GROUP BY od.pno
         ORDER BY od.pno
     </select>
@@ -163,6 +169,7 @@
         FROM orderdetail AS od
         JOIN product AS p ON p.pno = od.pno
         JOIN category AS c ON p.cate = c.cate
+        WHERE p.deldate IS NULL
         GROUP BY p.cate
         ORDER BY pcount DESC
         LIMIT 3

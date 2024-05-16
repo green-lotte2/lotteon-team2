@@ -11,7 +11,7 @@
         SELECT a.*, b.mainImg
         FROM `product` AS a
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
-        WHERE b.mainImg IS NOT NULL AND a.pno in (
+        WHERE b.mainImg IS NOT NULL AND a.deldate IS NULL AND a.pno in (
             SELECT r.pno AS rating
             FROM `review` AS r
             INNER JOIN `product` AS p ON p.pno = r.pno
@@ -26,7 +26,7 @@
         SELECT a.*, b.mainImg
         FROM `product` AS a
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
-        WHERE b.mainImg IS NOT NULL
+        WHERE b.mainImg IS NOT NULL AND a.deldate IS NULL
         ORDER BY a.rdate DESC, a.pno ASC
         LIMIT 8
     </select>
@@ -35,7 +35,7 @@
         SELECT a.*, b.mainImg
         FROM `product` AS a
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
-        WHERE b.mainImg IS NOT NULL
+        WHERE b.mainImg IS NOT NULL AND a.deldate IS NULL
         ORDER BY a.hit DESC, a.pno ASC
         LIMIT 8
     </select>
@@ -44,7 +44,8 @@
         SELECT a.*, b.mainImg
         FROM `product` AS a
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
-        WHERE b.mainImg IS NOT NULL AND a.pno in (
+        WHERE b.mainImg IS NOT NULL AND a.deldate IS NULL
+        AND a.pno in (
             SELECT od.pno
             FROM `orderdetail` AS od
             INNER JOIN `product` AS p ON p.pno = od.pno
@@ -59,7 +60,7 @@
         SELECT a.*, b.mainImg
         FROM `product` AS a
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
-        WHERE b.mainImg IS NOT NULL
+        WHERE b.mainImg IS NOT NULL AND a.deldate IS NULL
         ORDER BY a.discount DESC, a.pno ASC
         LIMIT 8
     </select>
@@ -70,7 +71,7 @@
         FROM `cart` AS c
         JOIN `product` AS a ON c.pno = a.pno
         LEFT JOIN `productimg` AS b ON a.pno = b.pno
-        WHERE c.uid = #{uid}
+        WHERE c.uid = #{uid} AND a.deldate IS NULL
         ORDER BY c.cno DESC
     </select>
 
@@ -79,7 +80,7 @@
         SELECT p.*, img.mainimg, img.subimg, img.detailimg
         FROM product p
         LEFT JOIN productimg img ON p.pno = img.pno
-        WHERE p.pno = #{pno}
+        WHERE p.pno = #{pno} AND p.deldate IS NULL
     </select>
 
     <!-- 상품 검색 -->
@@ -87,7 +88,7 @@
         SELECT p.*, img.mainImg, img.subImg, img.detailImg
         FROM product p
         LEFT JOIN productimg img ON p.pno = img.pno
-        WHERE 1=1
+        WHERE p.deldate IS NULL
         <if test="search != null and search != ''">
             AND p.pname LIKE CONCAT('%', #{search}, '%')
         </if>
@@ -108,7 +109,7 @@
         SELECT COUNT(*)
         FROM product p
         LEFT JOIN productimg img ON p.pno = img.pno
-        WHERE 1=1
+        WHERE p.deldate IS NULL
         <if test="search != null and search != ''">
             AND p.pname LIKE CONCAT('%', #{search}, '%')
         </if>

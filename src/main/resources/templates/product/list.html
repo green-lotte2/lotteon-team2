@@ -93,7 +93,7 @@
     </div>
     <!-- 상품목록 -->
     <div class="prodList">
-        <div class="item" th:each="product : ${products}">
+        <div class="item" th:each="product : ${products}" th:if="${product.deldate} == null">
             <div class="imgBox">
                 <a th:href="@{/product/view(pno=${product.pno})}" class="thumb">
                     <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
@@ -132,6 +132,50 @@
                 <h5 class="badge power">판매자등급</h5>
             </div>
         </div>
+
+
+
+        <div class="item" th:each="product : ${products}" th:if="${product.deldate} != null">
+            <div class="imgBox">
+                <a th:href="@{/product/list(cate=${result1.cate})}" class="thumb">
+                    <img th:src="@{|/product/${product.cate}/${product.mainimg}|}" alt="상품이미지">
+                    <div class="hover_text">
+                        <p>자세히보기 +</p>
+                    </div>
+                </a>
+            </div>
+            <div class="titleBox">
+                <h3 class="name" th:text="${product.pname}">상품명</h3>
+                <a th:href="@{/product/list(cate=${result1.cate})}" th:style="${product.deldate != null ? 'color:red':''}" class="desc">삭제된 상품 입니다.</a>
+            </div>
+            <div class="price">
+                <ul>
+                    <li>
+                        <!-- 할인된 가격을 계산하고 콤마 포맷을 적용합니다. -->
+                        <ins class="dis-price"
+                             th:text="${#numbers.formatInteger((product.price * (1 - product.discount / 100.0)), 3, 'COMMA') + '원'}">
+                            할인된 가격
+                        </ins>
+                    </li>
+                    <li>
+                        <!-- 원래 가격에 콤마 포맷을 적용합니다. -->
+                        <del class="org-price" th:text="${#numbers.formatInteger(product.price, 3, 'COMMA') + '원'}">
+                            30,000
+                        </del>
+                        <!-- 할인율 -->
+                        <span class="discount" th:text="${product.discount + '%'}">10%</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="sellerInfo">
+                <!-- 회사 (판매자 정보) -->
+                <!--<h4 class="seller" th:text="${product.company}"><i class="fas fa-home"></i>판매자</h4>-->
+                <!-- 판매자 등급 및 평점은 데모 데이터이며, 실제 필드가 없습니다. -->
+                <h5 class="badge power">판매자등급</h5>
+            </div>
+        </div>
+
+
     </div>
 
 

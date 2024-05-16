@@ -33,7 +33,7 @@
 
         <article class="latest">
             <h3>최근주문내역</h3>
-            <a href="#" class="more">더보기</a>
+            <a th:href="@{/mypage/order}" class="more">더보기</a>
             <table border="0">
                 <tr>
                     <th>날짜</th>
@@ -87,7 +87,7 @@
         </article>
         <article class="review">
             <h3>상품평</h3>
-            <a href="#" class="more">더보기</a>
+            <a th:href="@{/mypage/review}" class="more">더보기</a>
             <table border="0">
                 <tr>
                     <th>번호</th>
@@ -146,33 +146,6 @@
                         </span></td>
                 </tr>
             </table>
-        </article>
-
-        <article class="myinfo">
-            <h3>확인해주세요!</h3>
-
-            <div>
-                <div class="address">
-                    <span>기본 배송지설정</span>
-                    <a href="#" class="setting">변경</a>
-                </div>
-                <div class="email">
-                    <span>email 설정</span>
-                    <a href="#" class="setting">변경</a>
-                    <p>
-                        <span>abc123@gmail.com</span><br/>
-                        (최종수정일 <span>2021-12-10</span>)
-                    </p>
-                </div>
-                <div class="hp">
-                    <span>휴대폰 설정</span>
-                    <a href="#" class="setting">변경</a>
-                    <p>
-                        <span>abc123@gmail.com</span><br/>
-                        (최종수정일 <span>2021-12-10</span>)
-                    </p>
-                </div>
-            </div>
         </article>
 
         <!-- 🎈수취확인 팝업 -->
