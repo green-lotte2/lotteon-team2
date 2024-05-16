@@ -10,5 +10,4 @@ import java.util.List;
 
 public interface OrderRepositoryCustom {
     Page<Tuple> selectOrders(PageRequestDTO pageRequestDTO, Pageable pageable, String uid);
-
 }

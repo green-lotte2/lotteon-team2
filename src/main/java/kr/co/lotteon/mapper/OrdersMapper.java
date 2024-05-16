@@ -26,4 +26,6 @@ public interface OrdersMapper {
     public  List<ReviewDTO> selectReview(int pno);
 
     Double reviewAverage(int pno);
+
+    List<ReviewDTO> selectReviewsByUid(String uid);
 }

@@ -8,6 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface BannerRepository extends JpaRepository<Banner, Integer> {
-
-
 }
