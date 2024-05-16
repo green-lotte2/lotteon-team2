@@ -33,8 +33,6 @@ public class QOrders extends EntityPathBase<Orders> {
 
     public final StringPath receiver = createString("receiver");
 
-    public final StringPath request = createString("request");
-
     public final NumberPath<Integer> savepoint = createNumber("savepoint", Integer.class);
 
     public final NumberPath<Integer> total = createNumber("total", Integer.class);

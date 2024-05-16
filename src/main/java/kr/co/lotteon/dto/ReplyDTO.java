@@ -1,8 +1,7 @@
 package kr.co.lotteon.dto;
 
 
-import jakarta.persistence.JoinColumn;
-import kr.co.lotteon.entity.CsReply;
+import kr.co.lotteon.entity.Reply;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,8 +23,8 @@ public class ReplyDTO {
     private String writer;
 
 
-    public CsReply toEntity() {
-        return CsReply.builder()
+    public Reply toEntity() {
+        return Reply.builder()
                 .replyno(replyno)
                 .rcontent(rcontent)
                 .qnano(qnano)

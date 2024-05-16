@@ -37,8 +37,6 @@ public class Product {
     private int discount;
     private int point;
     private String info;
-    private String size;
-    private String color;
     private int hit;
     private String opname;
     private String opvalue;

@@ -21,9 +21,6 @@ public class UserDetail {
 
     @Builder.Default
     private int point = 0;
-
-    private String provider;
-
     private int grade;
 
     private char location;

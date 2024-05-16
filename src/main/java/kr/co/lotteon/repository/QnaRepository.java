@@ -1,7 +1,6 @@
 package kr.co.lotteon.repository;
 
 import kr.co.lotteon.entity.CsQna;
-import kr.co.lotteon.entity.CsReply;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

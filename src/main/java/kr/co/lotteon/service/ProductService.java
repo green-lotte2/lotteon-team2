@@ -302,8 +302,6 @@ public class ProductService {
                 .discount(product.getDiscount()) // 할인율 추가
                 .point(product.getPoint())
                 .info(product.getInfo())
-                .size(product.getSize())
-                .color(product.getColor())
                 .hit(product.getHit())
                 .opname(product.getOpname())
                 .opvalue(product.getOpvalue())

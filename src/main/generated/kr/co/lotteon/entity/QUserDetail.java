@@ -25,8 +25,6 @@ public class QUserDetail extends EntityPathBase<UserDetail> {
 
     public final NumberPath<Integer> point = createNumber("point", Integer.class);
 
-    public final StringPath provider = createString("provider");
-
     public final StringPath uid = createString("uid");
 
     public QUserDetail(String variable) {
