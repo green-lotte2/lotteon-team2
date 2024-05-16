@@ -167,10 +167,10 @@
                 });
 
                 document.getElementById('totalItems').innerText = totalItems;
-                document.getElementById('price').innerText = (price1).toLocaleString() + '원';
-                document.getElementById('totalAmount').innerText = totalAmount.toLocaleString() + '원';
-                document.getElementById('totalDiscount').innerText = (discount * -1).toLocaleString() + '원';
-                document.getElementById('totalDelivery').innerText = deliveryFee.toLocaleString() + '원';
+                document.getElementById('price').innerText = price1.toLocaleString(undefined, { maximumFractionDigits: 0 }) + '원';
+                document.getElementById('totalAmount').innerText = totalAmount.toLocaleString(undefined, { maximumFractionDigits: 0 }) + '원';
+                document.getElementById('totalDiscount').innerText = (discount * -1).toLocaleString(undefined, { maximumFractionDigits: 0 }) + '원';
+                document.getElementById('totalDelivery').innerText = deliveryFee.toLocaleString(undefined, { maximumFractionDigits: 0 }) + '원';
 
                 // 상품이 없을 경우 주문 버튼 알림 처리
                 const orderButton = document.querySelector('.order-button');

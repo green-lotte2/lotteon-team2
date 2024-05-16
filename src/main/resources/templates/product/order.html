@@ -36,7 +36,14 @@
                         alert("보유하신 포인트를 초과하였습니다.");
                         return false;
                     }
-                    if(point > parseInt(document.getElementById('finalPrice').innerText)){
+                    const finalPriceText = document.getElementById('finalPrice').innerText
+                    const priceArr = finalPriceText.split(',');
+                    let finalPrice = "";
+                    priceArr.forEach(function (price){
+                        finalPrice += price;
+                    });
+                    console.log(finalPrice);
+                    if(point > parseInt(finalPrice)){
                         alert("결제 금액 이상으로 포인트 사용은 불가능합니다.");
                         return false;
                     }
