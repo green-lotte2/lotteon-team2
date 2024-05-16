@@ -65,4 +65,13 @@
         SELECT AVG(rating) as averageRating FROM review WHERE pno = #{pno};
     </select>
 
+    <select id="selectReviewsByUid" resultType="kr.co.lotteon.dto.ReviewDTO">
+        SELECT r.rno, r.uid, r.content, r.rating, r.redate,
+        p.pno, p.pname
+        FROM review r
+        JOIN product p ON r.pno = p.pno
+        WHERE r.uid = #{uid}
+        ORDER BY r.redate desc
+    </select>
+
 </mapper>

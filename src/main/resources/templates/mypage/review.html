@@ -57,18 +57,6 @@
                 </tbody>
 
             </table>
-            <p class="page">
-                <!-- 이전 페이지 링크 -->
-                <a th:if="${result.prev}" th:href="@{/mypage/review(pg=${result.start - 1})}" class="prev">이전</a>
-                <!-- 숫자 페이지 링크 -->
-                <span th:each="pageNum : ${#numbers.sequence(result.start, result.end)}">
-                    <a th:href="@{/mypage/review(pg=${pageNum})}" th:text="${pageNum}" th:class="${pageNum == result.pg ? 'num on' : 'num'}"></a>
-                </span>
-                <!-- 다음 페이지 링크 -->
-                <a th:if="${result.next}" th:href="@{/mypage/review(pg=${result.end + 1})}" class="next">다음</a>
-            </p>
-
-
         </article>
     </section>
 </div>

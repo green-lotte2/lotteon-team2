@@ -1,4 +1,6 @@
-<html xmlns:th="http://www.thymeleaf.org"
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/UserLayout}">
 
@@ -23,11 +25,13 @@
 
             const cartForm = document.getElementById('cartForm');
 
-            cartForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // 기본 폼 제출 동작 방지
-                updateHiddenFields(); // 숨겨진 필드 업데이트
-                cartForm.submit(); // 실제 폼 제출
-            });
+            if (cartForm) {
+                cartForm.addEventListener('submit', function(event) {
+                    event.preventDefault(); // 기본 폼 제출 동작 방지
+                    updateHiddenFields(); // 숨겨진 필드 업데이트
+                    cartForm.submit(); // 실제 폼 제출
+                });
+            }
 
             function updateCartItem(tag) {
                 const pno = tag.closest('tr').querySelector('input[name="productSelect"]').value;
@@ -92,20 +96,22 @@
             // 초기화 시 숨겨진 필드 업데이트
             updateHiddenFields();
 
-
             // 전체 선택 체크박스 이벤트 핸들러 추가
             const selectAllCheckbox = document.getElementById('selectAll');
-            selectAllCheckbox.addEventListener('change', function () {
-                toggleSelectAll(this);
-                updateTotalSum(); // 전체 선택 시 합계 다시 계산
-            });
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('change', function () {
+                    toggleSelectAll(this);
+                    updateTotalSum(); // 전체 선택 시 합계 다시 계산
+                });
+            }
 
             document.querySelectorAll('input[name="productSelect"]').forEach(checkbox => {
                 checkbox.addEventListener('change', updateTotalSum); // 체크박스 변경 시 합계 업데이트
             });
 
             window.submitDeleteForm = function () {
-                const checkboxes = document.querySelectorAll('input[name="productSelect"]:checked');
+                const form = document.getElementById('deleteForm');
+                const checkboxes = form.querySelectorAll('input[name="productSelect"]:checked');
                 if (checkboxes.length === 0) {
                     alert('삭제할 상품을 선택하세요.');
                     return;
@@ -147,13 +153,11 @@
                 let deliveryFee = 0;
                 let price1 = 0;
 
-
                 document.querySelectorAll('tr.cart-item-row').forEach(row => {
                     const quantity = parseInt(row.querySelector('.pcount').children[0].value);
                     const price = parseFloat(row.querySelector('.price').innerText.replace(/,/g, ''));
                     const itemDiscount = parseFloat(row.querySelector('.discount').innerText.replace('%', '')) / 100;
                     const itemDeliveryFee = parseFloat(row.querySelector('.delivery').innerText.replace(/,/g, '').replace('무료배송', '0'));
-
 
                     discount += (price * itemDiscount) * quantity;
                     deliveryFee += itemDeliveryFee;
@@ -162,14 +166,12 @@
                     price1 += price * quantity;
                 });
 
-
                 document.getElementById('totalItems').innerText = totalItems;
                 document.getElementById('price').innerText = (price1).toLocaleString() + '원';
                 document.getElementById('totalAmount').innerText = totalAmount.toLocaleString() + '원';
                 document.getElementById('totalDiscount').innerText = (discount * -1).toLocaleString() + '원';
                 document.getElementById('totalDelivery').innerText = deliveryFee.toLocaleString() + '원';
             }
-
 
             let Top = document.getElementById('top');
 
@@ -195,8 +197,6 @@
         });
     </script>
 
-
-
     <!-- 제목, 페이지 네비게이션 -->
     <nav>
         <h1>장바구니</h1>
@@ -210,7 +210,7 @@
         <table>
             <thead>
             <tr>
-                <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"></th>
+                <th><input type="checkbox" id="selectAll"></th>
                 <th>상품명</th>
                 <th>총수량</th>
                 <th>판매가</th>
@@ -280,7 +280,6 @@
             </table>
             <input type="submit" name="order" class="order-button" value="주문하기">
         </div>
-
 
     </form>
 </section>

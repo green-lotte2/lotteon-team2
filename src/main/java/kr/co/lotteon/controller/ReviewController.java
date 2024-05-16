@@ -81,7 +81,7 @@ public class ReviewController {
         List<BannerDTO> banners = adminService.selectBanner();
         model.addAttribute("banners", banners);
 
-        List<ReviewDTO> reviews = reviewService.findReviewsByUserId(uid);
+        List<ReviewDTO> reviews = reviewService.selectReviewsByUid(uid);
         model.addAttribute("result", responseDTO);
         model.addAttribute("reviews", reviews);
         return "/mypage/review"; // 사용자 리뷰 보기 페이지 반환
