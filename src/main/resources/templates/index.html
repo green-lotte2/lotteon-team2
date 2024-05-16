@@ -60,6 +60,48 @@
             }
         </style>
 
+        <script>
+            (function() {
+                'use strict';
+
+                var color = {
+                    red: "color:#d83128;font-size:16px;",
+                    orange: "color:#ea991b;font-size:16px;",
+                    yellow: "color:#f8df23;font-size:16px;",
+                    green: "color:#93ba2f;font-size:16px;",
+                    blue: "color:#4da4e0;font-size:16px;",
+                    violet: "color:#8a2be2;font-size:16px;"
+                };
+
+                if (typeof console === "object" && console.log && typeof console.log === "function") {
+                    if (isUA('chrome') && !isUA('edge')) {
+                        console.log(
+                            "%c _      _____  _____  _____  _____   _____          _____                          _____ \n" +
+                            "%c| |    |  _  ||_   _||_   _||  ___| |  _  |        |_   _|                        / __  \\ \n" +
+                            "%c| |    | | | |  | |    | |  | |__   | | | | _ __     | |    ___   __ _  _ __ ___  `' / /' \n" +
+                            "%c| |    | | | |  | |    | |  |  __|  | | | || '_ \\    | |   / _ \\ / _` || '_ ` _ \\   / /   \n" +
+                            "%c| |____| |_| |  | |    | |  | |___  \\ \\_| || | | |   | |  |  __/| (_| || | | | | |./ /___ \n" +
+                            "%c|_____/ |___/   \\_/    \\_/  \\____/   \\___/ |_| |_|   \\_/   \\___| \\__,_||_| |_| |_|\\_____/ \n",
+                            color.red, color.orange, color.yellow, color.green, color.blue, color.violet
+                        );
+                    } else {
+                        console.log(
+                            " _      _____  _____  _____  _____   _____          _____                          _____ \n" +
+                            "| |    |  _  ||_   _||_   _||  ___| |  _  |        |_   _|                        / __  \\ \n" +
+                            "| |    | | | |  | |    | |  | |__   | | | | _ __     | |    ___   __ _  _ __ ___  `' / /' \n" +
+                            "| |    | | | |  | |    | |  |  __|  | | | || '_ \\    | |   / _ \\ / _` || '_ ` _ \\   / /   \n" +
+                            "| |____| |_| |  | |    | |  | |___  \\ \\_| || | | |   | |  |  __/| (_| || | | | | |./ /___ \n" +
+                            "|_____/  |___/  \\_/    \\_/  \\____/   \\___/ |_| |_|   \\_/   \\___| \\__,_||_| |_| |_|\\_____/ \n"
+                        );
+                    }
+                    console.log("\x3e \x3e \x3e http://43.202.24.20:8080/lotteon/\n");
+                }
+
+                function isUA(userAgent) {
+                    return navigator.userAgent.toLowerCase().indexOf(userAgent) > -1;
+                }
+            })();
+        </script>
     </head>
 
     <body>

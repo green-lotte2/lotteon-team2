@@ -9,9 +9,14 @@
     <script th:inline="javascript">
         window.onload = function () {
 
-            document.getElementById('order').onclick = async function (){
-
-            }
+            document.getElementById('order').onclick = function(event) {
+                const checkedProducts = document.querySelectorAll('input[name="checkbox"]:checked');
+                if (checkedProducts.length === 0) {
+                    event.preventDefault();
+                    alert("상품이 없습니다.");
+                    return false;
+                }
+            };
 
             // 주소 API 호출
             document.getElementById('btnZip').onclick = function (e) {
@@ -57,6 +62,10 @@
                 });
             }
 
+            function formatNumber(num) {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
             function setting() {
                 const checked = document.getElementsByName('checkbox');
                 const count = document.getElementsByClassName('count');
@@ -93,13 +102,14 @@
                 const finalPrice = calcPriceSum - deliPriceSum + parseInt(discount.innerText);
 
                 document.getElementById('count').innerText = countSum + ' 건';
-                document.getElementById('price').innerText = priceSum + '';
-                document.getElementById('discount').innerText = discountPrice + '';
-                document.getElementById('savePoint').innerText = pointSum + '';
-                document.getElementById('delivery').innerText = deliPriceSum + '';
-                document.getElementById('finalPrice').innerText = finalPrice + '';
+                document.getElementById('price').innerText = formatNumber(priceSum) + '원';
+                document.getElementById('discount').innerText = '-' + formatNumber(discountPrice) + '원';
+                document.getElementById('savePoint').innerText = formatNumber(pointSum) + '원';
+                document.getElementById('delivery').innerText = formatNumber(deliPriceSum) + '원';
+                document.getElementById('finalPrice').innerText = formatNumber(finalPrice) + '원';
                 document.getElementsByName('total')[0].value = finalPrice;
                 document.getElementsByName('savepoint')[0].value = pointSum;
+
             }
             document.getElementsByName('usepoint')[0].value = 0;
             setting();

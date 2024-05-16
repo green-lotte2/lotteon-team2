@@ -260,7 +260,7 @@
                 <h3 class="name" th:text="${product.pname}">상품명</h3>
                 <p th:text="${product.info}">상품설명 출력</p>
                 <p id="pno" th:text="${product.pno}" hidden></p>
-                <h5 class="rating star" th:style="'background-position: 0 ' + ${#numbers.formatInteger(Average/0.5,1)} * -20 + 'px'"></h5><a th:href="@{#}">상품평보기</a>
+                <h5 class="rating star" th:style="'background-position: 0 ' + ${#numbers.formatInteger(Average/0.5,1)} * -20 + 'px'"></h5><a href="#review">상품평보기</a>
                 <div th:text="'평균별점 : ' + ${#numbers.formatDecimal(Average, 1, 'POINT', 1, 'POINT')}" style="font-size: 20px"></div>
             </nav>
             <nav>
@@ -311,7 +311,7 @@
 
             <div class="count">
                 <button class="decrease" type="button">-</button>
-                <input type="text" class="quantity" name="num" min="1" value="1" id="count">
+                <input type="text" class="quantity" name="num" min="1" value="1" id="count" readonly>
                 <button class="increase" type="button">+</button>
             </div>
 
@@ -433,7 +433,7 @@
     </article>
 
     <!-- 상품 리뷰 내용 -->
-    <article class="review">
+    <article id="review" class="review">
         <nav>
             <h1>상품리뷰</h1>
         </nav>

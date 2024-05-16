@@ -171,7 +171,19 @@
                 document.getElementById('totalAmount').innerText = totalAmount.toLocaleString() + '원';
                 document.getElementById('totalDiscount').innerText = (discount * -1).toLocaleString() + '원';
                 document.getElementById('totalDelivery').innerText = deliveryFee.toLocaleString() + '원';
+
+                // 상품이 없을 경우 주문 버튼 알림 처리
+                const orderButton = document.querySelector('.order-button');
+                orderButton.onclick = function(event) {
+                    if (totalItems === 0) {
+                        event.preventDefault();
+                        alert("상품이 없습니다.");
+                    } else {
+                        cartForm.submit(); // 상품이 있는 경우 폼 제출
+                    }
+                };
             }
+
 
             let Top = document.getElementById('top');
 
