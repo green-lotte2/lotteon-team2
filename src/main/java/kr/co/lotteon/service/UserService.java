@@ -271,16 +271,16 @@ public class UserService {
         entity.setZip(userDTO.getZip());
         entity.setAddr1(userDTO.getAddr1());
         entity.setAddr2(userDTO.getAddr2());
-
-        Seller entitySeller = sellerRepository.findById(userDTO.getUid()).get();
-        entitySeller.setCompany(userDTO.getCompany());
-        entitySeller.setRepresent(userDTO.getRepresent());
-        entitySeller.setRegnum(userDTO.getRegnum());
-        entitySeller.setReportnum(userDTO.getReportnum());
-        entitySeller.setCohp(userDTO.getCohp());
-        entitySeller.setFax(userDTO.getFax());
-
+        if (entity.getRole().equals("SELLER")){
+            Seller entitySeller = sellerRepository.findById(userDTO.getUid()).get();
+            entitySeller.setCompany(userDTO.getCompany());
+            entitySeller.setRepresent(userDTO.getRepresent());
+            entitySeller.setRegnum(userDTO.getRegnum());
+            entitySeller.setReportnum(userDTO.getReportnum());
+            entitySeller.setCohp(userDTO.getCohp());
+            entitySeller.setFax(userDTO.getFax());
+            sellerRepository.save(entitySeller);
+        }
         userRepository.save(entity);
-        sellerRepository.save(entitySeller);
     }
 }

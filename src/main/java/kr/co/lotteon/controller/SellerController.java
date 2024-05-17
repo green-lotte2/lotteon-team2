@@ -166,7 +166,7 @@ public class SellerController {
     public String adminDeleteProduct(int pno) {
         Product product = productService.findProduct(pno);
         adminService.adminDeleteProduct(product);
-        return "redirect:/admin/product/list";
+        return "redirect:/seller/product/list";
     }
 
     @PostMapping("/seller/product/delete")
@@ -179,7 +179,7 @@ public class SellerController {
         }
         log.info(checkbox.toString());
 
-        return "redirect:/admin/product/list";
+        return "redirect:/seller/product/list";
     }
 
 }

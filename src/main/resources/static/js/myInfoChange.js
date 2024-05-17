@@ -124,7 +124,7 @@ $(function() {
                 success: function(data) {
                     if (data === "success") {
                         alert('회원정보 수정이 완료되었습니다.');
-                        window.location.href=contextPath + "/mypage/";
+                        window.location.href=contextPath + "/member/logout";
                     } else {
                         alert("error : 새로고침 후 다시 시도해주세요.");
                     }
