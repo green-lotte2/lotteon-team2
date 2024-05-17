@@ -3,6 +3,14 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/UserLayout}">
+<head>
+    <style>
+        header > .logo > div > form > button {
+            top: 5px;
+        }
+    </style>
+
+</head>
 
 <!-- 장바구니 페이지 시작 -->
 <section class="cart" layout:fragment="content">

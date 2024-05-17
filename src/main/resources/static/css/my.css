@@ -1288,6 +1288,8 @@ footer p > strong {
     color: #ffffff;
     margin: 10px auto;
     border: none;
+    position: relative;
+    right: -327px;
 }
 
 
